@@ -12,6 +12,7 @@ import {UserEvent} from "./views/User.js";
 import User from "./views/User.js";
 import logOut from "./views/logOut.js";
 import {LogOutEvent} from "./views/logOut.js";
+import NewsFeed from "./views/NewsFeed.js";
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
@@ -81,7 +82,13 @@ export default function router(URI) {
             uri: location.pathname,
             title: 'Log Out',
             viewEvent: LogOutEvent
-        }
+        },
+		'/newsfeed': {
+			returnView: NewsFeed,
+			uri: '/newsfeed',
+			state: {},
+			title: 'News Feed'
+		}
     };
 
     return routes[URI];

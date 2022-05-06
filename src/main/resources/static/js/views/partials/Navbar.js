@@ -18,7 +18,7 @@ export default function Navbar(props) {
             if (loggedIn) {
                 html = html + `
                     <li class="nav-item">
-                        <a class="nav-link" href="/posts" data-link>Posts</a>
+                        <a class="nav-link" href="/newsfeed" data-link>News Feed</a>
                     </li>`;
             }
                 // language=HTML
