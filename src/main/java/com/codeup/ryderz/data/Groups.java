@@ -34,7 +34,7 @@ public class Groups {
     private String location;
 
     @ManyToOne
-    @JsonIgnoreProperties({"groupsOwned", "groupsJoined", "password"})
+    @JsonIgnoreProperties({"groupsOwned","password"})
     private User groupOwner;
 
     @ManyToMany(

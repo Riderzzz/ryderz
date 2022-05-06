@@ -53,10 +53,10 @@ public class GroupsController {
         groupsRepository.save(groupToUpdate);
     }
 
-    @PutMapping("{groupId}")
-    public void addUserToGroup (@PathVariable Long groupId, @RequestParam Long userId) {
+    @PutMapping("{addGroupId}/adduser")
+    public void addUserToGroup(@PathVariable Long addGroupId, @RequestParam Long userId) {
         User userJoiningGroup = userRepository.getById(userId);
-        Groups groupToJoin = groupsRepository.getById(groupId);
+        Groups groupToJoin = groupsRepository.getById(addGroupId);
 
         List<User> groupsUsers = groupToJoin.getUsers();
 
