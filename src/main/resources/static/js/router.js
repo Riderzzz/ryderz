@@ -12,6 +12,10 @@ import {UserEvent} from "./views/User.js";
 import User from "./views/User.js";
 import logOut from "./views/logOut.js";
 import {LogOutEvent} from "./views/logOut.js";
+import NewsFeed from "./views/NewsFeed.js";
+import Discover from "./views/Discover.js";
+import Event from "./views/Event.js";
+import Group from "./views/Group.js";
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
@@ -81,6 +85,28 @@ export default function router(URI) {
             uri: location.pathname,
             title: 'Log Out',
             viewEvent: LogOutEvent
+        },
+		'/newsfeed': {
+			returnView: NewsFeed,
+			uri: '/newsfeed',
+			state: {},
+			title: 'News Feed'
+		},
+        '/discover': {
+            returnView: Discover,
+            uri: '/discover',
+            state: {},
+            title: 'Discover'
+        },
+        '/event': {
+            returnView: Event,
+            uri: '/event',
+            state: {},
+        },
+        '/group': {
+            returnView: Group,
+            uri: '/group',
+            state: {},
         }
     };
 
