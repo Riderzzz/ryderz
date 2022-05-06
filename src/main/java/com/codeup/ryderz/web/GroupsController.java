@@ -43,11 +43,20 @@ public class GroupsController {
     }
 
     @PutMapping("{groupId}")
+    public void editGroup(@PathVariable Long groupId, @RequestBody Groups newGroup) {
+        Groups groupToUpdate = groupsRepository.getById(groupId);
+
+        groupToUpdate.setName(newGroup.getName());
+        groupToUpdate.setBio(newGroup.getBio());
+        groupToUpdate.setLocation(newGroup.getLocation());
+
+        groupsRepository.save(groupToUpdate);
+    }
+
+    @PutMapping("{groupId}")
     public void addUserToGroup (@PathVariable Long groupId, @RequestParam Long userId) {
         User userJoiningGroup = userRepository.getById(userId);
-        System.out.println(userJoiningGroup);
         Groups groupToJoin = groupsRepository.getById(groupId);
-        System.out.println(groupToJoin.getId());
 
         List<User> groupsUsers = groupToJoin.getUsers();
 
@@ -58,6 +67,8 @@ public class GroupsController {
         groupsRepository.save(groupToJoin);
     }
 
-
-
+    @DeleteMapping("{groupId}")
+    public void deleteGroup(@PathVariable Long groupId) {
+        groupsRepository.deleteById(groupId);
+    }
 }
