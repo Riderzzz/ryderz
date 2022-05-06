@@ -1,33 +1,51 @@
 package com.codeup.ryderz.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Entity
+@Table(name = "events")
 public class Events {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+
+    @Column
     private Double startingLongitude;
-    @Column(nullable = false)
+
+    @Column
     private Double startingLatitude;
-    @Column(nullable = false)
+
+    @Column
     private Double endingLongitude;
-    @Column(nullable = false)
+
+    @Column
     private Double endingLatitude;
-    @Column(nullable = false)
+
+    @Column
     private Date createdDate;
-    @Column(nullable = false)
+
+    @Column
     private Date eventDate;
-    @Column(nullable = false)
+
+    @Column
     private String titleOfEvent;
-    @Column(nullable = false)
+
+    @Column
     private String descriptionOfEvent;
-    @Column(nullable = false)
+
+    @Column
     private String stateWhereEventTakesPlace;
-    @Column(nullable = false)
+
+    @Column
     private String eventLocation;
 
     @PrePersist
@@ -36,5 +54,21 @@ public class Events {
     }
 
     @ManyToOne
-    private User eventUserId;
+    @JsonIgnoreProperties({"events", "password", "groups", "posts", "email", "createdAt", "role"})
+    private User eventCreator;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH},
+            targetEntity = Category.class)
+    @JoinTable(
+            name="event_users",
+            joinColumns = {@JoinColumn(name = "event_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="user_id", nullable = false, updatable = false)},
+            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
+            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
+    )
+
+    @JsonIgnoreProperties("events")
+    private List<User> userCreatedEventId;
 }

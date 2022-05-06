@@ -1,4 +1,6 @@
 package com.codeup.ryderz.data;
 
-public interface EventsRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EventsRepository extends JpaRepository<Events, Long> {
 }
