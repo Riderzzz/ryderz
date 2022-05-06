@@ -34,13 +34,13 @@ public class Groups {
     private String location;
 
     @ManyToOne
-    @JsonIgnoreProperties({"groups", "password"})
+    @JsonIgnoreProperties({"groupsOwned", "groupsJoined", "password"})
     private User groupOwner;
 
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
-            targetEntity = Category.class)
+            targetEntity = User.class)
     @JoinTable(
             name="group_users",
             joinColumns = {@JoinColumn(name = "group_id", nullable = false, updatable = false)},
@@ -48,6 +48,6 @@ public class Groups {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
-    @JsonIgnoreProperties("groups")
+    @JsonIgnoreProperties({"groupsJoined", "password", "groupsOwned"})
     private List<User> users;
 }

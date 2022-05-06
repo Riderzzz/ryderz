@@ -38,6 +38,21 @@ public class User {
 
     @OneToMany(mappedBy = "groupOwner")
     @JsonIgnoreProperties("groupOwner")
-    private Collection<Groups> groups;
+    private Collection<Groups> groupsOwned;
+
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH},
+            targetEntity = Groups.class)
+    @JoinTable(
+            name="group_users",
+            joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="group_id", nullable = false, updatable = false)},
+            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
+            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
+    )
+    @JsonIgnoreProperties("users")
+    private Collection<Groups> groupsJoined;
 
 }
