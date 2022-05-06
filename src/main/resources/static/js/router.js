@@ -95,7 +95,10 @@ export default function router(URI) {
         '/discover': {
             returnView: Discover,
             uri: '/discover',
-            state: {},
+            state: {
+                events:"/api/events",
+                groups: "/api/groups"
+            },
             title: 'Discover'
         },
         '/event': {
