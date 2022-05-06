@@ -43,7 +43,7 @@ public class Events {
     private String descriptionOfEvent;
 
     @Column
-    private String stateWhereEventTakesPlace;
+    private String stateOfEvent;
 
     @Column
     private String eventLocation;

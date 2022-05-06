@@ -34,7 +34,7 @@ public class EventsController {
         event.setEventDate(newEvent.getEventDate());
         event.setTitleOfEvent(newEvent.getTitleOfEvent());
         event.setDescriptionOfEvent(newEvent.getDescriptionOfEvent());
-        event.setStateWhereEventTakesPlace(newEvent.getStateWhereEventTakesPlace());
+        event.setStateOfEvent(newEvent.getStateOfEvent());
         event.setEventLocation(newEvent.getEventLocation());
         eventsRepository.save(event);
         System.out.println("Ready to add event." + newEvent);
@@ -56,7 +56,7 @@ public class EventsController {
         events.setEventDate(updateEvent.getEventDate());
         events.setTitleOfEvent(updateEvent.getTitleOfEvent());
         events.setDescriptionOfEvent(updateEvent.getDescriptionOfEvent());
-        events.setStateWhereEventTakesPlace(updateEvent.getStateWhereEventTakesPlace());
+        events.setStateOfEvent(updateEvent.getStateOfEvent());
         events.setEventLocation(updateEvent.getEventLocation());
         eventsRepository.save(events);
         System.out.println("Ready to update event." + id + updateEvent);
