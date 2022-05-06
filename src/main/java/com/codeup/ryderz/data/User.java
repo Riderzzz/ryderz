@@ -35,4 +35,9 @@ public class User {
     @JsonIgnoreProperties("author")
     private Collection<Post> posts;
 
+
+    @OneToMany(mappedBy = "groupOwner")
+    @JsonIgnoreProperties("groupOwner")
+    private Collection<Groups> groups;
+
 }
