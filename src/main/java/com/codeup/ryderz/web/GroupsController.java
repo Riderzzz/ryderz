@@ -3,6 +3,8 @@ package com.codeup.ryderz.web;
 
 import com.codeup.ryderz.data.Groups;
 import com.codeup.ryderz.data.GroupsRepository;
+import com.codeup.ryderz.data.User;
+import com.codeup.ryderz.data.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -14,9 +16,11 @@ import java.util.List;
 public class GroupsController {
 
     private final GroupsRepository groupsRepository;
+    private final UserRepository userRepository;
 
-    public GroupsController(GroupsRepository groupsRepository) {
+    public GroupsController(GroupsRepository groupsRepository, UserRepository userRepository) {
         this.groupsRepository = groupsRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -37,4 +41,23 @@ public class GroupsController {
 
         groupsRepository.save(groupToAdd);
     }
+
+    @PutMapping("{groupId}")
+    public void addUserToGroup (@PathVariable Long groupId, @RequestParam Long userId) {
+        User userJoiningGroup = userRepository.getById(userId);
+        System.out.println(userJoiningGroup);
+        Groups groupToJoin = groupsRepository.getById(groupId);
+        System.out.println(groupToJoin.getId());
+
+        List<User> groupsUsers = groupToJoin.getUsers();
+
+        groupsUsers.add(userJoiningGroup);
+
+        groupToJoin.setUsers(groupsUsers);
+
+        groupsRepository.save(groupToJoin);
+    }
+
+
+
 }
