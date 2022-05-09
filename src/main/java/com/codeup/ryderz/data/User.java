@@ -70,6 +70,20 @@ public class User {
     @JsonIgnoreProperties("eventCreator")
     private Collection<Events> events;
 
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH},
+            targetEntity = Events.class)
+    @JoinTable(
+            name="event_users",
+            joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="event_id", nullable = false, updatable = false)},
+            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
+            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
+    )
+    @JsonIgnoreProperties({"usersId"})
+   private Collection<Events> eventsJoined;
+
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties("author")
     private Collection<Comments> comments;

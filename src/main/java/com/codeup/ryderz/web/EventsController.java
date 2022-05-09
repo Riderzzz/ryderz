@@ -1,9 +1,6 @@
 package com.codeup.ryderz.web;
 
-import com.codeup.ryderz.data.Events;
-import com.codeup.ryderz.data.EventsRepository;
-import com.codeup.ryderz.data.User;
-import com.codeup.ryderz.data.UserRepository;
+import com.codeup.ryderz.data.*;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,6 +59,15 @@ public class EventsController {
         events.setEventLocation(updateEvent.getEventLocation());
         eventsRepository.save(events);
         System.out.println("Ready to update event." + id + updateEvent);
+    }
+    @PutMapping("{addEventId}/adduser")
+    public void addUserToEvent(@PathVariable Long addEventId, @RequestParam Long userId) {
+        User userJoiningGroup = userRepository.getById(userId);
+        Events eventToJoin = eventsRepository.getById(addEventId);
+        List<User> eventsUsers = eventToJoin.getUsersId();
+        eventsUsers.add(userJoiningGroup);
+        eventToJoin.setUsersId(eventsUsers);
+        eventsRepository.save(eventToJoin);
     }
 
     @DeleteMapping("/{eventId}")
