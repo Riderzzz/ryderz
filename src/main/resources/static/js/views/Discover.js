@@ -1,3 +1,5 @@
+import createView from "../createView.js";
+
 export default function Discover(props) {
 	console.log(props)
 	// language=html
@@ -9,7 +11,14 @@ export default function Discover(props) {
     </head>
     <body>
     <div class="container">
-        <h1>Discover</h1>
+		<div class="row">
+			<div class="col-8">
+                <h1>Discover</h1>
+			</div>
+			<div class="col-4">
+				<button class="btn btn-dark mt-3 mx-2 createGroupBtn">Create Group</button><button class="btn btn-dark mt-3 mx-2 createEventBtn">Create Event</button>
+			</div>
+		</div>
         <div class="row">
             <div class="col">
                 <h3>Groups</h3>
@@ -23,7 +32,7 @@ export default function Discover(props) {
            		<h5>Members: </h5>
            		<p class="group-content-${group.id}">${group.bio}</p>
            	
-           		<p class="group-createDate">${group.createDate}</p>
+           		<p class="group-createdDate">${new Date(group.createdDate).toLocaleTimeString()} ${new Date(group.createdDate).toLocaleDateString()}</p>
            		<p class="group-owner-${group.id}">Organizer: ${group.groupOwner.username}</p>
 			</div>
         `)
@@ -56,4 +65,14 @@ export default function Discover(props) {
     </body>
     </html>`;
 
+}
+
+export function DiscoverEvents() {
+	$(".createGroupBtn").click(function () {
+		createView('/createGroup')
+	})
+
+	$(".createEventBtn").click(function () {
+		createView('/createEvent')
+	})
 }

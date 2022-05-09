@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -28,7 +28,12 @@ public class Groups {
     private String bio;
 
     @Column
-    private LocalDate createDate;
+    private Date createdDate;
+
+    @PrePersist
+    void setCreatedDate() {
+        this.createdDate  = new Date();
+    }
 
     @Column
     private String location;

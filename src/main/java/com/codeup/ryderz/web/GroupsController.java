@@ -5,6 +5,7 @@ import com.codeup.ryderz.data.Groups;
 import com.codeup.ryderz.data.GroupsRepository;
 import com.codeup.ryderz.data.User;
 import com.codeup.ryderz.data.UserRepository;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -29,17 +30,16 @@ public class GroupsController {
     }
 
     @PostMapping
-    public void createGroup(@RequestBody Groups newGroup) {
-        Groups groupToAdd = new Groups();
+    public void createGroup(@RequestBody Groups newGroup, OAuth2Authentication auth) {
+        if (auth != null) {
+            String email = auth.getName();
+            User user = userRepository.findByEmail(email);
+            newGroup.setGroupOwner(user);
+        }
 
-        groupToAdd.setGroupOwner(newGroup.getGroupOwner());
-        groupToAdd.setName(newGroup.getName());
-        groupToAdd.setBio(newGroup.getBio());
-        groupToAdd.setLocation(newGroup.getLocation());
+        groupsRepository.save(newGroup);
+        System.out.println("Group Created");
 
-        groupToAdd.setCreateDate(LocalDate.now());
-
-        groupsRepository.save(groupToAdd);
     }
 
     @PutMapping("{groupId}")

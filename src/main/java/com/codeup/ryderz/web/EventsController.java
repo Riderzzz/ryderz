@@ -2,6 +2,9 @@ package com.codeup.ryderz.web;
 
 import com.codeup.ryderz.data.Events;
 import com.codeup.ryderz.data.EventsRepository;
+import com.codeup.ryderz.data.User;
+import com.codeup.ryderz.data.UserRepository;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +16,11 @@ import java.util.Optional;
 public class EventsController {
 
     private EventsRepository eventsRepository;
+    private final UserRepository userRepository;
 
-    public EventsController(EventsRepository eventsRepository) {
+    public EventsController(EventsRepository eventsRepository, UserRepository userRepository) {
         this.eventsRepository = eventsRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/{id}")
@@ -24,20 +29,15 @@ public class EventsController {
     }
 
     @PostMapping
-    private void createEvent(@RequestBody Events newEvent) {
-        Events event = newEvent;
-        event.setCreatedDate(newEvent.getCreatedDate());
-        event.setStartingLatitude(newEvent.getStartingLatitude());
-        event.setStartingLongitude(newEvent.getStartingLongitude());
-        event.setEndingLatitude(newEvent.getEndingLatitude());
-        event.setEndingLongitude(newEvent.getEndingLongitude());
-        event.setEventDate(newEvent.getEventDate());
-        event.setTitleOfEvent(newEvent.getTitleOfEvent());
-        event.setDescriptionOfEvent(newEvent.getDescriptionOfEvent());
-        event.setStateOfEvent(newEvent.getStateOfEvent());
-        event.setEventLocation(newEvent.getEventLocation());
-        eventsRepository.save(event);
-        System.out.println("Ready to add event." + newEvent);
+    private void createEvent(@RequestBody Events newEvent, OAuth2Authentication auth) {
+        if (auth != null) {
+            String email = auth.getName();
+            User user = userRepository.findByEmail(email);
+            newEvent.setEventCreator(user);
+        }
+
+        eventsRepository.save(newEvent);
+        System.out.println("Event Created!");
     }
 
     @GetMapping()
