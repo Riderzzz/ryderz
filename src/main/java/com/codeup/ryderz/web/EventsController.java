@@ -63,7 +63,7 @@ public class EventsController {
     }
 
     @DeleteMapping("/{eventId}")
-    private void deleteUser(@PathVariable Long eventId) {
+    private void deleteEvent(@PathVariable Long eventId) {
         eventsRepository.deleteById(eventId);
     }
 }

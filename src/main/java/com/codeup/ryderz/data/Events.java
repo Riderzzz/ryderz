@@ -3,6 +3,7 @@ package com.codeup.ryderz.data;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class Events {
     }
 
     @ManyToOne
-    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined"})
+    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments"})
     private User eventCreator;
 
     @ManyToMany(
@@ -71,4 +72,8 @@ public class Events {
 
     @JsonIgnoreProperties("events")
     private List<User> userCreatedEventId;
+
+    @OneToMany(mappedBy = "event")
+    @JsonIgnoreProperties({"event", "post", "comments", "eventCreator"})
+    private Collection<Comments> comments;
 }
