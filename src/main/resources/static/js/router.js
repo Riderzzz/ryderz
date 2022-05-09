@@ -12,7 +12,6 @@ import {UserEvent} from "./views/User.js";
 import User from "./views/User.js";
 import logOut from "./views/logOut.js";
 import {LogOutEvent} from "./views/logOut.js";
-import NewsFeed, {NewsFeedEvents}from "./views/NewsFeed.js";
 import Discover, {DiscoverEvents} from "./views/Discover.js";
 import Event from "./views/Event.js";
 import Group from "./views/Group.js";
@@ -89,15 +88,7 @@ export default function router(URI) {
             title: 'Log Out',
             viewEvent: LogOutEvent
         },
-		'/newsfeed': {
-			returnView: NewsFeed,
-			uri: '/newsfeed',
-			state: {
-                posts: "/api/posts"
-            },
-			title: 'News Feed',
-            viewEvent: NewsFeedEvents
-		},
+
         '/discover': {
             returnView: Discover,
             uri: '/discover',
