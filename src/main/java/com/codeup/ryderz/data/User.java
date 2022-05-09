@@ -1,5 +1,6 @@
 package com.codeup.ryderz.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -26,15 +27,19 @@ public class User {
     private String username;
 
     @Column(nullable = false, length = 100, unique = true)
+    @JsonIgnore
     private String email;
 
     @Column(nullable = false, length = 100)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)
+    @JsonIgnore
     private LocalDate createdAt;
 
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private Role role;
 
     @OneToMany(mappedBy = "author")

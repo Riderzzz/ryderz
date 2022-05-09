@@ -34,7 +34,7 @@ public class Groups {
     private String location;
 
     @ManyToOne
-    @JsonIgnoreProperties({"groupsOwned","password"})
+    @JsonIgnoreProperties({"groupsOwned", "events", "groupsJoined", "posts"})
     private User groupOwner;
 
     @ManyToMany(
@@ -48,6 +48,6 @@ public class Groups {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
-    @JsonIgnoreProperties({"groupsJoined", "password", "groupsOwned"})
+    @JsonIgnoreProperties({"groupsJoined", "groupsOwned", "events", "posts"})
     private List<User> users;
 }

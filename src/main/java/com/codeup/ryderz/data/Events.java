@@ -54,7 +54,7 @@ public class Events {
     }
 
     @ManyToOne
-    @JsonIgnoreProperties({"events", "password", "groups", "posts", "email", "createdAt", "role", "groupsOwned" , "groupsJoined"})
+    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined"})
     private User eventCreator;
 
     @ManyToMany(
