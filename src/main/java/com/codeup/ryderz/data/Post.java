@@ -24,7 +24,7 @@ public class Post {
     @Column(nullable = false, length = 5000)
     private String content;
     @ManyToOne
-    @JsonIgnoreProperties({"post","password"})
+    @JsonIgnoreProperties({"posts","password", "groupsOwned", "groupsJoined", "events", "comments"})
     private User author;
 
     @ManyToMany(
@@ -35,6 +35,10 @@ public class Post {
 
     @JsonIgnoreProperties("posts")
     private Collection<Category> categories;
+
+    @OneToMany(mappedBy = "post")
+    @JsonIgnoreProperties({"post", "comments"})
+    private Collection<Comments> comments;
 
     public Post(String title, String content) {
         this.title = title;

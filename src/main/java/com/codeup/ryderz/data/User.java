@@ -65,4 +65,8 @@ public class User {
     @JsonIgnoreProperties("eventCreator")
     private Collection<Events> events;
 
+    @OneToMany(mappedBy = "author")
+    @JsonIgnoreProperties("author")
+    private Collection<Comments> comments;
+
 }

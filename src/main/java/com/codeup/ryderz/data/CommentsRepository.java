@@ -1,4 +1,6 @@
 package com.codeup.ryderz.data;
 
-public interface CommentsRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CommentsRepository extends JpaRepository<Comments, Long> {
 }
