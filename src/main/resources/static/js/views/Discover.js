@@ -51,8 +51,8 @@ export default function Discover(props) {
            		<h5 class="event-location-${event.id}">${event.eventLocation}</h5>
            		<h5>Members: </h5>
            		<p class="event-description-${event.id}">${event.descriptionOfEvent}</p>
-           		<p></p>
-           		<p class="event-dateTime">${new Date(event.createdDate).toLocaleTimeString()} ${new Date(event.createdDate).toLocaleDateString()}</p>
+           		<p>Event Date: ${new Date(event.eventDate).toLocaleDateString()} ${new Date(event.eventDate).toLocaleTimeString()}</p>
+           		<p class="event-dateTime">Created: ${new Date(event.createdDate).toLocaleDateString()}</p>
            		<p class="event-owner-${event.id}">Organizer: ${event.eventCreator.username}</p>
            		<p>State of event: <span class="stateOfEvent">${event.stateOfEvent}</span></p>
 			</div>

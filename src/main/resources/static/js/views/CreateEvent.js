@@ -31,7 +31,7 @@ export default function CreateEvent() {
                 <input class="form-control" type="text" id="newEventLocation" name="newEventLocation">
 				
 				<label for="eventDate">Event Date
-                <input type="date" id="eventDate" name="eventDate" value="2022-05-09">
+                <input type="datetime-local" id="eventDate" name="eventDate">
                 </label>
 				
 				<label for="states">Choose a state</label>
@@ -121,8 +121,8 @@ function createEventSubmitListener() {
 		const titleOfEvent = $("#newEventTitle").val();
 		const descriptionOfEvent = $("#newEventDescription").val();
 		const eventLocation = $("#newEventLocation").val();
-		const eventDate = $("#eventDate").val();
-		console.log(eventDate);
+		const dateTime = $("#eventDate").val();
+		const eventDate = new Date(dateTime).getTime();
 		const stateWhereEventTakesPlace = $("#states").val();
 		const startingLongitude = $("#startingLong").val();
 		const startingLatitude = $("#startingLatitude").val();
