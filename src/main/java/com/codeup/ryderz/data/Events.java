@@ -61,7 +61,7 @@ public class Events {
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
-            targetEntity = Category.class)
+            targetEntity = User.class)
     @JoinTable(
             name="event_users",
             joinColumns = {@JoinColumn(name = "event_id", nullable = false, updatable = false)},
