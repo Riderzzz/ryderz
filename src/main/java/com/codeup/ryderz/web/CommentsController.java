@@ -1,10 +1,6 @@
 package com.codeup.ryderz.web;
 
-import com.codeup.ryderz.data.Comments;
-import com.codeup.ryderz.data.CommentsRepository;
-import com.codeup.ryderz.data.Events;
-import com.codeup.ryderz.data.User;
-import com.codeup.ryderz.data.UserRepository;
+import com.codeup.ryderz.data.*;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
