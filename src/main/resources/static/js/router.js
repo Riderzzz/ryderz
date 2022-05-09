@@ -12,7 +12,7 @@ import {UserEvent} from "./views/User.js";
 import User from "./views/User.js";
 import logOut from "./views/logOut.js";
 import {LogOutEvent} from "./views/logOut.js";
-import NewsFeed from "./views/NewsFeed.js";
+import NewsFeed, {NewsFeedEvents} from "./views/NewsFeed.js";
 import Discover, {DiscoverEvents} from "./views/Discover.js";
 import Event from "./views/Event.js";
 import Group from "./views/Group.js";

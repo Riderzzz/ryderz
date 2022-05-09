@@ -54,6 +54,7 @@ export default function Discover(props) {
            		<p></p>
            		<p class="event-dateTime">${new Date(event.createdDate).toLocaleTimeString()} ${new Date(event.createdDate).toLocaleDateString()}</p>
            		<p class="event-owner-${event.id}">Organizer: ${event.eventCreator.username}</p>
+           		<p>State of event: <span class="stateOfEvent">${event.stateOfEvent}</span></p>
 			</div>
         `)
                             .join('')}

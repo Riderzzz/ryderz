@@ -1,5 +1,6 @@
 package com.codeup.ryderz.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import javax.persistence.*;
@@ -15,6 +16,8 @@ import java.util.List;
 @Entity
 @Table(name = "events")
 public class Events {
+    public enum StateOfEvent {NOTSTARTED, INPROGRESS, COMPLETED}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,8 +46,8 @@ public class Events {
     @Column
     private String descriptionOfEvent;
 
-    @Column
-    private String stateOfEvent;
+    @Enumerated(EnumType.STRING)
+    private StateOfEvent stateOfEvent;
 
     @Column
     private String eventLocation;

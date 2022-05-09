@@ -36,6 +36,8 @@ public class EventsController {
             newEvent.setEventCreator(user);
         }
 
+        newEvent.setStateOfEvent(Events.StateOfEvent.NOTSTARTED);
+
         eventsRepository.save(newEvent);
         System.out.println("Event Created!");
     }
