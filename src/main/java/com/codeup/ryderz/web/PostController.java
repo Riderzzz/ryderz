@@ -31,18 +31,13 @@ public class PostController {
         return postRepository.findById(postId);
     }
 
-    @PostMapping("{postId}")
-    private void createPost(@PathVariable Long postId, @RequestBody Post newPost, OAuth2Authentication auth) {
+    @PostMapping
+    private void createPost(@RequestBody Post newPost, OAuth2Authentication auth) {
         String email = auth.getName();
         User author = userRepository.findByEmail(email);
         newPost.setAuthor(author);
 
-        newPost.setCategories(Arrays.asList(categoriesRepository.getById(postId),
-                categoriesRepository.getById(postId),
-                categoriesRepository.getById(postId)));
         postRepository.save(newPost);
-
-        emailService.prepareAndSend(newPost, "New post!", "Hi there. You made a new post!");
     }
 //get email address of currently logged-in user, get user object with that email address. then compare user
 //ID and author of the post.

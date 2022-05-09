@@ -18,6 +18,7 @@ import Event from "./views/Event.js";
 import Group from "./views/Group.js";
 import CreateGroup, {CreateGroupEvents} from "./views/CreateGroup.js";
 import CreateEvent, {CreateEventEvents} from "./views/CreateEvent.js";
+import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
@@ -88,15 +89,15 @@ export default function router(URI) {
             title: 'Log Out',
             viewEvent: LogOutEvent
         },
-		'/newsfeed': {
-			returnView: NewsFeed,
-			uri: '/newsfeed',
-			state: {
+        '/newsfeed': {
+            returnView: NewsFeed,
+            uri: '/newsfeed',
+            state: {
                 posts: "/api/posts"
             },
-			title: 'News Feed',
+            title: 'News Feed',
             viewEvent: NewsFeedEvents
-		},
+        },
         '/discover': {
             returnView: Discover,
             uri: '/discover',
@@ -128,6 +129,12 @@ export default function router(URI) {
             uri: '/createGroup',
             state: {},
             viewEvent: CreateEventEvents
+        },
+        '/createPost': {
+            returnView: CreatePost,
+            uri: '/createPost',
+            state: {},
+            viewEvent: CreatePostEvents
         }
     };
 

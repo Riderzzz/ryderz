@@ -13,6 +13,10 @@ export default function NewsFeed(props) {
 					<title>News Feed</title>
 				</head>
 				<body>
+				<header class="d-flex justify-content-between m-3">
+					<div class="mx-4"><h3>News Feed</h3></div>
+					<button class="btn btn-dark create-post-btn mx-4">Create Post</button>
+				</header>
 				${props.posts.map(post => 
 				`
 				
@@ -24,7 +28,7 @@ export default function NewsFeed(props) {
 					<h5 class="card-title">${post.title}</h5>
 					<p class="card-text">${post.content}</p>
 					<p>
-						<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#post-${post.id}-collapseComments" aria-expanded="false" aria-controls="post-${post.id}-collapseComments">
+						<button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#post-${post.id}-collapseComments" aria-expanded="false" aria-controls="post-${post.id}-collapseComments">
 							Comments
 						</button>
 					</p>
@@ -56,6 +60,7 @@ export default function NewsFeed(props) {
 
 export function NewsFeedEvents() {
 	commentOnPost();
+	createPostBtn();
 }
 
 function commentOnPost() {
@@ -89,4 +94,10 @@ function commentOnPost() {
 			createView("/newsfeed")
 		});
 	});
+}
+
+function createPostBtn() {
+	$(".create-post-btn").click(function (){
+		createView('/createPost')
+	})
 }
