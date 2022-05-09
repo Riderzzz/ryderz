@@ -13,9 +13,11 @@ import User from "./views/User.js";
 import logOut from "./views/logOut.js";
 import {LogOutEvent} from "./views/logOut.js";
 import NewsFeed from "./views/NewsFeed.js";
-import Discover from "./views/Discover.js";
+import Discover, {DiscoverEvents} from "./views/Discover.js";
 import Event from "./views/Event.js";
 import Group from "./views/Group.js";
+import CreateGroup, {CreateGroupEvents} from "./views/CreateGroup.js";
+import CreateEvent, {CreateEventEvents} from "./views/CreateEvent.js";
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
@@ -99,7 +101,8 @@ export default function router(URI) {
                 events:"/api/events",
                 groups: "/api/groups"
             },
-            title: 'Discover'
+            title: 'Discover',
+            viewEvent: DiscoverEvents
         },
         '/event': {
             returnView: Event,
@@ -110,6 +113,18 @@ export default function router(URI) {
             returnView: Group,
             uri: '/group',
             state: {},
+        },
+        '/createGroup': {
+            returnView: CreateGroup,
+            uri: '/createGroup',
+            state: {},
+            viewEvent: CreateGroupEvents
+        },
+        '/createEvent': {
+            returnView: CreateEvent,
+            uri: '/createGroup',
+            state: {},
+            viewEvent: CreateEventEvents
         }
     };
 
