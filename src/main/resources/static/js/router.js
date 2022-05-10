@@ -19,6 +19,7 @@ import Group from "./views/Group.js";
 import CreateGroup, {CreateGroupEvents} from "./views/CreateGroup.js";
 import CreateEvent, {CreateEventEvents} from "./views/CreateEvent.js";
 import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
+import EditPost, {EditPostEvents} from "./views/EditPost.js";
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
@@ -139,6 +140,15 @@ export default function router(URI) {
                 categories: "/api/categories/all"
             },
             viewEvent: CreatePostEvents
+        },
+        '/editPost': {
+            returnView: EditPost,
+            uri: '/editPost',
+            state : {
+                posts: '/api/posts',
+                categories: "/api/categories/all"
+            },
+            viewEvent: EditPostEvents
         }
     };
 

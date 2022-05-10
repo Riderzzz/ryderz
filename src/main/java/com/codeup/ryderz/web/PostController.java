@@ -19,6 +19,7 @@ public class PostController {
     private final PostsRepository postRepository;
     private final UserRepository userRepository;
     private final CategoriesRepository categoriesRepository;
+    private final CommentsRepository commentsRepository;
     private final EmailService emailService;
 
     @GetMapping
@@ -54,6 +55,21 @@ public class PostController {
     @PutMapping("{postId}")
     private void updatePost(@PathVariable Long postId, @RequestBody Post newPost, OAuth2Authentication auth) {
         System.out.printf("Backend wants to update post id %d with %s\n", postId, newPost);
+
+        /*
+            initializing and empty array of categories. loops through the categories array sent through the
+            request body and checks to see if the name matches the categories name in the database. if it does
+            it adds the actual category to the array list to be set to the post
+         */
+        Collection<Category> categories = new ArrayList<>();
+
+        for (Category category : newPost.getCategories()) {
+            System.out.println(category.getName());
+            categories.add(categoriesRepository.findByName(category.getName()));
+        }
+
+        newPost.setCategories(categories);
+
         Post originalPost = postRepository.getById(postId);
         BeanUtils.copyProperties(newPost, originalPost, getNullPropertyNames(newPost));
         postRepository.save(originalPost);
@@ -62,6 +78,14 @@ public class PostController {
     @DeleteMapping("{postId}")
     private void deletePost(@PathVariable Long postId) {
         System.out.printf("Backend wants to delete post id %d\n", postId);
+        Post postToDelete = postRepository.getById(postId);
+
+        //in order to delete a post with comments you must first delete those comments from the database
+        Collection<Comments> postsComments = postToDelete.getComments();
+
+        for (Comments comment : postsComments) {
+            commentsRepository.deleteById(comment.getId());
+        }
         postRepository.deleteById(postId);
     }
 
