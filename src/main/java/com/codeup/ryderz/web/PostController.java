@@ -37,6 +37,16 @@ public class PostController {
         User author = userRepository.findByEmail(email);
         newPost.setAuthor(author);
 
+        Collection<Category> categories = new ArrayList<>();
+
+        for (Category category : newPost.getCategories()) {
+            System.out.println(category.getName());
+            categories.add(categoriesRepository.findByName(category.getName()));
+        }
+
+        newPost.setCategories(categories);
+
+
         postRepository.save(newPost);
     }
 //get email address of currently logged-in user, get user object with that email address. then compare user

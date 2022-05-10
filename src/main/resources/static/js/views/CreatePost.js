@@ -3,8 +3,8 @@ import createView from "../createView.js";
 
 const POST_URI = 'http://localhost:8081/api/posts'
 
-export default function CreatePost() {
-
+export default function CreatePost(props) {
+    console.log(props)
     return `
 			<!DOCTYPE html>
 			<html lang="html">
@@ -22,6 +22,16 @@ export default function CreatePost() {
                           <label for="createPostContent" class="form-label">Content</label>
                           <textarea class="form-control" id="createPostContent" rows="3"></textarea>
                         </div>
+                        <div class="mb-3">
+                         ${props.categories.map(cat =>
+                             `
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="category-${cat.id}" value="${cat.name}">
+                                    <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
+                                </div>
+                            `)
+                            .join('')}
+                        </div>
                         <div class="mb-3 d-flex justify-content-end">
                             <button class="btn btn-dark create-post-btn mx-4">Create Post</button>
                         </div>
@@ -36,12 +46,25 @@ export function CreatePostEvents(){
 
 function createPostListener() {
     $('.create-post-btn').click(e => {
+
+        let selectedCategories = [];
+
+        $('input[type="checkbox"]:checked').each(function() {
+            console.log(this.value);
+            selectedCategories.push({name: this.value})
+
+        });
+
+        console.log(selectedCategories)
+
         const title = $('#createPostTitle').val();
         const content = $('#createPostContent').val();
+        const categories = selectedCategories;
 
         const postObject = {
             title,
-            content
+            content,
+            categories
         }
         console.log(postObject);
         const requestObject = {
