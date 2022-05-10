@@ -1,11 +1,13 @@
-import {getHeaders} from "../auth.js";
+import {getHeaders, isLoggedIn, userEmail} from "../auth.js";
 import createView from "../createView.js";
 
 const COMMENT_URI = "http://localhost:8081/api/comments"
 
+
+
 export default function NewsFeed(props) {
 	console.log(props)
-	return `
+	let html = `
 			<!DOCTYPE html>
 			<html lang="html">
 				<head>
@@ -17,13 +19,28 @@ export default function NewsFeed(props) {
 					<div class="mx-4"><h3>News Feed</h3></div>
 					<button class="btn btn-dark create-post-btn mx-4">Create Post</button>
 				</header>
-				${props.posts.map(post => 
-				`
+				`;
+
+	html = html + props.posts.map(post => {
+				let postHtml =  `
 				
-				<div class="card m-3">
-				  <div class="card-header">
-					${post.author.username}
-				  </div>
+					<div class="card m-3">
+				 	 <div class="card-header d-flex justify-content-between">
+				 	 	<div>
+							${post.author.username}
+						</div>
+				 	 	<div class="edit-delete">
+				`
+				if (userEmail() === post.author.email) {
+					postHtml = postHtml + `<i class="bi bi-pen"></i>`
+				}
+
+				postHtml = postHtml +
+					`
+				  			
+				 	 	</div>
+				 	 </div>
+				  	
 				  <div class="card-body">
 					<h5 class="card-title">${post.title}</h5>
 					<p class="card-text">${post.content}</p>
@@ -39,7 +56,7 @@ export default function NewsFeed(props) {
 						  <input type="text" id="comment-content-${post.id}" class="form-control" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
 						  <button class="btn btn-outline-secondary comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
 						</div>
-					${post.comments.map(comment => 
+					${post.comments.map(comment =>
 						`
 						
 						  <div class="card card-body">
@@ -49,13 +66,15 @@ export default function NewsFeed(props) {
 						`).join("")}
 					</div>
 				  </div>
-				</div>
-				
-				`
-				).join("")}
+				</div>		
+	
 				</body>
-			</html>`;
+				</html>`
 
+		return postHtml;
+	}).join("");
+
+	return html;
 }
 
 export function NewsFeedEvents() {
