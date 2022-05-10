@@ -11,9 +11,10 @@ export default function Group(props) {
     </head>
     <body>
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col">
-                <h1>${props.group.name}</h1>
+				<h1>Group</h1>
+                <h2>${props.group.name}</h2>
                 <p>About: ${props.group.bio}</p>
                 <p>Created on: ${new Date(props.group.createdDate).toLocaleDateString()} ${new Date(props.group.createdDate).toLocaleTimeString()}</p>
                 <p>Owner: ${props.group.groupOwner.username}</p>
