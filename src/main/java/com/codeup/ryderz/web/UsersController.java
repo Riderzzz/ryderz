@@ -62,12 +62,18 @@ public class UsersController {
 
     @PutMapping("{id}")
     private void updateUser(@PathVariable Long id, @RequestBody User newUser) {
-        System.out.println("Ready to update user." + id + newUser);
+        User originalUser = userRepository.getById(id);
+        originalUser.setEmail(newUser.getEmail());
+        originalUser.setUsername(newUser.getUsername());
+        userRepository.save(originalUser);
+        System.out.println("User updated!");
     }
 
     @PutMapping("{id}/updatePassword")
-    private void updatePassword(@PathVariable Long id, @RequestParam(required = false) String oldPassword, @Valid @Size(min = 3) @RequestParam String newPassword) {
-
+    private void updatePassword(@PathVariable Long id, @RequestParam(required = false) String oldPassword, @Valid @Size(min = 3) @RequestParam String newPassword, OAuth2Authentication auth) {
+        User originalUser = userRepository.findByEmail(auth.getName());
+        originalUser.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(originalUser);
         System.out.println("changing password to " + newPassword);
     }
 
