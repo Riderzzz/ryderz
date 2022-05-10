@@ -20,6 +20,7 @@ import CreateGroup, {CreateGroupEvents} from "./views/CreateGroup.js";
 import CreateEvent, {CreateEventEvents} from "./views/CreateEvent.js";
 import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
 import EditPost, {EditPostEvents} from "./views/EditPost.js";
+import Profile, {showFriendsProfile} from "./views/Profile.js";
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
@@ -152,7 +153,15 @@ export default function router(URI, Id) {
                 categories: "/api/categories/all"
             },
             viewEvent: EditPostEvents
-        }
+        }, '/profile': {
+            returnView: Profile,
+            uri: '/profile',
+            state : {
+                profile: `/api/users/${Id}`
+            },
+            viewEvent: showFriendsProfile
+        },
+
     };
 
     return routes[URI];
