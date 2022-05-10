@@ -12,8 +12,8 @@ export default function User(props) {
 					<h2>Your Info</h2>
 					<small>To edit click on the editable fields</small>
                     <h5 id="show-id">User ID: ${props.user.id}</h5>
-                    <h5>Username: <span contenteditable="true" id="show-username">${props.user.username}</span></h5>
-                    <h5>Email: <span contenteditable="true" id="show-email">${props.user.email}</span></h5>
+                    <h5>Username: <span data-username="${props.user.username}" contenteditable="true" id="show-username">${props.user.username}</span></h5>
+                    <h5>Email: <span data-email="${props.user.email}" contenteditable="true" id="show-email">${props.user.email}</span></h5>
 					<p id="validation"></p>
 					<button class="edit-profile btn btn-dark" data-id="${props.user.id}">Save Edits</button>
 					
@@ -68,6 +68,8 @@ export function UserEvent() {
 
 function editProfileBtnListener() {
 	$(".edit-profile").click(function () {
+		const originalUsername = $("#show-username").data("username");
+		const originalEmail = $("#show-email").data("email");
 		const userId = $(this).data("id");
 		const username = $("#show-username").text();
 		const email = $("#show-email").text();
@@ -75,6 +77,12 @@ function editProfileBtnListener() {
 
 		if (!username || !email) {
 			validation.text("Please fill all fields");
+			validation.css("color", "red");
+			return;
+		}
+
+		if (username === originalUsername || email === originalEmail) {
+			validation.text("No fields were changed!");
 			validation.css("color", "red");
 			return;
 		}
