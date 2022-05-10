@@ -14,6 +14,9 @@ export default function Register(props) {
         <h1>Register</h1>
         <form>
             <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" aria-describedby="username"
+                       placeholder="Enter username">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
                        placeholder="Enter email">
@@ -37,7 +40,7 @@ export function RegisterEvent() {
     $("#register-btn").click(function () {
 
         let newUser = {
-            username: $("#email").val(),
+            username: $("#username").val(),
             email: $("#email").val(),
             password: $("#password").val()
         }
