@@ -15,7 +15,7 @@ import {LogOutEvent} from "./views/logOut.js";
 import NewsFeed, {NewsFeedEvents} from "./views/NewsFeed.js";
 import Discover, {DiscoverEvents} from "./views/Discover.js";
 import Event from "./views/Event.js";
-import Group from "./views/Group.js";
+import Group, {GroupEvents} from "./views/Group.js";
 import CreateGroup, {CreateGroupEvents} from "./views/CreateGroup.js";
 import CreateEvent, {CreateEventEvents} from "./views/CreateEvent.js";
 import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
@@ -24,7 +24,7 @@ import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
  * @param URI
  * @returns {*}
  */
-export default function router(URI) {
+export default function router(URI, Id) {
     const routes = {
         '/': {
             returnView: Home,
@@ -116,7 +116,10 @@ export default function router(URI) {
         '/group': {
             returnView: Group,
             uri: '/group',
-            state: {},
+            state: {
+                group: `/api/groups/${Id}`
+            },
+            viewEvent: GroupEvents
         },
         '/createGroup': {
             returnView: CreateGroup,

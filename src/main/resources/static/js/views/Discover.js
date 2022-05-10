@@ -29,6 +29,7 @@ export default function Discover(props) {
                             `
 			<div class="form-holder mb-3" data-id="${group.id}">
            		<h4 class="group-name-${group.id}">${group.name}</h4>
+			<button class="btn btn-dark group-page-btn" data-id="${group.id}">Go to Event page</button>
            		<h5 class="group-location-${group.id}">${group.location}</h5>
            		<h5>Members: ${group.users.length}</h5>
            		<p class="group-content-${group.id}">${group.bio}</p>
@@ -71,6 +72,11 @@ export default function Discover(props) {
 }
 
 export function DiscoverEvents() {
+	$(".group-page-btn").click(function () {
+		const eventId = $(this).data("id");
+		createView('/group', eventId);
+	})
+
 	$(".createGroupBtn").click(function () {
 		createView('/createGroup')
 	})

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -27,6 +28,11 @@ public class GroupsController {
     @GetMapping
     public List<Groups> getAll() {
         return groupsRepository.findAll();
+    }
+
+    @GetMapping("{groupId}")
+    public Optional<Groups> getGroupById(@PathVariable Long groupId) {
+        return groupsRepository.findById(groupId);
     }
 
     @PostMapping
