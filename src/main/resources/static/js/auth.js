@@ -93,7 +93,6 @@ export function userEmail() {
         const payload = parts[1];
         const decodedPayload = atob(payload);
         const payloadObject = JSON.parse(decodedPayload);
-        console.log(payloadObject.user_name)
         return payloadObject.user_name;
     }
 
