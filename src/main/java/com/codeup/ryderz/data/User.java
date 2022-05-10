@@ -86,4 +86,16 @@ public class User {
     @JsonIgnoreProperties("author")
     private Collection<Comments> comments;
 
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH},
+            targetEntity = User.class)
+    @JoinTable(
+            name="friends",
+            joinColumns = {@JoinColumn(name = "user1_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="user2_id", nullable = false, updatable = false)}
+    )
+    @ToString.Exclude
+    @JsonIgnoreProperties("friends")
+    private Collection<User> friends;
 }

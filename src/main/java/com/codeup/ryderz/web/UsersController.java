@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import javax.websocket.server.PathParam;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,10 +55,11 @@ public class UsersController {
     @PostMapping
     private void createUser(@RequestBody User newUser) {
         User user = newUser;
+
         user.setCreatedAt(LocalDate.now());
         user.setRole(User.Role.USER);
         user.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        userRepository.save(user);
+
         System.out.println("Ready to add user." + newUser);
     }
 
@@ -81,4 +84,33 @@ public class UsersController {
     private void deleteUser(@PathVariable Long userId) {
         System.out.println("ready to delete User." + userId);
     }
+
+    @PostMapping("{user1Id}/friends/{user2Id}")
+    private void addFriend(@PathVariable User user1Id, @PathVariable Long user2Id){
+            User user1 = user1Id;
+            User user2 = userRepository.getById(user2Id);
+
+            user2.setFriends(new ArrayList<>());
+            user1.setFriends(new ArrayList<>());
+
+            user1.getFriends().add(user2);
+            user2.getFriends().add(user1);
+
+
+            userRepository.save(user1);
+            userRepository.save(user2);
+    }
+
+    @DeleteMapping("{user1Id}/friends/{user2Id}")
+    private void deleteFriend(@PathVariable User user1Id, @PathVariable Long user2Id){
+        User user1 = user1Id;
+        User user2 = userRepository.getById(user2Id);
+
+        user1.getFriends().remove(user2);
+        user2.getFriends().remove(user1);
+
+        userRepository.save(user1);
+        userRepository.save(user2);
+    }
+
 }
