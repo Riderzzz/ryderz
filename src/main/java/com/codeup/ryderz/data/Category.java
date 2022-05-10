@@ -29,4 +29,12 @@ public class Category {
 
     @JsonIgnoreProperties("categories")
     private Collection<Post> posts;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH},
+            targetEntity = Events.class)
+
+    @JsonIgnoreProperties("categories")
+    private Collection<Events> events;
 }

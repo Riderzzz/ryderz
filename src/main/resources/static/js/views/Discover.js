@@ -11,14 +11,15 @@ export default function Discover(props) {
     </head>
     <body>
     <div class="container">
-		<div class="row">
-			<div class="col-8">
+        <div class="row">
+            <div class="col-8">
                 <h1>Discover</h1>
-			</div>
-			<div class="col-4">
-				<button class="btn btn-dark mt-3 mx-2 createGroupBtn">Create Group</button><button class="btn btn-dark mt-3 mx-2 createEventBtn">Create Event</button>
-			</div>
-		</div>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-dark mt-3 mx-2 createGroupBtn">Create Group</button>
+                <button class="btn btn-dark mt-3 mx-2 createEventBtn">Create Event</button>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <h3>Groups</h3>
@@ -29,7 +30,7 @@ export default function Discover(props) {
 			<div class="form-holder mb-3" data-id="${group.id}">
            		<h4 class="group-name-${group.id}">${group.name}</h4>
            		<h5 class="group-location-${group.id}">${group.location}</h5>
-           		<h5>Members: </h5>
+           		<h5>Members: ${group.users.length}</h5>
            		<p class="group-content-${group.id}">${group.bio}</p>
            	
            		<p class="group-createdDate">${new Date(group.createdDate).toLocaleTimeString()} ${new Date(group.createdDate).toLocaleDateString()}</p>
@@ -49,7 +50,8 @@ export default function Discover(props) {
 			<div class="form-holder mb-3" data-id="${event.id}">
            		<h4 class="event-name-${event.id}">${event.titleOfEvent}</h4>
            		<h5 class="event-location-${event.id}">${event.eventLocation}</h5>
-           		<h5>Members: </h5>
+           		<h5>Members: ${event.usersId.length}</h5>
+           		<p>Categories: ${event.categories.map(category => `${category.name}`).join(", ")}</p>
            		<p class="event-description-${event.id}">${event.descriptionOfEvent}</p>
            		<p>Event Date: ${new Date(event.eventDate).toLocaleDateString()} ${new Date(event.eventDate).toLocaleTimeString()}</p>
            		<p class="event-dateTime">Created: ${new Date(event.createdDate).toLocaleDateString()}</p>

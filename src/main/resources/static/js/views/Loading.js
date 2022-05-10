@@ -1,3 +1,17 @@
 export default function Loading(props) {
-    return `<h1>Loading...</h1>`;
+    // language=HTML
+    return `
+        <div class="center gif">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+	`;
 }

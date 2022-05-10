@@ -4,6 +4,8 @@ import com.codeup.ryderz.data.*;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +16,12 @@ public class EventsController {
 
     private EventsRepository eventsRepository;
     private final UserRepository userRepository;
+    private final CategoriesRepository categoryRepository;
 
-    public EventsController(EventsRepository eventsRepository, UserRepository userRepository) {
+    public EventsController(EventsRepository eventsRepository, UserRepository userRepository, CategoriesRepository categoryRepository) {
         this.eventsRepository = eventsRepository;
         this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/{id}")
@@ -35,6 +39,15 @@ public class EventsController {
 
         newEvent.setStateOfEvent(Events.StateOfEvent.NOTSTARTED);
 
+        Collection<Category> categories = new ArrayList<>();
+
+        for (Category category : newEvent.getCategories()) {
+            System.out.println(category.getName());
+            categories.add(categoryRepository.findByName(category.getName()));
+        }
+
+        newEvent.setCategories(categories);
+
         eventsRepository.save(newEvent);
         System.out.println("Event Created!");
     }
@@ -45,20 +58,20 @@ public class EventsController {
     }
 
     @PutMapping("{id}")
-    private void updateEvent(@PathVariable Long id, @RequestBody Events updateEvent) {
-        Events events = updateEvent;
-        events.setCreatedDate(updateEvent.getCreatedDate());
-        events.setStartingLatitude(updateEvent.getStartingLatitude());
-        events.setStartingLongitude(updateEvent.getStartingLongitude());
-        events.setEndingLatitude(updateEvent.getEndingLatitude());
-        events.setEndingLongitude(updateEvent.getEndingLongitude());
-        events.setEventDate(updateEvent.getEventDate());
-        events.setTitleOfEvent(updateEvent.getTitleOfEvent());
-        events.setDescriptionOfEvent(updateEvent.getDescriptionOfEvent());
-        events.setStateOfEvent(updateEvent.getStateOfEvent());
-        events.setEventLocation(updateEvent.getEventLocation());
-        eventsRepository.save(events);
-        System.out.println("Ready to update event." + id + updateEvent);
+    private void updateEvent(@PathVariable Long id, @RequestBody Events updatedEvent) {
+        Events originalEvent = eventsRepository.getById(id);
+        originalEvent.setStartingLongitude(updatedEvent.getStartingLongitude());
+        originalEvent.setStartingLatitude(updatedEvent.getStartingLatitude());
+        originalEvent.setEndingLongitude(updatedEvent.getEndingLongitude());
+        originalEvent.setEndingLatitude(updatedEvent.getEndingLatitude());
+        originalEvent.setEventDate(updatedEvent.getEventDate());
+        originalEvent.setTitleOfEvent(updatedEvent.getTitleOfEvent());
+        originalEvent.setDescriptionOfEvent(updatedEvent.getDescriptionOfEvent());
+        originalEvent.setStateOfEvent(updatedEvent.getStateOfEvent());
+        originalEvent.setEventLocation(updatedEvent.getEventLocation());
+
+        originalEvent.setCategories(updatedEvent.getCategories());
+        System.out.println("Ready to update event.");
     }
     @PutMapping("{addEventId}/adduser")
     public void addUserToEvent(@PathVariable Long addEventId, @RequestParam Long userId) {

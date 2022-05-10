@@ -127,7 +127,9 @@ export default function router(URI) {
         '/createEvent': {
             returnView: CreateEvent,
             uri: '/createGroup',
-            state: {},
+            state: {
+                categories: "/api/categories/all"
+            },
             viewEvent: CreateEventEvents
         },
         '/createPost': {
