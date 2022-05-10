@@ -14,7 +14,7 @@ import logOut from "./views/logOut.js";
 import {LogOutEvent} from "./views/logOut.js";
 import NewsFeed, {NewsFeedEvents} from "./views/NewsFeed.js";
 import Discover, {DiscoverEvents} from "./views/Discover.js";
-import Event from "./views/Event.js";
+import Event, {EventEvents} from "./views/Event.js";
 import Group, {GroupEvents} from "./views/Group.js";
 import CreateGroup, {CreateGroupEvents} from "./views/CreateGroup.js";
 import CreateEvent, {CreateEventEvents} from "./views/CreateEvent.js";
@@ -111,7 +111,10 @@ export default function router(URI, Id) {
         '/event': {
             returnView: Event,
             uri: '/event',
-            state: {},
+            state: {
+                event: `/api/events/${Id}`
+            },
+            viewEvent: EventEvents
         },
         '/group': {
             returnView: Group,
