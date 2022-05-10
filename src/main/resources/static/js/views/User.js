@@ -6,17 +6,18 @@ export default function User(props) {
 	//language=HTML
 	return `
         <div class="container">
-			<h1 class="text-center mt-4">Hello</h1>
+			<h1 class="text-center mt-4">Hello ${props.user.username}</h1>
             <div class="row mt-4">
                 <div class="col-md-7">
 					<h2>Your Info</h2>
-                    <h5 id="show-id">${props.user.id}</h5>
-                    <h5 contenteditable="true" id="show-username">${props.user.username}</h5>
-                    <h5 contenteditable="true" id="show-email">${props.user.email}</h5>
+					<small>To edit click on the editable fields</small>
+                    <h5 id="show-id">User ID: ${props.user.id}</h5>
+                    <h5>Username: <span contenteditable="true" id="show-username">${props.user.username}</span></h5>
+                    <h5>Email: <span contenteditable="true" id="show-email">${props.user.email}</span></h5>
 					<p id="validation"></p>
 					<button class="edit-profile btn btn-dark" data-id="${props.user.id}">Save Edits</button>
 					
-					<h2>Your Posts (${props.user.posts.length})</h2>
+					<h2 class="mt-4">Your Posts (${props.user.posts.length})</h2>
                     <div>${props.user.posts.map(post => {
                         `
                  <div>  
