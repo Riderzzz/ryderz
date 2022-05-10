@@ -33,9 +33,9 @@ export default function NewsFeed(props) {
 				
 					<div class="card m-3">
 				 	 <div class="card-header d-flex justify-content-between">
-				 	 	<div>
+				 	 	<a class="view-profile-page" data-id="${post.author.id}">
 							${post.author.username}
-						</div>
+						</a>
 				 	 	<div class="edit-delete">
 				`
 				if (userEmail() === post.author.email) {
@@ -91,6 +91,7 @@ export function NewsFeedEvents() {
 	createPostBtn();
 	editPostBtn();
 	deletePostBtn();
+	showProfilePage();
 }
 
 function commentOnPost() {
@@ -158,5 +159,13 @@ function deletePostBtn() {
 		}).finally(() => {
 			createView("/newsfeed")
 		})
+	});
+}
+
+function showProfilePage(){
+	$(".view-profile-page").click(function (){
+		const profileId = $(this).data("id");
+
+		createView("/profile",profileId);
 	});
 }
