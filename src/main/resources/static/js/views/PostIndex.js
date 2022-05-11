@@ -84,7 +84,7 @@ function createAddPostListener() {
             body: JSON.stringify(newPost)
         }
 
-        fetch("http://localhost:8081/api/posts", request)
+        fetch(BASE_URI, request)
             .then(res => {
                 console.log(res.status);
                 createView("/posts")
@@ -117,7 +117,7 @@ function createDeletePostListeners(){
             headers: getHeaders(),
         }
 
-        fetch(`http://localhost:8081/api/posts/${id}`, request)
+        fetch(`${BASE_URI}/${id}`, request)
             .then(res => {
                 console.log(res.status);
                 createView("/posts")
