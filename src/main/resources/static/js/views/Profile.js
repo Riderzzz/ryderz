@@ -10,10 +10,13 @@ console.log(props)
         <title>${props.profile.username}</title>
     </head>
     <body>
+    <div class="picture-header">
+        <img src="${props.profile.profilePicture}">
+    </div>
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>${props.profile.username}</h1>
+                
             </div>
         </div>
     </div>
