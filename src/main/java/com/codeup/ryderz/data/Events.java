@@ -78,4 +78,12 @@ public class Events {
     @OneToMany(mappedBy = "event")
     @JsonIgnoreProperties({"event", "post", "comments", "eventCreator"})
     private Collection<Comments> comments;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH},
+            targetEntity = Category.class)
+
+    @JsonIgnoreProperties("posts")
+    private Collection<Category> categories;
 }

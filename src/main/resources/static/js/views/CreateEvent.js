@@ -1,7 +1,7 @@
 import {getHeaders} from "../auth.js";
 import createView from "../createView.js";
 
-export default function CreateEvent() {
+export default function CreateEvent(props) {
 	//language=HTML
 	return `<!DOCTYPE html>
     <html lang="html">
@@ -33,6 +33,17 @@ export default function CreateEvent() {
 				<label for="eventDate">Event Date
                 <input type="datetime-local" id="eventDate" name="eventDate">
                 </label>
+
+                <div class="mb-3">
+                    ${props.categories.map(cat =>
+                            `
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="category-${cat.id}" value="${cat.name}">
+                                    <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
+                                </div>
+                            `)
+                            .join('')}
+                </div>
 				
 				<label for="states">Choose a state</label>
 
@@ -134,6 +145,18 @@ function createEventSubmitListener() {
 			return;
 		}
 
+		let selectedCategories = [];
+
+		$('input[type="checkbox"]:checked').each(function() {
+			console.log(this.value);
+			selectedCategories.push({name: this.value})
+
+		});
+
+		const categories = selectedCategories;
+
+		console.log(selectedCategories)
+
 		const newEvent = {
 			startingLongitude,
 			startingLatitude,
@@ -143,7 +166,8 @@ function createEventSubmitListener() {
 			titleOfEvent,
 			descriptionOfEvent,
 			eventLocation,
-			stateWhereEventTakesPlace
+			stateWhereEventTakesPlace,
+			categories
 		}
 
 

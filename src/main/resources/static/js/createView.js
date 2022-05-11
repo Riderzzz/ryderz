@@ -7,9 +7,9 @@ import {getHeaders} from "./auth.js";
  * Finds the correct route for a given view, builds a loading view, fetches data and builds the final rendered view.
  * @param URI
  */
-export default function createView(URI) {
+export default function createView(URI, Id) {
 
-    let route = router(URI);
+    let route = router(URI, Id);
 
     // Store the title because the loading screen render overwrites it.
     let currentTitle = document.title;

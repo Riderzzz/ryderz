@@ -1,13 +1,36 @@
+import createView from "../createView.js";
+
 export default function Group(props) {
+	console.log(props)
+	// language=HTML
 	return `<!DOCTYPE html>
-<html lang="html">
+    <html lang="html">
     <head>
         <meta charset="UTF-8"/>
-        <title>${props.title}</title>
+        <title>${props.group.name}</title>
     </head>
     <body>
-    <h1>Group</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col">
+				<h1>Group</h1>
+                <h2>${props.group.name}</h2>
+                <p>About: ${props.group.bio}</p>
+                <p>Created on: ${new Date(props.group.createdDate).toLocaleDateString()} ${new Date(props.group.createdDate).toLocaleTimeString()}</p>
+                <p>Owner: ${props.group.groupOwner.username}</p>
+                <p>Location: ${props.group.location}</p>
+                <p>Members: ${props.group.users.length}</p>
+				<button class="backToDiscover btn btn-dark">Back to discover</button>
+            </div>
+        </div>
+    </div>
     </body>
-</html>`;
+    </html>`;
 
+}
+
+export function GroupEvents() {
+	$(".backToDiscover").click(function () {
+		createView('/discover')
+	})
 }

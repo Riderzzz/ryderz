@@ -14,17 +14,18 @@ import logOut from "./views/logOut.js";
 import {LogOutEvent} from "./views/logOut.js";
 import NewsFeed, {NewsFeedEvents} from "./views/NewsFeed.js";
 import Discover, {DiscoverEvents} from "./views/Discover.js";
-import Event from "./views/Event.js";
-import Group from "./views/Group.js";
+import Event, {EventEvents} from "./views/Event.js";
+import Group, {GroupEvents} from "./views/Group.js";
 import CreateGroup, {CreateGroupEvents} from "./views/CreateGroup.js";
 import CreateEvent, {CreateEventEvents} from "./views/CreateEvent.js";
 import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
+import EditPost, {EditPostEvents} from "./views/EditPost.js";
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
  * @returns {*}
  */
-export default function router(URI) {
+export default function router(URI, Id) {
     const routes = {
         '/': {
             returnView: Home,
@@ -111,12 +112,18 @@ export default function router(URI) {
         '/event': {
             returnView: Event,
             uri: '/event',
-            state: {},
+            state: {
+                event: `/api/events/${Id}`
+            },
+            viewEvent: EventEvents
         },
         '/group': {
             returnView: Group,
             uri: '/group',
-            state: {},
+            state: {
+                group: `/api/groups/${Id}`
+            },
+            viewEvent: GroupEvents
         },
         '/createGroup': {
             returnView: CreateGroup,
@@ -127,14 +134,27 @@ export default function router(URI) {
         '/createEvent': {
             returnView: CreateEvent,
             uri: '/createGroup',
-            state: {},
+            state: {
+                categories: "/api/categories/all"
+            },
             viewEvent: CreateEventEvents
         },
         '/createPost': {
             returnView: CreatePost,
             uri: '/createPost',
-            state: {},
+            state: {
+                categories: "/api/categories/all"
+            },
             viewEvent: CreatePostEvents
+        },
+        '/editPost': {
+            returnView: EditPost,
+            uri: '/editPost',
+            state : {
+                posts: '/api/posts',
+                categories: "/api/categories/all"
+            },
+            viewEvent: EditPostEvents
         }
     };
 

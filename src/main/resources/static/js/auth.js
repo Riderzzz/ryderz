@@ -84,3 +84,17 @@ export function isLoggedIn() {
         return false
     }
 }
+
+export function userEmail() {
+
+    if (isLoggedIn()) {
+        const accessToken = window.localStorage.getItem("access_token");
+        const parts = accessToken.split('.');
+        const payload = parts[1];
+        const decodedPayload = atob(payload);
+        const payloadObject = JSON.parse(decodedPayload);
+        return payloadObject.user_name;
+    }
+
+    return false;
+}
