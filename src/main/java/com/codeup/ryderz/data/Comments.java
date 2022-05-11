@@ -29,7 +29,7 @@ public class Comments {
     private Date createdAt;
 
     @ManyToOne
-    @JsonIgnoreProperties({"comments", "author", "title", "content", "categories"})
+    @JsonIgnoreProperties({"comments", "author", "title", "content", "categories", "eventCreator", "usersId"})
     private Events event;
 
     @ManyToOne
