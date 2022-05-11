@@ -81,7 +81,7 @@ function editProfileBtnListener() {
 			return;
 		}
 
-		if (username === originalUsername || email === originalEmail) {
+		if (username === originalUsername && email === originalEmail) {
 			validation.text("No fields were changed!");
 			validation.css("color", "red");
 			return;
