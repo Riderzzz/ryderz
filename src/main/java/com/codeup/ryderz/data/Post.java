@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 
 @Getter
@@ -23,6 +24,15 @@ public class Post {
     private String title;
     @Column(nullable = false, length = 5000)
     private String content;
+    @Column
+    private Date createDate;
+
+    @PrePersist
+    void setCreateDate() {
+        this.createDate  = new Date();
+    }
+
+
     @ManyToOne
     @JsonIgnoreProperties({"posts","password", "groupsOwned", "groupsJoined", "events", "comments"})
     private User author;
