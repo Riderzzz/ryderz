@@ -40,6 +40,9 @@ public class User {
     @JsonIgnore
     private Role role;
 
+//    @Column(name = "profile_picture")
+//    private String profilePicture;
+
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties({"author", "comments"})
     private Collection<Post> posts;

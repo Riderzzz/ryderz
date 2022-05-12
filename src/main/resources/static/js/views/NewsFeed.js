@@ -10,27 +10,28 @@ export let editPostContent;
 export let editPostCategories;
 
 export default function NewsFeed(props) {
-	console.log(props)
-	//language=HTML
-	let html =
-		`
-			<div class="container-fluid">
-				<div class="row">
-					<div class="sidebar-container col-2 d-none d-lg-block">
-						${newsfeedSidebarHtml(props)}
-					</div>
-					<div class="posts-container col-12 col-lg-10">
-						${newsfeedPostsHtml(props)}
-					</div>
-				</div>
-			</div>
-		
-		`
+    console.log(props)
+    //language=HTML
+    let html =
+        `
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sidebar-container col-2 d-none d-lg-block">
+                        ${newsfeedSidebarHtml(props)}
+                    </div>
+                    <div class="posts-container col-12 col-lg-10">
+                        ${newsfeedPostsHtml(props)}
+                    </div>
+                </div>
+            </div>
 
-	return html;
+        `
+
+    return html;
 }
 
 export function NewsFeedEvents() {
+
 	commentOnPost();
 	createPostBtn();
 	editPostBtn();
@@ -38,82 +39,83 @@ export function NewsFeedEvents() {
 	sideBarGroupBtn();
 	sideBarEventBtn()
 	sideBarFriendBtn();
+
 }
 
 function commentOnPost() {
-	$(".comment-btn").click(function (){
-		let postId = $(this).data("id")
-		const content = $('#comment-content-' + postId).val()
+    $(".comment-btn").click(function () {
+        let postId = $(this).data("id")
+        const content = $('#comment-content' + postId).val()
 
-		//author field gets set in backend
-		const commentObject = {
-			content,
-			post: {
-				id: postId
-			}
-		}
+        //author field gets set in backend
+        const commentObject = {
+            content,
+            post: {
+                id: postId
+            }
+        }
 
-		console.log(commentObject)
+        console.log(commentObject)
 
-		const requestObject = {
-			method: "POST",
-			headers: getHeaders(),
-			body: JSON.stringify(commentObject)
-		}
+        const requestObject = {
+            method: "POST",
+            headers: getHeaders(),
+            body: JSON.stringify(commentObject)
+        }
 
-		fetch(COMMENT_URI, requestObject).then(function (){
-			console.log("Comment created");
-		}).catch(function (){
-			console.log("error")
-		}).finally(function (){
-			createView("/newsfeed")
-		});
-	});
+        fetch(COMMENT_URI, requestObject).then(function () {
+            console.log("Comment created");
+        }).catch(function () {
+            console.log("error")
+        }).finally(function () {
+            createView("/newsfeed")
+        });
+    });
 }
 
 function createPostBtn() {
-	$(".create-post-btn").click(function (){
-		createView('/createPost')
-	})
+    $(".create-post-btn").click(function () {
+        createView('/createPost')
+    })
 }
 
 function editPostBtn() {
-	$(".post-edit-btn").click(function (){
-		editPostId = $(this).data("id");
-		editPostTitle = $('#post-title-' + editPostId).text();
-		editPostContent = $('#post-content-' + editPostId).text();
-		editPostCategories = $('#post-categories-' + editPostId).text();
-		editPostCategories = editPostCategories.split(" ");
+    $(".post-edit-btn").click(function () {
+        editPostId = $(this).data("id");
+        editPostTitle = $('#post-title-' + editPostId).text();
+        editPostContent = $('#post-content-' + editPostId).text();
+        editPostCategories = $('#post-categories-' + editPostId).text();
+        editPostCategories = editPostCategories.split(" ");
 
-		createView('/editPost')
-	});
+        createView('/editPost')
+    });
 }
 
 function deletePostBtn() {
-	$(".post-delete-btn").click(function (){
-		const postId = $(this).data("id")
+    $(".post-delete-btn").click(function () {
+        const postId = $(this).data("id")
 
-		const requestObject = {
-			method: "DELETE",
-			headers: getHeaders()
-		}
+        const requestObject = {
+            method: "DELETE",
+            headers: getHeaders()
+        }
 
-		fetch(`${POST_URI}/${postId}`, requestObject).then(r => {
-			console.log("Post deleted")
-		}).catch(r => {
-			console.log("error")
-		}).finally(() => {
-			createView("/newsfeed")
-		})
-	});
+        fetch(`${POST_URI}/${postId}`, requestObject).then(r => {
+            console.log("Post deleted")
+        }).catch(r => {
+            console.log("error")
+        }).finally(() => {
+            createView("/newsfeed")
+        })
+    });
 }
 
 function sideBarGroupBtn() {
-	$('.group').click(function (){
-		const groupId = $(this).data("id")
-		console.log("this events id is: " + groupId)
-		createView("/group", groupId)
-	})
+    $('.group').click(function () {
+        const groupId = $(this).data("id")
+        console.log("this events id is: " + groupId)
+        createView("/group", groupId)
+    })
 }
 
 function sideBarEventBtn() {
@@ -181,34 +183,34 @@ function newsfeedSidebarHtml(props) {
 	return html;
 }
 
-function newsfeedPostsHtml(props) {
-	//language=HTML
-	let html = `
 
-				<header class="d-flex justify-content-between m-3">
-					<div class="mx-4"><h3>News Feed</h3></div>
-					<button class="btn btn-dark create-post-btn mx-4">Create Post</button>
-				</header>
-			
-				<div class="post">
-					${props.posts.reverse().map(post => {
-						//card-header begin
-						let html = `<div class="card m-3">
+
+function newsfeedPostsHtml(props) {
+    //language=HTML
+    let html = `
+        <header class="d-flex justify-content-between m-3">
+            <div class="mx-4"><h3>News Feed</h3></div>
+            <button class="btn btn-dark create-post-btn mx-4">Create Post</button>
+        </header>
+
+        <div class="post">
+            ${props.posts.reverse().map(post => {
+                //card-header begin
+                let html = `<div class="card m-3">
 										<div class="card-header d-flex justify-content-between">
 											<div>
 											${post.author.username}
 											</div>
 										<div class="edit-delete">	
 									`
+                if (userEmail() === post.author.email) {
+                    html += `<i data-id="${post.id}" class="bi bi-pen post-edit-btn mx-1"></i><i data-id="${post.id}" class="bi bi-x-lg post-delete-btn ml-1"></i>`
+                }
+                html += `</div></div>`
 
-						if (userEmail() === post.author.email) {
-							html += `<i data-id="${post.id}" class="bi bi-pen post-edit-btn mx-1"></i><i data-id="${post.id}" class="bi bi-x-lg post-delete-btn ml-1"></i>`
-						}
-						html += `</div></div>`
-						
-						//card-header-end
-						//card-body-start
-						html += `<div class="card-body">
+                //card-header-end
+                //card-body-start
+                html += `<div class="card-body">
 									<h5 class="card-title" id="post-title-${post.id}">${post.title}</h5>
 									<p class="card-text" id="post-content-${post.id}">${post.content}</p>
 									<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>
@@ -224,7 +226,7 @@ function newsfeedPostsHtml(props) {
 											<button class="btn btn-outline-secondary comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
 										</div>
 										${post.comments.map(comment =>
-										`
+                        `
 			
 										<div class="card card-body">
 										  author: ${comment.author.username}  content: ${comment.content}
@@ -232,9 +234,9 @@ function newsfeedPostsHtml(props) {
 			
 									`).join("")}
 									</div>
-
 									
 								</div>
+
 								`	//card-body end								
 						
 						html += `</div>`//ending div of card
