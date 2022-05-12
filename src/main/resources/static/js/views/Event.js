@@ -2,7 +2,8 @@ import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
 
 export default function Event(props) {
-	const datTimeConversion = props.event.eventDate;
+	const dateTimeConversion = props.event.eventDate.substring(16,-1);
+	console.log(dateTimeConversion);
 	console.log(props)
 	// language=HTML
 	let html =  `<!DOCTYPE html>
@@ -22,7 +23,7 @@ export default function Event(props) {
 				
                 <h5>Members: ${props.event.usersId.length}</h5>
 				
-                <p>Categories: ${props.event.categories.map(category => `${category.name}`).join(", ")}</p>
+                <p>Categories: <span id="OGCategories">${props.event.categories.map(category => `${category.name}`).join(", ")}</span></p>
 				
                 <p class="event-description-${props.event.id}">About: <span id="OGDescription">${props.event.descriptionOfEvent}</span></p>
 				
@@ -75,7 +76,7 @@ export default function Event(props) {
 				
 				<label for="editedEventDate">Event Date
 				
-                <input type="datetime-local" id="editedEventDate" name="eventDate" value="${props.event.eventDate}">
+                <input type="datetime-local" id="editedEventDate" name="eventDate" value="${dateTimeConversion}">
                 </label>
 
                 <div class="mb-3 formCategories">
@@ -147,16 +148,16 @@ export default function Event(props) {
                 </select>
 				
 				<label for="startingLong">Starting Longitude</label>
-				<input type="number" id="startingLong" name="startingLong">
+				<input value="${props.event.startingLongitude}" type="number" id="startingLong" name="startingLong">
 				
 				<label for="startingLatitude">Starting Latitude</label>
-				<input type="number" id="startingLatitude" name="startingLatitude">
+				<input value="${props.event.startingLatitude}" type="number" id="startingLatitude" name="startingLatitude">
 				
                 <label for="endingLong">Ending Longitude</label>
-                <input type="number" id="endingLong" name="endingLong">
+                <input value="${props.event.endingLongitude}" type="number" id="endingLong" name="endingLong">
 				
                 <label for="endingLatitude">Ending Latitude</label>
-                <input type="number" id="endingLatitude" name="endingLatitude">
+                <input value="${props.event.endingLatitude}" type="number" id="endingLatitude" name="endingLatitude">
 
                 <p id="character-warning-on-submit"></p>
                 <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
@@ -184,6 +185,8 @@ export function EventEvents() {
 	const OGStartingLat = $("#OGStartLat").text();
 	const OGEndingLong = $("#OGEndLong").text();
 	const OGEndingLat = $("#OGEndLat").text();
+	const OGCategories = $("#OGCategories").text().split(", ");
+	console.log(OGCategories)
 
 
 	$(".backToDiscover").click(function () {
@@ -210,17 +213,19 @@ export function EventEvents() {
 			.then(data => {
 				console.log(data)
 		//feed categories to form
-				$(".formCategories").html(`
+				let html = `
 					${data.map(cat =>
 					`
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="category-${cat.id}" value="${cat.name}">
+                                    <input class="form-check-input" ${OGCategories.includes(cat.name) ? "checked": ""} type="checkbox" id="category-${cat.id}" value="${cat.name}">
                                     <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
                                 </div>
                             `)
 					.join('')}
 		
-		`)
+		`
+
+				$(".formCategories").html(html)
 			})
 			.catch(error => {
 				console.log(error);
@@ -233,7 +238,7 @@ export function EventEvents() {
 	})
 
 	$("#submitEditedEventBtn").click(function () {
-		const eventId = $(this.data("id"));
+		const eventId = $(this).data("id");
 		console.log(OGTitle);
 		console.log(OGDescription);
 		console.log(OGLocation);
