@@ -103,5 +103,23 @@ public class PostController {
         return emptyNames.toArray(result);
     }
 
+    @GetMapping("friendsPost")
+    public Collection<Post> getNewsfeedPosts(OAuth2Authentication auth) {
+        User mainUser = userRepository.findByEmail(auth.getName());
+
+        Collection<User> userFriends = mainUser.getFriends();
+        Collection<Post> usersFriendsPost = new ArrayList<>();
+
+        usersFriendsPost.addAll(postRepository.findPostByAuthor_Username(mainUser.getUsername()));
+
+        for (User friend : userFriends) {
+            usersFriendsPost.addAll(postRepository.findPostByAuthor_Username(friend.getUsername()));
+        }
+
+
+        return usersFriendsPost;
+    }
+
+
 
 }
