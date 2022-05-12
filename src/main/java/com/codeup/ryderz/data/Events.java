@@ -72,7 +72,7 @@ public class Events {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
-    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId", "eventCreator"})
+    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId", "eventCreator", "password"})
     private List<User> usersId;
 
     @OneToMany(mappedBy = "event")

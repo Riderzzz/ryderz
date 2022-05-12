@@ -44,12 +44,12 @@ public class User {
 //    private String profilePicture;
 
     @OneToMany(mappedBy = "author")
-    @JsonIgnoreProperties("author")
+    @JsonIgnoreProperties({"author", "comments"})
     private Collection<Post> posts;
 
 
     @OneToMany(mappedBy = "groupOwner")
-    @JsonIgnoreProperties("groupOwner")
+    @JsonIgnoreProperties({"groupOwner", "users"})
     private Collection<Groups> groupsOwned;
 
 
@@ -64,11 +64,11 @@ public class User {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
-    @JsonIgnoreProperties("users")
+    @JsonIgnoreProperties({"users", "groupOwner"})
     private Collection<Groups> groupsJoined;
 
     @OneToMany(mappedBy = "eventCreator")
-    @JsonIgnoreProperties("eventCreator")
+    @JsonIgnoreProperties({"eventCreator", "comments"})
     private Collection<Events> events;
 
     @ManyToMany(
@@ -82,7 +82,7 @@ public class User {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
-    @JsonIgnoreProperties({"usersId"})
+    @JsonIgnoreProperties({"usersId", "eventCreator", "comments"})
    private Collection<Events> eventsJoined;
 
     @OneToMany(mappedBy = "author")
@@ -99,6 +99,6 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name="user2_id", nullable = false, updatable = false)}
     )
     @ToString.Exclude
-    @JsonIgnoreProperties("friends")
+    @JsonIgnoreProperties({"friends", "posts", "groupsOwned", "groupsJoined", "events", "eventsJoined", "comments", "password"})
     private Collection<User> friends;
 }
