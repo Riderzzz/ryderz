@@ -36,6 +36,7 @@ export function NewsFeedEvents() {
 	editPostBtn();
 	deletePostBtn();
 	sideBarGroupBtn();
+	sideBarEventBtn()
 	sideBarFriendBtn();
 }
 
@@ -115,11 +116,19 @@ function sideBarGroupBtn() {
 	})
 }
 
+function sideBarEventBtn() {
+	$('.event').click(function (){
+		const eventId = $(this).data("id")
+		console.log("this events id is: " + eventId)
+		createView("/event", eventId)
+	})
+}
+
 function sideBarFriendBtn() {
 	$('.friend').click(function (){
 		const friendId = $(this).data("id")
 		console.log("this friends id is: " + friendId)
-		// createView("/group", friendId) <--- once view for a users profile is made insert that where /group is
+		// createView("/friend", friendId) //<--- once view for a users profile is made insert that where /group is
 	})
 }
 
@@ -132,7 +141,7 @@ function newsfeedSidebarHtml(props) {
 				
 				<p class="mx-auto my-3">
 					<button class="sidebar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
-						Groups<i class="bi bi-caret-down mx-1"></i>
+						<i class="bi bi-people ms-1 me-2"></i>Groups
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseGroups">
@@ -143,18 +152,18 @@ function newsfeedSidebarHtml(props) {
 				
 				<p class="mx-auto my-3">
 					<button class="sidebar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
-						Events<i class="bi bi-caret-down mx-1"></i>
+						<i class="bi bi-calendar-event ms-1 me-2"></i>Events
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseEvents">
 					<div class="">
-						${props.user.eventsJoined.map(event => `<div class="p-1">- ${event.titleOfEvent}</div>`).join("")}
+						${props.user.eventsJoined.map(event => `<div class="p-1" data-id="${event.id}"><a href="#">-${event.titleOfEvent}</a></div>`).join("")}
 					</div>
 				</div>
 				
 				<p class="mx-auto my-3">
 					<button class="sidebar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
-						Friends<i class="bi bi-caret-down mx-1"></i>
+						<i class="bi bi-person ms-1 me-2"></i>Friends
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseFriends">
@@ -226,70 +235,13 @@ function newsfeedPostsHtml(props) {
 
 									
 								</div>
-								`									
+								`	//card-body end								
 						
 						html += `</div>`//ending div of card
 						return html
 					}).join("")}
 				</div>
 				
-				
 				`;
-
-	// html = html + props.posts.map(post => {
-	// 	let postHtml =  `
-	//
-	// 				<div class="card m-3">
-	// 			 	 <div class="card-header d-flex justify-content-between">
-	// 			 	 	<div>
-	// 						${post.author.username}
-	// 					</div>
-	// 			 	 	<div class="edit-delete">
-	// 			`
-	// 	if (userEmail() === post.author.email) {
-	// 		postHtml = postHtml + `<i data-id="${post.id}" class="bi bi-pen post-edit-btn mx-1"></i><i data-id="${post.id}" class="bi bi-x-lg post-delete-btn ml-1"></i>`
-	// 	}
-	//
-	// 	postHtml = postHtml +
-	// 		`
-	//
-	// 			 	 	</div>
-	// 			 	 </div>
-	//
-	// 			  <div class="card-body">
-	// 				<h5 class="card-title" id="post-title-${post.id}">${post.title}</h5>
-	// 				<p class="card-text" id="post-content-${post.id}">${post.content}</p>
-	// 				<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>
-	// 				<p>
-	// 					<button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#post-${post.id}-collapseComments" aria-expanded="false" aria-controls="post-${post.id}-collapseComments">
-	// 						Comments
-	// 					</button>
-	// 				</p>
-	//
-	//
-	// 				<div class="collapse" id="post-${post.id}-collapseComments">
-	// 					<div class="input-group mb-3">
-	// 					  <input type="text" id="comment-content-${post.id}" class="form-control" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
-	// 					  <button class="btn btn-outline-secondary comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
-	// 					</div>
-	// 				${post.comments.map(comment =>
-	// 			`
-	//
-	// 					  <div class="card card-body">
-	// 					  author: ${comment.author.username}  content: ${comment.content}
-	// 					  </div>
-	//
-	// 					`).join("")}
-	// 				</div>
-	// 			  </div>
-	// 			</div>
-	// 			</div>
-	// 			</section>
-	// 			</body>
-	// 			</html>`
-
-	// 	return postHtml;
-	// }).join("");
-
 	return html;
 }
