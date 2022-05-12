@@ -22,7 +22,7 @@ export default function Group(props) {
                 <p>Location: <span class="groupLocation">${props.group.location}</span></p>
                 <p>Members: ${props.group.users.length}</p>`
                 if (userEmail() === props.group.groupOwner.email) {
-					html += `<button class="saveGroupEdits btn btn-dark">Edit Group</button>`
+					html += `<button class="editGroupBtn btn btn-dark">Edit Group</button>`
                 }
 				html += `<button class="backToDiscover btn btn-dark">Back to discover</button>
             </div>
@@ -65,7 +65,7 @@ export function GroupEvents() {
 	$(".backToDiscover").click(function () {
 		createView('/discover')
 	})
-	$(".saveGroupEdits").click(function () {
+	$(".editGroupBtn").click(function () {
 		$("#editGroupName").val(groupName);
 		$("#editGroupBio").val(OGBio);
 		$("#editGroupLocation").val(OGLocation);
@@ -85,6 +85,12 @@ export function GroupEvents() {
 		const name = $("#editGroupName").val();
 		const bio = $("#editGroupBio").val();
 		const location = $("#editGroupLocation").val()
+
+		if (!name || !bio || !location) {
+			warningPTag.text("Please fill all fields");
+			warningPTag.css("color", "red");
+			return;
+		}
 
 		const editedGroup = {
 			name,

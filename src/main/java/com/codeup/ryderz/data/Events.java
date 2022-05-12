@@ -46,6 +46,9 @@ public class Events {
     @Column
     private String descriptionOfEvent;
 
+    @Column
+    private String stateWhereEventTakesPlace;
+
     @Enumerated(EnumType.STRING)
     private StateOfEvent stateOfEvent;
 
