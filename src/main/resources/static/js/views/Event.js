@@ -2,9 +2,31 @@ import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
 
 export default function Event(props) {
-	const dateTimeConversion = props.event.eventDate.substring(16,-1);
-	console.log(dateTimeConversion);
-	console.log(props)
+	const timeString = new Date(props.event.eventDate.toLocaleString().substring(29, -1));
+	const parsedTime = Date.parse(timeString);
+	const localTime = new Date(parsedTime)
+
+	let month = localTime.getMonth() + 1;
+	let date = localTime.getDate();
+	let hours = localTime.getHours();
+	let minutes = localTime.getMinutes();
+
+	if (localTime.getMonth() < 10) {
+		month = "0" + month;
+	}
+
+	if (localTime.getDate() < 10) {
+		date = "0" + date;
+	}
+
+	if (localTime.getHours() < 10) {
+		hours = "0" + hours;
+	}
+
+	if (localTime.getMinutes() < 10) {
+		minutes = "0" + minutes;
+	}
+	const timeFormat = `${localTime.getFullYear()}-${month}-${date}T${hours}:${minutes}`;
 	// language=HTML
 	let html =  `<!DOCTYPE html>
     <html lang="html">
@@ -27,7 +49,7 @@ export default function Event(props) {
 				
                 <p class="event-description-${props.event.id}">About: <span id="OGDescription">${props.event.descriptionOfEvent}</span></p>
 				
-                <p>Event Date: <span id="OGEventDate" data-dateTime="${props.event.eventDate}">${new Date(props.event.eventDate).toLocaleDateString()}
+                <p>Event Date: <span id="OGEventDate" data-id="${timeFormat}">${new Date(props.event.eventDate).toLocaleDateString()}
                     ${new Date(props.event.eventDate).toLocaleTimeString()}</span></p>
 				
                 <p class="event-dateTime">Created: ${new Date(props.event.createdDate).toLocaleDateString()}</p>
@@ -76,7 +98,7 @@ export default function Event(props) {
 				
 				<label for="editedEventDate">Event Date
 				
-                <input type="datetime-local" id="editedEventDate" name="eventDate" value="${dateTimeConversion}">
+                <input type="datetime-local" id="editedEventDate" name="eventDate" value="${timeFormat}">
                 </label>
 
                 <div class="mb-3 formCategories">
@@ -161,7 +183,7 @@ export default function Event(props) {
 
                 <p id="character-warning-on-submit"></p>
                 <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
-                <input id="submitEditedEventBtn" data-id="${props.event.id} class="btn btn-dark" type="button" value="Submit">
+                <input id="submitEditedEventBtn" data-id="${props.event.id}" class="btn btn-dark" type="button" value="Submit">
             </form>
 			</div>
         </div>
@@ -178,16 +200,14 @@ export function EventEvents() {
 	const OGTitle = $("#OGTitle").text();
 	const OGDescription = $("#OGDescription").text();
 	const OGLocation = $("#OGLocation").text();
-	const OGEventDate= $("#OGEventDate").data("dateTime");
-	const OGStatusOfEvent = $("#stateOfEvent").text();
+	const OGEventDate= $("#OGEventDate").data("id");
+	const OGStatusOfEvent = $(".stateOfEvent").text();
 	const OGState = $("#OGState").text();
 	const OGStartingLong = $("#OGStartLong").text();
 	const OGStartingLat = $("#OGStartLat").text();
 	const OGEndingLong = $("#OGEndLong").text();
 	const OGEndingLat = $("#OGEndLat").text();
 	const OGCategories = $("#OGCategories").text().split(", ");
-	console.log(OGCategories)
-
 
 	$(".backToDiscover").click(function () {
 		createView('/discover')
@@ -195,6 +215,7 @@ export function EventEvents() {
 
 	$(".editEventBtn").click(function () {
 		$("#states").val(OGState).prop('selected', 'true');
+		$("#eventStatus").val(OGStatusOfEvent).prop('selected', 'true');
 
 		//hide original event, show form to edit
 		$(".eventCol").css("display", "none");
@@ -239,54 +260,105 @@ export function EventEvents() {
 
 	$("#submitEditedEventBtn").click(function () {
 		const eventId = $(this).data("id");
-		console.log(OGTitle);
-		console.log(OGDescription);
-		console.log(OGLocation);
-		console.log(OGEventDate);
-		console.log(OGStatusOfEvent);
-		console.log(OGState)
-		console.log(OGStartingLong);
-		console.log(OGStartingLat);
-		console.log(OGEndingLong);
-		console.log(OGEndingLat);
-
 		const titleOfEvent = $("#editedEventTitle").val();
 		const descriptionOfEvent = $("#editedEventDescription").val();
 		const eventLocation = $("#editedEventLocation").val();
 		const dateTime = $("#editedEventDate").val();
 		const eventDate = new Date(dateTime).getTime();
+		const stateOfEvent = $('#eventStatus').val();
+		const stateWhereEventTakesPlace = $('#states').val();
 		const startingLongitude = $("#startingLong").val();
 		const startingLatitude = $("#startingLatitude").val();
 		const endingLongitude = $("#endingLong").val();
 		const endingLatitude = $("#endingLatitude").val();
 
-		console.log(titleOfEvent);
-		console.log(descriptionOfEvent);
-		console.log(eventLocation);
-		console.log(eventDate);
-		console.log(startingLongitude);
-		console.log(startingLatitude);
-		console.log(endingLongitude);
-		console.log(endingLatitude);
-
-		if (OGTitle === titleOfEvent && OGDescription === descriptionOfEvent && OGLocation === eventLocation && OGEventDate === eventDate){
-
-		}
-
-
-		const stateSelected = $('#states').val();
-		console.log(stateSelected);
-
 		let selectedCategories = [];
 
+		let checkCategories = [];
+
 		$('input[type="checkbox"]:checked').each(function() {
-			console.log(this.value);
 			selectedCategories.push({name: this.value})
+			checkCategories.push(this.value);
 
 		});
 
+		let warningPTag = $("#character-warning-on-submit");
+
 		const categories = selectedCategories;
-		console.log(categories);
+
+		if (OGTitle === titleOfEvent &&
+			OGDescription === descriptionOfEvent &&
+			OGLocation === eventLocation &&
+			OGEventDate === dateTime &&
+			OGStatusOfEvent === stateOfEvent &&
+			OGState === stateWhereEventTakesPlace &&
+			OGStartingLong === startingLongitude &&
+			OGStartingLat === startingLatitude &&
+			OGEndingLong === endingLongitude &&
+			OGEndingLat === endingLatitude &&
+			OGCategories.toString() === checkCategories.toString()
+		){
+			warningPTag.css("color", "red");
+			warningPTag.text("No changes were made!");
+			return;
+		} else {
+			warningPTag.text("");
+		}
+
+		if (!titleOfEvent ||
+			!descriptionOfEvent ||
+			!eventLocation ||
+			!eventDate ||
+			!stateOfEvent ||
+			!stateWhereEventTakesPlace ||
+			!startingLongitude ||
+			!startingLatitude ||
+			!endingLongitude ||
+			!endingLatitude)
+		{
+			warningPTag.css("color", "red");
+			warningPTag.text("Please fill in all fields!");
+			return;
+		}else {
+			warningPTag.text("")
+		}
+
+		const editedEvent = {
+			titleOfEvent,
+			descriptionOfEvent,
+			eventLocation,
+			eventDate,
+			stateOfEvent,
+			stateWhereEventTakesPlace,
+			startingLongitude,
+			startingLatitude,
+			endingLongitude,
+			endingLatitude,
+			categories
+		}
+
+
+		let request = {
+			method: "PUT",
+			headers: getHeaders(),
+			body: JSON.stringify(editedEvent)
+		}
+
+		fetch(`http://localhost:8081/api/events/${eventId}`, request)
+			.then(res => {
+				console.log(res.status)
+				if (res.status !== 200) {
+					console.log(res);
+					warningPTag.text("Error submitting changes!");
+					warningPTag.css("color", "red");
+				}
+				createView('/event', eventId);
+			})
+			.catch(error => {
+				console.log(error);
+				warningPTag.text("Error submitting changes!");
+				warningPTag.css("color", "red");
+			})
 
 	})
 }
