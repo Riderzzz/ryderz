@@ -14,14 +14,17 @@ export default function NewsFeed(props) {
 	//language=HTML
 	let html =
 		`
-		<div class="row">
-			<div class="sidebar-container col-3">
-				${newsfeedSidebarHtml(props)}
+			<div class="container-fluid">
+				<div class="row">
+					<div class="sidebar-container col-2 d-none d-lg-block">
+						${newsfeedSidebarHtml(props)}
+					</div>
+					<div class="posts-container col-12 col-lg-10">
+						${newsfeedPostsHtml(props)}
+					</div>
+				</div>
 			</div>
-			<div class="posts-container col-9">
-				${newsfeedPostsHtml(props)}
-			</div>
-		</div>
+		
 		`
 
 	return html;
@@ -32,6 +35,8 @@ export function NewsFeedEvents() {
 	createPostBtn();
 	editPostBtn();
 	deletePostBtn();
+	sideBarGroupBtn();
+	sideBarFriendBtn();
 }
 
 function commentOnPost() {
@@ -102,6 +107,22 @@ function deletePostBtn() {
 	});
 }
 
+function sideBarGroupBtn() {
+	$('.group').click(function (){
+		const groupId = $(this).data("id")
+		console.log("this events id is: " + groupId)
+		createView("/group", groupId)
+	})
+}
+
+function sideBarFriendBtn() {
+	$('.friend').click(function (){
+		const friendId = $(this).data("id")
+		console.log("this friends id is: " + friendId)
+		// createView("/group", friendId) <--- once view for a users profile is made insert that where /group is
+	})
+}
+
 function newsfeedSidebarHtml(props) {
 	//language=html
 	let html =
@@ -110,18 +131,18 @@ function newsfeedSidebarHtml(props) {
 			<div class="groups d-flex flex-column">
 				
 				<p class="mx-auto my-3">
-					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
+					<button class="sidebar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
 						Groups<i class="bi bi-caret-down mx-1"></i>
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseGroups">
 					<div class="">
-						${props.user.groupsJoined.map(group => `<div class="p-1">- ${group.name}</div>`).join("")}
+						${props.user.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
 					</div>
 				</div>
 				
 				<p class="mx-auto my-3">
-					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
+					<button class="sidebar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
 						Events<i class="bi bi-caret-down mx-1"></i>
 					</button>
 				</p>
@@ -132,13 +153,13 @@ function newsfeedSidebarHtml(props) {
 				</div>
 				
 				<p class="mx-auto my-3">
-					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
+					<button class="sidebar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
 						Friends<i class="bi bi-caret-down mx-1"></i>
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseFriends">
 					<div class="">
-						${props.user.friends.map(friend => `<div class="p-1">- ${friend.username}</div>`).join("")}
+						${props.user.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
 					</div>
 				</div>
 				
@@ -161,7 +182,7 @@ function newsfeedPostsHtml(props) {
 				</header>
 			
 				<div class="post">
-					${props.posts.map(post => {
+					${props.posts.reverse().map(post => {
 						//card-header begin
 						let html = `<div class="card m-3">
 										<div class="card-header d-flex justify-content-between">
