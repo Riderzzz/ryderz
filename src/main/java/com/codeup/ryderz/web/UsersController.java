@@ -42,13 +42,13 @@ public class UsersController {
 
 
     @GetMapping("{userID}")
-    public Optional<User> getUserById(@PathVariable Long userID) {
-        User usersInfo = userRepository.getById(userID);
+    public User getUserById(@PathVariable Long userID) {
+        User usersInfo = userRepository.findById(userID).get();
         String usersPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
         usersInfo.setUserPhotoUrl(usersPhotoUrl);
         System.out.println(usersInfo);
-//        System.out.println(usersPhotoUrl);
-        return Optional.of(usersInfo);
+        System.out.println(usersPhotoUrl);
+        return usersInfo;
     }
 
     @GetMapping("/getByUsername")

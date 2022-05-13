@@ -31,7 +31,6 @@ export default function Profile(props) {
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-6">
                         <h2><strong>William Withers</strong></h2>
-
                         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </div>
                 </div>
