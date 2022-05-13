@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -55,4 +56,7 @@ public class Groups {
     )
     @JsonIgnoreProperties({"groupsJoined", "groupsOwned", "events", "posts"})
     private List<User> users;
+
+    @OneToMany(mappedBy = "group")
+    private Collection<Comments> comments;
 }
