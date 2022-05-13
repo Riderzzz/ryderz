@@ -1,57 +1,7 @@
 import createView from "../createView.js";
 
-export default function Profile(props){
-console.log(props)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // **DO THIS**:
-//   Replace BUCKET_NAME with the bucket name.
-//
-    var albumBucketName = 'rydzerzcollection';
-
-// **DO THIS**:
-//   Replace this block of code with the sample code located at:
-//   Cognito -- Manage Identity Pools -- [identity_pool_name] -- Sample Code -- JavaScript
-//
-// Initialize the Amazon Cognito credentials provider
-    AWS.config.region = 'us-east-2'; // Region
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: 'us-east-2:466d1735-6b07-4cd6-b7da-1009316263c8',
-    });
-
-// Create a new service object
-    var s3 = new AWS.S3({
-        apiVersion: '2006-03-01',
-        params: {Bucket: albumBucketName}
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default function Profile(props) {
+    console.log(props)
 // language=HTML
     return `<!DOCTYPE html>
     <html lang="html">
@@ -60,19 +10,67 @@ console.log(props)
         <title>${props.profile.username}</title>
     </head>
     <body>
-    <div class="picture-header">
-        <img src="${props.profile.profilePicture}">
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                
-            </div>
+
+    <section class="bg-white shadow">
+        <div class="container">
+            <section class="user-images mb-5">
+                <!--Section: user images-->
+                <div class="profile-header-photograph p-5 text-center bg-image rounded-bottom shadow"
+                     style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');height: 400px;">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <img alt="temp" src="https://thumbs.dreamstime.com/b/biker-27757798.jpg"
+                         class="shadow-profile-picture rounded-circle position-absolute"
+                         style="width: 168px; height: 168px; margin-top: -140px">
+                </div>
+            </section>
+
+            <!--Section: User Data-->
+            <section class="text-center border-bottom">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-6">
+                        <h2><strong>William Withers</strong></h2>
+
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!--Section: Buttons-->
+            <section class="py-3 d-flex justify-content-between">
+                <!--Left Buttons-->
+                <div class="">
+                    <button type="button" class="btn profile-btn btn-light">Posts</button>
+                    <button type="button" class="btn profile-btn btn-light">About</button>
+                    <button type="button" class="btn profile-btn btn-light">Friends <small class="text-muted">100</small></button>
+                    <button type="button" class="btn profile-btn btn-light">Photos</button>
+
+                    <div class="dropdown d-inline-block">
+                        <button class="btn profile-btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-mdb-toggle="dropdown"
+                                aria-expanded="false">
+                            More
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--Right Buttons-->
+                <div class="">
+                    <button type="button" class="btn btn-light right-side-btn">Message</button>
+                    <button type="button" class="btn btn-light right-side-btn">Add Friend +</button>
+                </div>
+            </section>
         </div>
-    </div>
+    </section>
+
     </body>
     </html>`;
 }
-export function showFriendsProfile(){
+
+export function showFriendsProfile() {
 
 }

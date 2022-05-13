@@ -12,20 +12,19 @@ export let editPostCategories;
 export default function NewsFeed(props) {
     console.log(props)
     //language=HTML
-    let html =
-        `
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="sidebar-container col-2 d-none d-lg-block">
-                        ${newsfeedSidebarHtml(props)}
-                    </div>
-                    <div class="posts-container col-12 col-lg-10">
-                        ${newsfeedPostsHtml(props)}
-                    </div>
+    let html = `
+        <div class="container-fluid">
+            <div class="row">
+                <div class="sidebar-container col-2 d-none d-lg-block">
+                    ${newsfeedSidebarHtml(props)}
+                </div>
+                <div class="posts-container col-12 col-lg-10">
+                    ${newsfeedPostsHtml(props)}
                 </div>
             </div>
+        </div>
 
-        `
+    `
 
     return html;
 }
@@ -37,6 +36,7 @@ export function NewsFeedEvents() {
     deletePostBtn();
     sideBarGroupBtn();
     sideBarFriendBtn();
+    showProfilePage()
 }
 
 function commentOnPost() {
@@ -46,8 +46,7 @@ function commentOnPost() {
 
         //author field gets set in backend
         const commentObject = {
-            content,
-            post: {
+            content, post: {
                 id: postId
             }
         }
@@ -55,9 +54,7 @@ function commentOnPost() {
         console.log(commentObject)
 
         const requestObject = {
-            method: "POST",
-            headers: getHeaders(),
-            body: JSON.stringify(commentObject)
+            method: "POST", headers: getHeaders(), body: JSON.stringify(commentObject)
         }
 
         fetch(COMMENT_URI, requestObject).then(function () {
@@ -93,8 +90,7 @@ function deletePostBtn() {
         const postId = $(this).data("id")
 
         const requestObject = {
-            method: "DELETE",
-            headers: getHeaders()
+            method: "DELETE", headers: getHeaders()
         }
 
         fetch(`${POST_URI}/${postId}`, requestObject).then(r => {
@@ -104,6 +100,14 @@ function deletePostBtn() {
         }).finally(() => {
             createView("/newsfeed")
         })
+    });
+}
+
+function showProfilePage() {
+    $(".view-profile-page").click(function () {
+        const profileId = $(this).data("id");
+
+        createView("/profile", profileId);
     });
 }
 
@@ -125,50 +129,49 @@ function sideBarFriendBtn() {
 
 function newsfeedSidebarHtml(props) {
     //language=html
-    let html =
-        `
-            <div class="sidebar d-flex flex-column">
-                <div class="groups d-flex flex-column">
+    let html = `
+        <div class="sidebar d-flex flex-column">
+            <div class="groups d-flex flex-column">
 
-                    <p class="mx-auto my-3">
-                        <button class="sidebar-btn" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
-                            Groups<i class="bi bi-caret-down mx-1"></i>
-                        </button>
-                    </p>
-                    <div class="collapse mx-auto" id="collapseGroups">
-                        <div class="">
-                            ${props.user.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
-                        </div>
+                <p class="mx-auto my-3">
+                    <button class="sidebar-btn" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
+                        Groups<i class="bi bi-caret-down mx-1"></i>
+                    </button>
+                </p>
+                <div class="collapse mx-auto" id="collapseGroups">
+                    <div class="">
+                        ${props.user.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
                     </div>
-
-                    <p class="mx-auto my-3">
-                        <button class="sidebar-btn" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
-                            Events<i class="bi bi-caret-down mx-1"></i>
-                        </button>
-                    </p>
-                    <div class="collapse mx-auto" id="collapseEvents">
-                        <div class="">
-                            ${props.user.eventsJoined.map(event => `<div class="p-1">- ${event.titleOfEvent}</div>`).join("")}
-                        </div>
-                    </div>
-
-                    <p class="mx-auto my-3">
-                        <button class="sidebar-btn" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
-                            Friends<i class="bi bi-caret-down mx-1"></i>
-                        </button>
-                    </p>
-                    <div class="collapse mx-auto" id="collapseFriends">
-                        <div class="">
-                            ${props.user.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
-                        </div>
-                    </div>
-
                 </div>
+
+                <p class="mx-auto my-3">
+                    <button class="sidebar-btn" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
+                        Events<i class="bi bi-caret-down mx-1"></i>
+                    </button>
+                </p>
+                <div class="collapse mx-auto" id="collapseEvents">
+                    <div class="">
+                        ${props.user.eventsJoined.map(event => `<div class="p-1">- ${event.titleOfEvent}</div>`).join("")}
+                    </div>
+                </div>
+
+                <p class="mx-auto my-3">
+                    <button class="sidebar-btn" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
+                        Friends<i class="bi bi-caret-down mx-1"></i>
+                    </button>
+                </p>
+                <div class="collapse mx-auto" id="collapseFriends">
+                    <div class="">
+                        ${props.user.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
+                    </div>
+                </div>
+
             </div>
-        `
+        </div>
+    `
 
 
     return html;
@@ -187,9 +190,9 @@ function newsfeedPostsHtml(props) {
                 //card-header begin
                 let html = `<div class="card m-3">
 										<div class="card-header d-flex justify-content-between">
-											<div>
+											<a class="view-profile-page" data-id="${post.author.id}">
 											${post.author.username}
-											</div>
+											</a>
 										<div class="edit-delete">	
 									`
                 if (userEmail() === post.author.email) {
@@ -214,8 +217,7 @@ function newsfeedPostsHtml(props) {
 											<input type="text" id="comment-content-${post.id}" class="form-control" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
 											<button class="btn btn-outline-secondary comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
 										</div>
-										${post.comments.map(comment =>
-                        `
+										${post.comments.map(comment => `
 			
 										<div class="card card-body">
 										  author: ${comment.author.username}  content: ${comment.content}

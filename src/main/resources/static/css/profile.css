@@ -1,0 +1,19 @@
+.shadow{
+    filter: drop-shadow(0px 0px 6px #222);
+}
+.shadow-profile-picture{
+    filter: drop-shadow(0px 0px 7px black);
+}
+body{
+    background-color: lightgray;
+}
+.profile-btn {
+    background-color: transparent;
+    color: lightgray;
+    border: none;
+}
+.right-side-btn{
+    background-color: blue;
+    color: white;
+}
+
