@@ -32,7 +32,7 @@ public class Post {
         this.createDate  = new Date();
     }
 
-
+    @ToString.Exclude
     @ManyToOne
     @JsonIgnoreProperties({"posts","password", "groupsOwned", "groupsJoined", "events", "comments"})
     private User author;
@@ -42,10 +42,11 @@ public class Post {
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Category.class)
 
-
+    @ToString.Exclude
     @JsonIgnoreProperties("posts")
     private Collection<Category> categories;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "post")
     @JsonIgnoreProperties({"post", "comments"})
     private Collection<Comments> comments;

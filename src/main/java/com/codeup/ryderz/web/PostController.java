@@ -116,7 +116,6 @@ public class PostController {
             usersFriendsPost.addAll(postRepository.findPostByAuthor_Username(friend.getUsername()));
         }
 
-
         return usersFriendsPost;
     }
 

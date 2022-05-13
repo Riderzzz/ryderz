@@ -60,6 +60,7 @@ public class Events {
         this.createdDate  = new Date();
     }
 
+    @ToString.Exclude
     @ManyToOne
     @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId"})
     private User eventCreator;
@@ -75,9 +76,11 @@ public class Events {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
+    @ToString.Exclude
     @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId", "eventCreator", "password"})
     private List<User> usersId;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "event")
     @JsonIgnoreProperties({"event", "post", "comments", "eventCreator"})
     private Collection<Comments> comments;
@@ -86,7 +89,7 @@ public class Events {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Category.class)
-
+    @ToString.Exclude
     @JsonIgnoreProperties("posts")
     private Collection<Category> categories;
 }

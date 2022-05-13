@@ -8,7 +8,7 @@ import {getHeaders} from "./auth.js";
  * @param URI
  */
 export default function createView(URI, Id) {
-
+    console.log(Id)
     let route = router(URI, Id);
 
     // Store the title because the loading screen render overwrites it.
@@ -31,7 +31,7 @@ export default function createView(URI, Id) {
         // I tried using route.uri here instead, but it seems there's an off-by-one bug (https://stackoverflow.com/a/38830794)
         document.title = currentTitle;
         // Add the current page to the history stack
-        history.pushState({...props, lastUri: route.uri }, null, route.uri)
+        history.pushState({...props, lastUri: route.uri}, null, route.uri)
         render(props, route);
     });
 }
@@ -39,8 +39,8 @@ export default function createView(URI, Id) {
 // When the user hits back in the browser, get the last uri from history and render it (w/ props)
 window.addEventListener('popstate', (e) => {
     if (e?.state?.lastUri) {
-      console.log(`Back to ${e.state.lastUri}!`)
-      const { lastUri, ...props } = e.state
-      render(props, router(lastUri))
+        console.log(`Back to ${e.state.lastUri}!`)
+        const {lastUri, ...props} = e.state
+        render(props, router(lastUri))
     }
 });

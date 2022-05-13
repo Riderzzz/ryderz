@@ -2,6 +2,7 @@ package com.codeup.ryderz.web;
 
 import com.codeup.ryderz.data.User;
 import com.codeup.ryderz.data.UserRepository;
+import com.codeup.ryderz.services.S3Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,12 @@ import java.util.Optional;
 public class UsersController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private S3Service s3Service;
 
-    public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder, S3Service s3Service) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.s3Service = s3Service;
     }
 
     @GetMapping("me")
@@ -36,10 +39,16 @@ public class UsersController {
         return userRepository.findAll();
     }
 
-    @GetMapping("{userID}")
-    public Optional<User> getUserById(@PathVariable Long userID) {
 
-        return userRepository.findById(userID);
+
+    @GetMapping("{userID}")
+    public User getUserById(@PathVariable Long userID) {
+        User usersInfo = userRepository.findById(userID).get();
+        String usersPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
+        usersInfo.setUserPhotoUrl(usersPhotoUrl);
+        System.out.println(usersInfo);
+        System.out.println(usersPhotoUrl);
+        return usersInfo;
     }
 
     @GetMapping("/getByUsername")

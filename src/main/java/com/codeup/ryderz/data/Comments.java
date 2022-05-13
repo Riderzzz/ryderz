@@ -28,17 +28,21 @@ public class Comments {
     @Column
     private Date createdAt;
 
+    @ToString.Exclude
     @ManyToOne
     @JsonIgnoreProperties({"comments", "author", "title", "content", "categories", "eventCreator", "usersId"})
     private Events event;
 
+    @ToString.Exclude
     @ManyToOne
     private Groups group;
 
+    @ToString.Exclude
     @ManyToOne
     @JsonIgnoreProperties({"comments", "author", "title", "content", "categories"})
     private Post post;
 
+    @ToString.Exclude
     @ManyToOne
     @JsonIgnoreProperties({"comments","password", "posts", "groupsOwned", "events", "groupsJoined"})
     private User author;

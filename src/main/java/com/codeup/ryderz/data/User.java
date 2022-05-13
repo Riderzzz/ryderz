@@ -40,8 +40,11 @@ public class User {
     @JsonIgnore
     private Role role;
 
-//    @Column(name = "profile_picture")
-//    private String profilePicture;
+    @Transient
+    private String userPhotoUrl;
+
+    @Column(name = "profile_picture")
+    private String profilePicture;
 
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties({"author", "comments"})
@@ -64,11 +67,13 @@ public class User {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
+    @ToString.Exclude
     @JsonIgnoreProperties({"users", "groupOwner"})
     private Collection<Groups> groupsJoined;
 
     @OneToMany(mappedBy = "eventCreator")
-    @JsonIgnoreProperties({"eventCreator", "comments"})
+    @ToString.Exclude
+    @JsonIgnoreProperties({"eventCreator", "comments", "userId"})
     private Collection<Events> events;
 
     @ManyToMany(
@@ -82,8 +87,9 @@ public class User {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
+    @ToString.Exclude
     @JsonIgnoreProperties({"usersId", "eventCreator", "comments"})
-   private Collection<Events> eventsJoined;
+    private Collection<Events> eventsJoined;
 
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties("author")
