@@ -44,7 +44,7 @@ function showProfilePage() {
     $(".view-profile-page").click(function () {
         const profileId = $(this).data("id");
         console.log(profileId)
-        createView("/profile", profileId);
+        createView("/profile", `${profileId}`);
     });
 }
 
@@ -216,7 +216,7 @@ function newsfeedPostsHtml(props) {
         //card-header begin
         let html = `<div class="card m-3">
 										<div class="card-header post-header d-flex justify-content-between">
-											<a class="view-profile-page">
+											<a class="view-profile-page" data-id="${post.author.id}">
 											    <i class="bi bi-person-square avatar me-2"></i>${post.author.username}
 											</a>
 										<div class="header-right">	
