@@ -43,7 +43,7 @@ export function NewsFeedEvents() {
 function showProfilePage() {
     $(".view-profile-page").click(function () {
         const profileId = $(this).data("id");
-
+        console.log(profileId)
         createView("/profile", profileId);
     });
 }

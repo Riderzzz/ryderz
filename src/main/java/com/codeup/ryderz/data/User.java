@@ -40,8 +40,11 @@ public class User {
     @JsonIgnore
     private Role role;
 
-//    @Column(name = "profile_picture")
-//    private String profilePicture;
+    @Transient
+    private String userPhotoUrl;
+
+    @Column(name = "profile_picture")
+    private String profilePicture;
 
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties({"author", "comments"})
@@ -54,7 +57,7 @@ public class User {
 
 
     @ManyToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Groups.class)
     @JoinTable(
@@ -72,7 +75,7 @@ public class User {
     private Collection<Events> events;
 
     @ManyToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Events.class)
     @JoinTable(
@@ -90,7 +93,7 @@ public class User {
     private Collection<Comments> comments;
 
     @ManyToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = User.class)
     @JoinTable(
