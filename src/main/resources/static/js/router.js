@@ -95,7 +95,7 @@ export default function router(URI, Id) {
             returnView: NewsFeed,
             uri: '/newsfeed',
             state: {
-                posts: "/api/posts",
+                posts: "/api/posts/friendsPost",
                 user: "/api/users/me"
             },
             title: 'News Feed',

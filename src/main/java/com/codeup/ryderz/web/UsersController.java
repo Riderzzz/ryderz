@@ -61,6 +61,8 @@ public class UsersController {
         user.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         System.out.println("Ready to add user." + newUser);
+
+        userRepository.save(newUser);
     }
 
     @PutMapping("{id}")

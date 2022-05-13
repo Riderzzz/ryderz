@@ -65,12 +65,22 @@ public class EventsController {
         originalEvent.setEndingLongitude(updatedEvent.getEndingLongitude());
         originalEvent.setEndingLatitude(updatedEvent.getEndingLatitude());
         originalEvent.setEventDate(updatedEvent.getEventDate());
+        originalEvent.setStateWhereEventTakesPlace(updatedEvent.getStateWhereEventTakesPlace());
         originalEvent.setTitleOfEvent(updatedEvent.getTitleOfEvent());
         originalEvent.setDescriptionOfEvent(updatedEvent.getDescriptionOfEvent());
         originalEvent.setStateOfEvent(updatedEvent.getStateOfEvent());
         originalEvent.setEventLocation(updatedEvent.getEventLocation());
 
-        originalEvent.setCategories(updatedEvent.getCategories());
+        Collection<Category> categories = new ArrayList<>();
+
+        for (Category category : updatedEvent.getCategories()) {
+            System.out.println(category.getName());
+            categories.add(categoryRepository.findByName(category.getName()));
+        }
+
+        originalEvent.setCategories(categories);
+
+        eventsRepository.save(originalEvent);
         System.out.println("Ready to update event.");
     }
     @PutMapping("{addEventId}/adduser")
