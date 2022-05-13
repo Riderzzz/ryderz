@@ -33,6 +33,9 @@ public class Comments {
     private Events event;
 
     @ManyToOne
+    private Groups group;
+
+    @ManyToOne
     @JsonIgnoreProperties({"comments", "author", "title", "content", "categories"})
     private Post post;
 

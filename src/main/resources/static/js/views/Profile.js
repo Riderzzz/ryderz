@@ -41,14 +41,14 @@ export default function Profile(props) {
             <section class="py-3 d-flex justify-content-between">
                 <!--Left Buttons-->
                 <div class="">
-                    <button type="button" class="btn profile-btn btn-light">Posts</button>
-                    <button type="button" class="btn profile-btn btn-light">About</button>
-                    <button type="button" class="btn profile-btn btn-light">Friends <small
+                    <button type="button" class="btn btn-light active profile-btn">Posts</button>
+                    <button type="button" class="btn btn-light profile-btn">About</button>
+                    <button type="button" class="btn btn-light profile-btn">Friends <small
                             class="text-muted">100</small></button>
-                    <button type="button" class="btn profile-btn btn-light">Photos</button>
+                    <button type="button" class="btn btn-light profile-btn">Photos</button>
 
                     <div class="dropdown d-inline-block">
-                        <button class="btn profile-btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                        <button class="btn profile-btn  dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-mdb-toggle="dropdown"
                                 aria-expanded="false">
                             More
@@ -62,26 +62,18 @@ export default function Profile(props) {
                 </div>
                 <!--Right Buttons-->
                 <div class="">
-                    <button type="button" class="btn btn-light right-side-btn">Message</button>
-                    <button type="button" class="btn btn-light right-side-btn">Add Friend +</button>
+                    <button type="button" class="btn btn-primary right-side-btn">Message</button>
+                    <button type="button" class="btn btn-primary right-side-btn">Add Friend +</button>
                 </div>
             </section>
         </div>
     </section>
-
     </body>
     </html>`;
 }
 
 export function showFriendsProfile() {
-    activeLinks()
+
 }
 
-function activeLinks() {
 
-    $('.profile-btn').click(e => {
-        e.preventDefault();
-        $(this).siblings().removeClass("active");
-        $(this.addClass("active"));
-    });
-}
