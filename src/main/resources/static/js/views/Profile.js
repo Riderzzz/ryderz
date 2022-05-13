@@ -17,7 +17,7 @@ export default function Profile(props) {
             <section class="user-images mb-5">
                 <!--Section: user images-->
                 <div class="profile-header-photograph p-5 text-center bg-image rounded-bottom shadow"
-                     style="background-image: url('${props.profile.profilePicture}');height: 400px;">
+                     style="background-image: url('${props.profile.userPhotoUrl}');height: 400px;">
                 </div>
                 <div class="d-flex justify-content-center">
                     <img alt="temp" src="https://thumbs.dreamstime.com/b/biker-27757798.jpg"

@@ -28,8 +28,7 @@ public class Messages {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Category.class)
-
-
+    @ToString.Exclude
     @JsonIgnoreProperties("posts")
     private Collection<Category> categories;
 

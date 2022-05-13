@@ -46,7 +46,8 @@ public class UsersController {
         User usersInfo = userRepository.getById(userID);
         String usersPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
         usersInfo.setUserPhotoUrl(usersPhotoUrl);
-        System.out.println(usersPhotoUrl);
+        System.out.println(usersInfo);
+//        System.out.println(usersPhotoUrl);
         return Optional.of(usersInfo);
     }
 

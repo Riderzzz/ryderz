@@ -26,7 +26,7 @@ public class Category {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Post.class)
-
+    @ToString.Exclude
     @JsonIgnoreProperties("categories")
     private Collection<Post> posts;
 
@@ -34,7 +34,7 @@ public class Category {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Events.class)
-
+    @ToString.Exclude
     @JsonIgnoreProperties("categories")
     private Collection<Events> events;
 }

@@ -39,6 +39,7 @@ public class Groups {
     @Column
     private String location;
 
+    @ToString.Exclude
     @ManyToOne
     @JsonIgnoreProperties({"groupsOwned", "events", "groupsJoined", "posts"})
     private User groupOwner;
@@ -54,9 +55,11 @@ public class Groups {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
+    @ToString.Exclude
     @JsonIgnoreProperties({"groupsJoined", "groupsOwned", "events", "posts"})
     private List<User> users;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "group")
     private Collection<Comments> comments;
 }

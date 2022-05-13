@@ -57,7 +57,7 @@ public class User {
 
 
     @ManyToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Groups.class)
     @JoinTable(
@@ -67,15 +67,17 @@ public class User {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
+    @ToString.Exclude
     @JsonIgnoreProperties({"users", "groupOwner"})
     private Collection<Groups> groupsJoined;
 
     @OneToMany(mappedBy = "eventCreator")
-    @JsonIgnoreProperties({"eventCreator", "comments"})
+    @ToString.Exclude
+    @JsonIgnoreProperties({"eventCreator", "comments", "userId"})
     private Collection<Events> events;
 
     @ManyToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Events.class)
     @JoinTable(
@@ -85,15 +87,16 @@ public class User {
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
+    @ToString.Exclude
     @JsonIgnoreProperties({"usersId", "eventCreator", "comments"})
-   private Collection<Events> eventsJoined;
+    private Collection<Events> eventsJoined;
 
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties("author")
     private Collection<Comments> comments;
 
     @ManyToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = User.class)
     @JoinTable(
