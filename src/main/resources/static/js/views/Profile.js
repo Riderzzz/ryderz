@@ -42,7 +42,8 @@ export default function Profile(props) {
                 <div class="">
                     <button type="button" class="btn profile-btn btn-light">Posts</button>
                     <button type="button" class="btn profile-btn btn-light">About</button>
-                    <button type="button" class="btn profile-btn btn-light">Friends <small class="text-muted">100</small></button>
+                    <button type="button" class="btn profile-btn btn-light">Friends <small
+                            class="text-muted">100</small></button>
                     <button type="button" class="btn profile-btn btn-light">Photos</button>
 
                     <div class="dropdown d-inline-block">
@@ -72,5 +73,14 @@ export default function Profile(props) {
 }
 
 export function showFriendsProfile() {
+    activeLinks()
+}
 
+function activeLinks() {
+
+    $('.profile-btn').click(e => {
+        e.preventDefault();
+        $(this).siblings().removeClass("active");
+        $(this.addClass("active"));
+    });
 }

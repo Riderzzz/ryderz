@@ -150,7 +150,7 @@ function formatTime(date) {
         return (hour - 12) + ":" + hourSplit[1] + 'pm'
     }
 
-    return hour + ":" + timeSplit[1] + 'am'
+    return hour + ":" + hourSplit[1] + 'am'
 }
 
 function newsfeedSidebarHtml(props) {
@@ -231,7 +231,7 @@ function newsfeedPostsHtml(props) {
                         </div></div>`
         //card-header-end
         //card-body-start
-        html += `<div class="card-body pb-2">
+        html += `<div class="card-body pb-2">git 
 									<h5 class="card-title" id="post-title-${post.id}">${post.title}</h5>
 									<p class="card-text" id="post-content-${post.id}">${post.content}</p>
 									<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>
