@@ -35,6 +35,9 @@ public class EventsController {
             String email = auth.getName();
             User user = userRepository.findByEmail(email);
             newEvent.setEventCreator(user);
+            List<User> users = new ArrayList<>();
+            users.add(user);
+            newEvent.setUsersId(users);
         }
 
         newEvent.setStateOfEvent(Events.StateOfEvent.NOTSTARTED);
@@ -84,8 +87,8 @@ public class EventsController {
         System.out.println("Ready to update event.");
     }
     @PutMapping("{addEventId}/adduser")
-    public void addUserToEvent(@PathVariable Long addEventId, @RequestParam Long userId) {
-        User userJoiningGroup = userRepository.getById(userId);
+    public void addUserToEvent(@PathVariable Long addEventId, OAuth2Authentication auth) {
+        User userJoiningGroup = userRepository.findByEmail(auth.getName());
         Events eventToJoin = eventsRepository.getById(addEventId);
         List<User> eventsUsers = eventToJoin.getUsersId();
         eventsUsers.add(userJoiningGroup);
@@ -93,8 +96,22 @@ public class EventsController {
         eventsRepository.save(eventToJoin);
     }
 
+    @DeleteMapping("{eventId}/remove-user")
+    public void removeUserFromEvent(@PathVariable Long eventId, OAuth2Authentication auth) {
+        User userToRemove = userRepository.findByEmail(auth.getName());
+        Events eventToLeave = eventsRepository.getById(eventId);
+        List<User> users = eventToLeave.getUsersId();
+
+        users.remove(userToRemove);
+        eventToLeave.setUsersId(users);
+        eventsRepository.save(eventToLeave);
+    }
+
     @DeleteMapping("/{eventId}")
     private void deleteEvent(@PathVariable Long eventId) {
+        Events event = eventsRepository.getById(eventId);
+        event.setUsersId(null);
+        eventsRepository.save(event);
         eventsRepository.deleteById(eventId);
     }
 }

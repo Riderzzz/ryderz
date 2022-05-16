@@ -12,10 +12,10 @@ export default function Discover(props) {
     <body>
     <div class="container">
         <div class="row">
-            <div class="col-8 justify-content-center">
+            <div class="col-md-8 justify-content-center">
                 <h1>Discover</h1>
             </div>
-            <div class="col-4">
+            <div class="col-md-4">
                 <button class="btn btn-dark mt-3 mx-2 createGroupBtn">Create Group</button>
                 <button class="btn btn-dark mt-3 mx-2 createEventBtn">Create Event</button>
             </div>

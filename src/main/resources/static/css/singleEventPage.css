@@ -1,3 +1,7 @@
 .singleEventPageEditForm {
     display: none;
 }
+
+.deleteIcon {
+    display: none;
+}

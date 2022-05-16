@@ -317,7 +317,6 @@ function groupInfoPopulateHTML(props) {
 	}
 	//language=HTML
 	html += `
-        <button class="backToDiscover btn btn-dark">Back to discover</button>
         </div>`
 	//language=HTML
 	html += `
@@ -373,7 +372,7 @@ function checkIfUserInGroup(props) {
                     data-bs-target="#collapseExample" aria-expanded="false"
                     aria-controls="collapseExample">
                 Comment
-            </button>\``
+            </button>`
 	} else {
 		//language=HTML
 		return `
