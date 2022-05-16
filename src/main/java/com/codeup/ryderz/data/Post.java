@@ -15,7 +15,7 @@ import java.util.Date;
 @ToString
 @Entity
 @Table(name = "post")
-public class Post {
+public class Post implements Comparable<Post>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Post {
         this.createDate  = new Date();
     }
 
-
+    @ToString.Exclude
     @ManyToOne
     @JsonIgnoreProperties({"posts","password", "groupsOwned", "groupsJoined", "events", "comments"})
     private User author;
@@ -42,10 +42,11 @@ public class Post {
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = Category.class)
 
-
+    @ToString.Exclude
     @JsonIgnoreProperties("posts")
     private Collection<Category> categories;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "post")
     @JsonIgnoreProperties({"post", "comments"})
     private Collection<Comments> comments;
@@ -53,6 +54,14 @@ public class Post {
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    @Override
+    public int compareTo(Post u) {
+        if (getCreateDate() == null || u.getCreateDate() == null) {
+            return 0;
+        }
+        return getCreateDate().compareTo(u.getCreateDate());
     }
 
 }

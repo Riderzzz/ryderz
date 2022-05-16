@@ -30,7 +30,9 @@ export default function router(URI, Id) {
     const routes = {
         '/': {
             returnView: Home,
-            state: {},
+            state: {
+                user: '/api/users/me'
+            },
             uri: '/',
             title: 'Home',
         },
@@ -113,7 +115,7 @@ export default function router(URI, Id) {
         },
         '/event': {
             returnView: Event,
-            uri: '/event',
+            uri: `/event/${Id}`,
             state: {
                 event: `/api/events/${Id}`
             },
@@ -121,7 +123,7 @@ export default function router(URI, Id) {
         },
         '/group': {
             returnView: Group,
-            uri: '/group',
+            uri: `/group/${Id}`,
             state: {
                 group: `/api/groups/${Id}`
             },
@@ -161,7 +163,7 @@ export default function router(URI, Id) {
             returnView: Profile,
             uri: '/profile',
             state : {
-                profile: `/api/users/${Id}`
+                profile: `/api/users/1`
             },
             viewEvent: showFriendsProfile
         },

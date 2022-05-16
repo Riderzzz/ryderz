@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,9 @@ public class GroupsController {
             String email = auth.getName();
             User user = userRepository.findByEmail(email);
             newGroup.setGroupOwner(user);
+            List<User> users = new ArrayList<>();
+            users.add(user);
+            newGroup.setUsers(users);
         }
 
         groupsRepository.save(newGroup);
@@ -60,21 +64,39 @@ public class GroupsController {
     }
 
     @PutMapping("{addGroupId}/adduser")
-    public void addUserToGroup(@PathVariable Long addGroupId, @RequestParam Long userId) {
-        User userJoiningGroup = userRepository.getById(userId);
+    public void addUserToGroup(@PathVariable Long addGroupId, OAuth2Authentication auth) {
+        User userToJoin = userRepository.findByEmail(auth.getName());
         Groups groupToJoin = groupsRepository.getById(addGroupId);
 
         List<User> groupsUsers = groupToJoin.getUsers();
 
-        groupsUsers.add(userJoiningGroup);
+        groupsUsers.add(userToJoin);
 
         groupToJoin.setUsers(groupsUsers);
 
         groupsRepository.save(groupToJoin);
     }
 
+    @DeleteMapping("{groupId}/remove-user")
+    public void removeUserFromGroup(@PathVariable Long groupId, OAuth2Authentication auth) {
+        User userToRemove = userRepository.findByEmail(auth.getName());
+        Groups group = groupsRepository.getById(groupId);
+
+        List<User> users = group.getUsers();
+
+        users.remove(userToRemove);
+
+        group.setUsers(users);
+
+        groupsRepository.save(group);
+    }
+
     @DeleteMapping("{groupId}")
+//    Todo:if users in group delete them from group_users table before deleting group
     public void deleteGroup(@PathVariable Long groupId) {
+        Groups group = groupsRepository.getById(groupId);
+        group.setUsers(null);
+        groupsRepository.save(group);
         groupsRepository.deleteById(groupId);
     }
 }

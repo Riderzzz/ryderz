@@ -114,6 +114,7 @@ export default function CreateEvent(props) {
                 <input type="number" id="endingLatitude" name="endingLatitude">
 
                 <p id="character-warning-on-submit"></p>
+                <button class="backToDiscover btn btn-dark">Back to discover</button>
                 <input id="newEventBtn" class="btn btn-dark" type="button" value="Submit">
             </form>
         </div>
@@ -125,6 +126,13 @@ export default function CreateEvent(props) {
 
 export function CreateEventEvents() {
 	createEventSubmitListener();
+	backToDiscoverBtn();
+}
+
+function backToDiscoverBtn() {
+	$(".backToDiscover").click(function () {
+		createView('/discover')
+	})
 }
 
 function createEventSubmitListener() {

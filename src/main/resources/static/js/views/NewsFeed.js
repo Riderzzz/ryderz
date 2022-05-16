@@ -231,7 +231,7 @@ function newsfeedPostsHtml(props) {
                         </div></div>`
         //card-header-end
         //card-body-start
-        html += `<div class="card-body pb-2">git 
+        html += `<div class="card-body pb-2">
 									<h5 class="card-title" id="post-title-${post.id}">${post.title}</h5>
 									<p class="card-text" id="post-content-${post.id}">${post.content}</p>
 									<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>

@@ -55,7 +55,8 @@ export default function Discover(props) {
            		<p>Categories: ${event.categories.map(category => `${category.name}`).join(", ")}</p>
            		<p class="event-description-${event.id}">${event.descriptionOfEvent}</p>
            		<p>Event Date: ${new Date(event.eventDate).toLocaleDateString()} ${new Date(event.eventDate).toLocaleTimeString()}</p>
-           		<p class="event-dateTime">Created: ${new Date(event.createdDate).toLocaleDateString()}</p>
+           		<p class="event-dateTime">Created: ${new Date(event.createdDate).toLocaleDateString()}
+           		 ${new Date(event.createdDate).toLocaleTimeString()}</p>
            		<p class="event-owner-${event.id}">Organizer: ${event.eventCreator.username}</p>
            		<p>State of event: <span class="stateOfEvent">${event.stateOfEvent}</span></p>
 				<button class="btn btn-light event-page-btn" data-id="${event.id}">Go to Event page</button>

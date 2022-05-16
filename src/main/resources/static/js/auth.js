@@ -15,8 +15,8 @@ export default function addLoginEvent() {
             grant_type: 'password'
         }
 
-        // TODO: these are the only request params /oauth/token accepts in Spring Security
-        // TODO: need to possibly implement a random bit handshake w/ SHA256 on the password before sending
+        // these are the only request params /oauth/token accepts in Spring Security
+        // need to possibly implement a random bit handshake w/ SHA256 on the password before sending
         //      -> Alternatively, encrypt the entire request body
         let request = {
             method: "POST",

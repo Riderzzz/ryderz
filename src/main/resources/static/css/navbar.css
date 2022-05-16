@@ -1,0 +1,30 @@
+.navbar-profile {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.dropstart .dropdown-toggle::before {
+    vertical-align: .25em;
+}
+
+.navbar-profile:hover {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: transparent;
+}
+
+.navbar-profile:focus {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: transparent;
+}
+
+.navbar-profile:active {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: transparent;
+}
+
+.logo {
+    font-size: 1em;
+}

@@ -2,6 +2,7 @@ package com.codeup.ryderz.web;
 
 import com.codeup.ryderz.data.User;
 import com.codeup.ryderz.data.UserRepository;
+import com.codeup.ryderz.services.S3Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -20,26 +21,55 @@ import java.util.Optional;
 public class UsersController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private S3Service s3Service;
 
-    public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder, S3Service s3Service) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.s3Service = s3Service;
     }
 
     @GetMapping("me")
     private User getMyInfo(OAuth2Authentication auth){
-        String userName = auth.getName();
-        return userRepository.findByEmail(userName);
+
+        /*
+        Navbar calls this function everytime it gets loaded, on startup, there is nobody logged in for it to get
+        information from and would throw error.
+        in the catch it returns a temp user so it doesnt throw and errors
+         */
+
+        try{
+            String userName = auth.getName();
+            return userRepository.findByEmail(userName);
+        }catch (NullPointerException e) {
+            return userRepository.findByEmail("temp@temp.com");
+        }
+
+
+
     }
     @GetMapping
     private List<User> getUser() {
         return userRepository.findAll();
     }
 
-    @GetMapping("{userID}")
-    public Optional<User> getUserById(@PathVariable Long userID) {
+//    TODO: upload image file.
+//    upload user image
+//    receive file from front end
+//    If user !image upload file
+//    s3Service.deleteFile
+//    else --> delete current image --> upload new image
 
-        return userRepository.findById(userID);
+
+
+    @GetMapping("{userID}")
+    public User getUserById(@PathVariable Long userID) {
+        User usersInfo = userRepository.findById(userID).get();
+        String usersPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
+        usersInfo.setUserPhotoUrl(usersPhotoUrl);
+        System.out.println(usersInfo);
+        System.out.println(usersPhotoUrl);
+        return usersInfo;
     }
 
     @GetMapping("/getByUsername")
@@ -62,7 +92,7 @@ public class UsersController {
 
         System.out.println("Ready to add user." + newUser);
 
-        userRepository.save(newUser);
+        userRepository.save(user);
     }
 
     @PutMapping("{id}")
