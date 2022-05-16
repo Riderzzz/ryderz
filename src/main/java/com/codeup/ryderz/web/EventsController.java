@@ -4,10 +4,7 @@ import com.codeup.ryderz.data.*;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -97,4 +94,25 @@ public class EventsController {
     private void deleteEvent(@PathVariable Long eventId) {
         eventsRepository.deleteById(eventId);
     }
+
+    @GetMapping("friendsEvents")
+    public Collection<Events> getNewsfeedEvents(OAuth2Authentication auth) {
+        User mainUser = userRepository.findByEmail(auth.getName());
+
+        Collection<User> userFriends = mainUser.getFriends();
+        List<Events> usersFriendsEvents = new ArrayList<>();
+
+
+        usersFriendsEvents.addAll(eventsRepository.findEventsByEventCreator_Username(mainUser.getUsername()));
+
+        for (User friend : userFriends) {
+            usersFriendsEvents.addAll(eventsRepository.findEventsByEventCreator_Username(friend.getUsername()));
+        }
+
+        Collections.sort(usersFriendsEvents);
+
+        return usersFriendsEvents;
+    }
 }
+
+
