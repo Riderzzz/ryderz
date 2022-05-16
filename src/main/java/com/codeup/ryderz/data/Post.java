@@ -15,7 +15,7 @@ import java.util.Date;
 @ToString
 @Entity
 @Table(name = "post")
-public class Post {
+public class Post implements Comparable<Post>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +54,14 @@ public class Post {
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    @Override
+    public int compareTo(Post u) {
+        if (getCreateDate() == null || u.getCreateDate() == null) {
+            return 0;
+        }
+        return getCreateDate().compareTo(u.getCreateDate());
     }
 
 }

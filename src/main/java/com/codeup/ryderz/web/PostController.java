@@ -108,13 +108,16 @@ public class PostController {
         User mainUser = userRepository.findByEmail(auth.getName());
 
         Collection<User> userFriends = mainUser.getFriends();
-        Collection<Post> usersFriendsPost = new ArrayList<>();
+        List<Post> usersFriendsPost = new ArrayList<>();
+
 
         usersFriendsPost.addAll(postRepository.findPostByAuthor_Username(mainUser.getUsername()));
 
         for (User friend : userFriends) {
             usersFriendsPost.addAll(postRepository.findPostByAuthor_Username(friend.getUsername()));
         }
+
+        Collections.sort(usersFriendsPost);
 
         return usersFriendsPost;
     }
