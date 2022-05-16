@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "events")
-public class Events {
+public class Events implements Comparable<Events>{
     public enum StateOfEvent {NOTSTARTED, INPROGRESS, COMPLETED}
 
     @Id
@@ -92,4 +92,12 @@ public class Events {
     @ToString.Exclude
     @JsonIgnoreProperties("posts")
     private Collection<Category> categories;
+
+    @Override
+    public int compareTo(Events u) {
+        if (getCreatedDate() == null || u.getCreatedDate() == null) {
+            return 0;
+        }
+        return getCreatedDate().compareTo(u.getCreatedDate());
+    }
 }

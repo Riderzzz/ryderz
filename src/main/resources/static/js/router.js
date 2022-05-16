@@ -31,7 +31,7 @@ export default function router(URI, Id) {
         '/': {
             returnView: Home,
             state: {
-                user: '/api/users/me'
+
             },
             uri: '/',
             title: 'Home',
@@ -98,6 +98,7 @@ export default function router(URI, Id) {
             uri: '/newsfeed',
             state: {
                 posts: "/api/posts/friendsPost",
+                events: "/api/events/friendsEvents",
                 user: "/api/users/me"
             },
             title: 'News Feed',
@@ -165,6 +166,7 @@ export default function router(URI, Id) {
             state : {
                 profile: `/api/users/1`
             },
+            title: 'Profile',
             viewEvent: showFriendsProfile
         },
 
