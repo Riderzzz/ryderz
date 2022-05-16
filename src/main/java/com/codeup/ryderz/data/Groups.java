@@ -41,7 +41,7 @@ public class Groups {
 
     @ToString.Exclude
     @ManyToOne
-    @JsonIgnoreProperties({"groupsOwned", "events", "groupsJoined", "posts"})
+    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId"})
     private User groupOwner;
 
     @ManyToMany(
@@ -61,5 +61,6 @@ public class Groups {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "group")
+    @JsonIgnoreProperties({"group", "post", "event", "comments", "eventCreator"})
     private Collection<Comments> comments;
 }

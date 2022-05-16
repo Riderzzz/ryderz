@@ -32,6 +32,7 @@ export default function CreateGroup() {
 
 
                 <p id="character-warning-on-submit"></p>
+                <button class="backToDiscover btn btn-dark">Back to discover</button>
                 <input id="newGroupSubmit" class="btn btn-dark" type="button" value="Submit">
             </form>
         </div>
@@ -43,6 +44,13 @@ export default function CreateGroup() {
 
 export function CreateGroupEvents() {
 	createGroupSubmitListener();
+	backToDiscoverBtn();
+}
+
+function backToDiscoverBtn() {
+	$(".backToDiscover").click(function () {
+		createView('/discover')
+	})
 }
 
 function createGroupSubmitListener() {

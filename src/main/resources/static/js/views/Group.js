@@ -1,6 +1,6 @@
 import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
-
+//TODO: delete group / leave group
 export default function Group(props) {
 	console.log(props)
 	//language=HTML
@@ -71,6 +71,7 @@ export function GroupEvents() {
 	backToDiscoverBtn();
 	cancelEditsBtn();
 	createCommentListener();
+	deleteGroupBtn();
 }
 
 function backToDiscoverBtn() {
@@ -148,12 +149,44 @@ function editGroupSubmitBtn(groupName, OGBio, OGLocation) {
 	})
 }
 
+function deleteGroupBtn() {
+	$("#deleteGroup").click(function () {
+		let groupId = $(this).data("id");
+		let warningPTag = $("#character-warning-on-submit");
+
+		if (confirm("Delete this group?") === false) {
+			return;
+		}
+
+		const requestObject = {
+			method: "DELETE",
+			headers: getHeaders()
+		}
+
+		fetch(`http://localhost:8081/api/groups/${groupId}`, requestObject)
+			.then(res => {
+				console.log(res.status)
+				if (res.status !== 200) {
+					console.log(res);
+					warningPTag.text("Error submitting changes!");
+					warningPTag.css("color", "red");
+					return;
+				}
+				createView('/discover')
+			})
+			.catch(error => {
+				console.log(error);
+				warningPTag.text("Error submitting changes!");
+				warningPTag.css("color", "red");
+			})
+	})
+}
+
 function createCommentListener() {
 	$("#button-addon").click(function () {
 		let groupId = $(this).data("id");
 		let content = $("#comment-content").val();
-		console.log(groupId);
-		console.log(content);
+		let warningPTag = $("#character-warning-on-submit");
 
 		const commentObject = {
 			content,
@@ -173,8 +206,9 @@ function createCommentListener() {
 				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
+					return;
 				}
-				createView('/group', );
+				createView('/group', groupId);
 			})
 			.catch(error => {
 				console.log(error);
@@ -191,6 +225,7 @@ function createCommentListener() {
 function groupInfoPopulateHTML(props) {
 	//language=HTML
 	let html = `
+        <!--		TODO: add delete group option set up with backend-->
         <div class="groupCol">
             <h1>Group</h1>
             <h2><span class="groupName">${props.group.name}</span></h2>
@@ -245,6 +280,7 @@ function groupInfoPopulateHTML(props) {
                 <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
                 <input id="editGroupSubmit" data-id="${props.group.id}" class="btn btn-dark" type="button"
                        value="Submit">
+                <button class="btn btn-danger" data-id="${props.group.id}" id="deleteGroup">Delete</button>
             </form>
         </div>
 	`
@@ -295,10 +331,11 @@ function populateGroupCommentsHTML(props) {
 		let html = `
             <h1>Comments</h1>
             <div id="groupCommentsContainer">
-                ${props.group.comments.forEach(comment => {
-                    html += `<div class="card card-body p-2">
+                ${props.group.comments.reverse().map(comment =>
+                        `<div class="card card-body p-2 m-3">
                         <div class="d-flex">
                             <div class="info d-flex">
+<!--                            TODO: add delete icon to delete comment-->
                                 <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
                                 <div class="names">
                                     <div class="username">${comment.author.username}</div>
@@ -306,8 +343,8 @@ function populateGroupCommentsHTML(props) {
                                 </div>
                             </div>
                         </div>
-                    </div>`
-                }).join('')}
+                    </div>
+                `).join('')}
             </div>
 		`
 		return html;

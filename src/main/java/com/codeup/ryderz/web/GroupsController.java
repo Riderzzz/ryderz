@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,9 @@ public class GroupsController {
             String email = auth.getName();
             User user = userRepository.findByEmail(email);
             newGroup.setGroupOwner(user);
+            List<User> users = new ArrayList<>();
+            users.add(user);
+            newGroup.setUsers(users);
         }
 
         groupsRepository.save(newGroup);
@@ -73,8 +77,26 @@ public class GroupsController {
         groupsRepository.save(groupToJoin);
     }
 
+    @DeleteMapping("{groupId}/removeUser")
+    public void removeUserFromGroup(@PathVariable Long groupId, @RequestParam Long userId) {
+        User userToRemove = userRepository.getById(userId);
+        Groups group = groupsRepository.getById(groupId);
+
+        List<User> users = group.getUsers();
+
+        users.remove(userToRemove);
+
+        group.setUsers(users);
+
+        groupsRepository.save(group);
+    }
+
     @DeleteMapping("{groupId}")
+//    Todo:if users in group delete them from group_users table before deleting group
     public void deleteGroup(@PathVariable Long groupId) {
+        Groups group = groupsRepository.getById(groupId);
+        group.setUsers(null);
+        groupsRepository.save(group);
         groupsRepository.deleteById(groupId);
     }
 }

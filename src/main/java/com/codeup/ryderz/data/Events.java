@@ -82,7 +82,7 @@ public class Events {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "event")
-    @JsonIgnoreProperties({"event", "post", "comments", "eventCreator"})
+    @JsonIgnoreProperties({"event", "post", "group", "comments", "eventCreator"})
     private Collection<Comments> comments;
 
     @ManyToMany(
