@@ -11,7 +11,6 @@ export default function Profile(props) {
         <title>${props.profile.username}</title>
     </head>
     <body>
-
     <section class="bg-white shadow">
         <div class="container">
             <section class="user-images mb-5">
