@@ -28,8 +28,16 @@ public class UsersController {
 
     @GetMapping("me")
     private User getMyInfo(OAuth2Authentication auth){
-        String userName = auth.getName();
-        return userRepository.findByEmail(userName);
+
+        try{
+            String userName = auth.getName();
+            return userRepository.findByEmail(userName);
+        }catch (NullPointerException e) {
+            return userRepository.findByEmail("temp@temp.com");
+        }
+
+
+
     }
     @GetMapping
     private List<User> getUser() {
@@ -62,7 +70,7 @@ public class UsersController {
 
         System.out.println("Ready to add user." + newUser);
 
-        userRepository.save(newUser);
+        userRepository.save(user);
     }
 
     @PutMapping("{id}")
