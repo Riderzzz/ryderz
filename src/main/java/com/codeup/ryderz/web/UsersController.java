@@ -53,6 +53,13 @@ public class UsersController {
         return userRepository.findAll();
     }
 
+//    TODO: upload image file.
+//    upload user image
+//    receive file from front end
+//    If user !image upload file
+//    s3Service.deleteFile
+//    else --> delete current image --> upload new image
+
 
 
     @GetMapping("{userID}")

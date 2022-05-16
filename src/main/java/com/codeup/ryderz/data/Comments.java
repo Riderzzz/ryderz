@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -35,6 +34,7 @@ public class Comments {
 
     @ToString.Exclude
     @ManyToOne
+    @JsonIgnoreProperties({"comments", "groupOwner", "users", } )
     private Groups group;
 
     @ToString.Exclude

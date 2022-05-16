@@ -52,6 +52,7 @@ public class User {
 
 
     @OneToMany(mappedBy = "groupOwner")
+    @ToString.Exclude
     @JsonIgnoreProperties({"groupOwner", "users"})
     private Collection<Groups> groupsOwned;
 
