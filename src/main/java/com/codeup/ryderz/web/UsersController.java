@@ -29,6 +29,12 @@ public class UsersController {
     @GetMapping("me")
     private User getMyInfo(OAuth2Authentication auth){
 
+        /*
+        Navbar calls this function everytime it gets loaded, on startup, there is nobody logged in for it to get
+        information from and would throw error.
+        in the catch it returns a temp user so it doesnt throw and errors
+         */
+
         try{
             String userName = auth.getName();
             return userRepository.findByEmail(userName);
