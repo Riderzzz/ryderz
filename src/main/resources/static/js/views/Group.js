@@ -68,10 +68,70 @@ export function GroupEvents() {
 	const OGLocation = $(".groupLocation").text();
 	editGroupBtn(groupName, OGBio, OGLocation);
 	editGroupSubmitBtn(groupName, OGBio, OGLocation);
+	joinGroupBtn();
+	leaveGroupBtn();
 	backToDiscoverBtn();
 	cancelEditsBtn();
 	createCommentListener();
 	deleteGroupBtn();
+}
+
+function joinGroupBtn() {
+	$(".joinGroupBtn").click(function () {
+		const groupId = $(this).data("id");
+		console.log(groupId);
+		let warningPTag = $("#character-warning-on-submit");
+
+		let request = {
+			method: "PUT",
+			headers: getHeaders()
+		}
+
+		fetch(`http://localhost:8081/api/groups/${groupId}/adduser`, request)
+			.then(res => {
+				console.log(res.status)
+				if (res.status !== 200) {
+					console.log(res);
+					warningPTag.text("Error submitting changes!");
+					warningPTag.css("color", "red");
+				}
+				createView('/group', groupId);
+			})
+			.catch(error => {
+				console.log(error);
+				warningPTag.text("Error submitting changes!");
+				warningPTag.css("color", "red");
+			})
+
+	})
+}
+
+function leaveGroupBtn() {
+	$(".leaveGroupBtn").click(function () {
+		const groupId = $(this).data("id");
+		let warningPTag = $("#character-warning-on-submit");
+
+		let request = {
+			method: "DELETE",
+			headers: getHeaders()
+		}
+
+		fetch(`http://localhost:8081/api/groups/${groupId}/remove-user`, request)
+			.then(res => {
+				console.log(res.status)
+				if (res.status !== 200) {
+					console.log(res);
+					warningPTag.text("Error submitting changes!");
+					warningPTag.css("color", "red");
+				}
+				createView('/group', groupId);
+			})
+			.catch(error => {
+				console.log(error);
+				warningPTag.text("Error submitting changes!");
+				warningPTag.css("color", "red");
+			})
+	})
 }
 
 function backToDiscoverBtn() {
@@ -241,7 +301,7 @@ function groupInfoPopulateHTML(props) {
 		html += `<button class="editGroupBtn btn btn-dark">Edit Group</button>`
 	} else if (props.group.users.length === 0) {
 		console.log("length 0")
-		html += `<button class="joinGroupBtn btn btn-dark">Join Group</button>`
+		html += `<button class="joinGroupBtn btn btn-dark" data-id="${props.group.id}">Join Group</button>`
 	} else if (props.group.users.length > 0) {
 		arrayEmpty = false;
 		props.group.users.forEach(user => {
@@ -251,9 +311,9 @@ function groupInfoPopulateHTML(props) {
 		})
 	}
 	if (found) {
-		html += `<button class="joinGroupBtn btn btn-dark">Leave Group</button>`
+		html += `<button class="leaveGroupBtn btn btn-dark" data-id="${props.group.id}">Leave Group</button>`
 	} else if (!found && arrayEmpty === false) {
-		html += `<button class="joinGroupBtn btn btn-dark">Join Group</button>`
+		html += `<button class="joinGroupBtn btn btn-dark" data-id="${props.group.id}">Join Group</button>`
 	}
 	//language=HTML
 	html += `

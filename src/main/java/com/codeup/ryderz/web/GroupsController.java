@@ -64,22 +64,22 @@ public class GroupsController {
     }
 
     @PutMapping("{addGroupId}/adduser")
-    public void addUserToGroup(@PathVariable Long addGroupId, @RequestParam Long userId) {
-        User userJoiningGroup = userRepository.getById(userId);
+    public void addUserToGroup(@PathVariable Long addGroupId, OAuth2Authentication auth) {
+        User userToJoin = userRepository.findByEmail(auth.getName());
         Groups groupToJoin = groupsRepository.getById(addGroupId);
 
         List<User> groupsUsers = groupToJoin.getUsers();
 
-        groupsUsers.add(userJoiningGroup);
+        groupsUsers.add(userToJoin);
 
         groupToJoin.setUsers(groupsUsers);
 
         groupsRepository.save(groupToJoin);
     }
 
-    @DeleteMapping("{groupId}/removeUser")
-    public void removeUserFromGroup(@PathVariable Long groupId, @RequestParam Long userId) {
-        User userToRemove = userRepository.getById(userId);
+    @DeleteMapping("{groupId}/remove-user")
+    public void removeUserFromGroup(@PathVariable Long groupId, OAuth2Authentication auth) {
+        User userToRemove = userRepository.findByEmail(auth.getName());
         Groups group = groupsRepository.getById(groupId);
 
         List<User> users = group.getUsers();
