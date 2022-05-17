@@ -47,11 +47,13 @@ export default function Register(props) {
                                             </button>
 
                                         </div>
+                                        
                                         <div class="d-flex justify-content-center">
-                                        <small id="emailHelp" class="form-text">We'll never share your email with anyone
-                                            else.
-                                        </small>
+                                            <small id="emailHelp" class="form-text">We'll never share your email with anyone
+                                                else.
+                                            </small>
                                         </div>
+                                        
                                         <p class="text-center text-muted mt-5 mb-0">Already have an account?
                                             <a href="#!" class="fw-bold text-body">
                                                 <u>Login here</u>

@@ -13,21 +13,40 @@ export default function Discover(props) {
     <div class="container">
         <div class="row">
             <div class="col-md-8 justify-content-center">
-                <h1>Discover</h1>
+                <h1 class="mt-2">Discover</h1>
             </div>
             <div class="col-md-4">
                 <button class="btn btn-dark mt-3 mx-2 createGroupBtn">Create Group</button>
                 <button class="btn btn-dark mt-3 mx-2 createEventBtn">Create Event</button>
             </div>
         </div>
+        <div class="row mt-4">
+            <div class="col">
+                <ul class="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active bg-dark text-white" id="pills-home-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                aria-selected="true">Groups
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link bg-dark text-white" id="pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false">Events
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div class="row">
-            <div class="col justify-content-center">
-                <h3>Groups</h3>
-                <div id="groups-container" class="col-md-7">
-                    ${props.groups.reverse().map(group =>
-
-                            `
-			<div class="form-holder mb-3 border border-dark rounded bg-dark text-white p-4" data-id="${group.id}">
+            <div class="tab-content" id="pills-tabContent">
+                <div class="container tab-pane fade show active" id="pills-home" role="tabpanel"
+                     aria-labelledby="pills-home-tab">
+                    <h3 class="text-center">Groups</h3>
+                    <div id="groups-container" class="row justify-content-center">
+                        ${props.groups.reverse().map(group =>
+                                `
+			<div class="col-4 form-holder m-2 border border-dark rounded bg-dark text-white p-4" data-id="${group.id}">
            		<h4 class="group-name-${group.id}">${group.name}</h4>
            		<h5 class="group-location-${group.id}">${group.location}</h5>
            		<h5>Members: ${group.users.length}</h5>
@@ -38,17 +57,16 @@ export default function Discover(props) {
 			<button class="btn btn-light group-page-btn" data-id="${group.id}">Go to Group page</button>
 			</div>
         `)
-                            .join('')}
+                                .join('')}
+                    </div>
                 </div>
-            </div>
-            <div class="col">
-                <h3>Events</h3>
+                <div class="container tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <h3 class="text-center">Events</h3>
 
-                <div id="groups-container" class="col-md-7">
-                    ${props.events.reverse().map(event =>
-
-                            `
-			<div class="form-holder mb-3 border border-dark rounded bg-dark text-white p-4" data-id="${event.id}">
+                    <div id="groups-container" class="row justify-content-center">
+                        ${props.events.reverse().map(event =>
+                                `
+			<div class="col-4 form-holder m-2 border border-dark rounded bg-dark text-white p-4" data-id="${event.id}">
            		<h4 class="event-name-${event.id}">${event.titleOfEvent}</h4>
            		<h5 class="event-location-${event.id}">${event.eventLocation}</h5>
            		<h5>Members: ${event.usersId.length}</h5>
@@ -60,10 +78,10 @@ export default function Discover(props) {
            		<p class="event-owner-${event.id}">Organizer: ${event.eventCreator.username}</p>
            		<p>State of event: <span class="stateOfEvent">${event.stateOfEvent}</span></p>
 				<button class="btn btn-light event-page-btn" data-id="${event.id}">Go to Event page</button>
-
 			</div>
         `)
-                            .join('')}
+                                .join('')}
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,4 +110,18 @@ export function DiscoverEvents() {
 	$(".createEventBtn").click(function () {
 		createView('/createEvent')
 	})
+}
+
+function groupsHTML(props) {
+	//language=HTML
+	return `
+
+	`;
+}
+
+function eventsHTML(props) {
+	//language=HTML
+	return `
+
+	`
 }
