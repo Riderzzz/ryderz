@@ -1,15 +1,25 @@
 export default function Home(props) {
 
     return `
-        <header>
-            <h1>Home Page</h1>
-        </header>
         <main>
-            <div>
-                <p>
-                    This is the home page text.
-                </p>    
+        
+            <div class="pic-large d-none d-lg-block">
+                <div class="row">
+                    <div class="col-7"></div>
+                    <div class="col-5 mt-4">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad cupiditate dicta fugit libero magni minus qui recusandae rem rerum tenetur?</p>
+                        <div>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/login" data-link="Login">Login</a></button>
+                                <button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/register" data-link="Register">Register</a></button>
+                            </div>
+                        </div>    
+                    </div> 
+                </div>            
             </div>
+            <div class="pic-small d-lg-none">
+            
+            </div> 
         </main>
     `;
 }
