@@ -2,13 +2,30 @@
     background: rgba(0, 0, 0, 0.6) url("../images/scenic.jpg");
     background-size: cover;
 }
-.create-account-card {
-
+#username {
+    background: white url(../images/user-icon.png) right no-repeat;
+    /* height: 10px; */
+    margin-right: 10px;
+    padding-left: 10px;
+    background-size: 30px 30px;
 }
 
-.create-account-form {
-    opacity: 1;
+#email {
+    background: white url(../images/email-icon.png) right no-repeat;
+    /* height: 10px; */
+    margin-right: 10px;
+    padding-left: 10px;
+    background-size: 30px 30px;
+}
 
+#username-input-card {
+margin-bottom: 1px;
+}
+
+#email-icon {
+    margin-right: 15px;
+    height: 70px;
+    width: 70px;
 }
 .gradient-custom-3 {
 
@@ -30,8 +47,4 @@
 
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
-}
-
-#emailHelp {
-    margin-left: 117px;
 }
