@@ -1,12 +1,63 @@
-.shadow{
+.shadow {
     filter: drop-shadow(0px 0px 6px #222);
 }
-.shadow-profile-picture{
+
+.shadow-profile-picture {
     filter: drop-shadow(0px 0px 7px black);
 }
-body{
+
+.shadow-light {
+    filter: drop-shadow(0px 0px 5px #1B1B1B);
+}
+
+body {
     background-color: lightgray;
 }
 
+.btn {
+    background-color: black;
+    color: white;
+}
 
+.profile-header-photograph {
+    background-repeat: no-repeat;
+!important;
+    background-size: cover;
+!important;
+}
+
+.profile-card-header {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.go-to-profile-top {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.minutes-ago {
+    margin-left: 5px;
+    font-size: x-small;
+    margin-top: 15px;
+}
+
+.comment-users-posts {
+    border-radius: 18px;
+    background-color: lightgray;
+    border: none;
+}
+
+::placeholder{
+    color: darkgray;
+}
+
+.edit-post-button{
+    margin-left: auto;
+    margin-right: 10px;
+}
 
