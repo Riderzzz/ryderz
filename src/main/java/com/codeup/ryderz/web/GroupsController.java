@@ -74,6 +74,7 @@ public class GroupsController {
         groupsRepository.save(groupToUpdate);
     }
 
+//    TODO: Check if image exists to delete old image before adding a new image
     @PostMapping("{groupId}/upload")
     public ResponseEntity<String> uploadFile(@PathVariable Long groupId, @RequestParam(value = "file") MultipartFile file) {
         Groups group = groupsRepository.findById(groupId).get();
