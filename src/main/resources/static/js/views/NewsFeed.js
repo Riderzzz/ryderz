@@ -415,8 +415,8 @@ function eventCard(event) {
     //card-header-end
     //card-body-start
     html += `<div class="card-body pb-2">
-									<h5 class="card-title" id="post-title-${event.id}">${event.titleOfEvent}</h5>
-									<div class="starting-ending-addresses justify-content-between d-flex">
+									<h5 class="card-title d-flex justify-content-center justify-content-lg-start" id="post-title-${event.id}">${event.titleOfEvent}</h5>
+									<div class="starting-ending-addresses justify-content-between d-flex flex-column flex-lg-row align-items-center ">
 									    <div class="starting-address">Starting: lat-${event.startingLatitude}Long-${event.startingLongitude}</div>
 									    <div class="ending-address">Ending: lat-${event.endingLatitude}Long-${event.endingLongitude}</div>
 									    <div class="distance">Miles:(api data)</div>
