@@ -422,8 +422,8 @@ function eventCard(event) {
 									    <div class="distance">Miles:(api data)</div>
                                     </div>
                                     <div class="content-and-map row my-3">
-                                        <p class="card-text col-7" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
-                                        <div class="map col-5 mx-auto"></div>
+                                        <p class="card-text col-12 col-lg-7" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
+                                        <div class="map d-none d-lg-block col-lg-5 mx-auto"></div>
                                     </div>
 									<p class="card-text" id="post-categories-${event.id}">${event.categories.map(category => `${category.name}`).join(" ")}</p>
 									<div class="d-flex justify-content-between">
