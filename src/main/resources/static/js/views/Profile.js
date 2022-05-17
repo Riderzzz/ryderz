@@ -29,7 +29,7 @@ export default function Profile(props) {
             <section class="text-center border-bottom">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-6">
-                        <h2><strong>William Withers</strong></h2>
+                        <h2><strong>${props.profile.username}</strong></h2>
                         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </div>
                 </div>
@@ -80,16 +80,11 @@ export default function Profile(props) {
                     <div class="card  mb-4 shadow-light">
                         <div class="card-body">
                             <div class="card-title"><strong>Groups</strong></div>
-                            <ul class="list-unstyled">
-                                <li>asdf</li>
-                                <li>asdf</li>
-                            </ul>
-
-                            <div class="lightbox">
+                            <div>
                                 <div class="row d-flex">
                                     <div class="col-4 d-flex mb-3 justify-content-center">
                                         <img src="https://ehlinelaw.com/img/uploads/Leathernecks-MC-MCLI-Group-Riding.jpg"
-                                             alt="lightbox image 1" class="rounded-circle"
+                                             alt="image 1" class="rounded-circle"
                                              style="width: 90px;height: 90px;">
                                     </div>
                                     <div class="col-4 d-flex mb-3 justify-content-center">
@@ -124,69 +119,50 @@ export default function Profile(props) {
                     <!--end of groups-->
                     <!--users friend's on users profile-->
                     <div class="card shadow-light">
+                        ${props.profile.friends.map(friends => `
                         <div class="card-body">
                             <div class="card-title"><strong>Friends</strong></div>
                             <div>
                                 <div class="row d-flex">
                                     <div class="col-4 d-flex mb-3 justify-content-center">
-                                        <img src="https://ehlinelaw.com/img/uploads/Leathernecks-MC-MCLI-Group-Riding.jpg"
-                                             alt="image 1" class="rounded-circle"
-                                             style="border:1px black;width: 90px;height: 90px;">
-                                    </div>
-                                    <div class="col-4 d-flex mb-3 justify-content-center">
-                                        <img src="https://ehlinelaw.com/img/uploads/Leathernecks-MC-MCLI-Group-Riding.jpg"
-                                             alt="lightbox image 1" class="rounded-circle"
-                                             style="border:1px black;width: 90px;height: 90px;">
-                                    </div>
-                                    <div class="col-4 d-flex mb-3 justify-content-center">
-                                        <img src="https://ehlinelaw.com/img/uploads/Leathernecks-MC-MCLI-Group-Riding.jpg"
-                                             alt="lightbox image 1" class="rounded-circle"
-                                             style="border:1px black;width: 90px;height: 90px;">
-                                    </div>
-                                    <div class="col-4 d-flex mb-3 justify-content-center">
-                                        <img src="https://ehlinelaw.com/img/uploads/Leathernecks-MC-MCLI-Group-Riding.jpg"
-                                             alt="lightbox image 1" class="rounded-circle"
-                                             style="border-width:10px;width: 90px;height: 90px;">
-                                    </div>
-                                    <div class="col-4 d-flex mb-3 justify-content-center">
-                                        <img src="https://ehlinelaw.com/img/uploads/Leathernecks-MC-MCLI-Group-Riding.jpg"
-                                             alt="lightbox image 1" class="rounded-circle"
-                                             style="border:1px black;width: 90px;height: 90px;">
-                                    </div>
-                                    <div class="col-4 d-flex mb-3 justify-content-center">
-                                        <img src="https://ehlinelaw.com/img/uploads/Leathernecks-MC-MCLI-Group-Riding.jpg"
-                                             alt="lightbox image 1" class="rounded-circle"
-                                             style="border:1px black;width: 90px;height: 90px;">
+                                         <div class="justify-content-center">
+                                            <img src="${friends.userPhotoUrl}"
+                                                 alt="image 1" class="rounded-circle"
+                                                 style="width: 90px;height: 90px;">
+                                            <p class="text-center">${friends.username}</p>
+                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>`)}
+
                     </div>
                     <!--Friends End-->
                 </div>
                 <!--Posts start-->
                 <div class="col-7 mb-4 mb-md-0">
                     <!--cards for posts-->
-                    <div class="card shadow-light mb-4">
+                    ${props.profile.posts.map(post => ` 
+                        <div class="card shadow-light mb-4">
                         <!--head for card-->
                         <div class="profile-card-header d-flex">
                             <img src="https://ehlinelaw.com/img/uploads/Leathernecks-MC-MCLI-Group-Riding.jpg"
                                  alt="lightbox image 1" class="rounded-circle"
                                  style="width: 45px;height: 45px;">
                             <a class="go-to-profile-top" href="#">
-                                <strong>William Withers</strong>
+                                <strong>${props.profile.username}</strong>
                             </a>
                             <p class="text-muted minutes-ago"><small>20min ago</small></p>
-                            <a class="edit-post-button"><i class="fas fa-ellipsis-h"></i></a>
+                            <a class="edit-post-button" data-id="${post.id}"><i class="fas fa-ellipsis-h"></i></a>
                         </div>
                         <!--body of card-->
                         <div class="card-body">
-                            <p class="card-text">With supporting text below as a natural lead-in to additional
-                                content.</p>
+                            <p class="card-text">${post.content}</p>
                             <input class="comment-users-posts w-100" placeholder="Write a comment....">
                             
                         </div>
-                    </div>
+                    </div>`)}
+
                 </div>
                 <!--post end-->
             </div>
@@ -199,5 +175,4 @@ export default function Profile(props) {
 export function showFriendsProfile() {
 
 }
-
 

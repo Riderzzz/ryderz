@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 import javax.websocket.server.PathParam;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,9 +45,6 @@ public class UsersController {
         }catch (NullPointerException e) {
             return userRepository.findByEmail("temp@temp.com");
         }
-
-
-
     }
     @GetMapping
     private List<User> getUser() {
@@ -69,6 +67,14 @@ public class UsersController {
         usersInfo.setUserPhotoUrl(usersPhotoUrl);
         System.out.println(usersInfo);
         System.out.println(usersPhotoUrl);
+
+        Collection<User> listOfFriends = usersInfo.getFriends();
+        for (int i = 0; i < usersInfo.getFriends().size() ; i++) {
+            User currentUser = (User) listOfFriends.toArray()[i];
+            String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture());
+            currentUser.setUserPhotoUrl(friendsPhotoUrl);
+        }
+
         return usersInfo;
     }
 
@@ -119,18 +125,18 @@ public class UsersController {
 
     @PostMapping("{user1Id}/friends/{user2Id}")
     private void addFriend(@PathVariable User user1Id, @PathVariable Long user2Id){
-            User user1 = user1Id;
-            User user2 = userRepository.getById(user2Id);
+        User user1 = user1Id;
+        User user2 = userRepository.getById(user2Id);
 
-            user2.setFriends(new ArrayList<>());
-            user1.setFriends(new ArrayList<>());
+        user2.setFriends(new ArrayList<>());
+        user1.setFriends(new ArrayList<>());
 
-            user1.getFriends().add(user2);
-            user2.getFriends().add(user1);
+        user1.getFriends().add(user2);
+        user2.getFriends().add(user1);
 
 
-            userRepository.save(user1);
-            userRepository.save(user2);
+        userRepository.save(user1);
+        userRepository.save(user2);
     }
 
     @DeleteMapping("{user1Id}/friends/{user2Id}")
