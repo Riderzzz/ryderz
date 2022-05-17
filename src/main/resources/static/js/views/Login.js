@@ -86,9 +86,13 @@ export default function Login(props) {
             <form>
               
 
+              
               <!-- Email input -->
               <div class="form-outline mb-4" id="login-form">
-                      <img src="../../images/email.png" alt="email icon">
+                
+<!--                    <div id="email-icon">-->
+<!--                      <img src="../../images/email.png" alt="email icon">-->
+<!--                    </div>-->
                 <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email" />
                 <label class="form-label" for="form3Example3">Email address</label>
                 <small id="wrongMessage"></small>
@@ -110,10 +114,11 @@ export default function Login(props) {
 <!--              </div>-->
 
 <!--               Submit button -->
-              <button id ="login-btn" type="submit" value="Log In" class="glow-on-hover">
-          Login
-              </button>
-
+              <div class="d-flex justify-content-center">
+                <button id ="login-btn" type="submit" value="Log In" class="glow-on-hover">
+                Login
+                </button>
+              </div>
 
               <!-- Register buttons -->
 <!--              <div class="text-center">-->

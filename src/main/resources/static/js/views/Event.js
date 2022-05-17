@@ -41,15 +41,11 @@ export default function Event(props) {
                 </div>
                 <div class="map">Map goes here</div>
             </div>
-
-
         </div>
     </div>
     </body>
     </html>`;
-
 	return html;
-
 }
 
 export function EventEvents() {
@@ -84,19 +80,15 @@ function getTimeFormat(props) {
 	let date = localTime.getDate();
 	let hours = localTime.getHours();
 	let minutes = localTime.getMinutes();
-
 	if (localTime.getMonth() < 10) {
 		month = "0" + month;
 	}
-
 	if (localTime.getDate() < 10) {
 		date = "0" + date;
 	}
-
 	if (localTime.getHours() < 10) {
 		hours = "0" + hours;
 	}
-
 	if (localTime.getMinutes() < 10) {
 		minutes = "0" + minutes;
 	}
@@ -216,7 +208,6 @@ function cancelEditsBtn() {
 }
 
 function checkUserEventStatus(props) {
-	let html;
 	let found = false;
 	if (props.event.usersId.length > 0) {
 		props.event.usersId.forEach(user => {
@@ -225,8 +216,7 @@ function checkUserEventStatus(props) {
 			}
 		})
 	}
-	//language=HTML
-	html += `<h1>${props.event.titleOfEvent}</h1>
+	let html = `<h1>${props.event.titleOfEvent}</h1>
     <h4>${props.event.descriptionOfEvent}</h4>`
 
 	if (userEmail() === props.event.eventCreator.email) {
@@ -288,6 +278,7 @@ function checkIfCommentsExist(props) {
 
 function editEventBtn(OGState, OGStatusOfEvent, OGCategories) {
 	$(".editEventBtn").click(function () {
+		//Auto select options from original event
 		$("#states").val(OGState).prop('selected', 'true');
 		$("#eventStatus").val(OGStatusOfEvent).prop('selected', 'true');
 
@@ -309,17 +300,13 @@ function editEventBtn(OGState, OGStatusOfEvent, OGCategories) {
 				console.log(data)
 				//feed categories to form
 				let html = `
-					${data.map(cat =>
-					`
+					${data.map(cat => `
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" ${OGCategories.includes(cat.name) ? "checked" : ""} type="checkbox" id="category-${cat.id}" value="${cat.name}">
                                     <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
                                 </div>
                             `)
-					.join('')}
-		
-		`
-
+					.join('')}`
 				$(".formCategories").html(html)
 			})
 			.catch(error => {
