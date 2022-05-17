@@ -1,3 +1,5 @@
+import {isLoggedIn} from "../auth.js";
+
 export default function Home(props) {
 
     return `
@@ -9,10 +11,7 @@ export default function Home(props) {
                     <div class="col-5 mt-4">
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad cupiditate dicta fugit libero magni minus qui recusandae rem rerum tenetur?</p>
                         <div>
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/login" data-link="Login">Login</a></button>
-                                <button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/register" data-link="Register">Register</a></button>
-                            </div>
+                            ${loginAndRegister()}
                         </div>    
                     </div> 
                 </div>            
@@ -22,4 +21,14 @@ export default function Home(props) {
             </div> 
         </main>
     `;
+}
+
+function loginAndRegister() {
+    if (!isLoggedIn()) {
+        return `<div class="d-flex justify-content-end">
+                                <button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/login" data-link="Login">Login</a></button>
+                                <button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/register" data-link="Register">Register</a></button>
+                            </div>`
+    }
+    return ``
 }
