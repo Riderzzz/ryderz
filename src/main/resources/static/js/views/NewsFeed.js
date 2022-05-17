@@ -244,7 +244,7 @@ function joinBtnIfLoggedInAndNotJoined(usersJoined, eventId) {
             return `<div>
 
                 <button class="btn btn-sm btn-dark mx-2" type="button" data-id="${eventId}">
-                    Leave
+                    Leave <i class="bi bi-dash-lg"></i>
                 </button>
                 
             </div>`
@@ -254,7 +254,7 @@ function joinBtnIfLoggedInAndNotJoined(usersJoined, eventId) {
     return `<div>
     
     <button class="btn btn-sm btn-dark mx-2" type="button" data-id="${eventId}">
-	    Join
+	    Join <i class="bi bi-plus-lg"></i>
 	</button>
     
 </div>`
@@ -426,7 +426,7 @@ function eventCard(event) {
                                         <div class="map d-none d-lg-block col-lg-5 mx-auto"></div>
                                     </div>
 									<p class="card-text" id="post-categories-${event.id}">${event.categories.map(category => `${category.name}`).join(" ")}</p>
-									<div class="d-flex justify-content-between">
+									<div class="d-flex justify-content-between align-items-center">
 									    <div class="d-flex">
 									        <button class="btn btn-sm btn-dark me-2" type="button" data-bs-toggle="collapse" data-bs-target="#event-${event.id}-collapseComments" aria-expanded="false" aria-controls="event-${event.id}-collapseComments">
 										    Comments
