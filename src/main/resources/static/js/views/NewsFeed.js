@@ -31,6 +31,7 @@ export default function NewsFeed(props) {
     let html =
         `
             <div class="container-fluid">
+                <div class="username" data-username="${props.user.username}"></div>
                 <div class="row">
                     <div class="sidebar-container col-2  d-none d-lg-block">
                         ${newsfeedSidebarHtml(props)}
@@ -70,6 +71,7 @@ function showProfilePage() {
 function commentOnPost() {
     $(".post-comment-btn").click(function () {
         let postId = $(this).data("id")
+        let username = $('.username').data("username")
         const content = $('#comment-content-' + postId).val()
 
         //author field gets set in backend
@@ -93,7 +95,8 @@ function commentOnPost() {
         }).catch(function () {
             console.log("error")
         }).finally(function () {
-            createView("/newsfeed")
+            let commentSection = $('.post-' + postId + '-comments')
+            commentSection.html(showComment(commentObject, username) + commentSection.html())
         });
     });
 }
@@ -101,6 +104,7 @@ function commentOnPost() {
 function commentOnEvent() {
     $(".event-comment-btn").click(function () {
         let eventId = $(this).data("id")
+        let username = $('.username').data("username")
         const content = $('#comment-content-' + eventId).val()
 
         //author field gets set in backend
@@ -124,7 +128,8 @@ function commentOnEvent() {
         }).catch(function () {
             console.log("error")
         }).finally(function () {
-            createView("/newsfeed")
+            let commentSection = $('.event-' + eventId + '-comments')
+            commentSection.html(showComment(commentObject, username) + commentSection.html())
         });
     });
 }
@@ -236,7 +241,6 @@ function formatDate(d) {
 }
 
 function joinBtnIfLoggedInAndNotJoined(usersJoined, eventId) {
-    console.log(usersJoined)
 
     for (const user of usersJoined) {
         if (user.email === userEmail()) {
@@ -369,7 +373,8 @@ function postCard(post) {
 											<input type="text" id="comment-content-${post.id}" class="form-control" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
 											<button class="btn btn-outline-secondary post-comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
 										</div>
-										${post.comments.map(comment =>
+										<div class="post-${post.id}-comments">
+										${post.comments.reverse().map(comment =>
         `
 			
 										<div class="card card-body p-2">
@@ -386,6 +391,7 @@ function postCard(post) {
 										</div>
 			
 									`).join("")}
+										</div>
 									</div>
 									
 								</div>`	//card-body end
@@ -441,10 +447,10 @@ function eventCard(event) {
 											<input type="text" id="comment-content-${event.id}" class="form-control" data-postId="${event.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${event.id}">
 											<button class="btn btn-outline-secondary event-comment-btn" data-id="${event.id}" type="button" id="button-addon-${event.id}">comment</button>
 										</div>
-										${event.comments.map(comment =>
+										<div class="event-${event.id}-comments">
+										${event.comments.reverse().map(comment =>
         `
-			
-										<div class="card card-body p-2">
+			                                <div class="card card-body p-2">
                                             <div class="d-flex">
                                                 <div class="info d-flex">
                                                     <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
@@ -456,6 +462,7 @@ function eventCard(event) {
                                                 
                                             </div>
 										</div>
+										
 			
 									`).join("")}
 									</div>
@@ -467,3 +474,16 @@ function eventCard(event) {
     return html;
 }
 
+function showComment(comment, username) {
+    return `<div class="card card-body p-2">
+                                            <div class="d-flex">
+                                                <div class="info d-flex">
+                                                    <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
+                                                    <div class="names">
+                                                        <div class="username">${username}</div>
+                                                        <div class="content">${comment.content}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+										</div>`
+}
