@@ -415,15 +415,15 @@ function eventCard(event) {
     //card-header-end
     //card-body-start
     html += `<div class="card-body pb-2">
-									<h5 class="card-title" id="post-title-${event.id}">${event.titleOfEvent}</h5>
-									<div class="starting-ending-addresses justify-content-between d-flex">
+									<h5 class="card-title d-flex justify-content-center justify-content-lg-start" id="post-title-${event.id}">${event.titleOfEvent}</h5>
+									<div class="starting-ending-addresses justify-content-between d-flex flex-column flex-lg-row align-items-center ">
 									    <div class="starting-address">Starting: lat-${event.startingLatitude}Long-${event.startingLongitude}</div>
 									    <div class="ending-address">Ending: lat-${event.endingLatitude}Long-${event.endingLongitude}</div>
 									    <div class="distance">Miles:(api data)</div>
                                     </div>
                                     <div class="content-and-map row my-3">
-                                        <p class="card-text col-7" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
-                                        <div class="map col-5 mx-auto"></div>
+                                        <p class="card-text col-12 col-lg-7" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
+                                        <div class="map d-none d-lg-block col-lg-5 mx-auto"></div>
                                     </div>
 									<p class="card-text" id="post-categories-${event.id}">${event.categories.map(category => `${category.name}`).join(" ")}</p>
 									<div class="d-flex justify-content-between">
