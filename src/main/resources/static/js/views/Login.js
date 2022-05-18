@@ -93,8 +93,8 @@ export default function Login(props) {
 <!--                    <div id="email-icon">-->
 <!--                      <img src="../../images/email.png" alt="email icon">-->
 <!--                    </div>-->
-                <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email" />
-                <label class="form-label" for="form3Example3">Email address</label>
+                <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter username" />
+                <label class="form-label" for="form3Example3">Username</label>
                 <small id="wrongMessage"></small>
               </div>
 
