@@ -9,8 +9,10 @@ export let editPostId;
 export let editPostTitle;
 export let editPostContent;
 export let editPostCategories;
+let allProps;
 
 export default function NewsFeed(props) {
+    allProps = props
     let mixedProps = [];
     for (let post of props.posts) {
         post.date = new Date(post.createDate)
@@ -40,6 +42,10 @@ export default function NewsFeed(props) {
                         ${newsfeedPostsHtml(sortedProps)}
                     </div>
                 </div>
+                <div class="modal-container">
+                    ${createPostModal(props)}
+                    ${editPostModal(props)}           
+                </div>
             </div>
         `
 
@@ -50,7 +56,7 @@ export function NewsFeedEvents() {
 
     commentOnPost();
     createPostBtn();
-    editPostBtn();
+    populateEditPostBtn(allProps);
     deletePostBtn();
     sideBarGroupBtn();
     sideBarEventBtn();
@@ -59,6 +65,7 @@ export function NewsFeedEvents() {
     editEventBtn();
     deleteEventBtn();
     commentOnEvent();
+    editPostBtn();
 }
 function showProfilePage() {
     $(".view-profile-page").click(function () {
@@ -136,20 +143,102 @@ function commentOnEvent() {
 
 function createPostBtn() {
     $(".create-post-btn").click(function () {
-        createView('/createPost')
+        // createView('/createPost')
+        let selectedCategories = [];
+
+        $('input[type="checkbox"]:checked').each(function() {
+            console.log(this.value);
+            selectedCategories.push({name: this.value})
+
+        });
+
+        console.log(selectedCategories)
+
+        const title = $('#createPostTitle').val();
+        const content = $('#createPostContent').val();
+        const categories = selectedCategories;
+
+        const postObject = {
+            title,
+            content,
+            categories
+        }
+        console.log(postObject);
+        const requestObject = {
+            method: "POST",
+            headers: getHeaders(),
+            body: JSON.stringify(postObject)
+        }
+
+        fetch(POST_URI, requestObject).then(r => {
+            console.log("post created")
+        }).catch(r => {
+            console.log('error')
+        }).finally(r => {
+            createView('/newsfeed')
+        })
     })
 }
 
-function editPostBtn() {
+function populateEditPostBtn(props) {
     $(".post-edit-btn").click(function () {
+
+        //----start populating modal with posts info
         editPostId = $(this).data("id");
-        editPostTitle = $('#post-title-' + editPostId).text();
-        editPostContent = $('#post-content-' + editPostId).text();
         editPostCategories = $('#post-categories-' + editPostId).text();
         editPostCategories = editPostCategories.split(" ");
 
-        createView('/editPost')
+        $('.edit-post-checkbox').each(function() {
+            if (editPostCategories.includes($(this).val())) {
+                $(this).prop('checked', true)
+            }
+        });
+
+        $('#editPostTitle').val($('#post-title-' + editPostId).text())
+        $('#editPostContent').val($('#post-content-' + editPostId).text());
+        //----end populating modal with posts info
+
+
+        // createView('/editPost')
     });
+}
+
+function editPostBtn() {
+    $('.edit-post-btn').click(e => {
+
+        let selectedCategories = [];
+
+        $('input[type="checkbox"]:checked').each(function() {
+            selectedCategories.push({name: this.value})
+
+        });
+
+        // console.log(selectedCategories)
+
+        const title = $('#editPostTitle').val();
+        const content = $('#editPostContent').val();
+        const categories = selectedCategories;
+
+        const postObject = {
+            title,
+            content,
+            categories
+        }
+        console.log(postObject);
+        const requestObject = {
+            method: "PUT",
+            headers: getHeaders(),
+            body: JSON.stringify(postObject)
+        }
+
+        fetch(`${POST_URI}/${editPostId}`, requestObject).then(r => {
+            console.log("post edited")
+        }).catch(r => {
+            console.log('error')
+        }).finally(r => {
+            createView('/newsfeed')
+        })
+    })
 }
 
 function deletePostBtn() {
@@ -318,6 +407,10 @@ function newsfeedPostsHtml(sortedProps) {
 
     let html = `
         <header class="d-flex justify-content-between m-3">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                Launch demo modal
+            </button>
             <div class="mx-4"><h3>News Feed</h3></div>
             <button class="btn btn-dark create-post-btn mx-4">Create Post</button>
         </header>
@@ -349,7 +442,7 @@ function postCard(post) {
 				`
 
     if (userEmail() === post.author.email) {
-        html += `<div class="edit-delete"><i data-id="${post.id}" class="bi bi-pen post-edit-btn mx-1"></i><i data-id="${post.id}" class="bi bi-x-lg post-delete-btn ml-1"></i></div>`
+        html += `<div class="edit-delete"><i data-id="${post.id}" class="bi bi-pen post-edit-btn mx-1" data-bs-toggle="modal" data-bs-target="#editModal"></i><i data-id="${post.id}" class="bi bi-x-lg post-delete-btn ml-1"></i></div>`
     }
 
     html += `
@@ -469,7 +562,7 @@ function eventCard(event) {
 			
 									`).join("")}
 									</div>
-									
+								</div>
 								</div>`	//card-body end
 
     html += `</div>`//ending div of card
@@ -489,4 +582,99 @@ function showComment(comment, username) {
                                                 </div>
                                             </div>
 										</div>`
+}
+
+function createPostModal(props) {
+    return `
+<!-- Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Create Post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="m-3">
+                        <div class="mb-3">
+                          <label for="createPostTitle" class="form-label">Title</label>
+                          <input type="email" class="form-control" id="createPostTitle">
+                        </div>
+                        <div class="mb-3">
+                          <label for="createPostContent" class="form-label">Content</label>
+                          <textarea class="form-control" id="createPostContent" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                         ${props.categories.map(cat =>
+        `
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="category-${cat.id}" value="${cat.name}">
+                                    <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
+                                </div>
+                            `)
+        .join('')}
+                        </div>
+<!--                        <div class="mb-3 d-flex justify-content-end">-->
+<!--                            <button class="btn btn-dark create-post-btn mx-4">Create Post</button>-->
+<!--                        </div>-->
+                    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-dark create-post-btn" data-bs-dismiss="modal">Create</button>
+      </div>
+    </div>
+  </div>
+</div>`
+}
+
+function editPostModal(props) {
+    console.log(props)
+    return `<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="m-3">
+                        <div class="mb-3">
+                          <label for="editPostTitle" class="form-label">Title</label>
+                          <input type="email" class="form-control" id="editPostTitle" value="${editPostTitle}">
+                        </div>
+                        <div class="mb-3">
+                          <label for="editPostContent" class="form-label">Content</label>
+                          <textarea class="form-control" id="editPostContent" rows="3">${editPostContent}</textarea>
+                        </div>
+                        <div class="mb-3">
+                         ${props.categories.map(cat => {
+        let categoriesHtml = `
+                                <div class="form-check form-check-inline">
+                                                 `;
+
+        // if(editPostCategories.includes(cat.name)){
+        //     categoriesHtml += `<input class="form-check-input" type="checkbox" id="category-${cat.id}" value="${cat.name}" checked>`
+        // } else {
+            categoriesHtml += `<input class="form-check-input edit-post-checkbox" type="checkbox" id="category-${cat.id}" value="${cat.name}">`
+        // }
+        categoriesHtml += `
+                                    <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
+                                </div>
+                            `
+        return categoriesHtml;
+    })
+        .join('')}
+                        </div>
+                    
+                    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-dark edit-post-btn" data-bs-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>`
 }
