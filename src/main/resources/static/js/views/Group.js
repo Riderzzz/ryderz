@@ -279,21 +279,21 @@ function createCommentListener() {
 function uploadGroupImgHeader() {
 	$("#submitGroupHeaderImg").click(function () {
 		let groupId = $(this).data("id");
-		let file = $("#groupHeaderFile").prop('files')[0];
+		let file = document.getElementById("groupHeaderFile");
 		let warningPTag = $("#file-warning-on-submit");
 		let formData = new FormData();
+		console.log(file.files)
 
-		formData.append("file", file);
+		formData.append("file", file.files[0]);
 		console.log(groupId);
 		console.log(file);
 
 		const requestObject = {
 			method: "POST",
-			headers: getHeaders(),
 			body: formData
 		}
 
-		fetch(`http://localhost:8081/api/groups/${groupId}/upload`, requestObject)
+		fetch(`http://localhost:8081/api/groups/${groupId}/groupUpload`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
