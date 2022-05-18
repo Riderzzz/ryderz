@@ -404,10 +404,13 @@ function postCard(post) {
 function eventCard(event) {
     let html = `<div class="card m-3">
 					<div class="card-header post-header d-flex justify-content-between">
-						<a class="view-profile-page" data-id="${event.eventCreator.id}">
-							 <i class="bi bi-person-square avatar me-2"></i>${event.eventCreator.username}
+						<a class="view-profile-page d-flex align-items-end" data-id="${event.eventCreator.id}">
+							 <div class="me-2 newsfeed-profile-pic-container">
+							    <img class="newsfeed-profile-pic" src="${event.eventCreator.userPhotoUrl}" alt="">
+							 </div>
+                             <div class="users-username my-2">${event.eventCreator.username}</div>
 						</a>
-						<div class="header-right">	
+						<div class="header-right my-1">	
 				`
 
     if (userEmail() === event.eventCreator.email) {
