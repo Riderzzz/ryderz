@@ -86,3 +86,20 @@
     border: 1px solid black;
 }
 
+.newsfeed-profile-pic {
+    width: 65px;
+    height: 65px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.view-profile-page {
+    text-decoration: none;
+    color: black;
+}
+
+.users-username {
+    font-size: 1.25em;
+
+}
+

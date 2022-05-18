@@ -99,7 +99,8 @@ export default function router(URI, Id) {
             state: {
                 posts: "/api/posts/friendsPost",
                 events: "/api/events/friendsEvents",
-                user: "/api/users/me"
+                user: "/api/users/me",
+                categories: "/api/categories/all"
             },
             title: 'News Feed',
             viewEvent: NewsFeedEvents
