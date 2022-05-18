@@ -32,13 +32,6 @@ public class UsersController {
 
     @GetMapping("me")
     private User getMyInfo(OAuth2Authentication auth){
-
-        /*
-        Navbar calls this function everytime it gets loaded, on startup, there is nobody logged in for it to get
-        information from and would throw error.
-        in the catch it returns a temp user so it doesnt throw and errors
-         */
-
         try{
             String userName = auth.getName();
             return userRepository.findByEmail(userName);
@@ -64,9 +57,9 @@ public class UsersController {
     public User getUserById(@PathVariable Long userID) {
         User usersInfo = userRepository.findById(userID).get();
         String usersPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
+        String usersHeaderUrl = s3Service.getSignedURL(usersInfo.getHeaderPicture());
+        usersInfo.setUserHeaderUrl(usersHeaderUrl);
         usersInfo.setUserPhotoUrl(usersPhotoUrl);
-        System.out.println(usersInfo);
-        System.out.println(usersPhotoUrl);
 
         Collection<User> listOfFriends = usersInfo.getFriends();
         for (int i = 0; i < usersInfo.getFriends().size() ; i++) {
@@ -133,7 +126,6 @@ public class UsersController {
 
         user1.getFriends().add(user2);
         user2.getFriends().add(user1);
-
 
         userRepository.save(user1);
         userRepository.save(user2);

@@ -17,7 +17,7 @@ export default function Profile(props) {
             <section class="user-images mb-5">
                 <!--Section: user images-->
                 <div class="profile-header-photograph p-5 text-center bg-image rounded-bottom shadow"
-                     style="background-image: url('${props.profile.userPhotoUrl}');height: 400px;">
+                     style="background-image: url('${props.profile.userHeaderUrl}');height: 400px;">
                 </div>
                 <div class="d-flex justify-content-center">
                     <img class="shadow-profile-picture rounded-circle position-absolute"
@@ -46,16 +46,16 @@ export default function Profile(props) {
                     <button type="button" class="btn btn-light profile-btn">Photos</button>
 
                     <div class="dropdown d-inline-block">
-                        <button class="btn btn-light  dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-mdb-toggle="dropdown"
-                                aria-expanded="false">
-                            More
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                      
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown button
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                     
                     </div>
                 </div>
                 <!--Right Buttons-->
@@ -119,11 +119,11 @@ export default function Profile(props) {
                     <!--end of groups-->
                     <!--users friend's on users profile-->
                     <div class="card shadow-light">
-                        ${props.profile.friends.map(friends => `
+                        <div class="card-title"><strong>Friends</strong></div>
                         <div class="card-body">
-                            <div class="card-title"><strong>Friends</strong></div>
-                            <div>
-                                <div class="row d-flex">
+                            <div class="d-flex flex-wrap flex-row">
+                                ${props.profile.friends.map(friends => `
+      
                                     <div class="col-4 d-flex mb-3 justify-content-center">
                                          <div class="justify-content-center">
                                             <img src="${friends.userPhotoUrl}"
@@ -131,11 +131,9 @@ export default function Profile(props) {
                                                  style="width: 90px;height: 90px;">
                                             <p class="text-center">${friends.username}</p>
                                          </div>
-                                    </div>
-                                </div>
+                                    </div>`).join("")}
                             </div>
-                        </div>`)}
-
+                        </div>
                     </div>
                     <!--Friends End-->
                 </div>
@@ -161,8 +159,7 @@ export default function Profile(props) {
                             <input class="comment-users-posts w-100" placeholder="Write a comment....">
                             
                         </div>
-                    </div>`)}
-
+                    </div>`).join("")}
                 </div>
                 <!--post end-->
             </div>
@@ -175,4 +172,3 @@ export default function Profile(props) {
 export function showFriendsProfile() {
 
 }
-

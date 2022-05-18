@@ -17,6 +17,8 @@ import java.util.Collection;
 @Entity
 @Table(name = "user")
 public class User {
+
+
     public enum Role {USER, ADMIN}
 
     @Id
@@ -46,6 +48,12 @@ public class User {
 
     @Column(name = "profile_picture")
     private String profilePicture;
+
+    @Transient
+    private String userHeaderUrl;
+
+    @Column(name = "header_picture")
+    public String headerPicture;
 
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties({"author", "comments"})
