@@ -22,7 +22,7 @@ function addListenerToNavLinks() {
     document.addEventListener('click', (event) => {
         // we want checkboxes and labels to keep their default behavior when clicked
         // and not prevent the default
-        if(event.target.type && event.target.type === "checkbox") {
+        if(event.target.type && event.target.type === "checkbox" || event.target.type === "file") {
             return;
         }
         if(event.target.matches('label')) {
