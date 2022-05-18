@@ -5,8 +5,13 @@ import com.codeup.ryderz.data.Groups;
 import com.codeup.ryderz.data.GroupsRepository;
 import com.codeup.ryderz.data.User;
 import com.codeup.ryderz.data.UserRepository;
+import com.codeup.ryderz.services.S3Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +22,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/api/groups", headers = "Accept=application/json")
 public class GroupsController {
+
+    @Autowired
+    private S3Service service;
 
     private final GroupsRepository groupsRepository;
     private final UserRepository userRepository;
@@ -32,8 +40,11 @@ public class GroupsController {
     }
 
     @GetMapping("{groupId}")
-    public Optional<Groups> getGroupById(@PathVariable Long groupId) {
-        return groupsRepository.findById(groupId);
+    public Groups getGroupById(@PathVariable Long groupId) {
+        Groups group = groupsRepository.findById(groupId).get();
+        String groupImageUrl = service.getSignedURL(group.getGroupImageName());
+        group.setGroupPhotoUrl(groupImageUrl);
+        return group;
     }
 
     @PostMapping
@@ -61,6 +72,17 @@ public class GroupsController {
         groupToUpdate.setLocation(newGroup.getLocation());
 
         groupsRepository.save(groupToUpdate);
+    }
+
+//    TODO: Check if image exists to delete old image before adding a new image
+    @PostMapping("{groupId}/upload")
+    public ResponseEntity<String> uploadFile(@PathVariable Long groupId, @RequestParam(value = "file") MultipartFile file) {
+        Groups group = groupsRepository.findById(groupId).get();
+        System.out.println(file);
+        String fileName = service.uploadFile(file);
+        group.setGroupImageName(fileName);
+        groupsRepository.save(group);
+        return new ResponseEntity<>(fileName, HttpStatus.OK);
     }
 
     @PutMapping("{addGroupId}/adduser")
