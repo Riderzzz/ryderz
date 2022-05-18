@@ -2,6 +2,7 @@ package com.codeup.ryderz.web;
 
 import com.codeup.ryderz.data.*;
 import com.codeup.ryderz.services.EmailService;
+import com.codeup.ryderz.services.S3Service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -21,6 +22,7 @@ public class PostController {
     private final CategoriesRepository categoriesRepository;
     private final CommentsRepository commentsRepository;
     private final EmailService emailService;
+    private final S3Service s3Service;
 
     @GetMapping
     private List<Post> getAll() {
@@ -106,6 +108,7 @@ public class PostController {
     @GetMapping("friendsPost")
     public Collection<Post> getNewsfeedPosts(OAuth2Authentication auth) {
         User mainUser = userRepository.findByEmail(auth.getName());
+        mainUser.setUserPhotoUrl(s3Service.getSignedURL(mainUser.getProfilePicture()));
 
         Collection<User> userFriends = mainUser.getFriends();
         List<Post> usersFriendsPost = new ArrayList<>();
@@ -115,6 +118,7 @@ public class PostController {
 
         for (User friend : userFriends) {
             usersFriendsPost.addAll(postRepository.findPostByAuthor_Username(friend.getUsername()));
+            friend.setUserPhotoUrl(s3Service.getSignedURL(friend.getProfilePicture()));
         }
 
         Collections.sort(usersFriendsPost);
