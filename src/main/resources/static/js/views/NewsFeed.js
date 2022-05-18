@@ -38,7 +38,7 @@ export default function NewsFeed(props) {
                 <div class="id" data-userId="${props.user.id}"></div>
                 <div class="row">
                     <div class="sidebar-container col-2  d-none d-lg-block">
-                        ${newsfeedSidebarHtml(props)}
+                        ${newsfeedSidebarHtml(props.user)}
                     </div>
                     <div class="posts-container col-12 col-lg-10">
                         ${newsfeedPostsHtml(sortedProps)}
@@ -183,17 +183,24 @@ function createPostBtn() {
         }).catch(r => {
             console.log('error')
         }).finally(r => {
+            fetchPostsAndEventsData().then(d => {
+                console.log(d)
+                $('.posts-container').html(newsfeedPostsHtml(d))
+                NewsFeedEvents()
+            })
             // createView('/newsfeed')
-            postObject.comments = []
-            postObject.date = new Date()
-            postObject.author = {
-                id: $('.id').data("userId"),
-                username: $('.username').data("username"),
-                email: userEmail()
-            }
-            console.log(postObject.date.toLocaleTimeString())
-            let feedContainer = $('.post')
-            feedContainer.html(tempPostCard(postObject) + feedContainer.html())
+
+            //appends post without reloading page but has bugs
+            // postObject.comments = []
+            // postObject.date = new Date()
+            // postObject.author = {
+            //     id: $('.id').data("userId"),
+            //     username: $('.username').data("username"),
+            //     email: userEmail()
+            // }
+            // console.log(postObject.date.toLocaleTimeString())
+            // let feedContainer = $('.post')
+            // feedContainer.html(tempPostCard(postObject) + feedContainer.html())
         })
     })
 }
@@ -329,9 +336,12 @@ function editEventBtn() {
 }
 
 function joinEvent() {
-    $(document).on('click', '.join-event-btn', function () {
+    $('.join-event-btn').click(function () {
         let eventId = $(this).data("id")
         let userId = $('.id').data("userId")
+
+        $('.join-leave-container-' + eventId).text('Joined!')
+        // $('.join-leave-container-' + eventId).children().children().addClass('btn-success').removeClass('btn-dark')
 
         let requestObject = {
             method: 'PUT',
@@ -339,19 +349,26 @@ function joinEvent() {
         }
 
         fetch(`${EVENT_URI}/${eventId}/adduser`, requestObject).then(r => {
-
+            console.log('joined')
         }).catch(r => {
 
         }).finally(() => {
-            $('.join-leave-container-' + eventId).html(leaveBtn(eventId))
+            fetchUserData().then(d => {
+                console.log(d)
+                $('.sidebar-container').html(newsfeedSidebarHtml(d))
+                NewsFeedEvents()
+            })
         })
     })
 }
 
 function leaveEvent() {
-    $(document).on('click', '.leave-event-btn', function () {
+    $('.leave-event-btn').click(function () {
         let eventId = $(this).data("id")
         let userId = $('.id').data("userId")
+
+        $('.join-leave-container-' + eventId).text('left!')
+        // $('.join-leave-container-' + eventId).children().children().addClass('btn-danger').removeClass('btn-dark')
 
         let requestObject = {
             method: "DELETE",
@@ -359,11 +376,15 @@ function leaveEvent() {
         }
 
         fetch(`${EVENT_URI}/${eventId}/remove-user`, requestObject).then(r => {
-
+            console.log('left')
         }).catch(r => {
 
         }).finally(() => {
-            $('.join-leave-container-' + eventId).html(joinBtn(eventId))
+            fetchUserData().then(d => {
+                console.log(d)
+                $('.sidebar-container').html(newsfeedSidebarHtml(d))
+                NewsFeedEvents()
+            })
         })
     })
 }
@@ -443,7 +464,7 @@ function leaveBtn(eventId) {
             </div>`
 }
 
-function newsfeedSidebarHtml(props) {
+function newsfeedSidebarHtml(userProps) {
 
     //language=html
     let html =
@@ -458,7 +479,7 @@ function newsfeedSidebarHtml(props) {
 				</p>
 				<div class="collapse mx-auto" id="collapseGroups">
 					<div class="">
-						${props.user.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
+						${userProps.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
 					</div>
 				</div>
 				
@@ -469,7 +490,7 @@ function newsfeedSidebarHtml(props) {
 				</p>
 				<div class="collapse mx-auto" id="collapseEvents">
 					<div class="">
-						${props.user.eventsJoined.map(event => `<div class="p-1 event" data-id="${event.id}"><a href="#">-${event.titleOfEvent}</a></div>`).join("")}
+						${userProps.eventsJoined.map(event => `<div class="p-1 event" data-id="${event.id}"><a href="#">-${event.titleOfEvent}</a></div>`).join("")}
 					</div>
 				</div>
 				
@@ -480,7 +501,7 @@ function newsfeedSidebarHtml(props) {
 				</p>
 				<div class="collapse mx-auto" id="collapseFriends">
 					<div class="">
-						${props.user.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
+						${userProps.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
 					</div>
 				</div>
 				
@@ -493,6 +514,7 @@ function newsfeedSidebarHtml(props) {
 
 
 function newsfeedPostsHtml(sortedProps) {
+    console.log(sortedProps)
     //language=HTML
 
 
@@ -830,4 +852,54 @@ function tempPostCard(post) {
     html += `</div>`//ending div of card
 
     return html;
+}
+
+function fetchUserData() {
+    let requestObject = {
+        method: 'GET',
+        headers: getHeaders()
+    }
+    return fetch(`http://localhost:8081/api/users/me`, requestObject).then(r => {
+        return r.json()
+    }).then(data => data)
+}
+
+function fetchPostsAndEventsData() {
+    let requestObject = {
+        method: "GET",
+        headers: getHeaders()
+    }
+    return Promise.all([
+        fetch("http://localhost:8081/api/posts/friendsPost", requestObject),
+        fetch("http://localhost:8081/api/events/friendsEvents", requestObject),
+    ]).then(function (responses) {
+        // Get a JSON object from each of the responses
+        return Promise.all(responses.map(function (response) {
+            return response.json();
+        }));
+    }).then(function (data) {
+        // Log the data to the console
+        // You would do something with both sets of data here
+
+        let mixedProps = [];
+        for (let post of data[0]) {
+            post.date = new Date(post.createDate)
+            post.type = "post"
+            mixedProps.push(post)
+        }
+        for (let event of data[1]) {
+            event.date = new Date(event.createdDate)
+            event.type = "event"
+            mixedProps.push(event)
+        }
+
+        const sortedProps = mixedProps.sort((a, b) => b.date - a.date)
+
+        console.log(sortedProps)
+        console.log(data);
+        return sortedProps
+    }).catch(function (error) {
+        // if there's an error, log it
+        console.log(error);
+    });
 }
