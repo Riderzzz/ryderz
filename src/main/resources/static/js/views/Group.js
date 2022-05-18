@@ -4,7 +4,7 @@ import {getHeaders, userEmail} from "../auth.js";
 export default function Group(props) {
 	console.log(props)
 	//language=HTML
-	let html = `<!DOCTYPE html>
+	return `<!DOCTYPE html>
     <html lang="html">
     <head>
         <meta charset="UTF-8"/>
@@ -55,8 +55,6 @@ export default function Group(props) {
         </div>
     </body>
     </html>`;
-
-	return html;
 }
 
 
@@ -73,6 +71,7 @@ export function GroupEvents() {
 	cancelEditsBtn();
 	createCommentListener();
 	deleteGroupBtn();
+	uploadGroupImgHeader();
 }
 
 function joinGroupBtn() {
@@ -277,6 +276,40 @@ function createCommentListener() {
 	})
 }
 
+function uploadGroupImgHeader() {
+	$("#submitGroupHeaderImg").click(function () {
+		let groupId = $(this).data("id");
+		let file = $("#groupHeaderFile").prop('files')[0];
+		let warningPTag = $("#file-warning-on-submit");
+		let formData = new FormData();
+
+		formData.append("file", file);
+		console.log(groupId);
+		console.log(file);
+
+		const requestObject = {
+			method: "POST",
+			headers: getHeaders(),
+			body: formData
+		}
+
+		fetch(`http://localhost:8081/api/groups/${groupId}/upload`, requestObject)
+			.then(res => {
+				console.log(res.status)
+				if (res.status !== 200) {
+					console.log(res);
+					return;
+				}
+				createView('/group', groupId);
+			})
+			.catch(error => {
+				console.log(error);
+				warningPTag.text("Error submitting changes!");
+				warningPTag.css("color", "red");
+			})
+	})
+}
+
 //End of events
 
 
@@ -340,6 +373,10 @@ function groupInfoPopulateHTML(props) {
                        value="Submit">
                 <button class="btn btn-danger" data-id="${props.group.id}" id="deleteGroup">Delete</button>
             </form>
+			<h3>Change header image</h3>
+            <p id="file-warning-on-submit"></p>
+            <input id="groupHeaderFile" type="file" accept="image/*">
+			<input type="submit" data-id="${props.group.id}" id="submitGroupHeaderImg">
         </div>
 	`
 	return html;
@@ -347,13 +384,14 @@ function groupInfoPopulateHTML(props) {
 
 function checkIfUserInGroup(props) {
 	if (props.group.groupOwner.email === userEmail()) {
-		//language=HTML
-		return `
+		let html = `
             <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseExample" aria-expanded="false"
                     aria-controls="collapseExample">
                 Comment
             </button>`
+		//language=HTML
+		return html;
 	}
 	let userIsInGroup = false;
 
