@@ -1,4 +1,17 @@
-.Capstone-title {
-    margin-left: 85px;
+.capstone-title {
+    margin-left: 105px;
     margin-top: 175px;
+    border: 1px black;
+    width: 200px;
+}
+
+#capstone-card {
+    width: 300px;
+}
+
+#our-story {
+    margin-left: 55px;
+    margin-top: 75px;
+    border: 1px black;
+    width: 200px;
 }
