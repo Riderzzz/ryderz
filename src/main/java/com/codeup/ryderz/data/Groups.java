@@ -39,6 +39,12 @@ public class Groups {
     @Column
     private String location;
 
+    @Transient
+    private String groupPhotoUrl;
+
+    @Column(name = "group_image_name")
+    private String groupImageName;
+
     @ToString.Exclude
     @ManyToOne
     @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId"})
