@@ -1,10 +1,7 @@
 package com.codeup.ryderz.web;
 
 
-import com.codeup.ryderz.data.Groups;
-import com.codeup.ryderz.data.GroupsRepository;
-import com.codeup.ryderz.data.User;
-import com.codeup.ryderz.data.UserRepository;
+import com.codeup.ryderz.data.*;
 import com.codeup.ryderz.services.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +10,9 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -28,10 +24,12 @@ public class GroupsController {
 
     private final GroupsRepository groupsRepository;
     private final UserRepository userRepository;
+    private final CommentsRepository commentRepository;
 
-    public GroupsController(GroupsRepository groupsRepository, UserRepository userRepository) {
+    public GroupsController(GroupsRepository groupsRepository, UserRepository userRepository, CommentsRepository commentRepository) {
         this.groupsRepository = groupsRepository;
         this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
     }
 
     @GetMapping
@@ -121,8 +119,13 @@ public class GroupsController {
 //    Todo:if users in group delete them from group_users table before deleting group
     public void deleteGroup(@PathVariable Long groupId) {
         Groups group = groupsRepository.getById(groupId);
+        if (group.getGroupImageName() != null) {
+            String previousImgName = group.getGroupImageName();
+            service.deleteFile(previousImgName);
+        }
         group.setUsers(null);
-        groupsRepository.save(group);
+        Collection<Comments> comments = group.getComments();
+        commentRepository.deleteAll(comments);
         groupsRepository.deleteById(groupId);
     }
 }

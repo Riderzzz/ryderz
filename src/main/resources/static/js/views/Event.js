@@ -8,7 +8,7 @@ export default function Event(props) {
     <html lang="html">
     <head>
         <meta charset="UTF-8"/>
-        <title>${props.event.titleOfEvent}</title>
+        <title>Event</title>
     </head>
     <body>
     <div class="container">
@@ -29,7 +29,9 @@ export default function Event(props) {
                             </button>
                         </div>
                     </div>
-                    ${checkIfCommentsExist(props)}
+                    <div class="commentSection-${props.event.id}">
+                        ${checkIfCommentsExist(props)}
+                    </div>
                 </div>
             </div>
             <div class="col-md-5">
@@ -69,6 +71,7 @@ export function EventEvents() {
 	joinEventBtn();
 	leaveEventBtn();
 	commentOnEvent();
+	deleteEventBtn();
 }
 
 function getTimeFormat(props) {
@@ -165,10 +168,11 @@ function leaveEventBtn() {
 
 function commentOnEvent() {
 	$(".comment-btn").click(function () {
+		let comment = $("#comment-content");
 		const eventId = $(this).data("id");
-		console.log(eventId);
-		let content = $("#comment-content").val();
+		let content = comment.val();
 		let warningPTag = $("#character-warning-on-submit");
+		comment.val("");
 
 		const commentObject = {
 			content,
@@ -190,7 +194,7 @@ function commentOnEvent() {
 					console.log(res);
 					return;
 				}
-				createView('/event', eventId);
+				refreshComments(eventId)
 			})
 			.catch(error => {
 				console.log(error);
@@ -198,6 +202,29 @@ function commentOnEvent() {
 				warningPTag.css("color", "red");
 			})
 	})
+}
+
+function refreshComments(eventId) {
+	let commentSection = $(".commentSection-" + eventId);
+
+	let warningPTag = $(".warningReloadingComments");
+
+	const requestObject = {
+		method: "GET",
+		headers: getHeaders()
+	}
+
+	fetch(`http://localhost:8081/api/events/${eventId}`, requestObject)
+		.then(res => res.json())
+		.then(data => {
+			let state = {event: data}
+			commentSection.html(checkIfCommentsExist(state));
+		})
+		.catch(error => {
+			console.log(error);
+			warningPTag.text("Error reloading comments!");
+			warningPTag.css("color", "red");
+		})
 }
 
 function cancelEditsBtn() {
@@ -224,7 +251,7 @@ function checkUserEventStatus(props) {
 	} else if (found && userEmail() !== props.event.eventCreator.email) {
 		//language=HTML
 		html += `
-            <button class="leaveEvent btn btn-dark" data-id="${props.event.id}">Leave Event</button>`
+            <button class="leaveEvent btn btn-danger" data-id="${props.event.id}">Leave Event</button>`
 	} else if (!found && userEmail() !== props.event.eventCreator.email) {
 		html += `<button class="joinEventBtn btn btn-dark" data-id="${props.event.id}">Join Event</button>`
 	}
@@ -245,6 +272,7 @@ function checkUserEventStatus(props) {
 
 function checkIfCommentsExist(props) {
 	let html;
+	console.log(props);
 	if (props.event.comments.length > 0) {
 		//language=HTML
 		let html = `
@@ -420,6 +448,40 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 	})
 }
 
+function deleteEventBtn() {
+	$("#deleteEvent").click(function () {
+		let eventId = $(this).data("id");
+		let warningPTag = $("#character-warning-on-submit");
+
+		if (confirm("Delete this event?") === false) {
+			return;
+		}
+
+		const requestObject = {
+			method: "DELETE",
+			headers: getHeaders()
+		}
+
+		fetch(`http://localhost:8081/api/events/${eventId}`, requestObject)
+			.then(res => {
+				console.log(res.status)
+				if (res.status !== 200) {
+					console.log(res);
+					warningPTag.text("Error submitting changes!");
+					warningPTag.css("color", "red");
+					return;
+				}
+				createView('/discover')
+			})
+			.catch(error => {
+				console.log(error);
+				warningPTag.text("Error submitting changes!");
+				warningPTag.css("color", "red");
+			})
+
+	})
+}
+
 function eventColHTML(props, timeFormat) {
 	//language=HTML
 	let html = `
@@ -574,6 +636,7 @@ function eventEditFormHTML(props, timeFormat) {
             <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
             <input id="submitEditedEventBtn" data-id="${props.event.id}" class="btn btn-dark" type="button"
                    value="Submit">
+            <button id="deleteEvent" data-id="${props.event.id}" class="btn btn-danger">Delete Event</button>
         </form>
 	`
 

@@ -1,6 +1,7 @@
 package com.codeup.ryderz.web;
 
 import com.codeup.ryderz.data.*;
+import com.codeup.ryderz.services.S3Service;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +15,15 @@ public class EventsController {
     private EventsRepository eventsRepository;
     private final UserRepository userRepository;
     private final CategoriesRepository categoryRepository;
+    private final S3Service s3Service;
+    private final CommentsRepository commentRepository;
 
-    public EventsController(EventsRepository eventsRepository, UserRepository userRepository, CategoriesRepository categoryRepository) {
+    public EventsController(EventsRepository eventsRepository, UserRepository userRepository, CategoriesRepository categoryRepository, S3Service s3Service, CommentsRepository commentRepository) {
         this.eventsRepository = eventsRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
+        this.s3Service = s3Service;
+        this.commentRepository = commentRepository;
     }
 
     @GetMapping("/{id}")
@@ -108,13 +113,15 @@ public class EventsController {
     private void deleteEvent(@PathVariable Long eventId) {
         Events event = eventsRepository.getById(eventId);
         event.setUsersId(null);
-        eventsRepository.save(event);
+        Collection<Comments> comments = event.getComments();
+        commentRepository.deleteAll(comments);
         eventsRepository.deleteById(eventId);
     }
 
     @GetMapping("friendsEvents")
     public Collection<Events> getNewsfeedEvents(OAuth2Authentication auth) {
         User mainUser = userRepository.findByEmail(auth.getName());
+        mainUser.setUserPhotoUrl(s3Service.getSignedURL(mainUser.getProfilePicture()));
 
         Collection<User> userFriends = mainUser.getFriends();
         List<Events> usersFriendsEvents = new ArrayList<>();
@@ -124,6 +131,7 @@ public class EventsController {
 
         for (User friend : userFriends) {
             usersFriendsEvents.addAll(eventsRepository.findEventsByEventCreator_Username(friend.getUsername()));
+            friend.setUserPhotoUrl(s3Service.getSignedURL(friend.getProfilePicture()));
         }
 
         Collections.sort(usersFriendsEvents);

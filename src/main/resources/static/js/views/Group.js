@@ -1,6 +1,6 @@
 import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
-//TODO: delete group / leave group
+
 export default function Group(props) {
 	console.log(props)
 	//language=HTML
@@ -8,7 +8,7 @@ export default function Group(props) {
     <html lang="html">
     <head>
         <meta charset="UTF-8"/>
-        <title>${props.group.name}</title>
+        <title>Group</title>
     </head>
     <body>
     <div class="container">
@@ -32,22 +32,15 @@ export default function Group(props) {
                     <hr>
                     <div class="row">
                         <div class="col">
-                            <div class="collapse" id="collapseExample">
-                                <div class="input-group my-3">
-                                    <input type="text" id="comment-content" class="form-control"
-                                           data-postId="${props.group.id}" placeholder="Your thoughts..."
-                                           aria-label="Comment"
-                                           aria-describedby="button-addon">
-                                    <button class="btn btn-dark comment-btn" data-id="${props.group.id}"
-                                            type="button" id="button-addon">Submit
-                                    </button>
-                                </div>
-                            </div>
+                            ${commentInputCollapseHTML(props)}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            ${populateGroupCommentsHTML(props)}
+                            <h1>Comments</h1>
+                            <div class="commentSection-${props.group.id}">
+                                ${populateGroupCommentsHTML(props)}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -242,9 +235,11 @@ function deleteGroupBtn() {
 
 function createCommentListener() {
 	$("#button-addon").click(function () {
+		let comment = $("#comment-content");
 		let groupId = $(this).data("id");
-		let content = $("#comment-content").val();
+		let content = comment.val();
 		let warningPTag = $("#character-warning-on-submit");
+		comment.val("");
 
 		const commentObject = {
 			content,
@@ -266,7 +261,7 @@ function createCommentListener() {
 					console.log(res);
 					return;
 				}
-				createView('/group', groupId);
+				refreshComments(groupId)
 			})
 			.catch(error => {
 				console.log(error);
@@ -276,17 +271,40 @@ function createCommentListener() {
 	})
 }
 
+function refreshComments(groupId) {
+	//add comment to list of comment displayed
+	// fetch same data as current router props
+	// give props to populateGroupComments()
+	let commentSection = $(".commentSection-" + groupId);
+
+	let warningPTag = $(".warningReloadingComments");
+
+	const requestObject = {
+		method: "GET",
+		headers: getHeaders()
+	}
+
+	fetch(`http://localhost:8081/api/groups/${groupId}`, requestObject)
+		.then(res => res.json())
+		.then(data => {
+			let state = {group: data}
+			commentSection.html(populateGroupCommentsHTML(state));
+		})
+		.catch(error => {
+			console.log(error);
+			warningPTag.text("Error reloading comments!");
+			warningPTag.css("color", "red");
+		})
+}
+
 function uploadGroupImgHeader() {
 	$("#submitGroupHeaderImg").click(function () {
 		let groupId = $(this).data("id");
 		let file = document.getElementById("groupHeaderFile");
 		let warningPTag = $("#file-warning-on-submit");
 		let formData = new FormData();
-		console.log(file.files)
 
 		formData.append("file", file.files[0]);
-		console.log(groupId);
-		console.log(file);
 
 		const requestObject = {
 			method: "POST",
@@ -371,28 +389,18 @@ function groupInfoPopulateHTML(props) {
                 <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
                 <input id="editGroupSubmit" data-id="${props.group.id}" class="btn btn-dark" type="button"
                        value="Submit">
-                <button class="btn btn-danger" data-id="${props.group.id}" id="deleteGroup">Delete</button>
+                <button class="btn btn-danger" data-id="${props.group.id}" id="deleteGroup">Delete Group</button>
             </form>
-			<h3>Change header image</h3>
+            <h3>Change header image</h3>
             <p id="file-warning-on-submit"></p>
             <input id="groupHeaderFile" type="file" accept="image/*">
-			<input type="submit" data-id="${props.group.id}" id="submitGroupHeaderImg">
+            <input type="submit" data-id="${props.group.id}" id="submitGroupHeaderImg">
         </div>
 	`
 	return html;
 }
 
 function checkIfUserInGroup(props) {
-	if (props.group.groupOwner.email === userEmail()) {
-		let html = `
-            <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseExample" aria-expanded="false"
-                    aria-controls="collapseExample">
-                Comment
-            </button>`
-		//language=HTML
-		return html;
-	}
 	let userIsInGroup = false;
 
 	if (props.group.users.length > 0) {
@@ -402,7 +410,8 @@ function checkIfUserInGroup(props) {
 			}
 		})
 	}
-	if (userIsInGroup) {
+
+	if (userIsInGroup || props.group.groupOwner.email === userEmail()) {
 		//language=HTML
 		return `
             <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
@@ -425,7 +434,6 @@ function populateGroupCommentsHTML(props) {
 	} else {
 		//language=HTML
 		let html = `
-            <h1>Comments</h1>
             <div id="groupCommentsContainer">
                 ${props.group.comments.reverse().map(comment =>
                         `<div class="card card-body p-2 m-3">
@@ -443,9 +451,27 @@ function populateGroupCommentsHTML(props) {
                 `).join('')}
             </div>
 		`
-		return html;
+		return html
 	}
 
+}
+
+function commentInputCollapseHTML(props) {
+//	language=HTML
+	return `
+        <div class="collapse" id="collapseExample">
+            <div class="input-group my-3">
+                <p class="warningReloadingComments"></p>
+                <input type="text" id="comment-content" class="form-control"
+                       data-postId="${props.group.id}" placeholder="Your thoughts..."
+                       aria-label="Comment"
+                       aria-describedby="button-addon">
+                <button class="btn btn-dark comment-btn" data-id="${props.group.id}"
+                        type="button" id="button-addon">Submit
+                </button>
+            </div>
+        </div>
+	`
 }
 
 //End of HTML
