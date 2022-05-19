@@ -356,6 +356,10 @@ function joinEvent() {
             fetchUserData().then(d => {
                 console.log(d)
                 $('.sidebar-container').html(newsfeedSidebarHtml(d))
+            })
+            fetchPostsAndEventsData().then(d => {
+                console.log(d)
+                $('.posts-container').html(newsfeedPostsHtml(d))
                 NewsFeedEvents()
             })
         })
@@ -383,6 +387,10 @@ function leaveEvent() {
             fetchUserData().then(d => {
                 console.log(d)
                 $('.sidebar-container').html(newsfeedSidebarHtml(d))
+            })
+            fetchPostsAndEventsData().then(d => {
+                console.log(d)
+                $('.posts-container').html(newsfeedPostsHtml(d))
                 NewsFeedEvents()
             })
         })
