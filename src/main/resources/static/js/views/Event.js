@@ -29,7 +29,9 @@ export default function Event(props) {
                             </button>
                         </div>
                     </div>
-                    ${checkIfCommentsExist(props)}
+                    <div class="commentSection-${props.event.id}">
+                        ${checkIfCommentsExist(props)}
+                    </div>
                 </div>
             </div>
             <div class="col-md-5">
@@ -166,10 +168,11 @@ function leaveEventBtn() {
 
 function commentOnEvent() {
 	$(".comment-btn").click(function () {
+		let comment = $("#comment-content");
 		const eventId = $(this).data("id");
-		console.log(eventId);
-		let content = $("#comment-content").val();
+		let content = comment.val();
 		let warningPTag = $("#character-warning-on-submit");
+		comment.val("");
 
 		const commentObject = {
 			content,
@@ -191,7 +194,7 @@ function commentOnEvent() {
 					console.log(res);
 					return;
 				}
-				createView('/event', eventId);
+				refreshComments(eventId)
 			})
 			.catch(error => {
 				console.log(error);
@@ -199,6 +202,29 @@ function commentOnEvent() {
 				warningPTag.css("color", "red");
 			})
 	})
+}
+
+function refreshComments(eventId) {
+	let commentSection = $(".commentSection-" + eventId);
+
+	let warningPTag = $(".warningReloadingComments");
+
+	const requestObject = {
+		method: "GET",
+		headers: getHeaders()
+	}
+
+	fetch(`http://localhost:8081/api/events/${eventId}`, requestObject)
+		.then(res => res.json())
+		.then(data => {
+			let state = {event: data}
+			commentSection.html(checkIfCommentsExist(state));
+		})
+		.catch(error => {
+			console.log(error);
+			warningPTag.text("Error reloading comments!");
+			warningPTag.css("color", "red");
+		})
 }
 
 function cancelEditsBtn() {
@@ -246,6 +272,7 @@ function checkUserEventStatus(props) {
 
 function checkIfCommentsExist(props) {
 	let html;
+	console.log(props);
 	if (props.event.comments.length > 0) {
 		//language=HTML
 		let html = `
@@ -609,7 +636,7 @@ function eventEditFormHTML(props, timeFormat) {
             <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
             <input id="submitEditedEventBtn" data-id="${props.event.id}" class="btn btn-dark" type="button"
                    value="Submit">
-			<button id="deleteEvent" data-id="${props.event.id}" class="btn btn-danger">Delete Event</button>
+            <button id="deleteEvent" data-id="${props.event.id}" class="btn btn-danger">Delete Event</button>
         </form>
 	`
 

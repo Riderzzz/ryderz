@@ -32,18 +32,7 @@ export default function Group(props) {
                     <hr>
                     <div class="row">
                         <div class="col">
-                            <div class="collapse" id="collapseExample">
-                                <div class="input-group my-3">
-                                    <p class="warningReloadingComments"></p>
-                                    <input type="text" id="comment-content" class="form-control"
-                                           data-postId="${props.group.id}" placeholder="Your thoughts..."
-                                           aria-label="Comment"
-                                           aria-describedby="button-addon">
-                                    <button class="btn btn-dark comment-btn" data-id="${props.group.id}"
-                                            type="button" id="button-addon">Submit
-                                    </button>
-                                </div>
-                            </div>
+                            ${commentInputCollapseHTML(props)}
                         </div>
                     </div>
                     <div class="row">
@@ -465,6 +454,24 @@ function populateGroupCommentsHTML(props) {
 		return html
 	}
 
+}
+
+function commentInputCollapseHTML(props) {
+//	language=HTML
+	return `
+        <div class="collapse" id="collapseExample">
+            <div class="input-group my-3">
+                <p class="warningReloadingComments"></p>
+                <input type="text" id="comment-content" class="form-control"
+                       data-postId="${props.group.id}" placeholder="Your thoughts..."
+                       aria-label="Comment"
+                       aria-describedby="button-addon">
+                <button class="btn btn-dark comment-btn" data-id="${props.group.id}"
+                        type="button" id="button-addon">Submit
+                </button>
+            </div>
+        </div>
+	`
 }
 
 //End of HTML
