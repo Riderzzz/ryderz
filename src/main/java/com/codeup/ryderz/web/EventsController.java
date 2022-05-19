@@ -16,12 +16,14 @@ public class EventsController {
     private final UserRepository userRepository;
     private final CategoriesRepository categoryRepository;
     private final S3Service s3Service;
+    private final CommentsRepository commentRepository;
 
-    public EventsController(EventsRepository eventsRepository, UserRepository userRepository, CategoriesRepository categoryRepository, S3Service s3Service) {
+    public EventsController(EventsRepository eventsRepository, UserRepository userRepository, CategoriesRepository categoryRepository, S3Service s3Service, CommentsRepository commentRepository) {
         this.eventsRepository = eventsRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.s3Service = s3Service;
+        this.commentRepository = commentRepository;
     }
 
     @GetMapping("/{id}")
@@ -111,7 +113,8 @@ public class EventsController {
     private void deleteEvent(@PathVariable Long eventId) {
         Events event = eventsRepository.getById(eventId);
         event.setUsersId(null);
-        eventsRepository.save(event);
+        Collection<Comments> comments = event.getComments();
+        commentRepository.deleteAll(comments);
         eventsRepository.deleteById(eventId);
     }
 

@@ -8,7 +8,7 @@ export default function Group(props) {
     <html lang="html">
     <head>
         <meta charset="UTF-8"/>
-        <title>${props.group.name}</title>
+        <title>Group</title>
     </head>
     <body>
     <div class="container">
@@ -299,7 +299,6 @@ function refreshComments(groupId) {
 		.then(res => res.json())
 		.then(data => {
 			let state = {group: data}
-			console.log(state);
 			commentSection.html(populateGroupCommentsHTML(state));
 		})
 		.catch(error => {
@@ -315,11 +314,8 @@ function uploadGroupImgHeader() {
 		let file = document.getElementById("groupHeaderFile");
 		let warningPTag = $("#file-warning-on-submit");
 		let formData = new FormData();
-		console.log(file.files)
 
 		formData.append("file", file.files[0]);
-		console.log(groupId);
-		console.log(file);
 
 		const requestObject = {
 			method: "POST",
@@ -404,7 +400,7 @@ function groupInfoPopulateHTML(props) {
                 <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
                 <input id="editGroupSubmit" data-id="${props.group.id}" class="btn btn-dark" type="button"
                        value="Submit">
-                <button class="btn btn-danger" data-id="${props.group.id}" id="deleteGroup">Delete</button>
+                <button class="btn btn-danger" data-id="${props.group.id}" id="deleteGroup">Delete Group</button>
             </form>
             <h3>Change header image</h3>
             <p id="file-warning-on-submit"></p>
