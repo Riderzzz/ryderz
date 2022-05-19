@@ -3,6 +3,15 @@
         flex-direction: row;
         width: 100%;
     }
+    #capstone-card h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        font-family: Oswald,Arial Narrow,sans-serif;
+        text-transform: uppercase;
+    }
+    #capstone-card p {
+        font-size: 1rem;
+    }
 }
 
 #our-story-card {
@@ -11,8 +20,21 @@
     flex-direction: column-reverse;
     max-width: 56.25rem;
 }
-
-
+#capstone-card h2 {
+    text-align: center;
+    padding-left: 0;
+    font-size: 1.5rem;
+    line-height: 2;
+    margin-bottom: 1.125rem;
+}
+#capstone-card p {
+    font-size: .875rem;
+    line-height: 1.5;
+    margin: 1.5rem auto;
+    width: 100%;
+    text-align: left;
+    font-weight: 300;
+}
 #capstone-card {
     flex: 0 0 30%;
     min-height: 18.75rem;
