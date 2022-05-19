@@ -1,17 +1,25 @@
-.capstone-title {
-    margin-left: 105px;
-    margin-top: 175px;
-    border: 1px black;
-    width: 200px;
+@media (min-width: 45em) {
+    #our-story-card {
+        flex-direction: row;
+        width: 100%;
+    }
 }
+
+#our-story-card {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+    max-width: 56.25rem;
+}
+
 
 #capstone-card {
+    flex: 0 0 30%;
+    min-height: 18.75rem;
+    min-width: 20rem;
+    overflow: auto;
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
     width: 300px;
-}
-
-#our-story {
-    margin-left: 55px;
-    margin-top: 75px;
-    border: 1px black;
-    width: 200px;
-}
+    height: 570px;
+    }
