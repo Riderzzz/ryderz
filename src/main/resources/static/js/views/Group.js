@@ -1,6 +1,6 @@
 import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
-//TODO: delete group / leave group
+
 export default function Group(props) {
 	console.log(props)
 	//language=HTML
@@ -34,6 +34,7 @@ export default function Group(props) {
                         <div class="col">
                             <div class="collapse" id="collapseExample">
                                 <div class="input-group my-3">
+                                    <p class="warningReloadingComments"></p>
                                     <input type="text" id="comment-content" class="form-control"
                                            data-postId="${props.group.id}" placeholder="Your thoughts..."
                                            aria-label="Comment"
@@ -47,7 +48,10 @@ export default function Group(props) {
                     </div>
                     <div class="row">
                         <div class="col">
-                            ${populateGroupCommentsHTML(props)}
+                            <h1>Comments</h1>
+                            <div class="commentSection-${props.group.id}">
+                                ${populateGroupCommentsHTML(props)}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -246,6 +250,17 @@ function createCommentListener() {
 		let content = $("#comment-content").val();
 		let warningPTag = $("#character-warning-on-submit");
 
+		let commentSection = $(".commentSection-" + groupId);
+
+		let commentSectionHTML = commentSection.html();
+
+		let newCommentHTML = returnNewCommentHTML(content);
+
+		commentSection.html("");
+
+		commentSection.html(newCommentHTML + commentSectionHTML);
+
+
 		const commentObject = {
 			content,
 			group: {
@@ -266,7 +281,7 @@ function createCommentListener() {
 					console.log(res);
 					return;
 				}
-				createView('/group', groupId);
+				refreshComments(groupId)
 			})
 			.catch(error => {
 				console.log(error);
@@ -274,6 +289,53 @@ function createCommentListener() {
 				warningPTag.css("color", "red");
 			})
 	})
+}
+
+function returnNewCommentHTML(content) {
+	//language=HTML
+	return `
+        <div class="card card-body p-2 m-3">
+            <div class="d-flex">
+                <div class="info d-flex">
+                    <!--                            TODO: add delete icon to delete comment-->
+                    <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
+                    <div class="names">
+                        <div class="username">You</div>
+                        <div class="content">${content}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	`
+}
+
+function refreshComments(groupId) {
+	//add comment to list of comment displayed
+	// fetch same data as current router props
+	// give props to populateGroupComments()
+	let commentSection = $(".commentSection-" + groupId);
+
+	let warningPTag = $(".warningReloadingComments");
+
+	const requestObject = {
+		method: "GET",
+		headers: getHeaders()
+	}
+
+	fetch(`http://localhost:8081/api/groups/${groupId}`, requestObject)
+		.then(res => res.json())
+		.then(data => {
+			let state = {group: data}
+			console.log(state);
+			commentSection.html(populateGroupCommentsHTML(state));
+		})
+		.catch(error => {
+			console.log(error);
+			warningPTag.text("Error reloading comments!");
+			warningPTag.css("color", "red");
+		})
+
+
 }
 
 function uploadGroupImgHeader() {
@@ -373,26 +435,16 @@ function groupInfoPopulateHTML(props) {
                        value="Submit">
                 <button class="btn btn-danger" data-id="${props.group.id}" id="deleteGroup">Delete</button>
             </form>
-			<h3>Change header image</h3>
+            <h3>Change header image</h3>
             <p id="file-warning-on-submit"></p>
             <input id="groupHeaderFile" type="file" accept="image/*">
-			<input type="submit" data-id="${props.group.id}" id="submitGroupHeaderImg">
+            <input type="submit" data-id="${props.group.id}" id="submitGroupHeaderImg">
         </div>
 	`
 	return html;
 }
 
 function checkIfUserInGroup(props) {
-	if (props.group.groupOwner.email === userEmail()) {
-		let html = `
-            <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseExample" aria-expanded="false"
-                    aria-controls="collapseExample">
-                Comment
-            </button>`
-		//language=HTML
-		return html;
-	}
 	let userIsInGroup = false;
 
 	if (props.group.users.length > 0) {
@@ -402,7 +454,8 @@ function checkIfUserInGroup(props) {
 			}
 		})
 	}
-	if (userIsInGroup) {
+
+	if (userIsInGroup || props.group.groupOwner.email === userEmail()) {
 		//language=HTML
 		return `
             <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
@@ -425,7 +478,6 @@ function populateGroupCommentsHTML(props) {
 	} else {
 		//language=HTML
 		let html = `
-            <h1>Comments</h1>
             <div id="groupCommentsContainer">
                 ${props.group.comments.reverse().map(comment =>
                         `<div class="card card-body p-2 m-3">
@@ -443,7 +495,7 @@ function populateGroupCommentsHTML(props) {
                 `).join('')}
             </div>
 		`
-		return html;
+		return html
 	}
 
 }
