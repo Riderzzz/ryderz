@@ -340,8 +340,8 @@ function joinEvent() {
         let eventId = $(this).data("id")
         let userId = $('.id').data("userId")
 
-        $('.join-leave-container-' + eventId).text('Joined!')
-        // $('.join-leave-container-' + eventId).children().children().addClass('btn-success').removeClass('btn-dark')
+        $('.join-leave-container-' + eventId).children().children().text('Joined!')
+        $('.join-leave-container-' + eventId).children().children().addClass('btn-success').removeClass('btn-dark')
 
         let requestObject = {
             method: 'PUT',
@@ -356,6 +356,10 @@ function joinEvent() {
             fetchUserData().then(d => {
                 console.log(d)
                 $('.sidebar-container').html(newsfeedSidebarHtml(d))
+            })
+            fetchPostsAndEventsData().then(d => {
+                console.log(d)
+                $('.posts-container').html(newsfeedPostsHtml(d))
                 NewsFeedEvents()
             })
         })
@@ -367,8 +371,8 @@ function leaveEvent() {
         let eventId = $(this).data("id")
         let userId = $('.id').data("userId")
 
-        $('.join-leave-container-' + eventId).text('left!')
-        // $('.join-leave-container-' + eventId).children().children().addClass('btn-danger').removeClass('btn-dark')
+        $('.join-leave-container-' + eventId).children().children().text('left!')
+        $('.join-leave-container-' + eventId).children().children().addClass('btn-danger').removeClass('btn-dark')
 
         let requestObject = {
             method: "DELETE",
@@ -383,6 +387,10 @@ function leaveEvent() {
             fetchUserData().then(d => {
                 console.log(d)
                 $('.sidebar-container').html(newsfeedSidebarHtml(d))
+            })
+            fetchPostsAndEventsData().then(d => {
+                console.log(d)
+                $('.posts-container').html(newsfeedPostsHtml(d))
                 NewsFeedEvents()
             })
         })
