@@ -65,3 +65,17 @@ body {
     position: absolute;
 }
 
+.card-title{
+    margin-left: 5px;
+}
+.posts-page{
+    display: none;
+
+}
+.about-page{
+    display: none;
+}
+.friends-page{
+    display: none;
+}
+

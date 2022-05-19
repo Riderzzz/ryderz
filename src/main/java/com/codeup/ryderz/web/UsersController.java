@@ -1,5 +1,6 @@
 package com.codeup.ryderz.web;
 
+import com.codeup.ryderz.data.Groups;
 import com.codeup.ryderz.data.User;
 import com.codeup.ryderz.data.UserRepository;
 import com.codeup.ryderz.services.S3Service;
@@ -68,6 +69,13 @@ public class UsersController {
             currentUser.setUserPhotoUrl(friendsPhotoUrl);
         }
 
+        Collection<Groups> listOfGroups = usersInfo.getGroupsJoined();
+        for (int i = 0; i < usersInfo.getGroupsJoined().size() ; i++) {
+            Groups currentUser = (Groups) listOfGroups.toArray()[i];
+            String groupPhotoUrl = s3Service.getSignedURL(currentUser.getGroupImageName());
+            currentUser.setGroupPhotoUrl(groupPhotoUrl);
+        }
+
         return usersInfo;
     }
 
@@ -116,9 +124,9 @@ public class UsersController {
         System.out.println("ready to delete User." + userId);
     }
 
-    @PostMapping("{user1Id}/friends/{user2Id}")
-    private void addFriend(@PathVariable User user1Id, @PathVariable Long user2Id){
-        User user1 = user1Id;
+    @PostMapping("/friends/{user2Id}")
+    private void addFriend(@PathVariable Long user2Id, OAuth2Authentication auth){
+        User user1 = userRepository.findByEmail(auth.getName());
         User user2 = userRepository.getById(user2Id);
 
         user2.setFriends(new ArrayList<>());
