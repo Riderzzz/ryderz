@@ -340,8 +340,8 @@ function joinEvent() {
         let eventId = $(this).data("id")
         let userId = $('.id').data("userId")
 
-        $('.join-leave-container-' + eventId).text('Joined!')
-        // $('.join-leave-container-' + eventId).children().children().addClass('btn-success').removeClass('btn-dark')
+        $('.join-leave-container-' + eventId).children().children().text('Joined!')
+        $('.join-leave-container-' + eventId).children().children().addClass('btn-success').removeClass('btn-dark')
 
         let requestObject = {
             method: 'PUT',
@@ -371,8 +371,8 @@ function leaveEvent() {
         let eventId = $(this).data("id")
         let userId = $('.id').data("userId")
 
-        $('.join-leave-container-' + eventId).text('left!')
-        // $('.join-leave-container-' + eventId).children().children().addClass('btn-danger').removeClass('btn-dark')
+        $('.join-leave-container-' + eventId).children().children().text('left!')
+        $('.join-leave-container-' + eventId).children().children().addClass('btn-danger').removeClass('btn-dark')
 
         let requestObject = {
             method: "DELETE",
