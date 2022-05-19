@@ -246,20 +246,11 @@ function deleteGroupBtn() {
 
 function createCommentListener() {
 	$("#button-addon").click(function () {
+		let comment = $("#comment-content");
 		let groupId = $(this).data("id");
-		let content = $("#comment-content").val();
+		let content = comment.val();
 		let warningPTag = $("#character-warning-on-submit");
-
-		let commentSection = $(".commentSection-" + groupId);
-
-		let commentSectionHTML = commentSection.html();
-
-		let newCommentHTML = returnNewCommentHTML(content);
-
-		commentSection.html("");
-
-		commentSection.html(newCommentHTML + commentSectionHTML);
-
+		comment.val("");
 
 		const commentObject = {
 			content,
@@ -291,24 +282,6 @@ function createCommentListener() {
 	})
 }
 
-function returnNewCommentHTML(content) {
-	//language=HTML
-	return `
-        <div class="card card-body p-2 m-3">
-            <div class="d-flex">
-                <div class="info d-flex">
-                    <!--                            TODO: add delete icon to delete comment-->
-                    <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
-                    <div class="names">
-                        <div class="username">You</div>
-                        <div class="content">${content}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-	`
-}
-
 function refreshComments(groupId) {
 	//add comment to list of comment displayed
 	// fetch same data as current router props
@@ -334,8 +307,6 @@ function refreshComments(groupId) {
 			warningPTag.text("Error reloading comments!");
 			warningPTag.css("color", "red");
 		})
-
-
 }
 
 function uploadGroupImgHeader() {
