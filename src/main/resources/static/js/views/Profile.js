@@ -76,6 +76,7 @@ export default function Profile(props) {
                     <!--users photo's on users profile-->
 
                 </div>
+                
                 <!--Posts start-->
                 <div class="col-7 mb-4 mb-md-0">
                     ${showUsersPosts(props)}
