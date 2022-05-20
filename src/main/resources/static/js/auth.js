@@ -1,6 +1,7 @@
 import fetchData from "./fetchData.js";
 import createView from "./createView.js";
 import {ifUserUnauthorized} from "./views/Login.js";
+// import {pubnub} from "./pubnubChat.js";
 
 /**
  * Adds a login event to allow the user to initially obtain a new OAuth2.0 token
@@ -99,3 +100,5 @@ export function userEmail() {
 
     return false;
 }
+
+
