@@ -39,8 +39,10 @@ export default function Discover(props) {
                         <h3 class="text-center mt-3">Groups</h3>
                         <div id="groups-container" class="row justify-content-center">
                             ${props.groups.reverse().map(group =>
-                                    `
-			<div class="col-3 shadow text-dark bg-light form-holder m-2 rounded p-4" data-id="${group.id}">
+									`
+			<div class="col-3">
+			<a class="groupDiv" data-id="${group.id}">
+			<div class=" shadow text-dark bg-light form-holder m-2 rounded p-4" data-id="${group.id}">
            		<h4 class="group-name-${group.id}">${group.name}</h4>
            		<h5 class="group-location-${group.id}">${group.location}</h5>
            		<h5>Members: ${group.users.length}</h5>
@@ -49,6 +51,8 @@ export default function Discover(props) {
            		<p class="group-createdDate">${new Date(group.createdDate).toLocaleTimeString()} ${new Date(group.createdDate).toLocaleDateString()}</p>
            		<p class="group-owner-${group.id}">Organizer: ${group.groupOwner.username}</p>
 			<button class="btn btn-dark group-page-btn" data-id="${group.id}">Go to Group page</button>
+			</div>
+			</a>
 			</div>
         `)
                                     .join('')}
@@ -60,7 +64,9 @@ export default function Discover(props) {
                         <div id="groups-container" class="row justify-content-center">
                             ${props.events.reverse().map(event =>
                                     `
-			<div class="col-3 shadow text-dark bg-light form-holder m-3 rounded p-4" data-id="${event.id}">
+			<div class="col-3">
+			<a class="eventDiv" data-id="${event.id}">
+			<div class="shadow text-dark bg-light form-holder m-3 rounded p-4" data-id="${event.id}">
            		<h4 class="event-name-${event.id}">${event.titleOfEvent}</h4>
            		<h5 class="event-location-${event.id}">${event.eventLocation}</h5>
            		<h5>Members: ${event.usersId.length}</h5>
@@ -72,6 +78,8 @@ export default function Discover(props) {
            		<p class="event-owner-${event.id}">Organizer: ${event.eventCreator.username}</p>
            		<p>State of event: <span class="stateOfEvent">${event.stateOfEvent}</span></p>
 				<button class="btn btn-dark event-page-btn" data-id="${event.id}">Go to Event page</button>
+			</div>
+			</a>
 			</div>
         `)
                                     .join('')}
@@ -100,11 +108,19 @@ export default function Discover(props) {
 }
 
 export function DiscoverEvents() {
+	$(".groupDiv").click(function () {
+		const groupId = $(this).data("id");
+		createView('/group', groupId);
+	})
 	$(".group-page-btn").click(function () {
 		const groupId = $(this).data("id");
 		createView('/group', groupId);
 	})
 
+	$(".eventDiv").click(function () {
+		const eventId = $(this).data("id");
+		createView('/event', eventId);
+	})
 	$(".event-page-btn").click(function () {
 		const eventId = $(this).data("id");
 		createView('/event', eventId);
@@ -117,18 +133,4 @@ export function DiscoverEvents() {
 	$(".createEventBtn").click(function () {
 		createView('/createEvent')
 	})
-}
-
-function groupsHTML(props) {
-	//language=HTML
-	return `
-
-	`;
-}
-
-function eventsHTML(props) {
-	//language=HTML
-	return `
-
-	`
 }
