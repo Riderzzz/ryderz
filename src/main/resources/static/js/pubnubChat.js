@@ -16,8 +16,8 @@ pubNubListener()
 
 function initPubNub(){
     return new PubNub({
-        publishKey : "pub-c-62bc5d65-2a08-407c-8259-890f93d4222d",
-        subscribeKey : "sub-c-17f4346c-ca4f-11ec-987b-a6fdca316470",
+        publishKey : PUB_KEY,
+        subscribeKey : SUB_KEY,
         keepalive: true,
         uuid: "william"
     })
