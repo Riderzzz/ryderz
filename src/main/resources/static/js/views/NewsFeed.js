@@ -422,15 +422,12 @@ function sideBarFriendBtn() {
 }
 
 function formatTime(time) {
-
+    console.log(time)
     let hourSplit = time.split(":")
-    let hour = parseInt(hourSplit[0]);
+    let secondsAndAMPM = hourSplit[2]
+    let AMorPM = secondsAndAMPM.split(" ")
 
-    if (hour > 12) {
-        return (hour - 12) + ":" + hourSplit[1] + 'pm'
-    }
-
-    return hour + ":" + hourSplit[1] + 'am'
+    return hourSplit[0] + ':' + hourSplit[1] + ' ' + AMorPM[1]
 }
 
 function formatDate(d) {
@@ -566,7 +563,7 @@ function postCard(post) {
     }
 
     html += `
-            <div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString())}</div>
+            <div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString('en-US'))}</div>
                         
             </div></div>`
     //card-header-end

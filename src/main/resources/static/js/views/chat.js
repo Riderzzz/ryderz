@@ -17,14 +17,14 @@ export default function chatTest(props) {
     
     
     
-    <div class="chat-box-container mx-auto row">
-        <div class="contacts col-3">Withers56</div>
-        <div class="chat col-8 p-0">
+    <div class="chat-box-container row d-none">
+        <div class="contacts col-4">Withers56</div>
+        <div class="chat col-7 p-0">
             <div class="feed m-1"></div>
             <div class="type-bar d-flex">
                 <div class="bottom">
                     <div class="input-group">
-                      <input type="text" class="form-control" name="msgField" id="msg" aria-label="Recipient's username" aria-describedby="button-addon2">
+                      <input type="text" class="form-control" name="msgField" id="msg" data-channel="${channel}" aria-label="Recipient's username" aria-describedby="button-addon2">
                       <button class="btn btn-outline-dark send-msg-btn" type="button" id="button-addon2" data-channel="${channel}">Send</button>
                     </div>
                 </div>
@@ -32,8 +32,8 @@ export default function chatTest(props) {
         </div>
     </div>
   
-    <div class="chatBox">
-    
+    <div class="chatbox-btn px-4 py-2">
+        <i class="bi bi-chat-dots"></i>
     </div>
 
     `
@@ -44,6 +44,15 @@ export function chatTestEvents() {
     subscribeToChannel(channel)
     fetchOldMessages(channel)
     sendMsgBtn()
+    sendMsgEnter()
+    toggleChatboxBtn()
+}
+
+function toggleChatboxBtn() {
+    $('.chatbox-btn').click(function () {
+        $('.chat-box-container').toggleClass('d-none')
+        setFeedToBottom()
+    })
 }
 
 
@@ -58,13 +67,29 @@ function sendMsgBtn() {
     })
 }
 
+function sendMsgEnter() {
+    $('#msg').keypress(function(event){
+        var keycode = event.keyCode
+        if(keycode == '13'){
+            let messageText = $('#msg').val()
+            $(this).val("")
+            let channel = $(this).data("channel")
+
+            console.log('ready to send: ' + messageText)
+
+            sendMsg(messageText, channel)
+        }
+    })
+}
+
 export function appendToChatbox(message){
     let feed = $('.feed')
     setFeedToBottom()
     feed.html(feed.html() + `
-        <div class="card">
+        <div class="card chat-card">
           <div class="card-body">
-            ${message.publisher}: ${message.message.description}
+              <div class="name">${message.publisher}:</div>
+              <div class="message">${message.message.description}</div> 
           </div>
         </div>
     `)
@@ -83,9 +108,10 @@ export function appendOldMessagesToChatBox(messageArray) {
     for (const msg of messages) {
         console.log(`${msg.uuid}: ${msg.message.description}`)
         feed.html(feed.html() + `
-        <div class="card">
+        <div class="card chat-card">
           <div class="card-body">
-            ${msg.uuid}: ${msg.message.description}
+            <div class="name">${msg.uuid}:</div>
+            <div class="message">${msg.message.description}</div> 
           </div>
         </div>
         `)
@@ -104,7 +130,9 @@ function setFeedToBottom() {
 }
 
 
-
+function chatBoxHtml() {
+    return
+}
 
 
 

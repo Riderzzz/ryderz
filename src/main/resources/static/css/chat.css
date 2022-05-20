@@ -1,7 +1,11 @@
 .chat-box-container {
     height: 66vh;
-    width: 50%;
+    width: 40%;
     border-radius: 10px;
+
+    position: fixed;
+    bottom: 3.5em;
+    right: 1em;
 }
 .contacts {
     background-color: #9a9a9a;
@@ -16,6 +20,11 @@
     height: 100%;
     border-radius: 0 10px 10px 0;
     border: 2px solid black;
+}
+
+.chat-card {
+    border-radius: 1em;
+    margin: 1em;
 }
 
 .feed {
@@ -34,4 +43,12 @@
 
 .bottom {
     width: 90%
+}
+
+.chatbox-btn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    font-size: 2em;
 }
