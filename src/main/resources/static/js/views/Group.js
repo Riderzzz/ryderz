@@ -65,6 +65,7 @@ export function GroupEvents() {
 	createCommentListener();
 	deleteGroupBtn();
 	uploadGroupImgHeader();
+	clickOnCommentAuthorName();
 }
 
 function joinGroupBtn() {
@@ -328,6 +329,14 @@ function uploadGroupImgHeader() {
 	})
 }
 
+function clickOnCommentAuthorName() {
+	$(".commentATag").click(function () {
+		let commentAuthorID = $(this).data("id");
+
+		createView("/profile", commentAuthorID);
+	})
+}
+
 //End of events
 
 
@@ -440,10 +449,14 @@ function populateGroupCommentsHTML(props) {
                         <div class="d-flex">
                             <div class="info d-flex">
 <!--                            TODO: add delete icon to delete comment-->
-                                <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
-                                <div class="names">
-                                    <div class="username">${comment.author.username}</div>
-                                    <div class="content">${comment.content}</div>
+								<a class="commentATag" data-id="${comment.author.id}">
+                                <div class="pic"><img class="group-comment-profile-pic" src="${comment.author.userPhotoUrl}" alt=""></div>
+                                </a>
+                                <div class="ms-2 names">
+                                	<a class="commentATag" data-id="${comment.author.id}">
+                                    	<div class="username">${comment.author.username}</div>
+                                	</a>
+                                	<div class="content">${comment.content}</div>
                                 </div>
                             </div>
                         </div>

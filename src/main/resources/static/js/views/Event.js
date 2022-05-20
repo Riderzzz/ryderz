@@ -72,6 +72,7 @@ export function EventEvents() {
 	leaveEventBtn();
 	commentOnEvent();
 	deleteEventBtn();
+	clickOnCommentAuthorName();
 }
 
 function getTimeFormat(props) {
@@ -234,6 +235,14 @@ function cancelEditsBtn() {
 	})
 }
 
+function clickOnCommentAuthorName() {
+	$(".commentATag").click(function () {
+		let commentAuthorID = $(this).data("id");
+
+		createView("/profile", commentAuthorID);
+	})
+}
+
 function checkUserEventStatus(props) {
 	let found = false;
 	if (props.event.usersId.length > 0) {
@@ -283,9 +292,13 @@ function checkIfCommentsExist(props) {
                         <div class="d-flex">
                             <div class="info d-flex">
 <!--                            TODO: add delete icon to delete comment-->
-                                <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
-                                <div class="names">
-                                    <div class="username">${comment.author.username}</div>
+								<a class="commentATag" data-id="${comment.author.id}">
+                                <div class="pic"><img class="event-comment-profile-pic" src="${comment.author.userPhotoUrl}" alt=""></div>
+                                </a>
+                                <div class="ms-2 names">
+                                	<a class="commentATag" data-id="${comment.author.id}">
+                                    	<div class="username">${comment.author.username}</div>
+                                    </a>
                                     <div class="content">${comment.content}</div>
                                 </div>
                                 <div class="deleteIcon ml-auto"><i class="bi bi-x-square-fill"></i></div>

@@ -27,8 +27,19 @@ public class EventsController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Events> getEventById(@PathVariable Long id){
-        return eventsRepository.findById(id);
+    public Events getEventById(@PathVariable Long id){
+        Events event = eventsRepository.findById(id).get();
+
+        Collection<Comments> eventComments = event.getComments();
+
+        for (Comments comment: eventComments) {
+            User commentAuthor = comment.getAuthor();
+            String imageName = commentAuthor.getProfilePicture();
+            String imageUrl = s3Service.getSignedURL(imageName);
+            commentAuthor.setUserPhotoUrl(imageUrl);
+        }
+
+        return event;
     }
 
     @PostMapping
