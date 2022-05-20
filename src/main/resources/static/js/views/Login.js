@@ -115,7 +115,7 @@ export default function Login(props) {
 
 <!--               Submit button -->
               <div class="d-flex justify-content-center">
-                <button id ="login-btn" type="submit" value="Log In" class="glow-on-hover">
+                <button id ="login-btn" type="submit" value="Log In" class="glow-on-hover-login">
                 Login
                 </button>
               </div>

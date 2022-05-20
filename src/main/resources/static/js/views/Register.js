@@ -5,7 +5,7 @@ export default function Register(props) {
     // language=HTML
     return `
         <!DOCTYPE html>
-        <section class="vh-100 bg-image"
+        <section class="vh-100 register-bg-image"
                  style="background-image: url('../../images/scenic.jpg');">
 
             <div class="mask d-flex align-items-center h-100 gradient-custom-3">
