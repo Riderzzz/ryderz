@@ -1,20 +1,5 @@
 import {getHeaders, isLoggedIn} from "../../auth.js";
 
-// export async function getData() {
-// 	if (isLoggedIn()) {
-// 		let requestOject= {
-// 			method: "GET",
-// 			headers: getHeaders()
-// 		}
-//
-// 		return fetch("http://localhost:8081/api/users/me", requestOject).then(function (result){
-// 			return result.json()
-// 		}).then(function (data){
-// 			return Navbar(data)
-// 		})
-// 	}
-// }
-
 export default function Navbar(props) {
 
 	// let data = getData().then(d => {})
@@ -35,6 +20,9 @@ export default function Navbar(props) {
 				<div class="logo text-white order-2 order-lg-1">LogoPlaceHolder</div>
                 <div class="collapse navbar-collapse justify-content-end order-4 order-lg-2" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto align-items-center">
+						<li class="nav-item">
+							<a class="nav-link" href="/chatTest" data-link>chat</a>
+						</li>
                         <li class="nav-item">
                             <a class="nav-link" href="/" data-link>Home</a>
                         </li>`;
