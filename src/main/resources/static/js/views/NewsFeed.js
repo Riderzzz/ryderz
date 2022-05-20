@@ -1,5 +1,7 @@
 import {getHeaders, isLoggedIn, userEmail} from "../auth.js";
 import createView from "../createView.js";
+import {fetchOldMessages, subscribeToChannel} from "../pubnubChat.js";
+import {chatBoxHtml, sendMsgBtn, sendMsgEnter, toggleChatboxBtn} from "./chat.js";
 
 const COMMENT_URI = "http://localhost:8081/api/comments";
 const POST_URI = "http://localhost:8081/api/posts";
@@ -9,7 +11,7 @@ export let editPostId;
 export let editPostTitle;
 export let editPostContent;
 let count = 0
-// export let editPostCategories;
+let channel = 'app-test-1'
 let allProps;
 
 export default function NewsFeed(props) {
@@ -48,6 +50,9 @@ export default function NewsFeed(props) {
                     ${createPostModal(props)}
                     ${editPostModal(props)}           
                 </div>
+                <div>
+                    ${chatBoxHtml()}
+                </div>
             </div>
         `
 
@@ -70,6 +75,12 @@ export function NewsFeedEvents() {
     editPostBtn();
     joinEvent();
     leaveEvent();
+
+    subscribeToChannel(channel)
+    fetchOldMessages(channel)
+    sendMsgBtn()
+    sendMsgEnter()
+    toggleChatboxBtn()
 }
 function showProfilePage() {
     $(".view-profile-page").click(function () {
@@ -188,19 +199,6 @@ function createPostBtn() {
                 $('.posts-container').html(newsfeedPostsHtml(d))
                 NewsFeedEvents()
             })
-            // createView('/newsfeed')
-
-            //appends post without reloading page but has bugs
-            // postObject.comments = []
-            // postObject.date = new Date()
-            // postObject.author = {
-            //     id: $('.id').data("userId"),
-            //     username: $('.username').data("username"),
-            //     email: userEmail()
-            // }
-            // console.log(postObject.date.toLocaleTimeString())
-            // let feedContainer = $('.post')
-            // feedContainer.html(tempPostCard(postObject) + feedContainer.html())
         })
     })
 }

@@ -16,25 +16,8 @@ export default function chatTest(props) {
     <h1>chat</h1>
     
     
+    ${chatBoxHtml()}
     
-    <div class="chat-box-container row d-none">
-        <div class="contacts col-4">Withers56</div>
-        <div class="chat col-7 p-0">
-            <div class="feed m-1"></div>
-            <div class="type-bar d-flex">
-                <div class="bottom">
-                    <div class="input-group">
-                      <input type="text" class="form-control" name="msgField" id="msg" data-channel="${channel}" aria-label="Recipient's username" aria-describedby="button-addon2">
-                      <button class="btn btn-outline-dark send-msg-btn" type="button" id="button-addon2" data-channel="${channel}">Send</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  
-    <div class="chatbox-btn px-4 py-2">
-        <i class="bi bi-chat-dots"></i>
-    </div>
 
     `
 }
@@ -48,7 +31,7 @@ export function chatTestEvents() {
     toggleChatboxBtn()
 }
 
-function toggleChatboxBtn() {
+export function toggleChatboxBtn() {
     $('.chatbox-btn').click(function () {
         $('.chat-box-container').toggleClass('d-none')
         setFeedToBottom()
@@ -56,7 +39,7 @@ function toggleChatboxBtn() {
 }
 
 
-function sendMsgBtn() {
+export function sendMsgBtn() {
     $('.send-msg-btn').click(function (){
         let messageText = $('#msg').val()
         let channel = $(this).data("channel")
@@ -67,7 +50,7 @@ function sendMsgBtn() {
     })
 }
 
-function sendMsgEnter() {
+export function sendMsgEnter() {
     $('#msg').keypress(function(event){
         var keycode = event.keyCode
         if(keycode == '13'){
@@ -120,7 +103,7 @@ export function appendOldMessagesToChatBox(messageArray) {
     setFeedToBottom()
 }
 
-function setFeedToBottom() {
+export function setFeedToBottom() {
     let feed = $('.feed')
 
     let isScrolledToBottom = feed.scrollHeight - feed.clientHeight <= feed.scrollTop + 1;
@@ -130,8 +113,25 @@ function setFeedToBottom() {
 }
 
 
-function chatBoxHtml() {
-    return
+export function chatBoxHtml() {
+    return `<div class="chat-box-container row d-none">
+        <div class="contacts col-4">Withers56</div>
+        <div class="chat col-7 p-0">
+            <div class="feed m-1"></div>
+            <div class="type-bar d-flex">
+                <div class="bottom">
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="msgField" id="msg" data-channel="${channel}" aria-label="Recipient's username" aria-describedby="button-addon2">
+                      <button class="btn btn-outline-dark send-msg-btn" type="button" id="button-addon2" data-channel="${channel}">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div class="chatbox-btn px-4 py-2">
+        <i class="bi bi-chat-dots"></i>
+    </div>`
 }
 
 
