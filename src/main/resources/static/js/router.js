@@ -164,9 +164,9 @@ export default function router(URI, Id) {
             viewEvent: EditPostEvents
         }, '/profile': {
             returnView: Profile,
-            uri: '/profile',
+            uri: `/profile/${Id}`,
             state : {
-                profile: `/api/users/1`
+                profile: `/api/users/${Id}`
             },
             title: 'Profile',
             viewEvent: showFriendsProfile
