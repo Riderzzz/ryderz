@@ -1,36 +1,26 @@
-// import {isLoggedIn} from "./auth.js";
+import {isLoggedIn, pubnub, userEmail} from "./auth.js";
+import {appendOldMessagesToChatBox, appendToChatbox} from "./views/chat.js";
 
-import {isLoggedIn} from "./auth.js";
-import {appendToChatbox} from "./views/chat.js";
+let count = 1;
 
-export let pubnub = initPubNub()
-
-unsubscribe()
-pubNubListener()
-
-
-
-
-
-
-
-function initPubNub(){
+export function initPubNub(){
     return new PubNub({
         publishKey : PUB_KEY,
         subscribeKey : SUB_KEY,
-        keepalive: true,
-        uuid: "william"
+        uuid: userEmail()
     })
-
-    // unsub()
-    //
-    // pubnub.unsubscribe({
-    //     channel: channel
-    // })
-
 }
 
-function pubNubListener(){
+export function setUUID() {
+    let user = userEmail()
+    console.log(user)
+    pubnub.set_uuid = user
+    console.log(pubnub.uuid)
+}
+
+
+
+export function pubNubListener(){
 
     const listener = { // <-- extract the listener
         message: function(msg) {
@@ -52,10 +42,10 @@ export function subscribeToChannel(channel) {
     })
 }
 
-export function sendMsg(msg, channel) {
+export function sendMsg(msg, currentChannel) {
     if (isLoggedIn()) {
         var publishPayload = {
-            channel : channel,
+            channel : currentChannel,
             message: {
                 description: msg
             }
@@ -64,6 +54,21 @@ export function sendMsg(msg, channel) {
             console.log(status, response);
         })
     }
+}
+
+export function fetchOldMessages(currentChannel) {
+
+    console.log(currentChannel)
+    pubnub.fetchMessages(
+        {
+            channels: [currentChannel],
+            end: '15343325004275466',
+            count: 50
+        },
+        (status, response) => {
+            appendOldMessagesToChatBox(response)
+        }
+    );
 }
 
 export function unsubscribe() {

@@ -20,7 +20,7 @@
 
 .feed {
     max-height: 85%;
-    overflow: scroll;
+    overflow: auto;
     height: 85%;
 }
 

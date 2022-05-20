@@ -1,4 +1,6 @@
-import {pubnub, sendMsg, subscribeToChannel} from "../pubnubChat.js"
+import {sendMsg, subscribeToChannel, setUUID, fetchOldMessages} from "../pubnubChat.js"
+// import {pubnub} from "../auth.js";
+// import {userEmail} from "../auth.js";
 // import {isLoggedIn, userEmail} from "../auth.js";
 
 
@@ -6,7 +8,7 @@ import {pubnub, sendMsg, subscribeToChannel} from "../pubnubChat.js"
 
 
 
-let channel = 'hello_world'
+let channel = 'app-test-1'
 
 export default function chatTest(props) {
 
@@ -38,9 +40,12 @@ export default function chatTest(props) {
 }
 
 export function chatTestEvents() {
+    setUUID()
     subscribeToChannel(channel)
+    fetchOldMessages(channel)
     sendMsgBtn()
 }
+
 
 function sendMsgBtn() {
     $('.send-msg-btn').click(function (){
@@ -55,8 +60,49 @@ function sendMsgBtn() {
 
 export function appendToChatbox(message){
     let feed = $('.feed')
-    feed.html(feed.html() + `${message.publisher}: ${message.message.description}`)
+    setFeedToBottom()
+    feed.html(feed.html() + `
+        <div class="card">
+          <div class="card-body">
+            ${message.publisher}: ${message.message.description}
+          </div>
+        </div>
+    `)
+    feed.scrollTop(feed[0].scrollHeight)
 }
+
+export function appendOldMessagesToChatBox(messageArray) {
+
+    if (messageArray.channels == null) {
+        return
+    }
+
+    let feed = $('.feed')
+    let messages = messageArray.channels[Object.keys(messageArray.channels)[0]]
+
+    for (const msg of messages) {
+        console.log(`${msg.uuid}: ${msg.message.description}`)
+        feed.html(feed.html() + `
+        <div class="card">
+          <div class="card-body">
+            ${msg.uuid}: ${msg.message.description}
+          </div>
+        </div>
+        `)
+        feed.scrollTop(feed[0].scrollHeight)
+    }
+    setFeedToBottom()
+}
+
+function setFeedToBottom() {
+    let feed = $('.feed')
+
+    let isScrolledToBottom = feed.scrollHeight - feed.clientHeight <= feed.scrollTop + 1;
+
+    if(!isScrolledToBottom)
+        feed.scrollTop = feed.scrollHeight - feed.clientHeight;
+}
+
 
 
 

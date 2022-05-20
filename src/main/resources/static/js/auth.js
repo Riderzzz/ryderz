@@ -1,8 +1,9 @@
 import fetchData from "./fetchData.js";
 import createView from "./createView.js";
 import {ifUserUnauthorized} from "./views/Login.js";
-// import {pubnub} from "./pubnubChat.js";
+import {initPubNub, pubNubListener, unsubscribe} from "./pubnubChat.js";
 
+export let pubnub;
 /**
  * Adds a login event to allow the user to initially obtain a new OAuth2.0 token
  * On a successful response, sets the tokens into storage and redirects to the root
@@ -43,6 +44,13 @@ export default function addLoginEvent() {
             }
 
             setTokens(data);
+
+            //inializing pubnub here because this is the point whenever the user has successfully logged in
+            pubnub = initPubNub()
+
+            unsubscribe()
+            pubNubListener()
+
             createView("/");
         });
     });

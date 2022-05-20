@@ -1,20 +1,5 @@
 import {getHeaders, isLoggedIn} from "../../auth.js";
 
-// export async function getData() {
-// 	if (isLoggedIn()) {
-// 		let requestOject= {
-// 			method: "GET",
-// 			headers: getHeaders()
-// 		}
-//
-// 		return fetch("http://localhost:8081/api/users/me", requestOject).then(function (result){
-// 			return result.json()
-// 		}).then(function (data){
-// 			return Navbar(data)
-// 		})
-// 	}
-// }
-
 export default function Navbar(props) {
 
 	// let data = getData().then(d => {})
