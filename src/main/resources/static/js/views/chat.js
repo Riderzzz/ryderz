@@ -12,14 +12,7 @@ let channel = 'app-test-1'
 
 export default function chatTest(props) {
 
-    return `
-    <h1>chat</h1>
-    
-    
-    ${chatBoxHtml()}
-    
-
-    `
+    return `<h1>chat</h1>`
 }
 
 export function chatTestEvents() {
@@ -41,9 +34,10 @@ export function toggleChatboxBtn() {
 
 export function sendMsgBtn() {
     $('.send-msg-btn').click(function (){
-        let messageText = $('#msg').val()
+        let message = $('#msg')
+        let messageText = message.val()
         let channel = $(this).data("channel")
-
+        message.val("")
         console.log('ready to send: ' + messageText)
 
         sendMsg(messageText, channel)
@@ -67,7 +61,7 @@ export function sendMsgEnter() {
 
 export function appendToChatbox(message){
     let feed = $('.feed')
-    setFeedToBottom()
+
     feed.html(feed.html() + `
         <div class="card chat-card">
           <div class="card-body">
@@ -98,7 +92,7 @@ export function appendOldMessagesToChatBox(messageArray) {
           </div>
         </div>
         `)
-        feed.scrollTop(feed[0].scrollHeight)
+
     }
     setFeedToBottom()
 }
@@ -106,16 +100,14 @@ export function appendOldMessagesToChatBox(messageArray) {
 export function setFeedToBottom() {
     let feed = $('.feed')
 
-    let isScrolledToBottom = feed.scrollHeight - feed.clientHeight <= feed.scrollTop + 1;
-
-    if(!isScrolledToBottom)
-        feed.scrollTop = feed.scrollHeight - feed.clientHeight;
+    feed.scrollTop(feed[0].scrollHeight)
 }
 
 
-export function chatBoxHtml() {
+export function chatBoxHtml(friends) {
+    console.log(friends)
     return `<div class="chat-box-container row d-none">
-        <div class="contacts col-4">Withers56</div>
+        <div class="contacts col-4 py-3"><hr>${friends.map(friend => `${friendTabs(friend)}`).join("")}</div>
         <div class="chat col-7 p-0">
             <div class="feed m-1"></div>
             <div class="type-bar d-flex">
@@ -129,9 +121,22 @@ export function chatBoxHtml() {
         </div>
     </div>
   
-    <div class="chatbox-btn px-4 py-2">
+    <div class="chatbox-btn me-2 mb-2">
         <i class="bi bi-chat-dots"></i>
     </div>`
+}
+
+function friendTabs(friend) {
+    //language=html
+    return `
+<div class="friend-tab d-flex py-1">
+    <div class="chat-avatar"><i class="bi bi-person-fill"></i></div>
+    <div class="friend-info">${friend.username}</div>
+</div>
+<hr>
+
+
+`
 }
 
 

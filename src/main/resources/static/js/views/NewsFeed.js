@@ -30,8 +30,6 @@ export default function NewsFeed(props) {
 
     const sortedProps = mixedProps.sort((a, b) => b.date - a.date)
 
-    console.log(sortedProps)
-
     //language=HTML
     let html =
         `
@@ -51,7 +49,7 @@ export default function NewsFeed(props) {
                     ${editPostModal(props)}           
                 </div>
                 <div>
-                    ${chatBoxHtml()}
+                    ${chatBoxHtml(props.user.friends)}
                 </div>
             </div>
         `
@@ -857,7 +855,7 @@ function tempPostCard(post) {
     return html;
 }
 
-function fetchUserData() {
+export function fetchUserData() {
     let requestObject = {
         method: 'GET',
         headers: getHeaders()
