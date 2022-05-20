@@ -1,4 +1,4 @@
-#email {
+#username {
     background: white url(../images/email-icon.png) right no-repeat;
     /* height: 10px; */
     margin-right: 10px;
@@ -42,7 +42,7 @@
     background: radial-gradient(#44006b, #9d2e2e);
 }
 
-.glow-on-hover {
+.glow-on-hover-login {
     width: 220px;
     height: 50px;
     border: none;
@@ -55,7 +55,7 @@
     border-radius: 10px;
 }
 
-.glow-on-hover:before {
+.glow-on-hover-login:before {
     content: '';
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
     position: absolute;
@@ -72,19 +72,19 @@
     border-radius: 10px;
 }
 
-.glow-on-hover:active {
+.glow-on-hover-login:active {
     color: #000
 }
 
-.glow-on-hover:active:after {
+.glow-on-hover-login:active:after {
     background: transparent;
 }
 
-.glow-on-hover:hover:before {
+.glow-on-hover-login:hover:before {
     opacity: 1;
 }
 
-.glow-on-hover:after {
+.glow-on-hover-login:after {
     z-index: -1;
     content: '';
     position: absolute;
