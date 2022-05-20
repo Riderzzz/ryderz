@@ -550,11 +550,11 @@ function newsfeedPostsHtml(sortedProps) {
 
 function postCard(post) {
     //card-header begin
-    let html = `<div class="card m-3 post-num-${post.id}">
-					<div class="card-header post-header d-flex justify-content-between">
+    let html = `<div class="card m-3 post-num-${post.id} shadow-light">
+					<div class="post-header mb-2 d-flex justify-content-between">
 						<a class="view-profile-page d-flex align-items-end" data-id="${post.author.id}">
 							 <div class="me-2 newsfeed-profile-pic-container">
-							    <img class="newsfeed-profile-pic" src="${post.author.userPhotoUrl}" alt="">
+							    <img class="newsfeed-profile-pic rounded-circle" src="${post.author.userPhotoUrl}" alt="">
 							 </div>
                              <div class="users-username my-2">${post.author.username}</div>
 						</a>
@@ -615,11 +615,11 @@ function postCard(post) {
 }
 
 function eventCard(event) {
-    let html = `<div class="card m-3 event-num-${event.id}"">
-					<div class="card-header post-header d-flex justify-content-between">
+    let html = `<div class="card m-3 event-num-${event.id} shadow-light">
+					<div class="post-header d-flex justify-content-between mb-2">
 						<a class="view-profile-page d-flex align-items-end" data-id="${event.eventCreator.id}">
 							 <div class="me-2 newsfeed-profile-pic-container">
-							    <img class="newsfeed-profile-pic" src="${event.eventCreator.userPhotoUrl}" alt="">
+							    <img class="newsfeed-profile-pic rounded-circle" src="${event.eventCreator.userPhotoUrl}" alt="">
 							 </div>
                              <div class="users-username my-2">${event.eventCreator.username}</div>
 						</a>

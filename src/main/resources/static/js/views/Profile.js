@@ -1,5 +1,6 @@
 import createView from "../createView.js";
 import {getHeaders} from "../auth.js";
+
 const BASE_URI = 'http://localhost:8081/api/users';
 
 export default function Profile(props) {
@@ -24,7 +25,8 @@ export default function Profile(props) {
                 </div>
                 <div class="d-flex justify-content-center">
                     <img class="shadow-profile-picture rounded-circle position-absolute"
-                         style="background-image: url('${props.profile.userPhotoUrl}'); width: 168px; height: 168px; margin-top: -140px">
+                         src="${props.profile.userPhotoUrl}"
+                         style="width: 168px; height: 168px; margin-top: -140px" alt="">
                 </div>
             </section>
 
@@ -53,11 +55,12 @@ export default function Profile(props) {
                     <button type="button" class="btn btn-light mr-2"><i
                             class="far fa-envelope mr-2"></i> Message
                     </button>
-                    <button type="button" class="btn btn-light mr-2 add-friend-btn" data-id="${props.profile.id}">Add Friends ${props.profile.id}<i
-                            class="fas fa-plus ml-2"></i>
+                    <button type="button" class="btn btn-light mr-2 add-friend-btn" data-id="${props.profile.id}">Add
+                        Friends ${props.profile.id}<i
+                                class="fas fa-plus ml-2"></i>
                     </button>
                 </div>
-       
+
             </section>
         </div>
     </section>
@@ -76,6 +79,7 @@ export default function Profile(props) {
                     <!--users photo's on users profile-->
 
                 </div>
+
                 <!--Posts start-->
                 <div class="col-7 mb-4 mb-md-0">
                     ${showUsersPosts(props)}
@@ -116,7 +120,9 @@ export function showFriendsProfile() {
     friendsButtonListener();
     addFriendButtonListener();
     showProfilePage();
+    commentsButtonListener();
 }
+
 function showProfilePage() {
     $(".show-users-friends-profile").click(function () {
         const profileId = $(this).data("id");
@@ -125,8 +131,8 @@ function showProfilePage() {
     });
 }
 
-function addFriendButtonListener(){
-    $(".add-friend-btn").click(i =>{
+function addFriendButtonListener() {
+    $(".add-friend-btn").click(i => {
         const id = $(".add-friend-btn").data(`id`);
         console.log(id);
 
@@ -173,6 +179,11 @@ function friendsButtonListener() {
     });
 }
 
+function commentsButtonListener(){
+    $(".comments-link").click(r=>{
+        $(".comments-show").css("display","block")
+    })
+}
 
 function showUsersGroups(props) {
     //language=HTML
@@ -206,10 +217,14 @@ function showUsersFriends(props) {
                     ${props.profile.friends.map(friends => `
                     <div class="col-4 d-flex mb-3 justify-content-center">
                          <div class="justify-content-center">
+                         <div>
                             <img src="${friends.userPhotoUrl}"
                                  alt="image 1" class="rounded-circle"
                                  style="width: 90px;height: 90px;">
+                                 </div>
+                                 <div>
                             <a class="text-center show-users-friends-profile" data-id="${friends.id}">${friends.username}</a>
+                            </div>
                          </div>
                     </div>`).join("")}
                 </div>
@@ -237,16 +252,47 @@ function showUsersPosts(props) {
             <a class="edit-post-button" data-id="${post.id}"><i class="fas fa-ellipsis-h"></i></a>
         </div>
         <!--body of card-->
+       
         <div class="card-body">
             <p class="card-text">${post.content}</p>
-            <input class="comment-users-posts w-100" placeholder="Write a comment....">
-            
-        </div>
-    </div>`).join("")}`
+               
+            <input class="comment-users-posts w-100 mt-1" placeholder="Write a comment....">
+            <div class="d-flex justify-content-end mt-1">
+            <div class="" id="${post.id}-container">
+                 <button class="comments-link" data-bs-toggle="collapse" data-bs-target="#post-${post.id}" aria-controls="post-${post.id}"><small>comments</small></button>
+            </div>
+            </div>
+            <div class="collapse" id="post-${post.id}">
+            <div class="comments-show">
+                ${displayComments(post)}
+            </div>
+            </div>
+     
+     
+    </div>
+</div>`).join("")}`
 
     return html;
 }
 
+function displayComments(props) {
+    //language=HTML
+    let html = `
+        ${props.comments.map(posts => `
+            <div class="card card-body p-2 mb-1">
+                <div class="d-flex">
+                   <div class="info d-flex">
+                         <img src="${posts.author.userPhotoUrl}" alt="lightbox image 1" class="rounded-circle" style="width: 45px;height: 45px;">
+                        <div class="name">
+                        <div class="username">${posts.author.username}</div>
+                        <div class="content">${posts.content}</div>
+                        </div>
+                   </div>
+                </div>
+            </div>`
+        ).join("")}`
+    return html;
+}
 
 function showPostsOnly(props) {
     let html = `
