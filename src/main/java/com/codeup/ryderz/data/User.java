@@ -55,7 +55,7 @@ public class User {
     public String headerPicture;
 
     @OneToMany(mappedBy = "author")
-    @JsonIgnoreProperties({"author", "comments"})
+    @JsonIgnoreProperties({"author"})
     private Collection<Post> posts;
 
 
