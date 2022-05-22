@@ -1,4 +1,4 @@
-import {sendMsg, subscribeToChannel, setUUID, fetchOldMessages} from "../pubnubChat.js"
+import {sendMsg, subscribeToChannel, setUUID, fetchOldMessages, pubNubListener, unsubscribe} from "../pubnubChat.js"
 // import {pubnub} from "../auth.js";
 // import {userEmail} from "../auth.js";
 // import {isLoggedIn, userEmail} from "../auth.js";
@@ -36,11 +36,29 @@ export function sendMsgBtn() {
     $('.send-msg-btn').click(function (){
         let message = $('#msg')
         let messageText = message.val()
-        let channel = $(this).data("channel")
+        // let channel = $(this).data("channel")
         message.val("")
         console.log('ready to send: ' + messageText)
 
         sendMsg(messageText, channel)
+    })
+}
+
+export function selectFriendsTabListener() {
+    $('.friend-tab').click(function () {
+        let friendId = $(this).data('id')
+        let userId = $('.id').data('userid')
+
+        console.log('clicked on friend with id of: ' + friendId)
+        console.log('your id: ' + userId)
+
+        unsubscribe(channel)
+
+        channel = getFriendsChannel(userId, friendId)
+
+        console.log(channel)
+        console.log('setting channel to: ' + channel)
+        subscribeToChannel(channel)
     })
 }
 
@@ -129,7 +147,7 @@ export function chatBoxHtml(friends) {
 function friendTabs(friend) {
     //language=html
     return `
-<div class="friend-tab d-flex py-1">
+<div class="friend-tab d-flex py-1" data-id="${friend.id}">
     <div class="chat-avatar"><i class="bi bi-person-fill"></i></div>
     <div class="friend-info">${friend.username}</div>
 </div>
@@ -139,6 +157,18 @@ function friendTabs(friend) {
 `
 }
 
+export function getFriendsChannel(userId, friendId) {
+    console.log(typeof userId, typeof friendId)
+
+    if (userId > friendId) {
+        userId += ""
+        friendId += ""
+        return userId + friendId
+    }
+    userId += ""
+    friendId += ""
+    return friendId + userId
+}
 
 
 

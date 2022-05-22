@@ -118,11 +118,12 @@ public class UsersController {
     }
 
     @PostMapping("{user1Id}/friends/{user2Id}")
-    private void addFriend(@PathVariable User user1Id, @PathVariable Long user2Id){
-            User user1 = user1Id;
+    private void addFriend(@PathVariable Long user1Id, @PathVariable Long user2Id){
+            User user1 = userRepository.getById(user1Id);
             User user2 = userRepository.getById(user2Id);
 
-            user2.setFriends(new ArrayList<>());
+
+        user2.setFriends(new ArrayList<>());
             user1.setFriends(new ArrayList<>());
 
             user1.getFriends().add(user2);

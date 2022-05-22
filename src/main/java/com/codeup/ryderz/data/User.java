@@ -103,7 +103,9 @@ public class User {
     @JoinTable(
             name="friends",
             joinColumns = {@JoinColumn(name = "user1_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name="user2_id", nullable = false, updatable = false)}
+            inverseJoinColumns = {@JoinColumn(name="user2_id", nullable = false, updatable = false)},
+            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
+            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
     @ToString.Exclude
     @JsonIgnoreProperties({"friends", "posts", "groupsOwned", "groupsJoined", "events", "eventsJoined", "comments", "password"})

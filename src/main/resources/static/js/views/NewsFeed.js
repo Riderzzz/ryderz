@@ -1,7 +1,7 @@
 import {getHeaders, isLoggedIn, userEmail} from "../auth.js";
 import createView from "../createView.js";
 import {fetchOldMessages, subscribeToChannel} from "../pubnubChat.js";
-import {chatBoxHtml, sendMsgBtn, sendMsgEnter, toggleChatboxBtn} from "./chat.js";
+import {chatBoxHtml, selectFriendsTabListener, sendMsgBtn, sendMsgEnter, toggleChatboxBtn} from "./chat.js";
 
 const COMMENT_URI = "http://localhost:8081/api/comments";
 const POST_URI = "http://localhost:8081/api/posts";
@@ -35,7 +35,7 @@ export default function NewsFeed(props) {
         `
             <div class="container-fluid">
                 <div class="username" data-username="${props.user.username}"></div>
-                <div class="id" data-userId="${props.user.id}"></div>
+                <div class="id" data-userid="${props.user.id}"></div>
                 <div class="row">
                     <div class="sidebar-container col-2  d-none d-lg-block">
                         ${newsfeedSidebarHtml(props.user)}
@@ -74,11 +74,13 @@ export function NewsFeedEvents() {
     joinEvent();
     leaveEvent();
 
+    //chat functions
     subscribeToChannel(channel)
     fetchOldMessages(channel)
     sendMsgBtn()
     sendMsgEnter()
     toggleChatboxBtn()
+    selectFriendsTabListener()
 }
 function showProfilePage() {
     $(".view-profile-page").click(function () {
@@ -334,7 +336,7 @@ function editEventBtn() {
 function joinEvent() {
     $('.join-event-btn').click(function () {
         let eventId = $(this).data("id")
-        let userId = $('.id').data("userId")
+        let userId = $('.id').data("userid")
 
         $('.join-leave-container-' + eventId).children().children().text('Joined!')
         $('.join-leave-container-' + eventId).children().children().addClass('btn-success').removeClass('btn-dark')
@@ -365,7 +367,7 @@ function joinEvent() {
 function leaveEvent() {
     $('.leave-event-btn').click(function () {
         let eventId = $(this).data("id")
-        let userId = $('.id').data("userId")
+        let userId = $('.id').data("userid")
 
         $('.join-leave-container-' + eventId).children().children().text('left!')
         $('.join-leave-container-' + eventId).children().children().addClass('btn-danger').removeClass('btn-dark')

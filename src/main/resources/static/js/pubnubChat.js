@@ -72,6 +72,6 @@ export function fetchOldMessages(currentChannel) {
     );
 }
 
-export function unsubscribe() {
-    pubnub.unsubscribeAll()
+export function unsubscribe(channel) {
+    pubnub.unsubscribe({ channels: [channel] });
 }

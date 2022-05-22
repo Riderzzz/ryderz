@@ -42,7 +42,9 @@ export default function Register(props) {
                                         <div class="d-flex justify-content-center">
                                             <button type="button"
                                                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-                                                    aria-describedby="emailHelp">
+                                                    aria-describedby="emailHelp"
+                                            id="register-btn">
+                                                
                                                 Register
                                             </button>
 
