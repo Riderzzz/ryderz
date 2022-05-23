@@ -15,7 +15,6 @@ export default function Register(props) {
                             <div class="card" style="border-radius: 15px;">
                                 <div class="card-body create-account-form">
                                     <h2 class="text-uppercase text-center mb-5">Create an account</h2>
-
                                     <form>
                                         <!--                                        <div class="form-outline mb-4">-->
                                         <!--                                            <input type="text" id="form3Example1cg"  class="form-control form-control-lg"/>-->
@@ -37,7 +36,6 @@ export default function Register(props) {
                                             <input type="password" id="password" class="form-control form-control-lg" placeholder="Enter password"/>
                                             <label class="form-label" for="form3Example4cg"></label>
                                         </div>
-
 
                                         <div class="d-flex justify-content-center">
                                             <button type="button"
@@ -61,7 +59,6 @@ export default function Register(props) {
                                         </p>
 
                                     </form>
-
                                 </div>
                             </div>
                         </div>

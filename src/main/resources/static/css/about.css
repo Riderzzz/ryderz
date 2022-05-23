@@ -46,6 +46,48 @@
     height: 570px;
     }
 
-#week-1 {
+.arrow-content {
+    float: left;
+    width: 50%;
+    height: 500px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
 
+.arrow {
+    position: relative;
+    margin: 0 auto;
+    width: 100px;
+}
+
+#arrow-1 {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+}
+
+#arrow-2 {
+    width: 150px;
+    height: 150px;
+}
+
+.weeks-card {
+    margin-top:115px;
+}
+
+#hidden {
+    visibility: hidden;
+}
+#week-1 {
+}
+
+#week-2 {
+
+}
+
+#week-3 {
+}
+#week-4 {
 }
