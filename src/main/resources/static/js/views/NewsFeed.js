@@ -81,7 +81,19 @@ export function NewsFeedEvents() {
     sendMsgEnter()
     toggleChatboxBtn()
     selectFriendsTabListener()
+    hideChatbox()
 }
+
+function hideChatbox() {
+    $('.posts-container').click(function () {
+        let chatbox = $('.chat-box-container')
+
+        if (!chatbox.hasClass('d-none')) {
+            chatbox.toggleClass('d-none')
+        }
+    })
+}
+
 function showProfilePage() {
     $(".view-profile-page").click(function () {
         const profileId = $(this).data("id");
@@ -420,7 +432,7 @@ function sideBarFriendBtn() {
 }
 
 function formatTime(time) {
-    console.log(time)
+    // console.log(time)
     let hourSplit = time.split(":")
     let secondsAndAMPM = hourSplit[2]
     let AMorPM = secondsAndAMPM.split(" ")
@@ -435,7 +447,7 @@ function formatDate(d) {
 }
 
 function joinBtnIfLoggedInAndNotJoined(usersJoined, eventId) {
-    console.log(eventId)
+    // console.log(eventId)
 
     for (const user of usersJoined) {
         if (user.email === userEmail()) {
@@ -450,7 +462,7 @@ function joinBtnIfLoggedInAndNotJoined(usersJoined, eventId) {
 function joinBtn(eventId) {
     return`<div>
     
-    <button class="btn btn-sm btn-dark mx-2 join-event-btn" type="button" data-id="${eventId}">
+    <button class="btn btn-sm btn-lightG mx-2 join-event-btn" type="button" data-id="${eventId}">
 	    Join <i class="bi bi-plus-lg"></i>
 	</button>
     
@@ -460,7 +472,7 @@ function joinBtn(eventId) {
 function leaveBtn(eventId) {
     return`<div>
 
-                <button class="btn btn-sm btn-dark mx-2 leave-event-btn" type="button" data-id="${eventId}">
+                <button class="btn btn-sm btn-lightG mx-2 leave-event-btn" type="button" data-id="${eventId}">
                     Leave <i class="bi bi-dash-lg"></i>
                 </button>
                 
@@ -472,7 +484,7 @@ function newsfeedSidebarHtml(userProps) {
     //language=html
     let html =
         `
-		<div class="sidebar d-flex flex-column">
+		<div class="sidebar d-flex flex-column navbar-dark-bg">
 			<div class="groups d-flex flex-column">
 				
 				<p class="mx-auto my-3">
@@ -481,7 +493,7 @@ function newsfeedSidebarHtml(userProps) {
                         <div><i class="bi bi-caret-down icon mx-2"></i></div>
 					</button>
 				</p>
-				<div class="collapse mx-auto" id="collapseGroups">
+				<div class="collapse me-auto" id="collapseGroups">
 					<div class="">
 						${userProps.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
 					</div>
@@ -493,7 +505,7 @@ function newsfeedSidebarHtml(userProps) {
                         <div><i class="bi bi-caret-down icon mx-2"></i></div>
 					</button>
 				</p>
-				<div class="collapse mx-auto" id="collapseEvents">
+				<div class="collapse me-auto" id="collapseEvents">
 					<div class="">
 						${userProps.eventsJoined.map(event => `<div class="p-1 event" data-id="${event.id}"><a href="#">-${event.titleOfEvent}</a></div>`).join("")}
 					</div>
@@ -506,7 +518,7 @@ function newsfeedSidebarHtml(userProps) {
 						
 					</button>
 				</p>
-				<div class="collapse mx-auto" id="collapseFriends">
+				<div class="collapse me-auto" id="collapseFriends">
 					<div class="">
 						${userProps.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
 					</div>
@@ -528,7 +540,7 @@ function newsfeedPostsHtml(sortedProps) {
     let html = `
         <header class="d-flex justify-content-between m-3">
             <div class="mx-4"><h3>News Feed</h3></div>
-            <button class="btn btn-dark mx-4" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
+            <button class="btn btn-lightG mx-4" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
         </header>
         <div class="post">
             ${sortedProps.map(post => {
@@ -549,19 +561,19 @@ function newsfeedPostsHtml(sortedProps) {
 
 function postCard(post) {
     //card-header begin
-    let html = `<div class="card m-3 post-num-${post.id} shadow-light">
+    let html = `<div class="card m-3 post-num-${post.id} shadow-light card-dark-bg">
 					<div class="post-header mb-2 d-flex justify-content-between">
 						<a class="view-profile-page d-flex align-items-end" data-id="${post.author.id}">
 							 <div class="me-2 newsfeed-profile-pic-container">
 							    <img class="newsfeed-profile-pic rounded-circle" src="${post.author.userPhotoUrl}" alt="">
 							 </div>
-                             <div class="users-username my-2">${post.author.username}</div>
+                             <div class="users-username">${post.author.username}</div>
 						</a>
-						<div class="">	
+						<div class="header-right-post">	
 				`
 
     if (userEmail() === post.author.email) {
-        html += `<div class="edit-delete"><i data-id="${post.id}" class="bi bi-pen post-edit-btn mx-1" data-bs-toggle="modal" data-bs-target="#editModal"></i><i data-id="${post.id}" class="bi bi-x-lg post-delete-btn ml-1"></i></div>`
+        html += `<div class="edit-delete"><i data-id="${post.id}" class="bi bi-pen post-edit-btn pointer hover-opacity mx-1" data-bs-toggle="modal" data-bs-target="#editModal"></i><i data-id="${post.id}" class="bi bi-x-lg post-delete-btn pointer hover-opacity ml-1"></i></div>`
     }
 
     html += `
@@ -570,14 +582,14 @@ function postCard(post) {
             </div></div>`
     //card-header-end
     //card-body-start
-    html += `<div class="card-body pb-2">
+    html += `<div class="card-body pb-2 bt">
 									<h5 class="card-title" id="post-title-${post.id}">${post.title}</h5>
 									<p class="card-text" id="post-content-${post.id}">${post.content}</p>
 									<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>
 									<div class="d-flex justify-content-between ">
-										<button class="btn btn-sm btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#post-${post.id}-collapseComments" aria-expanded="false" aria-controls="post-${post.id}-collapseComments">
-										Comments
-										</button>
+									      <a class="show-comments collapsed text-white" data-bs-toggle="collapse" href="#post-${post.id}-collapseComments" role="button" aria-expanded="false" aria-controls="post-${post.id}-collapseComments">
+                                            Comments <i class="bi bi-chevron-down icon"></i>
+                                          </a>
 										<div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString('en-US'))}</div>
 									</div>
 									
@@ -615,48 +627,54 @@ function postCard(post) {
 }
 
 function eventCard(event) {
-    let html = `<div class="card m-3 event-num-${event.id} shadow-light">
+    let html = `<div class="card m-3 event-num-${event.id} shadow-light card-dark-bg">
 					<div class="post-header d-flex justify-content-between mb-2">
 						<a class="view-profile-page d-flex align-items-end" data-id="${event.eventCreator.id}">
 							 <div class="me-2 newsfeed-profile-pic-container">
 							    <img class="newsfeed-profile-pic rounded-circle" src="${event.eventCreator.userPhotoUrl}" alt="">
 							 </div>
-                             <div class="users-username my-2">${event.eventCreator.username}</div>
+                             <div class="users-username">${event.eventCreator.username}</div>
 						</a>
-						<div class="header-right my-1">	
+						<div class="event-header-right">
+						    <div class="join-leave-container-${event.id} me-2">
+							    ${joinBtnIfLoggedInAndNotJoined(event.usersId, event.id)}
+                            </div>
+                        
+						<div class="header-right">	
+						    
 				`
 
     if (userEmail() === event.eventCreator.email) {
-        html += `<div class="edit-delete"><i data-id="${event.id}" class="bi bi-pen event-edit-btn mx-1"></i><i data-id="${event.id}" class="bi bi-x-lg event-delete-btn ml-1"></i></div>`
+        html += `<div class="edit-delete"><i data-id="${event.id}" class="bi bi-pen event-edit-btn pointer hover-opacity mx-1"></i><i data-id="${event.id}" class="bi bi-x-lg event-delete-btn pointer hover-opacity ml-1"></i></div>`
     }
 
     html += `    <div class="rider-count">Riders: ${event.usersId.length}<i class="bi bi-person-fill"></i></div>
                         
-            </div></div>`
+            </div></div></div>`
     //card-header-end
     //card-body-start
-    html += `<div class="card-body pb-2">
-									<h5 class="card-title d-flex justify-content-center justify-content-lg-start" id="post-title-${event.id}">${event.titleOfEvent}</h5>
-									<div class="starting-ending-addresses justify-content-between d-flex flex-column flex-lg-row align-items-center ">
-									    <div class="starting-address">Starting: lat-${event.startingLatitude}Long-${event.startingLongitude}</div>
-									    <div class="ending-address">Ending: lat-${event.endingLatitude}Long-${event.endingLongitude}</div>
-									    <div class="distance">Miles:(api data)</div>
-                                    </div>
+    html += `<div class="card-body pb-2 bt">
+									<h5 class="d-flex justify-content-center justify-content-lg-start" id="post-title-${event.id}">${event.titleOfEvent}</h5>
+									
                                     <div class="content-and-map row my-3">
-                                        <p class="card-text col-12 col-lg-7" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
-                                        <div class="map d-none d-lg-block col-lg-5 mx-auto"></div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="starting-address mb-1">Starting: lat-${event.startingLatitude}Long-${event.startingLongitude}</div>
+                                            <div class="ending-address mb-1">Ending: lat-${event.endingLatitude}Long-${event.endingLongitude}</div>
+                                            <div class="distance mb-1">Miles:(api data)</div>
+                                            <p class="card-text" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
+                                        </div>
+                                        <div class="map-container d-none d-lg-block col-lg-6 mx-auto">
+                                            <div class="map"></div>
+                                        </div>
                                     </div>
 									<p class="card-text" id="post-categories-${event.id}">
                                         ${event.categories.map(category => `${category.name}`).join(" ")}
                                     </p>
 									<div class="d-flex justify-content-between align-items-center">
 									    <div class="d-flex">
-									        <button class="btn btn-sm btn-dark me-2" type="button" data-bs-toggle="collapse" data-bs-target="#event-${event.id}-collapseComments" aria-expanded="false" aria-controls="event-${event.id}-collapseComments">
-										    Comments
-										    </button>
-										    <div class="join-leave-container-${event.id}">
-										        ${joinBtnIfLoggedInAndNotJoined(event.usersId, event.id)}
-                                            </div>
+									        <a class="show-comments collapsed text-white me-2" data-bs-toggle="collapse" href="#event-${event.id}-collapseComments" role="button" aria-expanded="false" aria-controls="event-${event.id}-collapseComments">
+                                                Comments <i class="bi bi-chevron-down icon"></i>
+                                            </a>
                                         </div>
                                         <div class="time">${formatDate(event.date)} ${formatTime(event.date.toLocaleTimeString('en-US'))}</div>
 
@@ -753,7 +771,7 @@ function createPostModal(props) {
 }
 
 function editPostModal(props) {
-    console.log(props)
+    // console.log(props)
     return `<!-- Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">

@@ -10,7 +10,7 @@ export default function Navbar(props) {
 	// console.log(data)
 	// language=HTML
 	let html = `
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-dark-bg">
             <div class="container d-flex justify-content-between">
                 <button class="navbar-toggler order-1" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent"

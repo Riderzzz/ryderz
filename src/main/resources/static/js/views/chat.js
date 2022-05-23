@@ -104,7 +104,7 @@ export function appendOldMessagesToChatBox(messageArray) {
     let messages = messageArray.channels[Object.keys(messageArray.channels)[0]]
 
     for (const msg of messages) {
-        console.log(`${msg.uuid}: ${msg.message.description}`)
+        // console.log(`${msg.uuid}: ${msg.message.description}`)
         feed.html(feed.html() + `
         <div class="card chat-card">
           <div class="card-body p-2">
@@ -126,7 +126,7 @@ export function setFeedToBottom() {
 
 
 export function chatBoxHtml(friends) {
-    console.log(friends)
+    // console.log(friends)
     return `<div class="chat-box-container row d-none">
         <div class="contacts col-4 py-3"><hr>${friends.map(friend => `${friendTabs(friend)}`).join("")}</div>
         <div class="chat col-7 p-0">

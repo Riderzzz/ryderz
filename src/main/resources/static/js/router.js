@@ -157,13 +157,8 @@ export default function router(URI, Id) {
         },
         '/profile': {
             returnView: Profile,
-<<<<<<< HEAD
-            uri: '/profile',
-            state: {
-=======
-            uri: `/profile/${Id}`,
+            uri: `/profile`,
             state : {
->>>>>>> f16ce6d23606563c08cd7df62186eaf11ad6faff
                 profile: `/api/users/${Id}`
             },
             viewEvent: showFriendsProfile
