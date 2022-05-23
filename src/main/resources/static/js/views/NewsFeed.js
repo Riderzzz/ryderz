@@ -476,8 +476,9 @@ function newsfeedSidebarHtml(userProps) {
 			<div class="groups d-flex flex-column">
 				
 				<p class="mx-auto my-3">
-					<button class="sidebar-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
-						<i class="bi bi-people ms-1 me-2"></i>Groups<i class="bi bi-caret-down icon"></i>
+					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
+                        <div><i class="bi bi-people ms-1 me-1"></i>Groups</div>
+                        <div><i class="bi bi-caret-down icon mx-2"></i></div>
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseGroups">
@@ -487,8 +488,9 @@ function newsfeedSidebarHtml(userProps) {
 				</div>
 				
 				<p class="mx-auto my-3">
-					<button class="sidebar-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
-						<i class="bi bi-calendar-event ms-1 me-2"></i>Events<i class="bi bi-caret-down icon"></i>
+					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
+                        <div><i class="bi bi-calendar-event ms-1 me-1"></i>Events</div>
+                        <div><i class="bi bi-caret-down icon mx-2"></i></div>
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseEvents">
@@ -498,8 +500,10 @@ function newsfeedSidebarHtml(userProps) {
 				</div>
 				
 				<p class="mx-auto my-3">
-					<button class="sidebar-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
-						<i class="bi bi-person ms-1 me-2"></i>Friends<i class="bi bi-caret-down icon"></i>
+					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
+                        <div><i class="bi bi-person ms-1 me-1"></i>Friends</div>
+                        <div><i class="bi bi-caret-down icon mx-2"></i></div>
+						
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseFriends">
@@ -553,7 +557,7 @@ function postCard(post) {
 							 </div>
                              <div class="users-username my-2">${post.author.username}</div>
 						</a>
-						<div class="header-right">	
+						<div class="">	
 				`
 
     if (userEmail() === post.author.email) {
@@ -561,7 +565,7 @@ function postCard(post) {
     }
 
     html += `
-            <div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString('en-US'))}</div>
+            
                         
             </div></div>`
     //card-header-end
@@ -570,10 +574,11 @@ function postCard(post) {
 									<h5 class="card-title" id="post-title-${post.id}">${post.title}</h5>
 									<p class="card-text" id="post-content-${post.id}">${post.content}</p>
 									<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>
-									<div>
+									<div class="d-flex justify-content-between ">
 										<button class="btn btn-sm btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#post-${post.id}-collapseComments" aria-expanded="false" aria-controls="post-${post.id}-collapseComments">
 										Comments
 										</button>
+										<div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString('en-US'))}</div>
 									</div>
 									
 									<div class="collapse" id="post-${post.id}-collapseComments">
@@ -625,8 +630,7 @@ function eventCard(event) {
         html += `<div class="edit-delete"><i data-id="${event.id}" class="bi bi-pen event-edit-btn mx-1"></i><i data-id="${event.id}" class="bi bi-x-lg event-delete-btn ml-1"></i></div>`
     }
 
-    html += `
-            <div class="time">${formatDate(new Date(event.date))} ${formatTime(new Date(event.date).toLocaleTimeString())}</div>
+    html += `    <div class="rider-count">Riders: ${event.usersId.length}<i class="bi bi-person-fill"></i></div>
                         
             </div></div>`
     //card-header-end
@@ -642,7 +646,9 @@ function eventCard(event) {
                                         <p class="card-text col-12 col-lg-7" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
                                         <div class="map d-none d-lg-block col-lg-5 mx-auto"></div>
                                     </div>
-									<p class="card-text" id="post-categories-${event.id}">${event.categories.map(category => `${category.name}`).join(" ")}</p>
+									<p class="card-text" id="post-categories-${event.id}">
+                                        ${event.categories.map(category => `${category.name}`).join(" ")}
+                                    </p>
 									<div class="d-flex justify-content-between align-items-center">
 									    <div class="d-flex">
 									        <button class="btn btn-sm btn-dark me-2" type="button" data-bs-toggle="collapse" data-bs-target="#event-${event.id}-collapseComments" aria-expanded="false" aria-controls="event-${event.id}-collapseComments">
@@ -652,7 +658,8 @@ function eventCard(event) {
 										        ${joinBtnIfLoggedInAndNotJoined(event.usersId, event.id)}
                                             </div>
                                         </div>
-                                        <div class="rider-count">Riders: ${event.usersId.length}<i class="bi bi-person-fill"></i></div>
+                                        <div class="time">${formatDate(event.date)} ${formatTime(event.date.toLocaleTimeString('en-US'))}</div>
+
 									</div>
 									
 									<div class="collapse" id="event-${event.id}-collapseComments">

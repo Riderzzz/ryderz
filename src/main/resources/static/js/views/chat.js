@@ -46,6 +46,8 @@ export function sendMsgBtn() {
 
 export function selectFriendsTabListener() {
     $('.friend-tab').click(function () {
+        $('.friend-tab').removeClass('friend-highlighted')
+        $(this).addClass('friend-highlighted')
         let friendId = $(this).data('id')
         let userId = $('.id').data('userid')
 
@@ -59,6 +61,7 @@ export function selectFriendsTabListener() {
         console.log(channel)
         console.log('setting channel to: ' + channel)
         subscribeToChannel(channel)
+        fetchOldMessages(channel)
     })
 }
 
@@ -68,7 +71,6 @@ export function sendMsgEnter() {
         if(keycode == '13'){
             let messageText = $('#msg').val()
             $(this).val("")
-            let channel = $(this).data("channel")
 
             console.log('ready to send: ' + messageText)
 
@@ -98,13 +100,14 @@ export function appendOldMessagesToChatBox(messageArray) {
     }
 
     let feed = $('.feed')
+    feed.html("")
     let messages = messageArray.channels[Object.keys(messageArray.channels)[0]]
 
     for (const msg of messages) {
         console.log(`${msg.uuid}: ${msg.message.description}`)
         feed.html(feed.html() + `
         <div class="card chat-card">
-          <div class="card-body">
+          <div class="card-body p-2">
             <div class="name">${msg.uuid}:</div>
             <div class="message">${msg.message.description}</div> 
           </div>
@@ -148,7 +151,7 @@ function friendTabs(friend) {
     //language=html
     return `
 <div class="friend-tab d-flex py-1" data-id="${friend.id}">
-    <div class="chat-avatar"><i class="bi bi-person-fill"></i></div>
+    <div class="chat-avatar"><i class="bi bi-person-fill pe-1"></i></div>
     <div class="friend-info">${friend.username}</div>
 </div>
 <hr>
