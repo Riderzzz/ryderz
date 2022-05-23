@@ -21,7 +21,11 @@ import CreateEvent, {CreateEventEvents} from "./views/CreateEvent.js";
 import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
 import EditPost, {EditPostEvents} from "./views/EditPost.js";
 import Profile, {showFriendsProfile} from "./views/Profile.js";
+
+
+
 import chatTest, {chatTestEvents} from "./views/chat.js";
+
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
@@ -31,24 +35,19 @@ export default function router(URI, Id) {
     const routes = {
         '/': {
             returnView: Home,
-            state: {
-
-            },
+            state: {},
             uri: '/',
-            title: 'Home',
         },
         '/login': {
             returnView: Login,
             state: {},
             uri: '/login',
-            title: "Login",
             viewEvent: LoginEvent
         },
         '/register': {
             returnView: Register,
             state: {},
             uri: '/register',
-            title: 'Register',
             viewEvent: RegisterEvent
         },
         '/posts': {
@@ -57,14 +56,12 @@ export default function router(URI, Id) {
                 posts: '/api/posts'
             },
             uri: '/posts',
-            title: 'All Posts',
             viewEvent: PostsEvent
         },
         '/about': {
             returnView: About,
             state: {},
             uri: '/about',
-            title: 'About',
         },
         '/error': {
             returnView: Error404,
@@ -76,7 +73,6 @@ export default function router(URI, Id) {
             returnView: Loading,
             state: {},
             uri: location.pathname,
-            title: 'Loading...',
         },
         '/user': {
             returnView: User,
@@ -84,14 +80,12 @@ export default function router(URI, Id) {
                 user: "/api/users/me"
             },
             uri: '/user',
-            title: 'User',
             viewEvent: UserEvent
         },
         '/logout': {
             returnView: logOut,
             state: {},
             uri: location.pathname,
-            title: 'Log Out',
             viewEvent: LogOutEvent
         },
         '/newsfeed': {
@@ -103,17 +97,15 @@ export default function router(URI, Id) {
                 user: "/api/users/me",
                 categories: "/api/categories/all"
             },
-            title: 'News Feed',
             viewEvent: NewsFeedEvents
         },
         '/discover': {
             returnView: Discover,
             uri: '/discover',
             state: {
-                events:"/api/events",
+                events: "/api/events",
                 groups: "/api/groups"
             },
-            title: 'Discover',
             viewEvent: DiscoverEvents
         },
         '/event': {
@@ -157,18 +149,23 @@ export default function router(URI, Id) {
         '/editPost': {
             returnView: EditPost,
             uri: '/editPost',
-            state : {
+            state: {
                 posts: '/api/posts',
                 categories: "/api/categories/all"
             },
             viewEvent: EditPostEvents
-        }, '/profile': {
+        },
+        '/profile': {
             returnView: Profile,
+<<<<<<< HEAD
+            uri: '/profile',
+            state: {
+=======
             uri: `/profile/${Id}`,
             state : {
+>>>>>>> f16ce6d23606563c08cd7df62186eaf11ad6faff
                 profile: `/api/users/${Id}`
             },
-            title: 'Profile',
             viewEvent: showFriendsProfile
         }, '/chatTest': {
             returnView: chatTest,

@@ -2,6 +2,7 @@ import fetchData from "./fetchData.js";
 import createView from "./createView.js";
 import {ifUserUnauthorized} from "./views/Login.js";
 import {initPubNub, pubNubListener, unsubscribe} from "./pubnubChat.js";
+import {fetchUserData} from "./views/NewsFeed.js";
 
 export let pubnub;
 /**
@@ -46,10 +47,9 @@ export default function addLoginEvent() {
             setTokens(data);
 
             //inializing pubnub here because this is the point whenever the user has successfully logged in
-            pubnub = initPubNub()
+            pubnubInitWithUserUsername()
 
-            unsubscribe()
-            pubNubListener()
+
 
             createView("/");
         });
@@ -107,6 +107,21 @@ export function userEmail() {
     }
 
     return false;
+}
+
+export function pubnubInitWithUserUsername() {
+    if (isLoggedIn()) {
+        fetchUserData().then(function (data) {
+            pubnub = new PubNub({
+                publishKey : PUB_KEY,
+                subscribeKey : SUB_KEY,
+                uuid: data.username
+            })
+            unsubscribe()
+            pubNubListener()
+        })
+    }
+
 }
 
 

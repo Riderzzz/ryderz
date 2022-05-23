@@ -1,5 +1,7 @@
 import {getHeaders, isLoggedIn, userEmail} from "../auth.js";
 import createView from "../createView.js";
+import {fetchOldMessages, subscribeToChannel} from "../pubnubChat.js";
+import {chatBoxHtml, selectFriendsTabListener, sendMsgBtn, sendMsgEnter, toggleChatboxBtn} from "./chat.js";
 
 const COMMENT_URI = "http://localhost:8081/api/comments";
 const POST_URI = "http://localhost:8081/api/posts";
@@ -9,7 +11,7 @@ export let editPostId;
 export let editPostTitle;
 export let editPostContent;
 let count = 0
-// export let editPostCategories;
+let channel = 'app-test-1'
 let allProps;
 
 export default function NewsFeed(props) {
@@ -28,14 +30,12 @@ export default function NewsFeed(props) {
 
     const sortedProps = mixedProps.sort((a, b) => b.date - a.date)
 
-    console.log(sortedProps)
-
     //language=HTML
     let html =
         `
             <div class="container-fluid">
                 <div class="username" data-username="${props.user.username}"></div>
-                <div class="id" data-userId="${props.user.id}"></div>
+                <div class="id" data-userid="${props.user.id}"></div>
                 <div class="row">
                     <div class="sidebar-container col-2  d-none d-lg-block">
                         ${newsfeedSidebarHtml(props.user)}
@@ -47,6 +47,9 @@ export default function NewsFeed(props) {
                 <div class="modal-container">
                     ${createPostModal(props)}
                     ${editPostModal(props)}           
+                </div>
+                <div>
+                    ${chatBoxHtml(props.user.friends)}
                 </div>
             </div>
         `
@@ -70,6 +73,14 @@ export function NewsFeedEvents() {
     editPostBtn();
     joinEvent();
     leaveEvent();
+
+    //chat functions
+    subscribeToChannel(channel)
+    fetchOldMessages(channel)
+    sendMsgBtn()
+    sendMsgEnter()
+    toggleChatboxBtn()
+    selectFriendsTabListener()
 }
 function showProfilePage() {
     $(".view-profile-page").click(function () {
@@ -188,19 +199,6 @@ function createPostBtn() {
                 $('.posts-container').html(newsfeedPostsHtml(d))
                 NewsFeedEvents()
             })
-            // createView('/newsfeed')
-
-            //appends post without reloading page but has bugs
-            // postObject.comments = []
-            // postObject.date = new Date()
-            // postObject.author = {
-            //     id: $('.id').data("userId"),
-            //     username: $('.username').data("username"),
-            //     email: userEmail()
-            // }
-            // console.log(postObject.date.toLocaleTimeString())
-            // let feedContainer = $('.post')
-            // feedContainer.html(tempPostCard(postObject) + feedContainer.html())
         })
     })
 }
@@ -338,7 +336,7 @@ function editEventBtn() {
 function joinEvent() {
     $('.join-event-btn').click(function () {
         let eventId = $(this).data("id")
-        let userId = $('.id').data("userId")
+        let userId = $('.id').data("userid")
 
         $('.join-leave-container-' + eventId).children().children().text('Joined!')
         $('.join-leave-container-' + eventId).children().children().addClass('btn-success').removeClass('btn-dark')
@@ -369,7 +367,7 @@ function joinEvent() {
 function leaveEvent() {
     $('.leave-event-btn').click(function () {
         let eventId = $(this).data("id")
-        let userId = $('.id').data("userId")
+        let userId = $('.id').data("userid")
 
         $('.join-leave-container-' + eventId).children().children().text('left!')
         $('.join-leave-container-' + eventId).children().children().addClass('btn-danger').removeClass('btn-dark')
@@ -422,15 +420,12 @@ function sideBarFriendBtn() {
 }
 
 function formatTime(time) {
-
+    console.log(time)
     let hourSplit = time.split(":")
-    let hour = parseInt(hourSplit[0]);
+    let secondsAndAMPM = hourSplit[2]
+    let AMorPM = secondsAndAMPM.split(" ")
 
-    if (hour > 12) {
-        return (hour - 12) + ":" + hourSplit[1] + 'pm'
-    }
-
-    return hour + ":" + hourSplit[1] + 'am'
+    return hourSplit[0] + ':' + hourSplit[1] + ' ' + AMorPM[1]
 }
 
 function formatDate(d) {
@@ -481,8 +476,9 @@ function newsfeedSidebarHtml(userProps) {
 			<div class="groups d-flex flex-column">
 				
 				<p class="mx-auto my-3">
-					<button class="sidebar-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
-						<i class="bi bi-people ms-1 me-2"></i>Groups<i class="bi bi-caret-down icon"></i>
+					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
+                        <div><i class="bi bi-people ms-1 me-1"></i>Groups</div>
+                        <div><i class="bi bi-caret-down icon mx-2"></i></div>
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseGroups">
@@ -492,8 +488,9 @@ function newsfeedSidebarHtml(userProps) {
 				</div>
 				
 				<p class="mx-auto my-3">
-					<button class="sidebar-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
-						<i class="bi bi-calendar-event ms-1 me-2"></i>Events<i class="bi bi-caret-down icon"></i>
+					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
+                        <div><i class="bi bi-calendar-event ms-1 me-1"></i>Events</div>
+                        <div><i class="bi bi-caret-down icon mx-2"></i></div>
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseEvents">
@@ -503,8 +500,10 @@ function newsfeedSidebarHtml(userProps) {
 				</div>
 				
 				<p class="mx-auto my-3">
-					<button class="sidebar-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
-						<i class="bi bi-person ms-1 me-2"></i>Friends<i class="bi bi-caret-down icon"></i>
+					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
+                        <div><i class="bi bi-person ms-1 me-1"></i>Friends</div>
+                        <div><i class="bi bi-caret-down icon mx-2"></i></div>
+						
 					</button>
 				</p>
 				<div class="collapse mx-auto" id="collapseFriends">
@@ -550,15 +549,15 @@ function newsfeedPostsHtml(sortedProps) {
 
 function postCard(post) {
     //card-header begin
-    let html = `<div class="card m-3 post-num-${post.id}">
-					<div class="card-header post-header d-flex justify-content-between">
+    let html = `<div class="card m-3 post-num-${post.id} shadow-light">
+					<div class="post-header mb-2 d-flex justify-content-between">
 						<a class="view-profile-page d-flex align-items-end" data-id="${post.author.id}">
 							 <div class="me-2 newsfeed-profile-pic-container">
-							    <img class="newsfeed-profile-pic" src="${post.author.userPhotoUrl}" alt="">
+							    <img class="newsfeed-profile-pic rounded-circle" src="${post.author.userPhotoUrl}" alt="">
 							 </div>
                              <div class="users-username my-2">${post.author.username}</div>
 						</a>
-						<div class="header-right">	
+						<div class="">	
 				`
 
     if (userEmail() === post.author.email) {
@@ -566,7 +565,7 @@ function postCard(post) {
     }
 
     html += `
-            <div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString())}</div>
+            
                         
             </div></div>`
     //card-header-end
@@ -575,10 +574,11 @@ function postCard(post) {
 									<h5 class="card-title" id="post-title-${post.id}">${post.title}</h5>
 									<p class="card-text" id="post-content-${post.id}">${post.content}</p>
 									<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>
-									<div>
+									<div class="d-flex justify-content-between ">
 										<button class="btn btn-sm btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#post-${post.id}-collapseComments" aria-expanded="false" aria-controls="post-${post.id}-collapseComments">
 										Comments
 										</button>
+										<div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString('en-US'))}</div>
 									</div>
 									
 									<div class="collapse" id="post-${post.id}-collapseComments">
@@ -615,11 +615,11 @@ function postCard(post) {
 }
 
 function eventCard(event) {
-    let html = `<div class="card m-3 event-num-${event.id}"">
-					<div class="card-header post-header d-flex justify-content-between">
+    let html = `<div class="card m-3 event-num-${event.id} shadow-light">
+					<div class="post-header d-flex justify-content-between mb-2">
 						<a class="view-profile-page d-flex align-items-end" data-id="${event.eventCreator.id}">
 							 <div class="me-2 newsfeed-profile-pic-container">
-							    <img class="newsfeed-profile-pic" src="${event.eventCreator.userPhotoUrl}" alt="">
+							    <img class="newsfeed-profile-pic rounded-circle" src="${event.eventCreator.userPhotoUrl}" alt="">
 							 </div>
                              <div class="users-username my-2">${event.eventCreator.username}</div>
 						</a>
@@ -630,8 +630,7 @@ function eventCard(event) {
         html += `<div class="edit-delete"><i data-id="${event.id}" class="bi bi-pen event-edit-btn mx-1"></i><i data-id="${event.id}" class="bi bi-x-lg event-delete-btn ml-1"></i></div>`
     }
 
-    html += `
-            <div class="time">${formatDate(new Date(event.date))} ${formatTime(new Date(event.date).toLocaleTimeString())}</div>
+    html += `    <div class="rider-count">Riders: ${event.usersId.length}<i class="bi bi-person-fill"></i></div>
                         
             </div></div>`
     //card-header-end
@@ -647,7 +646,9 @@ function eventCard(event) {
                                         <p class="card-text col-12 col-lg-7" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
                                         <div class="map d-none d-lg-block col-lg-5 mx-auto"></div>
                                     </div>
-									<p class="card-text" id="post-categories-${event.id}">${event.categories.map(category => `${category.name}`).join(" ")}</p>
+									<p class="card-text" id="post-categories-${event.id}">
+                                        ${event.categories.map(category => `${category.name}`).join(" ")}
+                                    </p>
 									<div class="d-flex justify-content-between align-items-center">
 									    <div class="d-flex">
 									        <button class="btn btn-sm btn-dark me-2" type="button" data-bs-toggle="collapse" data-bs-target="#event-${event.id}-collapseComments" aria-expanded="false" aria-controls="event-${event.id}-collapseComments">
@@ -657,7 +658,8 @@ function eventCard(event) {
 										        ${joinBtnIfLoggedInAndNotJoined(event.usersId, event.id)}
                                             </div>
                                         </div>
-                                        <div class="rider-count">Riders: ${event.usersId.length}<i class="bi bi-person-fill"></i></div>
+                                        <div class="time">${formatDate(event.date)} ${formatTime(event.date.toLocaleTimeString('en-US'))}</div>
+
 									</div>
 									
 									<div class="collapse" id="event-${event.id}-collapseComments">
@@ -862,7 +864,7 @@ function tempPostCard(post) {
     return html;
 }
 
-function fetchUserData() {
+export function fetchUserData() {
     let requestObject = {
         method: 'GET',
         headers: getHeaders()
