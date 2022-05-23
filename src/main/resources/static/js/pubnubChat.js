@@ -4,10 +4,11 @@ import {appendOldMessagesToChatBox, appendToChatbox} from "./views/chat.js";
 let count = 1;
 
 export function initPubNub(){
+
     return new PubNub({
         publishKey : PUB_KEY,
         subscribeKey : SUB_KEY,
-        uuid: userEmail()
+        uuid: userUsername()
     })
 }
 
@@ -71,6 +72,6 @@ export function fetchOldMessages(currentChannel) {
     );
 }
 
-export function unsubscribe() {
-    pubnub.unsubscribeAll()
+export function unsubscribe(channel) {
+    pubnub.unsubscribe({ channels: [channel] });
 }

@@ -20,9 +20,6 @@ export default function Navbar(props) {
 				<div class="logo text-white order-2 order-lg-1">LogoPlaceHolder</div>
                 <div class="collapse navbar-collapse justify-content-end order-4 order-lg-2" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto align-items-center">
-						<li class="nav-item">
-							<a class="nav-link" href="/chatTest" data-link>chat</a>
-						</li>
                         <li class="nav-item">
                             <a class="nav-link" href="/" data-link>Home</a>
                         </li>`;
