@@ -5,7 +5,7 @@ export default function Register(props) {
     // language=HTML
     return `
         <!DOCTYPE html>
-        <section class="vh-100 bg-image"
+        <section class="vh-100 register-bg-image"
                  style="background-image: url('../../images/scenic.jpg');">
 
             <div class="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -41,7 +41,7 @@ export default function Register(props) {
 
                                         <div class="d-flex justify-content-center">
                                             <button type="button"
-                                                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                                                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body register-button" id="register-btn"
                                                     aria-describedby="emailHelp">
                                                 Register
                                             </button>

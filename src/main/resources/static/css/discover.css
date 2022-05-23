@@ -1,0 +1,7 @@
+.groupDiv, .eventDiv {
+    text-decoration: none;
+}
+
+.groupDiv, .eventDiv :hover {
+    cursor: pointer;
+}

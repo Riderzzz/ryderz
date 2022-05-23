@@ -42,6 +42,16 @@ public class GroupsController {
         Groups group = groupsRepository.findById(groupId).get();
         String groupImageUrl = service.getSignedURL(group.getGroupImageName());
         group.setGroupPhotoUrl(groupImageUrl);
+
+        Collection<Comments> groupComments = group.getComments();
+
+        for (Comments comment: groupComments) {
+            User commentAuthor = comment.getAuthor();
+            String imageName = commentAuthor.getProfilePicture();
+            String imageUrl = service.getSignedURL(imageName);
+            commentAuthor.setUserPhotoUrl(imageUrl);
+        }
+
         return group;
     }
 
