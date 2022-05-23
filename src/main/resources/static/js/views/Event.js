@@ -41,7 +41,7 @@ export default function Event(props) {
                 <div class="singleEventPageEditForm">
                     ${eventEditFormHTML(props, timeFormat)}
                 </div>
-                <div class="map">Map goes here</div>
+                <div id="viewDiv">`;  html+=`</div>
             </div>
         </div>
     </div>

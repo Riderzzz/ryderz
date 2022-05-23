@@ -3,7 +3,7 @@ import createView from "../createView.js";
 
 export default function CreateEvent(props) {
 	//language=HTML
-	return `<!DOCTYPE html>
+	let html = `<!DOCTYPE html>
     <html lang="html">
     <head>
         <meta charset="UTF-8"/>
@@ -118,10 +118,16 @@ export default function CreateEvent(props) {
                 <input id="newEventBtn" class="btn btn-dark" type="button" value="Submit">
             </form>
         </div>
+		<div class="row">
+			<div class="col">
+				<div id="viewDiv">`; html+=`</div>
+			</div>
+		</div>
     </div>
 
     </body>
 	`
+	return html
 }
 
 export function CreateEventEvents() {
