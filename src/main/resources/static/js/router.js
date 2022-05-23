@@ -22,6 +22,7 @@ import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
 import EditPost, {EditPostEvents} from "./views/EditPost.js";
 import Profile, {showFriendsProfile} from "./views/Profile.js";
 import chatTest, {chatTestEvents} from "./views/chat.js";
+import {capstoneText} from "./views/About.js";
 /**
  * Returns the route object for a specific route based on the given URI
  * @param URI
@@ -65,6 +66,7 @@ export default function router(URI, Id) {
             state: {},
             uri: '/about',
             title: 'About',
+            viewEvent: capstoneText
         },
         '/error': {
             returnView: Error404,
