@@ -95,7 +95,9 @@ export default function router(URI, Id) {
                 posts: "/api/posts/friendsPost",
                 events: "/api/events/friendsEvents",
                 user: "/api/users/me",
-                categories: "/api/categories/all"
+                categories: "/api/categories/all",
+                recentEvents: "/api/events/recentEvents",
+                recentGroups: "/api/groups/recentGroups"
             },
             viewEvent: NewsFeedEvents
         },

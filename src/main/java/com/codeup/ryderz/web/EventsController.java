@@ -149,6 +149,19 @@ public class EventsController {
 
         return usersFriendsEvents;
     }
+
+    @GetMapping("recentEvents")
+    public Collection<Events> getRecentEvents(){
+        List<Events> allEvents = eventsRepository.findAll();
+
+        List<Events> recentThree = new ArrayList<>();
+
+        recentThree.add(allEvents.get(allEvents.size() - 1));
+        recentThree.add(allEvents.get(allEvents.size() - 2));
+        recentThree.add(allEvents.get(allEvents.size() - 3));
+
+        return recentThree;
+    }
 }
 
 

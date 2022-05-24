@@ -41,10 +41,12 @@ export default function NewsFeed(props) {
                     <div class="sidebar-container col-2  d-none d-lg-block">
                         ${newsfeedSidebarHtml(props.user)}
                     </div>
-                    <div class="posts-container col-12 col-lg-8">
+                    <div class="posts-container col-12 col-lg-7">
                         ${newsfeedPostsHtml(sortedProps)}
                     </div>
-                    <div class="recent-events d-none d-lg-block col-2"><h5>Recent events...</h5></div>
+                    <div class="recent-events d-none d-lg-block col-3">
+                        ${newsfeedRecent(props)}
+                    </div>
                 </div>
                 <div class="modal-container">
                     ${createPostModal(props)}
@@ -559,6 +561,50 @@ function newsfeedPostsHtml(sortedProps) {
 				
 				`;
     return html;
+}
+
+function newsfeedRecent(props) {
+    //language=html
+    let html =
+        `
+        <div class="recent-events">
+            <h4>Recent groups...</h4>
+            ${props.recentGroups.map(group => `${recentGroupCard(group)}`).join("")}
+            <h4>Recent events...</h4>
+            ${props.recentEvents.map(event => `${recentEventCard(event)}`).join("")}
+        </div>         
+        
+        `
+    return html;
+}
+
+function recentEventCard(event) {
+    return `
+            <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}">
+              <img src="https://picsum.photos/id/${event.id + 1000}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
+              <div class="card-body d-flex justify-content-between">
+                  <div>
+                    <h5>${event.titleOfEvent}</h5>
+                    <p class="card-text">${event.eventLocation}</p>
+                  </div>
+                  <div>
+                    <div class="date" style="font-size: .5em">${formatDate(new Date(event.eventDate))}</div>
+                    <div class="time">${formatTime(new Date(event.eventDate).toLocaleTimeString('en-US'))}</div>
+                  </div>  
+              </div>
+            </div>`
+}
+
+function recentGroupCard(group) {
+
+    return `
+            <div class="card card-dark-bg m-3 recent-event-card" data-id="${group.id}">
+              <img src="${group.groupPhotoUrl}" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
+              <div class="card-body">
+                <h5>${group.name}</h5>
+                <p class="card-text">${group.bio}</p>
+              </div>
+            </div>`
 }
 
 function postCard(post) {
