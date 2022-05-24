@@ -46,7 +46,7 @@ export default function NewsFeed(props) {
                 </div>
                 <div class="modal-container">
                     ${createPostModal(props)}
-                    ${editPostModal(props)}           
+                    ${editPostModal(props)}
                 </div>
                 <div>
                     ${chatBoxHtml(props.user.friends)}
@@ -82,6 +82,7 @@ export function NewsFeedEvents() {
     toggleChatboxBtn()
     selectFriendsTabListener()
 }
+
 function showProfilePage() {
     $(".view-profile-page").click(function () {
         const profileId = $(this).data("id");
@@ -164,7 +165,7 @@ function createPostBtn() {
         // createView('/createPost')
         let selectedCategories = [];
 
-        $('input[type="checkbox"]:checked').each(function() {
+        $('input[type="checkbox"]:checked').each(function () {
             console.log(this.value);
             selectedCategories.push({name: this.value})
 
@@ -208,7 +209,7 @@ function populateEditPostBtn() {
         let editPostCheckboxes = $('.edit-post-checkbox')
 
         //unchecking boxes from last edit
-        editPostCheckboxes.each(function (){
+        editPostCheckboxes.each(function () {
             $(this).prop('checked', false)
         })
 
@@ -219,7 +220,7 @@ function populateEditPostBtn() {
         editPostCategories = editPostCategories.split(" ");
         console.log(editPostCategories)
 
-        editPostCheckboxes.each(function() {
+        editPostCheckboxes.each(function () {
             if (editPostCategories.includes($(this).val())) {
                 console.log($(this).val())
                 $(this).prop('checked', true)
@@ -243,7 +244,7 @@ function editPostBtn() {
 
         let selectedCategories = [];
 
-        $('input[type="checkbox"]:checked').each(function() {
+        $('input[type="checkbox"]:checked').each(function () {
             selectedCategories.push({name: this.value})
 
         });
@@ -326,7 +327,7 @@ function deleteEventBtn() {
 }
 
 function editEventBtn() {
-    $(".event-edit-btn").click(function (){
+    $(".event-edit-btn").click(function () {
         const eventId = $(this).data("id")
         console.log("THis event id is " + eventId)
         createView("/event", eventId)
@@ -404,7 +405,7 @@ function sideBarGroupBtn() {
 }
 
 function sideBarEventBtn() {
-    $('.event').click(function (){
+    $('.event').click(function () {
         const eventId = $(this).data("id")
         console.log("this events id is: " + eventId)
         createView("/event", eventId)
@@ -412,7 +413,7 @@ function sideBarEventBtn() {
 }
 
 function sideBarFriendBtn() {
-    $('.friend').click(function (){
+    $('.friend').click(function () {
         const friendId = $(this).data("id")
         console.log("this friends id is: " + friendId)
         createView("/profile", friendId) //<--- once view for a users profile is made insert that where /group is
@@ -448,76 +449,76 @@ function joinBtnIfLoggedInAndNotJoined(usersJoined, eventId) {
 }
 
 function joinBtn(eventId) {
-    return`<div>
-    
-    <button class="btn btn-sm btn-dark mx-2 join-event-btn" type="button" data-id="${eventId}">
-	    Join <i class="bi bi-plus-lg"></i>
-	</button>
-    
-</div>`
+    return `
+        <div>
+            <button class="btn btn-sm btn-dark mx-2 join-event-btn" type="button" data-id="${eventId}">
+                Join <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>`
 }
 
 function leaveBtn(eventId) {
-    return`<div>
-
+    return `<div>
                 <button class="btn btn-sm btn-dark mx-2 leave-event-btn" type="button" data-id="${eventId}">
                     Leave <i class="bi bi-dash-lg"></i>
                 </button>
-                
             </div>`
 }
 
 function newsfeedSidebarHtml(userProps) {
-
     //language=html
-    let html =
-        `
-		<div class="sidebar d-flex flex-column">
-			<div class="groups d-flex flex-column">
-				
-				<p class="mx-auto my-3">
-					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
+    let html = `
+        <div class="sidebar d-flex flex-column">
+            <div class="groups d-flex flex-column">
+                <p class="mx-auto my-3">
+                    <button class="sidebar-btn collapsed d-flex justify-content-between align-items-center"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups"
+                            aria-expanded="false" aria-controls="collapseGroups">
                         <div><i class="bi bi-people ms-1 me-1"></i>Groups</div>
                         <div><i class="bi bi-caret-down icon mx-2"></i></div>
-					</button>
-				</p>
-				<div class="collapse mx-auto" id="collapseGroups">
-					<div class="">
-						${userProps.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
-					</div>
-				</div>
-				
-				<p class="mx-auto my-3">
-					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
+                    </button>
+                </p>
+                
+                <div class="collapse mx-auto" id="collapseGroups">
+                    <div class="">
+                        ${userProps.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
+                    </div>
+                </div>
+
+                <p class="mx-auto my-3">
+                    <button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" 
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents"
+                            aria-expanded="false" aria-controls="collapseEvents">
                         <div><i class="bi bi-calendar-event ms-1 me-1"></i>Events</div>
                         <div><i class="bi bi-caret-down icon mx-2"></i></div>
-					</button>
-				</p>
-				<div class="collapse mx-auto" id="collapseEvents">
-					<div class="">
-						${userProps.eventsJoined.map(event => `<div class="p-1 event" data-id="${event.id}"><a href="#">-${event.titleOfEvent}</a></div>`).join("")}
-					</div>
-				</div>
-				
-				<p class="mx-auto my-3">
-					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
+                    </button>
+                </p>
+                
+                <div class="collapse mx-auto" id="collapseEvents">
+                    <div class="">
+                        ${userProps.eventsJoined.map(event => `<div class="p-1 event" data-id="${event.id}"><a href="#">-${event.titleOfEvent}</a></div>`).join("")}
+                    </div>
+                </div>
+
+                <p class="mx-auto my-3">
+                    <button class="sidebar-btn collapsed d-flex justify-content-between align-items-center"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends"
+                            aria-expanded="false" aria-controls="collapseFriends">
                         <div><i class="bi bi-person ms-1 me-1"></i>Friends</div>
                         <div><i class="bi bi-caret-down icon mx-2"></i></div>
-						
-					</button>
-				</p>
-				<div class="collapse mx-auto" id="collapseFriends">
-					<div class="">
-						${userProps.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
-					</div>
-				</div>
-				
-			</div>
-		</div>
-		`
+                    </button>
+                </p>
+                
+                <div class="collapse mx-auto" id="collapseFriends">
+                    <div class="">
+                        ${userProps.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
+                    </div>
+                </div>
+            </div>
+        </div>`
+
     return html;
 }
-
 
 
 function newsfeedPostsHtml(sortedProps) {
@@ -532,82 +533,80 @@ function newsfeedPostsHtml(sortedProps) {
         </header>
         <div class="post">
             ${sortedProps.map(post => {
-        
-                if (post.type === "post"){
+                if (post.type === "post") {
                     return postCard(post)
                 }
                 if (post.type === "event") {
                     return eventCard(post)
                 }
-                
-    }).join("")}
+            }).join("")}
         </div>
-				
-				`;
+
+    `;
     return html;
 }
 
 function postCard(post) {
     //card-header begin
-    let html = `<div class="card m-3 post-num-${post.id} shadow-light">
-					<div class="post-header mb-2 d-flex justify-content-between">
-						<a class="view-profile-page d-flex align-items-end" data-id="${post.author.id}">
-							 <div class="me-2 newsfeed-profile-pic-container">
-							    <img class="newsfeed-profile-pic rounded-circle" src="${post.author.userPhotoUrl}" alt="">
-							 </div>
-                             <div class="users-username my-2">${post.author.username}</div>
-						</a>
-						<div class="">	
-				`
+    let html = `
+    <div class="card m-3 post-num-${post.id} shadow-light">
+		<div class="post-header mb-2 d-flex justify-content-between">
+			<a class="view-profile-page d-flex align-items-end" data-id="${post.author.id}">
+				 <div class="me-2 newsfeed-profile-pic-container">
+				    <img class="newsfeed-profile-pic rounded-circle" src="${post.author.userPhotoUrl}" alt="">
+				 </div>
+                    <div class="users-username my-2">${post.author.username}</div>
+			</a>
+			<div class="">`
 
     if (userEmail() === post.author.email) {
         html += `<div class="edit-delete"><i data-id="${post.id}" class="bi bi-pen post-edit-btn mx-1" data-bs-toggle="modal" data-bs-target="#editModal"></i><i data-id="${post.id}" class="bi bi-x-lg post-delete-btn ml-1"></i></div>`
     }
 
     html += `
-            
-                        
-            </div></div>`
+       </div>
+    </div>`
     //card-header-end
     //card-body-start
-    html += `<div class="card-body pb-2">
-									<h5 class="card-title" id="post-title-${post.id}">${post.title}</h5>
-									<p class="card-text" id="post-content-${post.id}">${post.content}</p>
-									<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>
-									<div class="d-flex justify-content-between ">
-										<button class="btn btn-sm btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#post-${post.id}-collapseComments" aria-expanded="false" aria-controls="post-${post.id}-collapseComments">
-										Comments
-										</button>
-										<div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString('en-US'))}</div>
-									</div>
-									
-									<div class="collapse" id="post-${post.id}-collapseComments">
-										<div class="input-group my-3">
-											<input type="text" id="comment-content-${post.id}" class="form-control" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
-											<button class="btn btn-outline-secondary post-comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
-										</div>
-										<div class="post-${post.id}-comments">
-										${post.comments.reverse().map(comment =>
-        `
+    html += `
+    <div class="card-body pb-2">
+			<h5 class="card-title" id="post-title-${post.id}">${post.title}</h5>
+			<p class="card-text" id="post-content-${post.id}">${post.content}</p>
+			<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>
 			
-										<div class="card card-body p-2">
-                                            <div class="d-flex">
-                                                <div class="info d-flex">
-                                                    <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
-                                                    <div class="names">
-                                                        <div class="username">${comment.author.username}</div>
-                                                        <div class="content">${comment.content}</div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-										</div>
+			<div class="d-flex justify-content-between ">
+				<button class="btn btn-sm btn-dark" type="button" data-bs-toggle="collapse" 
+				    data-bs-target="#post-${post.id}-collapseComments" aria-expanded="false" 
+				    aria-controls="post-${post.id}-collapseComments">
+				Comments
+				</button>
+				<div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString('en-US'))}</div>
+			</div>
 			
-									`).join("")}
-										</div>
-									</div>
-									
-								</div>`	//card-body end
+	    <div class="collapse" id="post-${post.id}-collapseComments">
+	    
+		    <div class="input-group my-3">
+	    		<input type="text" id="comment-content-${post.id}" class="form-control" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
+		    	<button class="btn btn-outline-secondary post-comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
+	    	</div>
+	    	
+	    	<div class="post-${post.id}-comments">
+		    		${post.comments.reverse().map(comment => `
+		    	<div class="card card-body p-2">
+                    <div class="d-flex">
+                        <div class="info d-flex">
+                            <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
+                            <div class="names">
+                                <div class="username">${comment.author.username}</div>
+                                <div class="content">${comment.content}</div>
+                            </div>
+                        </div>
+                    </div>
+		    	</div>`).join("")}
+	    	</div>
+	    	
+         </div>								
+    </div>`	//card-body end
 
     html += `</div>`//ending div of card
 
@@ -615,79 +614,83 @@ function postCard(post) {
 }
 
 function eventCard(event) {
-    let html = `<div class="card m-3 event-num-${event.id} shadow-light">
-					<div class="post-header d-flex justify-content-between mb-2">
-						<a class="view-profile-page d-flex align-items-end" data-id="${event.eventCreator.id}">
-							 <div class="me-2 newsfeed-profile-pic-container">
-							    <img class="newsfeed-profile-pic rounded-circle" src="${event.eventCreator.userPhotoUrl}" alt="">
-							 </div>
-                             <div class="users-username my-2">${event.eventCreator.username}</div>
-						</a>
-						<div class="header-right my-1">	
+    let html = `
+    <div class="card m-3 event-num-${event.id} shadow-light">
+	    <div class="post-header d-flex justify-content-between mb-2">
+		    <a class="view-profile-page d-flex align-items-end" data-id="${event.eventCreator.id}">
+			    <div class="me-2 newsfeed-profile-pic-container">
+				    <img class="newsfeed-profile-pic rounded-circle" src="${event.eventCreator.userPhotoUrl}" alt="">
+				</div>
+                <div class="users-username my-2">${event.eventCreator.username}</div>
+		    </a>
+		    
+		<div class="header-right my-1">	
 				`
 
     if (userEmail() === event.eventCreator.email) {
         html += `<div class="edit-delete"><i data-id="${event.id}" class="bi bi-pen event-edit-btn mx-1"></i><i data-id="${event.id}" class="bi bi-x-lg event-delete-btn ml-1"></i></div>`
     }
 
-    html += `    <div class="rider-count">Riders: ${event.usersId.length}<i class="bi bi-person-fill"></i></div>
-                        
-            </div></div>`
+    html += `
+            <div class="rider-count">Riders: ${event.usersId.length}<i class="bi bi-person-fill"></i></div>
+        </div>
+    </div>`
     //card-header-end
     //card-body-start
-    html += `<div class="card-body pb-2">
-									<h5 class="card-title d-flex justify-content-center justify-content-lg-start" id="post-title-${event.id}">${event.titleOfEvent}</h5>
-									<div class="starting-ending-addresses justify-content-between d-flex flex-column flex-lg-row align-items-center ">
-									    <div class="starting-address">Starting: lat-${event.startingLatitude}Long-${event.startingLongitude}</div>
-									    <div class="ending-address">Ending: lat-${event.endingLatitude}Long-${event.endingLongitude}</div>
-									    <div class="distance">Miles:(api data)</div>
-                                    </div>
-                                    <div class="content-and-map row my-3">
-                                        <p class="card-text col-12 col-lg-7" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
-                                        <div class="map d-none d-lg-block col-lg-5 mx-auto"></div>
-                                    </div>
-									<p class="card-text" id="post-categories-${event.id}">
-                                        ${event.categories.map(category => `${category.name}`).join(" ")}
-                                    </p>
-									<div class="d-flex justify-content-between align-items-center">
-									    <div class="d-flex">
-									        <button class="btn btn-sm btn-dark me-2" type="button" data-bs-toggle="collapse" data-bs-target="#event-${event.id}-collapseComments" aria-expanded="false" aria-controls="event-${event.id}-collapseComments">
-										    Comments
-										    </button>
-										    <div class="join-leave-container-${event.id}">
-										        ${joinBtnIfLoggedInAndNotJoined(event.usersId, event.id)}
-                                            </div>
-                                        </div>
-                                        <div class="time">${formatDate(event.date)} ${formatTime(event.date.toLocaleTimeString('en-US'))}</div>
-
-									</div>
+    html += `
+    <div class="card-body pb-2">
+		<h5 class="card-title d-flex justify-content-center justify-content-lg-start" id="post-title-${event.id}">${event.titleOfEvent}</h5>
+		
+	    <div class="starting-ending-addresses justify-content-between d-flex flex-column flex-lg-row align-items-center ">
+	        <div class="starting-address">Starting: lat-${event.startingLatitude}Long-${event.startingLongitude}</div>
+	        <div class="ending-address">Ending: lat-${event.endingLatitude}Long-${event.endingLongitude}</div>
+	        <div class="distance">Miles:(api data)</div>
+        </div>
+        
+        <div class="content-and-map row my-3">
+            <p class="card-text col-12 col-lg-7" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
+            <div class="map d-none d-lg-block col-lg-5 mx-auto"></div>
+        </div>
+        
+		<p class="card-text" id="post-categories-${event.id}">
+            ${event.categories.map(category => `${category.name}`).join(" ")}
+        </p>
+        
+		<div class="d-flex justify-content-between align-items-center">
+		    <div class="d-flex">
+			    <button class="btn btn-sm btn-dark me-2" type="button" data-bs-toggle="collapse" 
+			        data-bs-target="#event-${event.id}-collapseComments" aria-expanded="false" 
+			        aria-controls="event-${event.id}-collapseComments">Comments
+				</button>
+				<div class="join-leave-container-${event.id}">
+			        ${joinBtnIfLoggedInAndNotJoined(event.usersId, event.id)}
+                </div>
+            </div>
+            <div class="time">${formatDate(event.date)} ${formatTime(event.date.toLocaleTimeString('en-US'))}</div>
+		</div>
 									
-									<div class="collapse" id="event-${event.id}-collapseComments">
-										<div class="input-group my-3">
-											<input type="text" id="comment-content-${event.id}" class="form-control" data-postId="${event.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${event.id}">
-											<button class="btn btn-outline-secondary event-comment-btn" data-id="${event.id}" type="button" id="button-addon-${event.id}">comment</button>
-										</div>
-										<div class="event-${event.id}-comments">
-										${event.comments.reverse().map(comment =>
-        `
-			                                <div class="card card-body p-2">
-                                            <div class="d-flex">
-                                                <div class="info d-flex">
-                                                    <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
-                                                    <div class="names">
-                                                        <div class="username">${comment.author.username}</div>
-                                                        <div class="content">${comment.content}</div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-										</div>
-										
-			
-									`).join("")}
-									</div>
-								</div>
-								</div>`	//card-body end
+		<div class="collapse" id="event-${event.id}-collapseComments">
+		    <div class="input-group my-3">
+			    <input type="text" id="comment-content-${event.id}" class="form-control" data-postId="${event.id}" 
+			        placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${event.id}">
+				<button class="btn btn-outline-secondary event-comment-btn" data-id="${event.id}" type="button" id="button-addon-${event.id}">comment</button>
+			</div>
+			<div class="event-${event.id}-comments">
+			    ${event.comments.reverse().map(comment => `
+			        <div class="card card-body p-2">
+                        <div class="d-flex">
+                            <div class="info d-flex">
+                                <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
+                                    <div class="names">
+                                        <div class="username">${comment.author.username}</div>
+                                        <div class="content">${comment.content}</div>
+                                    </div>
+                            </div>                  
+                        </div>
+					</div>`).join("")}
+			</div>
+		</div>
+	</div>`	//card-body end
 
     html += `</div>`//ending div of card
 
@@ -695,61 +698,63 @@ function eventCard(event) {
 }
 
 function showComment(comment, username) {
-    return `<div class="card card-body p-2">
-                                            <div class="d-flex">
-                                                <div class="info d-flex">
-                                                    <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
-                                                    <div class="names">
-                                                        <div class="username">${username}</div>
-                                                        <div class="content">${comment.content}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-										</div>`
+    return `
+    <div class="card card-body p-2">
+        <div class="d-flex">
+            <div class="info d-flex">
+                <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
+                    <div class="names">
+                        <div class="username">${username}</div>
+                        <div class="content">${comment.content}</div>
+                    </div>
+            </div>
+        </div>
+	</div>`
 }
 
 function createPostModal(props) {
     return `
 <!-- Modal -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">Create Post</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form class="m-3">
+    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Create Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <form class="m-3">
                         <div class="mb-3">
-                          <label for="createPostTitle" class="form-label">Title</label>
-                          <input type="email" class="form-control" id="createPostTitle">
+                            <label for="createPostTitle" class="form-label">Title</label>
+                            <input type="email" class="form-control" id="createPostTitle">
                         </div>
+                        
                         <div class="mb-3">
-                          <label for="createPostContent" class="form-label">Content</label>
-                          <textarea class="form-control" id="createPostContent" rows="3"></textarea>
+                            <label for="createPostContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="createPostContent" rows="3"></textarea>
                         </div>
+                        
                         <div class="mb-3">
-                         ${props.categories.map(cat =>
-        `
+                            ${props.categories.map(cat => `
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" id="category-${cat.id}" value="${cat.name}">
                                     <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
-                                </div>
-                            `)
-        .join('')}
+                                </div>`).join('')}
                         </div>
-<!--                        <div class="mb-3 d-flex justify-content-end">-->
-<!--                            <button class="btn btn-dark create-post-btn mx-4">Create Post</button>-->
-<!--                        </div>-->
+                        
                     </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-dark create-post-btn" data-bs-dismiss="modal">Create</button>
-      </div>
-    </div>
-  </div>
-</div>`
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-dark create-post-btn" data-bs-dismiss="modal">Create</button>
+              </div>
+              
+            </div>
+        </div>
+    </div>`
 }
 
 function editPostModal(props) {
@@ -781,7 +786,7 @@ function editPostModal(props) {
         // if(editPostCategories.includes(cat.name)){
         //     categoriesHtml += `<input class="form-check-input" type="checkbox" id="category-${cat.id}" value="${cat.name}" checked>`
         // } else {
-            categoriesHtml += `<input class="form-check-input edit-post-checkbox" type="checkbox" id="category-${cat.id}" value="${cat.name}">`
+        categoriesHtml += `<input class="form-check-input edit-post-checkbox" type="checkbox" id="category-${cat.id}" value="${cat.name}">`
         // }
         categoriesHtml += `
                                     <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
@@ -802,7 +807,6 @@ function editPostModal(props) {
   </div>
 </div>`
 }
-
 
 
 function tempPostCard(post) {
