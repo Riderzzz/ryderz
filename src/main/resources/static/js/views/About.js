@@ -1,7 +1,7 @@
 
 export default function About(props) {
     return `
-    <div class="main-card container">
+    <div class="main-card container first-card">
         <div class="our-story-card d-flex row">
             <div id="capstone-card" class="col-6">
                 <h2>Ryderz Capstone</h2>
@@ -10,19 +10,18 @@ export default function About(props) {
                 <p id="week-3-text"></p>
             </div>
             <div class="col-6 d-flex row weeks-card">
-                <div id="week-2" class="col-6">
-                week 2
-                </div>
-                <div id="week-3" class="col-6">
-                week 3
-                </div>
-                <div id="week-1" class="col-6" >
+                <p id="week-1" class="col-3 week-effects">
                 week 1
-                </div>
-                <div id="week-4" class="col-6">
+                </p>
+                <p id="week-2" class="col-3 week-effects">
+                week 2
+                </p>
+                <p id="week-3" class="col-3 week-effects" >
+                week 3
+                </p>
+                <p id="week-4" class="col-3 week-effects">
                 week 4
-                </div>
-                
+                </p>
             </div>
         </div>
     </div>
@@ -42,20 +41,20 @@ export default function About(props) {
 // {
     export function capstoneText() {
         $('#week-1').hover(
-            function () {
-                $('#capstone-card').("Week 1 we used the rest blogs skeleton to set up the foundation of our backend. Some of the methods used include");
+            function() {
+                $('#capstone-card').html("Week 1 we used a skeleton of our rest blog to set up the foundation of our backend. Some of the methodology used includes SpringBoot for a relational database, javascript/jQuery, Oauth, ");
             }
         );$('#week-2').hover(
-            function () {
-                $('#capstone-card').html("Week 2 we used the rest blogs skeleton to set up");
+            function() {
+                $('#capstone-card').html("Week 2 most of the time was spent setting up group events allowing users to log into their own accounts to create public group ride events");
             }
         );$('#week-3').hover(
-            function () {
-                $('#capstone-card').html("Week 3 we used the rest blogs skeleton to set up");
+            function() {
+                $('#capstone-card').html("Week 3");
             }
         );$('#week-4').hover(
-            function () {
-                $('#capstone-card').html("Week 4 we used the rest blogs skeleton to set up");
+            function() {
+                $('#capstone-card').html("Week 4");
             }
         );
     }
