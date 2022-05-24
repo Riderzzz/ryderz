@@ -157,7 +157,6 @@ export default function router(URI, Id) {
         },
         '/profile': {
             returnView: Profile,
-
             uri: `/profile/${Id}`,
             state : {
                 profile: `/api/users/${Id}`

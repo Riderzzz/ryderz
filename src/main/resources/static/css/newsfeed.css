@@ -6,7 +6,7 @@
 
 .sidebar-container {
     min-height: 100vh;
-    background-color: #212529;
+    background-color: #181818;
     color: white;
 }
 
@@ -44,12 +44,41 @@
     transform: rotate(180deg);
 }
 
+.posts-container {
+    background-color: #121212;
+    color: white;
+}
+
+.card-dark-bg {
+    background-color: #404040;
+}
+
+.navbar-dark-bg {
+    background-color: #181818;
+}
+
 .avatar {
     font-size: 2.5em;
 }
 
 .comment-avatar {
     font-size: 2em;
+}
+
+.comment-card {
+    margin-top: .5em;
+    margin-bottom: .5em;
+    /*border-bottom: 1px rgba(255, 255, 255, 0.25) solid;*/
+}
+
+.comment-btn {
+    background-color: inherit;
+    color: white;
+    border-color: white ;
+}
+
+.comment-btn:hover {
+    background-color: #A1CCA5;
 }
 
 .name {
@@ -70,7 +99,7 @@
 }
 
 .edit-delete {
-    margin-top: .5em;
+    font-size: 1.25em;
 }
 
 .header-right {
@@ -80,13 +109,22 @@
     justify-content: flex-end;
 }
 
+.header-right-post {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 .map {
     background-color: green;
-    width: 300px;
-    height: 250px;
+    width: 100%;
+    height: 100%;
     border: 1px solid black;
 }
 
+.map-container {
+    height: 350px;
+}
 .newsfeed-profile-pic {
     margin-top: 10px;
     width: 45px;
@@ -101,6 +139,8 @@
 
 .users-username {
     font-size: 1.25em;
+    color: white;
+    align-self: end;
 }
 
 .users-username:hover {
@@ -109,5 +149,32 @@
 }
 .shadow-light {
     filter: drop-shadow(0px 0px 5px #1B1B1B);
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.hover-opacity:hover {
+    opacity: .5;
+}
+
+.event-header-right {
+    display: flex;
+    align-items: end;
+}
+
+.btn-lightG {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+.bt {
+    border-top: 1px rgba(255, 255, 255, 0.25) solid;
+}
+
+.recent-events {
+    background-color: #181818;
+    color: white;
 }
 
