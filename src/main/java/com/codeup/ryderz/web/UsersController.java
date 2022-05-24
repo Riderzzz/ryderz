@@ -129,11 +129,14 @@ public class UsersController {
         User user1 = userRepository.findByEmail(auth.getName());
         User user2 = userRepository.getById(user2Id);
 
-        user2.setFriends(new ArrayList<>());
-        user1.setFriends(new ArrayList<>());
+        Collection<User> user1Friends = user1.getFriends();
+        Collection<User> user2Friends = user2.getFriends();
 
-        user1.getFriends().add(user2);
-        user2.getFriends().add(user1);
+        user1Friends.add(user2);
+        user2Friends.add(user1);
+
+        user1.setFriends(user1Friends);
+        user2.setFriends(user2Friends);
 
         userRepository.save(user1);
         userRepository.save(user2);
