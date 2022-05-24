@@ -15,6 +15,7 @@ let channel = 'app-test-1'
 let allProps;
 
 export default function NewsFeed(props) {
+    console.log(props)
     allProps = props
     let mixedProps = [];
     for (let post of props.posts) {
@@ -40,9 +41,10 @@ export default function NewsFeed(props) {
                     <div class="sidebar-container col-2  d-none d-lg-block">
                         ${newsfeedSidebarHtml(props.user)}
                     </div>
-                    <div class="posts-container col-12 col-lg-10">
+                    <div class="posts-container col-12 col-lg-8">
                         ${newsfeedPostsHtml(sortedProps)}
                     </div>
+                    <div class="recent-events d-none d-lg-block col-2"><h5>Recent events...</h5></div>
                 </div>
                 <div class="modal-container">
                     ${createPostModal(props)}
@@ -490,7 +492,7 @@ function newsfeedSidebarHtml(userProps) {
 				<p class="mx-auto my-3">
 					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
                         <div><i class="bi bi-people ms-1 me-1"></i>Groups</div>
-                        <div><i class="bi bi-caret-down icon mx-2"></i></div>
+                        <div><i class="bi bi-caret-up icon mx-2"></i></div>
 					</button>
 				</p>
 				<div class="collapse me-auto" id="collapseGroups">
@@ -502,7 +504,7 @@ function newsfeedSidebarHtml(userProps) {
 				<p class="mx-auto my-3">
 					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
                         <div><i class="bi bi-calendar-event ms-1 me-1"></i>Events</div>
-                        <div><i class="bi bi-caret-down icon mx-2"></i></div>
+                        <div><i class="bi bi-caret-up icon mx-2"></i></div>
 					</button>
 				</p>
 				<div class="collapse me-auto" id="collapseEvents">
@@ -514,7 +516,7 @@ function newsfeedSidebarHtml(userProps) {
 				<p class="mx-auto my-3">
 					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFriends" aria-expanded="false" aria-controls="collapseFriends">
                         <div><i class="bi bi-person ms-1 me-1"></i>Friends</div>
-                        <div><i class="bi bi-caret-down icon mx-2"></i></div>
+                        <div><i class="bi bi-caret-up icon mx-2"></i></div>
 						
 					</button>
 				</p>
@@ -588,32 +590,20 @@ function postCard(post) {
 									<p class="card-text" id="post-categories-${post.id}">${post.categories.map(category => `${category.name}`).join(" ")}</p>
 									<div class="d-flex justify-content-between ">
 									      <a class="show-comments collapsed text-white" data-bs-toggle="collapse" href="#post-${post.id}-collapseComments" role="button" aria-expanded="false" aria-controls="post-${post.id}-collapseComments">
-                                            Comments <i class="bi bi-chevron-down icon"></i>
+                                            Comments <i class="bi bi-chevron-up icon"></i>
                                           </a>
 										<div class="time">${formatDate(post.date)} ${formatTime(post.date.toLocaleTimeString('en-US'))}</div>
 									</div>
-									
 									<div class="collapse" id="post-${post.id}-collapseComments">
 										<div class="input-group my-3">
 											<input type="text" id="comment-content-${post.id}" class="form-control" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
-											<button class="btn btn-outline-secondary post-comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
+											<button class="btn btn-outline-secondary post-comment-btn comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
 										</div>
 										<div class="post-${post.id}-comments">
 										${post.comments.reverse().map(comment =>
         `
 			
-										<div class="card card-body p-2">
-                                            <div class="d-flex">
-                                                <div class="info d-flex">
-                                                    <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
-                                                    <div class="names">
-                                                        <div class="username">${comment.author.username}</div>
-                                                        <div class="content">${comment.content}</div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-										</div>
+										${showComment(comment,comment.author.username)}
 			
 									`).join("")}
 										</div>
@@ -673,7 +663,7 @@ function eventCard(event) {
 									<div class="d-flex justify-content-between align-items-center">
 									    <div class="d-flex">
 									        <a class="show-comments collapsed text-white me-2" data-bs-toggle="collapse" href="#event-${event.id}-collapseComments" role="button" aria-expanded="false" aria-controls="event-${event.id}-collapseComments">
-                                                Comments <i class="bi bi-chevron-down icon"></i>
+                                                Comments <i class="bi bi-chevron-up icon"></i>
                                             </a>
                                         </div>
                                         <div class="time">${formatDate(event.date)} ${formatTime(event.date.toLocaleTimeString('en-US'))}</div>
@@ -688,18 +678,9 @@ function eventCard(event) {
 										<div class="event-${event.id}-comments">
 										${event.comments.reverse().map(comment =>
         `
-			                                <div class="card card-body p-2">
-                                            <div class="d-flex">
-                                                <div class="info d-flex">
-                                                    <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
-                                                    <div class="names">
-                                                        <div class="username">${comment.author.username}</div>
-                                                        <div class="content">${comment.content}</div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-										</div>
+
+                                            ${showComment(comment,comment.author.username)}
+			                               
 										
 			
 									`).join("")}
@@ -713,8 +694,8 @@ function eventCard(event) {
 }
 
 function showComment(comment, username) {
-    return `<div class="card card-body p-2">
-                                            <div class="d-flex">
+    return `<div>
+                                            <div class="d-flex comment-card">
                                                 <div class="info d-flex">
                                                     <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
                                                     <div class="names">

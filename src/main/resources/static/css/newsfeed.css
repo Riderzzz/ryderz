@@ -65,6 +65,22 @@
     font-size: 2em;
 }
 
+.comment-card {
+    margin-top: .5em;
+    margin-bottom: .5em;
+    /*border-bottom: 1px rgba(255, 255, 255, 0.25) solid;*/
+}
+
+.comment-btn {
+    background-color: inherit;
+    color: white;
+    border-color: white ;
+}
+
+.comment-btn:hover {
+    background-color: #A1CCA5;
+}
+
 .name {
 
 }
@@ -155,5 +171,10 @@
 
 .bt {
     border-top: 1px rgba(255, 255, 255, 0.25) solid;
+}
+
+.recent-events {
+    background-color: #181818;
+    color: white;
 }
 

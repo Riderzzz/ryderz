@@ -1,4 +1,5 @@
 import {sendMsg, subscribeToChannel, setUUID, fetchOldMessages, pubNubListener, unsubscribe} from "../pubnubChat.js"
+import {pubnub} from "../auth.js";
 // import {pubnub} from "../auth.js";
 // import {userEmail} from "../auth.js";
 // import {isLoggedIn, userEmail} from "../auth.js";
@@ -105,15 +106,25 @@ export function appendOldMessagesToChatBox(messageArray) {
 
     for (const msg of messages) {
         // console.log(`${msg.uuid}: ${msg.message.description}`)
-        feed.html(feed.html() + `
-        <div class="card chat-card">
+        if (msg.uuid === pubnub.getUUID()) {
+            feed.html(feed.html() + `
+        <div class="card chat-card me-auto">
           <div class="card-body p-2">
             <div class="name">${msg.uuid}:</div>
             <div class="message">${msg.message.description}</div> 
           </div>
         </div>
         `)
-
+        } else {
+            feed.html(feed.html() + `
+        <div class="card chat-card ms-auto">
+          <div class="card-body p-2">
+            <div class="name">${msg.uuid}:</div>
+            <div class="message">${msg.message.description}</div> 
+          </div>
+        </div>
+        `)
+        }
     }
     setFeedToBottom()
 }
