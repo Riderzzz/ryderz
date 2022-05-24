@@ -19,6 +19,7 @@ export default function Profile(props) {
     <!--Filler for top white portion of page-->
     <section class="bg-white shadow">
         <div class="container">
+            
             <section class="user-images mb-5">
                 <!--Section: user images-->
                 <div class="profile-header-photograph p-5 text-center bg-image rounded-bottom shadow"
@@ -30,7 +31,6 @@ export default function Profile(props) {
                          src="${props.profile.userPhotoUrl}"
                          style="width: 168px; height: 168px; margin-top: -140px" alt="">
                 </div>
-                
             </section>
 
             <!--Section: User Data-->
@@ -63,8 +63,8 @@ export default function Profile(props) {
                                 class="fas fa-plus ml-2"></i>
                     </button>
                 </div>
-
             </section>
+            
         </div>
     </section>
     <!-- Bottom gray portion of the page-->
@@ -186,6 +186,7 @@ function commentTest(){
     $(".submit-comment").click(function (){
         let id = $(this).data("id")
         let content = $(".comment-users-" + id).val();
+        $(".comment-users-" + id).val("");
 
         const comment = {
             content,
@@ -203,15 +204,43 @@ function commentTest(){
         fetch(COMMENT_URI, requestObj)
             .then(function () {
                 console.log("Comment created");
+                refreshComments(id)
             }).catch(function () {
                 console.log("error")
-            }).finally(function () {
-                let commentSection = $('.comments-' + id + '-show')
-                commentSection.html(newComment(comment) + commentSection.html())
         });
 
     })
 }
+
+function refreshComments(id) {
+
+    let commentSection = $(".comments-"+ id + "-show");
+
+    const requestObject = {
+        method: "GET",
+        headers: getHeaders()
+    }
+
+    fetch(`${BASE_URI}/${id}`, requestObject)
+        .then(res => res.json())
+        .then(data => {
+            let state = {};
+            console.log(data)
+            data.posts.forEach(post =>{
+               if(id === post.id){
+                  state = post;
+               }
+            });
+
+            console.log(state)
+            commentSection.html(displayComments(state));
+        })
+        .catch(error => {
+            console.log(error);
+        })
+}
+
+
 
 function showUsersGroups(props) {
     //language=HTML
@@ -305,6 +334,7 @@ function showUsersPosts(props) {
 }
 
 function displayComments(props) {
+    console.log(props)
     //language=HTML
     let html = `
         ${props.comments.map(posts => `
@@ -321,21 +351,6 @@ function displayComments(props) {
             </div>`
         ).join("")}`
     return html;
-}
-
-function newComment(comment) {
-    return `
-    <div class="card card-body p-2">
-        <div class="d-flex">
-            <div class="info d-flex">
-                <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
-                    <div class="names">
-                        <div class="username">${username}</div>
-                        <div class="content">${comment.content}</div>
-                    </div>
-            </div>
-        </div>
-	</div>`
 }
 
 function showPostsOnly(props) {
