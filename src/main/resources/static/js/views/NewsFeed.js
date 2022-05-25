@@ -78,6 +78,10 @@ export function NewsFeedEvents() {
     joinEvent();
     leaveEvent();
 
+    //left side-bar functions
+    goToRecentEventBtn()
+    goToRecentGroupBtn()
+
     //chat functions
     subscribeToChannel(channel)
     fetchOldMessages(channel)
@@ -483,6 +487,20 @@ function leaveBtn(eventId) {
             </div>`
 }
 
+function goToRecentGroupBtn() {
+    $('.recent-group-card').click(function () {
+        let groupId = $(this).data("id")
+        createView('/group', groupId)
+    })
+}
+
+function goToRecentEventBtn() {
+    $('.recent-event-card').click(function () {
+        let eventId = $(this).data("id");
+        createView('/event', eventId)
+    })
+}
+
 function newsfeedSidebarHtml(userProps) {
 
     //language=html
@@ -580,16 +598,16 @@ function newsfeedRecent(props) {
 
 function recentEventCard(event) {
     return `
-            <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}">
+            <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}" style='background-image: url("https://picsum.photos/id/${event.id + 1000}/200/100"); background-repeat: no-repeat'>
               <img src="https://picsum.photos/id/${event.id + 1000}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
-              <div class="card-body d-flex justify-content-between">
+              <div class="card-body d-flex justify-content-between p-2">
                   <div>
-                    <h5>${event.titleOfEvent}</h5>
-                    <p class="card-text">${event.eventLocation}</p>
+                    <h6>${event.titleOfEvent}</h6>
+                    <p class="card-text">${event.eventLocation}, ${event.stateWhereEventTakesPlace}</p>
                   </div>
                   <div>
-                    <div class="date" style="font-size: .5em">${formatDate(new Date(event.eventDate))}</div>
-                    <div class="time">${formatTime(new Date(event.eventDate).toLocaleTimeString('en-US'))}</div>
+                    <div class="date" style="font-size: .75em">${formatDate(new Date(event.eventDate))}</div>
+                    <div class="time" style="font-size: .75em">${formatTime(new Date(event.eventDate).toLocaleTimeString('en-US'))}</div>
                   </div>  
               </div>
             </div>`
@@ -598,11 +616,11 @@ function recentEventCard(event) {
 function recentGroupCard(group) {
 
     return `
-            <div class="card card-dark-bg m-3 recent-event-card" data-id="${group.id}">
-              <img src="${group.groupPhotoUrl}" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
-              <div class="card-body">
+            <div class="card card-dark-bg m-3 recent-group-card" data-id="${group.id}">
+              <img src="https://picsum.photos/id/${group.id + 100}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
+              <div class="card-body p-2">
                 <h5>${group.name}</h5>
-                <p class="card-text">${group.bio}</p>
+                <p class="card-text">${group.location}</p>
               </div>
             </div>`
 }

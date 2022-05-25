@@ -5,9 +5,10 @@
 }
 
 .sidebar-container {
-    min-height: 100vh;
     background-color: #181818;
     color: white;
+    overflow: scroll;
+    height: 91vh;
 }
 
 .sidebar-btn {
@@ -47,6 +48,9 @@
 .posts-container {
     background-color: #121212;
     color: white;
+
+    overflow: scroll;
+    height: 91vh;
 }
 
 .card-dark-bg {
@@ -176,9 +180,17 @@
 .recent-events {
     background-color: #181818;
     color: white;
+
+    overflow: scroll;
+    height: 91vh;
 }
 
 .recent-event-card:hover {
+    opacity: .7;
+    cursor: pointer;
+}
+
+.recent-group-card:hover {
     opacity: .7;
     cursor: pointer;
 }

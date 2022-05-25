@@ -79,7 +79,7 @@ export default function Navbar(props) {
 						</button>
 	
 						<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" id="navbarProfile" href="/profile" data-link>Profile</a></li>
+							<li><a class="dropdown-item" id="navbarProfile" href="/myProfile" data-link="myProfile">Profile</a></li>
 							<li><hr class="dropdown-divider m-0"></li>
 							<li><a class="dropdown-item" href="/user" data-link="User Info">Setting</a></li>
 							<li><hr class="dropdown-divider m-0"></li>

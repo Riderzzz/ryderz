@@ -165,6 +165,14 @@ export default function router(URI, Id) {
             },
             viewEvent: showFriendsProfile
         },
+        '/myProfile': {
+            returnView: Profile,
+            uri: `/profile/${Id}`,
+            state : {
+                profile: `/api/users/me`
+            },
+            viewEvent: showFriendsProfile
+        },
         '/chatTest': {
             returnView: chatTest,
             uri: '/chatTest',

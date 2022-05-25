@@ -35,7 +35,29 @@ public class UsersController {
     private User getMyInfo(OAuth2Authentication auth){
         try{
             String userName = auth.getName();
-            return userRepository.findByEmail(userName);
+            User usersInfo = userRepository.findByEmail(userName);
+
+            String signedPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
+            String signedHeaderUrl = s3Service.getSignedURL(usersInfo.getHeaderPicture());
+
+            usersInfo.setUserPhotoUrl(signedPhotoUrl);
+            usersInfo.setUserHeaderUrl(signedHeaderUrl);
+
+            Collection<User> listOfFriends = usersInfo.getFriends();
+            for (int i = 0; i < usersInfo.getFriends().size() ; i++) {
+                User currentUser = (User) listOfFriends.toArray()[i];
+                String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture());
+                currentUser.setUserPhotoUrl(friendsPhotoUrl);
+            }
+
+            Collection<Groups> listOfGroups = usersInfo.getGroupsJoined();
+            for (int i = 0; i < usersInfo.getGroupsJoined().size() ; i++) {
+                Groups currentUser = (Groups) listOfGroups.toArray()[i];
+                String groupPhotoUrl = s3Service.getSignedURL(currentUser.getGroupImageName());
+                currentUser.setGroupPhotoUrl(groupPhotoUrl);
+            }
+
+            return usersInfo;
         }catch (NullPointerException e) {
             return userRepository.findByEmail("temp@temp.com");
         }
