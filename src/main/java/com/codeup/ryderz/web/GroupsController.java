@@ -138,4 +138,23 @@ public class GroupsController {
         commentRepository.deleteAll(comments);
         groupsRepository.deleteById(groupId);
     }
+
+    @GetMapping("recentGroups")
+    public Collection<Groups> getRecentGroups(){
+        List<Groups> allGroups = groupsRepository.findAll();
+
+        List<Groups> recentThree = new ArrayList<>();
+
+        recentThree.add(allGroups.get(allGroups.size() - 1));
+        recentThree.add(allGroups.get(allGroups.size() - 2));
+        recentThree.add(allGroups.get(allGroups.size() - 3));
+
+        for (Groups group : recentThree) {
+            String groupPhotoName = group.getGroupImageName();
+            String signedUrl = service.getSignedURL(groupPhotoName);
+            group.setGroupPhotoUrl(signedUrl);
+        }
+
+        return recentThree;
+    }
 }

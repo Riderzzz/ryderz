@@ -1,5 +1,6 @@
 package com.codeup.ryderz.web;
 
+import com.codeup.ryderz.data.Groups;
 import com.codeup.ryderz.data.User;
 import com.codeup.ryderz.data.UserRepository;
 import com.codeup.ryderz.services.S3Service;
@@ -9,11 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
-import javax.websocket.server.PathParam;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -31,22 +31,34 @@ public class UsersController {
 
     @GetMapping("me")
     private User getMyInfo(OAuth2Authentication auth){
-
-        /*
-        Navbar calls this function everytime it gets loaded, on startup, there is nobody logged in for it to get
-        information from and would throw error.
-        in the catch it returns a temp user so it doesnt throw and errors
-         */
-
         try{
             String userName = auth.getName();
-            return userRepository.findByEmail(userName);
+            User usersInfo = userRepository.findByEmail(userName);
+
+            String signedPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
+            String signedHeaderUrl = s3Service.getSignedURL(usersInfo.getHeaderPicture());
+
+            usersInfo.setUserPhotoUrl(signedPhotoUrl);
+            usersInfo.setUserHeaderUrl(signedHeaderUrl);
+
+            Collection<User> listOfFriends = usersInfo.getFriends();
+            for (int i = 0; i < usersInfo.getFriends().size() ; i++) {
+                User currentUser = (User) listOfFriends.toArray()[i];
+                String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture());
+                currentUser.setUserPhotoUrl(friendsPhotoUrl);
+            }
+
+            Collection<Groups> listOfGroups = usersInfo.getGroupsJoined();
+            for (int i = 0; i < usersInfo.getGroupsJoined().size() ; i++) {
+                Groups currentUser = (Groups) listOfGroups.toArray()[i];
+                String groupPhotoUrl = s3Service.getSignedURL(currentUser.getGroupImageName());
+                currentUser.setGroupPhotoUrl(groupPhotoUrl);
+            }
+
+            return usersInfo;
         }catch (NullPointerException e) {
             return userRepository.findByEmail("temp@temp.com");
         }
-
-
-
     }
     @GetMapping
     private List<User> getUser() {
@@ -66,9 +78,24 @@ public class UsersController {
     public User getUserById(@PathVariable Long userID) {
         User usersInfo = userRepository.findById(userID).get();
         String usersPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
+        String usersHeaderUrl = s3Service.getSignedURL(usersInfo.getHeaderPicture());
+        usersInfo.setUserHeaderUrl(usersHeaderUrl);
         usersInfo.setUserPhotoUrl(usersPhotoUrl);
-        System.out.println(usersInfo);
-        System.out.println(usersPhotoUrl);
+
+        Collection<User> listOfFriends = usersInfo.getFriends();
+        for (int i = 0; i < usersInfo.getFriends().size() ; i++) {
+            User currentUser = (User) listOfFriends.toArray()[i];
+            String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture());
+            currentUser.setUserPhotoUrl(friendsPhotoUrl);
+        }
+
+        Collection<Groups> listOfGroups = usersInfo.getGroupsJoined();
+        for (int i = 0; i < usersInfo.getGroupsJoined().size() ; i++) {
+            Groups currentUser = (Groups) listOfGroups.toArray()[i];
+            String groupPhotoUrl = s3Service.getSignedURL(currentUser.getGroupImageName());
+            currentUser.setGroupPhotoUrl(groupPhotoUrl);
+        }
+
         return usersInfo;
     }
 
@@ -117,20 +144,22 @@ public class UsersController {
         System.out.println("ready to delete User." + userId);
     }
 
-    @PostMapping("{user1Id}/friends/{user2Id}")
-    private void addFriend(@PathVariable User user1Id, @PathVariable Long user2Id){
-            User user1 = user1Id;
-            User user2 = userRepository.getById(user2Id);
+    @PostMapping("/friends/{user2Id}")
+    private void addFriend(@PathVariable Long user2Id, OAuth2Authentication auth){
+        User user1 = userRepository.findByEmail(auth.getName());
+        User user2 = userRepository.getById(user2Id);
 
-            user2.setFriends(new ArrayList<>());
-            user1.setFriends(new ArrayList<>());
+        Collection<User> user1Friends = user1.getFriends();
+        Collection<User> user2Friends = user2.getFriends();
 
-            user1.getFriends().add(user2);
-            user2.getFriends().add(user1);
+        user1Friends.add(user2);
+        user2Friends.add(user1);
 
+        user1.setFriends(user1Friends);
+        user2.setFriends(user2Friends);
 
-            userRepository.save(user1);
-            userRepository.save(user2);
+        userRepository.save(user1);
+        userRepository.save(user2);
     }
 
     @DeleteMapping("{user1Id}/friends/{user2Id}")

@@ -41,7 +41,7 @@ export default function Event(props) {
                 <div class="singleEventPageEditForm">
                     ${eventEditFormHTML(props, timeFormat)}
                 </div>
-                <div class="map">Map goes here</div>
+                <div id="singleEventMap"></div>
             </div>
         </div>
     </div>
@@ -73,6 +73,25 @@ export function EventEvents() {
 	commentOnEvent();
 	deleteEventBtn();
 	clickOnCommentAuthorName();
+	initMap();
+}
+
+let map;
+
+function initMap() {
+	let map, infoWindow;
+
+	infoWindow = new google.maps.InfoWindow();
+
+	map = new google.maps.Map(document.getElementById("singleEventMap"), {
+		center: {lat: -34.397, lng: 150.644},
+		zoom: 8,
+	});
+
+	var directionsService = new google.maps.DirectionsService();
+	var directionsRenderer = new google.maps.DirectionsRenderer();
+
+
 }
 
 function getTimeFormat(props) {

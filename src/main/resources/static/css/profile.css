@@ -1,11 +1,136 @@
-.shadow{
+.shadow {
     filter: drop-shadow(0px 0px 6px #222);
 }
-.shadow-profile-picture{
-    filter: drop-shadow(0px 0px 7px black);
+
+.shadow-profile-picture {
+    /*filter: drop-shadow(0px 0px 6px black);*/
+    border: 3px solid white;
 }
-body{
+
+.shadow-light {
+    filter: drop-shadow(0px 0px 5px #1B1B1B);
+}
+
+body {
     background-color: lightgray;
+}
+
+.btn {
+    background-color: black;
+    color: white;
+}
+
+.profile-header-photograph {
+    background-repeat: no-repeat;!important;
+    background-size: cover;!important;
+}
+
+.profile-card-header {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.go-to-profile-top {
+    margin-left: 5px;
+    margin-top: 20px;
+    color: gray;
+    text-decoration: none;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.minutes-ago {
+    margin-left: 5px;
+    font-size: x-small;
+    margin-top: 26px;
+}
+
+.comment-users-posts {
+    border-radius: 18px;
+    background-color: lightgray;
+    border: none;
+    width: 80%;
+}
+
+::placeholder {
+    color: darkgray;
+}
+
+.edit-post-button {
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.dropdown-menu {
+    position: absolute;
+}
+
+.card-title {
+    margin-left: 5px;
+}
+
+.posts-page {
+    display: none;
+
+}
+
+.about-page {
+    display: none;
+}
+
+.friends-page {
+    display: none;
+}
+
+.comments-link {
+    color: gray;
+    margin-right: 10px;
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+}
+
+.comments-link:hover{
+    cursor: pointer;
+
+}
+
+.comments-show{
+    display: none;
+}
+
+.show-users-group-profile{
+    text-decoration: none;
+    color: gray;
+}
+
+.show-users-group-profile:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.show-users-friends-profile{
+    text-decoration: none;
+    color: gray;
+}
+
+.show-users-friends-profile:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.go-to-profile-top:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.submit-comment{
+    border-radius: 18px;
+    color: white;
+    background-color: black;
+    width: 15%;
 }
 
 

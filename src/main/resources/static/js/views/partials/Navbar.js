@@ -10,7 +10,7 @@ export default function Navbar(props) {
 	// console.log(data)
 	// language=HTML
 	let html = `
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-dark-bg">
             <div class="container d-flex justify-content-between">
                 <button class="navbar-toggler order-1" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent"
@@ -20,9 +20,6 @@ export default function Navbar(props) {
 				<div class="logo text-white order-2 order-lg-1">LogoPlaceHolder</div>
                 <div class="collapse navbar-collapse justify-content-end order-4 order-lg-2" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto align-items-center">
-						<li class="nav-item">
-							<a class="nav-link" href="/chatTest" data-link>chat</a>
-						</li>
                         <li class="nav-item">
                             <a class="nav-link" href="/" data-link>Home</a>
                         </li>`;
@@ -52,7 +49,7 @@ export default function Navbar(props) {
             </li>
 			<li class="nav-item d-none d-lg-block">
 				<form class="d-flex">
-					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+					<input class="form-control me-2 nav-search" type="search" placeholder="Search" aria-label="Search">
 				</form>
 			</li>
 			`;
@@ -82,7 +79,7 @@ export default function Navbar(props) {
 						</button>
 	
 						<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-							<li><a class="dropdown-item" id="navbarProfile" href="/profile" data-link>Profile</a></li>
+							<li><a class="dropdown-item" id="navbarProfile" href="/myProfile" data-link="myProfile">Profile</a></li>
 							<li><hr class="dropdown-divider m-0"></li>
 							<li><a class="dropdown-item" href="/user" data-link="User Info">Setting</a></li>
 							<li><hr class="dropdown-divider m-0"></li>
