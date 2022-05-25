@@ -37,16 +37,19 @@ export default function router(URI, Id) {
             returnView: Home,
             state: {},
             uri: '/',
+            title: 'Home'
         },
         '/login': {
             returnView: Login,
             state: {},
+            title: 'Login',
             uri: '/login',
             viewEvent: LoginEvent
         },
         '/register': {
             returnView: Register,
             state: {},
+            title: 'Register',
             uri: '/register',
             viewEvent: RegisterEvent
         },
@@ -55,6 +58,7 @@ export default function router(URI, Id) {
             state: {
                 posts: '/api/posts'
             },
+            title: 'Post Index',
             uri: '/posts',
             viewEvent: PostsEvent
         },
@@ -62,6 +66,7 @@ export default function router(URI, Id) {
             returnView: About,
             state: {},
             uri: '/about',
+            title: 'About'
         },
         '/error': {
             returnView: Error404,
@@ -71,6 +76,7 @@ export default function router(URI, Id) {
         },
         '/loading': {
             returnView: Loading,
+            title: 'Loading',
             state: {},
             uri: location.pathname,
         },
@@ -79,6 +85,7 @@ export default function router(URI, Id) {
             state: {
                 user: "/api/users/me"
             },
+            title: 'User',
             uri: '/user',
             viewEvent: UserEvent
         },
@@ -91,6 +98,7 @@ export default function router(URI, Id) {
         '/newsfeed': {
             returnView: NewsFeed,
             uri: '/newsfeed',
+            title: 'News Feed',
             state: {
                 posts: "/api/posts/friendsPost",
                 events: "/api/events/friendsEvents",
@@ -102,6 +110,7 @@ export default function router(URI, Id) {
         '/discover': {
             returnView: Discover,
             uri: '/discover',
+            title: 'Discover',
             state: {
                 events: "/api/events",
                 groups: "/api/groups"
@@ -111,6 +120,7 @@ export default function router(URI, Id) {
         '/event': {
             returnView: Event,
             uri: `/event/${Id}`,
+            title: 'Event',
             state: {
                 event: `/api/events/${Id}`
             },
@@ -119,6 +129,7 @@ export default function router(URI, Id) {
         '/group': {
             returnView: Group,
             uri: `/group/${Id}`,
+            title: 'Group',
             state: {
                 group: `/api/groups/${Id}`
             },
@@ -127,12 +138,14 @@ export default function router(URI, Id) {
         '/createGroup': {
             returnView: CreateGroup,
             uri: '/createGroup',
+            title: 'Create Group',
             state: {},
             viewEvent: CreateGroupEvents
         },
         '/createEvent': {
             returnView: CreateEvent,
             uri: '/createGroup',
+            title: 'Create Event',
             state: {
                 categories: "/api/categories/all"
             },
@@ -141,6 +154,7 @@ export default function router(URI, Id) {
         '/createPost': {
             returnView: CreatePost,
             uri: '/createPost',
+            title: 'Create Post',
             state: {
                 categories: "/api/categories/all"
             },
@@ -149,6 +163,7 @@ export default function router(URI, Id) {
         '/editPost': {
             returnView: EditPost,
             uri: '/editPost',
+            title: 'Edit Post',
             state: {
                 posts: '/api/posts',
                 categories: "/api/categories/all"
@@ -157,13 +172,9 @@ export default function router(URI, Id) {
         },
         '/profile': {
             returnView: Profile,
-<<<<<<< HEAD
-            uri: '/profile',
-            state: {
-=======
             uri: `/profile/${Id}`,
+            title: 'Profile',
             state : {
->>>>>>> f16ce6d23606563c08cd7df62186eaf11ad6faff
                 profile: `/api/users/${Id}`
             },
             viewEvent: showFriendsProfile
@@ -174,8 +185,6 @@ export default function router(URI, Id) {
             title: 'Chat',
             viewEvent: chatTestEvents
         }
-
-
     };
 
     return routes[URI];
