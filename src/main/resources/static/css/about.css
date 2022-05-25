@@ -9,9 +9,31 @@
         font-family: Oswald,Arial Narrow,sans-serif;
         text-transform: uppercase;
     }
-    #capstone-card p {
+    #capstone-card {
         font-size: 1rem;
     }
+    .story .story-title--desktop {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .story .block_text {
+        font-size: 1.875rem;
+        margin-bottom: 3.75rem;
+    }
+}
+.story .block_text {
+    width: 60%;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.33;
+    letter-spacing: .3px;
+    margin-bottom: 31px;
+}
+
+.story__name {
+    font-family: Oswald,Arial Narrow,sans-serif;
+    text-transform: uppercase;
 }
 
 .first-card {
@@ -66,12 +88,14 @@
     font-weight: lighter;
     letter-spacing: 2px;
     transition: 1s box-shadow;
-    background-color: #A1CCA5;
-    color: white;
+    background-color: #709775;
+    color: palegoldenrod;
+    cursor: default;
 }
 
 .week-effects:hover {
-    box-shadow: 0 5px 35px 0px rgba(0,0,0,.1);
+    box-shadow: 0 5px 35px 0 rgba(0,0,0,.1);
+    text-shadow: 0 0 5px #A1CCA5;
 }
 
 .week-effects:hover::before, .week-effects:hover::after {
