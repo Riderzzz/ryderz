@@ -12,7 +12,8 @@ export let editPostTitle;
 export let editPostContent;
 let count = 0
 let channel = 'app-test-1'
-let allProps;
+let allProps = ''
+let sortedProps = ''
 
 export default function NewsFeed(props) {
     console.log(props)
@@ -29,7 +30,7 @@ export default function NewsFeed(props) {
         mixedProps.push(event)
     }
 
-    const sortedProps = mixedProps.sort((a, b) => b.date - a.date)
+    sortedProps = mixedProps.sort((a, b) => b.date - a.date)
 
     //language=HTML
     let html =
@@ -62,6 +63,7 @@ export default function NewsFeed(props) {
 }
 
 export function NewsFeedEvents() {
+    navSearchListener()
 
     commentOnPost();
     createPostBtn();
@@ -90,6 +92,27 @@ export function NewsFeedEvents() {
     toggleChatboxBtn()
     selectFriendsTabListener()
     hideChatbox()
+}
+
+function navSearchListener() {
+    $('.nav-search').keyup(function (e){
+        let searchedString = $(this).val().toLowerCase()
+
+
+        for (let prop of sortedProps) {
+            if (prop.type === 'post'){
+                if (prop.title.toLowerCase().includes(searchedString)) {
+                    console.log(prop.title)
+                }
+            }
+            if (prop.type === 'event') {
+                if (prop.titleOfEvent.toLowerCase().includes(searchedString)) {
+                    console.log(prop.titleOfEvent)
+                }
+            }
+        }
+
+    })
 }
 
 function hideChatbox() {
