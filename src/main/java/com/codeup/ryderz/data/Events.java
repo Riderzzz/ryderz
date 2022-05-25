@@ -62,7 +62,7 @@ public class Events implements Comparable<Events>{
 
     @ToString.Exclude
     @ManyToOne
-    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId"})
+    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId", "friends"})
     private User eventCreator;
 
     @ManyToMany(
@@ -77,7 +77,7 @@ public class Events implements Comparable<Events>{
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
     @ToString.Exclude
-    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId", "eventCreator", "password"})
+    @JsonIgnoreProperties({"events", "groups", "posts", "groupsOwned" , "groupsJoined", "comments", "eventsJoined", "usersId", "eventCreator", "password", "friends"})
     private List<User> usersId;
 
     @ToString.Exclude

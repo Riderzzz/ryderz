@@ -100,7 +100,9 @@ export default function router(URI, Id) {
                 posts: "/api/posts/friendsPost",
                 events: "/api/events/friendsEvents",
                 user: "/api/users/me",
-                categories: "/api/categories/all"
+                categories: "/api/categories/all",
+                recentEvents: "/api/events/recentEvents",
+                recentGroups: "/api/groups/recentGroups"
             },
             viewEvent: NewsFeedEvents
         },
@@ -173,6 +175,14 @@ export default function router(URI, Id) {
             title: 'Profile',
             state : {
                 profile: `/api/users/${Id}`
+            },
+            viewEvent: showFriendsProfile
+        },
+        '/myProfile': {
+            returnView: Profile,
+            uri: `/profile/${Id}`,
+            state : {
+                profile: `/api/users/me`
             },
             viewEvent: showFriendsProfile
         },

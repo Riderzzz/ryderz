@@ -12,7 +12,8 @@ export let editPostTitle;
 export let editPostContent;
 let count = 0
 let channel = 'app-test-1'
-let allProps;
+let allProps = ''
+let sortedProps = ''
 
 export default function NewsFeed(props) {
     console.log(props)
@@ -29,7 +30,7 @@ export default function NewsFeed(props) {
         mixedProps.push(event)
     }
 
-    const sortedProps = mixedProps.sort((a, b) => b.date - a.date)
+    sortedProps = mixedProps.sort((a, b) => b.date - a.date)
 
     //language=HTML
     let html =
@@ -41,10 +42,12 @@ export default function NewsFeed(props) {
                     <div class="sidebar-container col-2  d-none d-lg-block">
                         ${newsfeedSidebarHtml(props.user)}
                     </div>
-                    <div class="posts-container col-12 col-lg-8">
+                    <div class="posts-container col-12 col-lg-7">
                         ${newsfeedPostsHtml(sortedProps)}
                     </div>
-                    <div class="recent-events d-none d-lg-block col-2"><h5>Recent events...</h5></div>
+                    <div class="recent-events d-none d-lg-block col-3">
+                        ${newsfeedRecent(props)}
+                    </div>
                 </div>
                 <div class="modal-container">
                     ${createPostModal(props)}
@@ -60,6 +63,7 @@ export default function NewsFeed(props) {
 }
 
 export function NewsFeedEvents() {
+    navSearchListener()
 
     commentOnPost();
     createPostBtn();
@@ -76,6 +80,10 @@ export function NewsFeedEvents() {
     joinEvent();
     leaveEvent();
 
+    //left side-bar functions
+    goToRecentEventBtn()
+    goToRecentGroupBtn()
+
     //chat functions
     subscribeToChannel(channel)
     fetchOldMessages(channel)
@@ -84,6 +92,27 @@ export function NewsFeedEvents() {
     toggleChatboxBtn()
     selectFriendsTabListener()
     hideChatbox()
+}
+
+function navSearchListener() {
+    $('.nav-search').keyup(function (e){
+        let searchedString = $(this).val().toLowerCase()
+
+
+        for (let prop of sortedProps) {
+            if (prop.type === 'post'){
+                if (prop.title.toLowerCase().includes(searchedString)) {
+                    console.log(prop.title)
+                }
+            }
+            if (prop.type === 'event') {
+                if (prop.titleOfEvent.toLowerCase().includes(searchedString)) {
+                    console.log(prop.titleOfEvent)
+                }
+            }
+        }
+
+    })
 }
 
 function hideChatbox() {
@@ -481,6 +510,20 @@ function leaveBtn(eventId) {
             </div>`
 }
 
+function goToRecentGroupBtn() {
+    $('.recent-group-card').click(function () {
+        let groupId = $(this).data("id")
+        createView('/group', groupId)
+    })
+}
+
+function goToRecentEventBtn() {
+    $('.recent-event-card').click(function () {
+        let eventId = $(this).data("id");
+        createView('/event', eventId)
+    })
+}
+
 function newsfeedSidebarHtml(userProps) {
 
     //language=html
@@ -559,6 +602,50 @@ function newsfeedPostsHtml(sortedProps) {
 				
 				`;
     return html;
+}
+
+function newsfeedRecent(props) {
+    //language=html
+    let html =
+        `
+        <div class="recent-events">
+            <h4>Recent groups...</h4>
+            ${props.recentGroups.map(group => `${recentGroupCard(group)}`).join("")}
+            <h4>Recent events...</h4>
+            ${props.recentEvents.map(event => `${recentEventCard(event)}`).join("")}
+        </div>         
+        
+        `
+    return html;
+}
+
+function recentEventCard(event) {
+    return `
+            <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}" style='background-image: url("https://picsum.photos/id/${event.id + 1000}/200/100"); background-repeat: no-repeat'>
+              <img src="https://picsum.photos/id/${event.id + 1000}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
+              <div class="card-body d-flex justify-content-between p-2">
+                  <div>
+                    <h6>${event.titleOfEvent}</h6>
+                    <p class="card-text">${event.eventLocation}, ${event.stateWhereEventTakesPlace}</p>
+                  </div>
+                  <div>
+                    <div class="date" style="font-size: .75em">${formatDate(new Date(event.eventDate))}</div>
+                    <div class="time" style="font-size: .75em">${formatTime(new Date(event.eventDate).toLocaleTimeString('en-US'))}</div>
+                  </div>  
+              </div>
+            </div>`
+}
+
+function recentGroupCard(group) {
+
+    return `
+            <div class="card card-dark-bg m-3 recent-group-card" data-id="${group.id}">
+              <img src="https://picsum.photos/id/${group.id + 100}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
+              <div class="card-body p-2">
+                <h5>${group.name}</h5>
+                <p class="card-text">${group.location}</p>
+              </div>
+            </div>`
 }
 
 function postCard(post) {
