@@ -21,10 +21,8 @@ body {
 }
 
 .profile-header-photograph {
-    background-repeat: no-repeat;
-!important;
-    background-size: cover;
-!important;
+    background-repeat: no-repeat;!important;
+    background-size: cover;!important;
 }
 
 .profile-card-header {
@@ -33,8 +31,10 @@ body {
 }
 
 .go-to-profile-top {
-    margin-left: 10px;
-    margin-top: 10px;
+    margin-left: 5px;
+    margin-top: 20px;
+    color: gray;
+    text-decoration: none;
 }
 
 .card {
@@ -44,13 +44,14 @@ body {
 .minutes-ago {
     margin-left: 5px;
     font-size: x-small;
-    margin-top: 15px;
+    margin-top: 26px;
 }
 
 .comment-users-posts {
     border-radius: 18px;
     background-color: lightgray;
     border: none;
+    width: 80%;
 }
 
 ::placeholder {
@@ -95,7 +96,42 @@ body {
     cursor: pointer;
 
 }
+
 .comments-show{
     display: none;
 }
+
+.show-users-group-profile{
+    text-decoration: none;
+    color: gray;
+}
+
+.show-users-group-profile:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.show-users-friends-profile{
+    text-decoration: none;
+    color: gray;
+}
+
+.show-users-friends-profile:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.go-to-profile-top:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.submit-comment{
+    border-radius: 18px;
+    color: white;
+    background-color: black;
+    width: 15%;
+}
+
+
 

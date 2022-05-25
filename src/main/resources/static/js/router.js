@@ -21,9 +21,6 @@ import CreateEvent, {CreateEventEvents} from "./views/CreateEvent.js";
 import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
 import EditPost, {EditPostEvents} from "./views/EditPost.js";
 import Profile, {showFriendsProfile} from "./views/Profile.js";
-
-
-
 import chatTest, {chatTestEvents} from "./views/chat.js";
 
 /**

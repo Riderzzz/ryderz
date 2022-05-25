@@ -19,13 +19,13 @@ export default function Profile(props) {
     <!--Filler for top white portion of page-->
     <section class="bg-white shadow">
         <div class="container">
-            
+
             <section class="user-images mb-5">
                 <!--Section: user images-->
                 <div class="profile-header-photograph p-5 text-center bg-image rounded-bottom shadow"
                      style="background-image: url('${props.profile.userHeaderUrl}');height: 400px;">
                 </div>
-                
+
                 <div class="d-flex justify-content-center">
                     <img class="shadow-profile-picture rounded-circle position-absolute"
                          src="${props.profile.userPhotoUrl}"
@@ -50,52 +50,61 @@ export default function Profile(props) {
                     <button type="button" class="btn btn-light profile-btn posts-button">Posts</button>
                     <button type="button" class="btn btn-light profile-btn about-button">About</button>
                     <button type="button" class="btn btn-light profile-btn friends-button">Friends <small
-                            class="text-muted">100</small></button>
+                            class="text-muted">${props.profile.friends.length}</small></button>
                     <button type="button" class="btn btn-light profile-btn">Photos</button>
                 </div>
                 <!--Right Buttons-->
                 <div class="">
+                    
                     <button type="button" class="btn btn-light mr-2"><i
                             class="far fa-envelope mr-2"></i> Message
                     </button>
+                    
                     <button type="button" class="btn btn-light mr-2 add-friend-btn" data-id="${props.profile.id}">Add
                         Friends ${props.profile.id}<i
                                 class="fas fa-plus ml-2"></i>
                     </button>
+                    
                 </div>
             </section>
-            
+
         </div>
     </section>
     <!-- Bottom gray portion of the page-->
     <section class="">
         <div class="container">
+            
             <div class="row bottom-profile">
+                
                 <div class="col-5 mb-4 mb-md-0">
                     <!--Groups joined on users profile-->
                     ${showUsersGroups(props)}
                     <!--users friend's on users profile-->
                     ${showUsersFriends(props)}
                     <!--users photo's on users profile-->
-
                 </div>
                 <!--Posts start-->
                 <div class="col-7 mb-4 mb-md-0">
                     ${showUsersPosts(props)}
                 </div>
+                
             </div>
 
             <!-- show contents based on button pressed-->
             <div class="row posts-page">
+                
                 <div class="col">
                     ${showPostsOnly(props)}
                 </div>
+                
             </div>
 
             <div class="row about-page">
+                
                 <div class="col">
                     ${showAboutPageOnly(props)}
                 </div>
+                
             </div>
 
             <div class="row friends-page">
@@ -119,13 +128,21 @@ export function showFriendsProfile() {
     addFriendButtonListener();
     showProfilePage();
     commentsButtonListener();
-    commentTest();
+    commentFromUserProfile();
+    showGroupPage();
 }
 
 function showProfilePage() {
     $(".show-users-friends-profile").click(function () {
         const profileId = $(this).data("id");
         createView("/profile", `${profileId}`);
+    });
+}
+
+function showGroupPage() {
+    $(".show-users-group-profile").click(function () {
+        const groupId = $(this).data("id");
+        createView("/group", `${groupId}`);
     });
 }
 
@@ -176,15 +193,15 @@ function friendsButtonListener() {
     });
 }
 
-function commentsButtonListener(){
-    $(".comments-link").click(r=>{
-        $(".comments-show").css("display","block")
+function commentsButtonListener() {
+    $(".comments-link").click(r => {
+        $(".comments-show").css("display", "block")
     })
 }
 
-function commentTest(){
-    $(".submit-comment").click(function (){
-        let id = $(this).data("id")
+function commentFromUserProfile() {
+    $(".submit-comment").click(function () {
+        let id = $(this).data("id");
         let content = $(".comment-users-" + id).val();
         $(".comment-users-" + id).val("");
 
@@ -203,10 +220,9 @@ function commentTest(){
 
         fetch(COMMENT_URI, requestObj)
             .then(function () {
-                console.log("Comment created");
-                refreshComments(id)
-            }).catch(function () {
-                console.log("error")
+                refreshComments(id);
+            }).catch(error => {
+            console.log(error);
         });
 
     })
@@ -214,7 +230,7 @@ function commentTest(){
 
 function refreshComments(id) {
 
-    let commentSection = $(".comments-"+ id + "-show");
+    let commentSection = $(".comments-" + id + "-show");
 
     const requestObject = {
         method: "GET",
@@ -222,24 +238,21 @@ function refreshComments(id) {
     }
 
     fetch(`${BASE_URI}/${id}`, requestObject)
-        .then(res => res.json())
-        .then(data => {
-            let state = {};
-            console.log(data)
-            data.posts.forEach(post =>{
-               if(id === post.id){
-                  state = post;
-               }
-            });
+        .then(res => res.json()).then(data => {
+        let state = {};
 
-            console.log(state)
-            commentSection.html(displayComments(state));
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        data.posts.forEach(post => {
+            if (id === post.id) {
+                state = post;
+            }
+        });
+
+        console.log(state)
+        commentSection.html(displayComments(state));
+    }).catch(error => {
+        console.log(error);
+    })
 }
-
 
 
 function showUsersGroups(props) {
@@ -250,12 +263,19 @@ function showUsersGroups(props) {
             <div class="card-body">
                 <div class="d-flex flex-wrap flex-row">
                     ${props.profile.groupsJoined.map(groups => `
-                       <div class="col-4 d-flex mb-3 justify-content-center">
-                            <div class="justify-content-center">
-                               <img src="${groups.groupPhotoUrl}"
-                                    alt="image 1" class="rounded-circle"
-                                    style="width: 90px;height: 90px;">
-                               <p class="text-center">${groups.name}</p>
+                        <div class="col-4 d-flex mb-3 justify-content-center">
+                            <div>
+                                <!--group photo within users page-->
+                                <div class="justify-content-center">
+                                    <img src="${groups.groupPhotoUrl}"
+                                        alt="image 1" class="rounded-circle"
+                                        style="width: 90px;height: 90px;">
+                                </div>
+                                <!-- group name within users page-->
+                                <div class="text-center">
+                                    <a class="show-users-group-profile" data-id="${groups.id}">${groups.name}</a>
+                                </div>
+                                
                             </div>
                        </div>`).join("")}
                 </div>
@@ -279,8 +299,8 @@ function showUsersFriends(props) {
                                         alt="image 1" class="rounded-circle"
                                          style="width: 90px;height: 90px;">
                                 </div>
-                                <div>
-                                   <a class="text-center show-users-friends-profile" 
+                                <div class="text-center">
+                                   <a class="show-users-friends-profile" 
                                         data-id="${friends.id}">${friends.username}</a>
                                 </div>
                             </div>
@@ -313,7 +333,7 @@ function showUsersPosts(props) {
             <!--body of card-->
                 <div class="card-body">
                     <p class="card-text">${post.content}</p>
-                    <input class="comment-users-${post.id} w-75 mt-1" placeholder="Write a comment...." data-id="${post.id}">
+                    <input class="comment-users-${post.id} comment-users-posts mt-1" placeholder="Write a comment...." data-id="${post.id}">
                     <button type="submit" class="submit-comment" data-id="${post.id}">Comment</button>
                     
                     <div class="d-flex justify-content-end mt-1">
@@ -399,9 +419,10 @@ function showFriendsOnly(props) {
                     <div class="col-4 d-flex mb-3 justify-content-center">
                          <div class="justify-content-center">
                             <img src="${friends.userPhotoUrl}"
-                                 alt="image 1" class="rounded-circle"
-                                 style="width: 90px;height: 90px;">
-                            <p class="text-center">${friends.username}</p>
+                                alt="image 1" class="rounded-circle"
+                                style="width: 90px;height: 90px;">
+                            <a class="text-center show-users-friends-profile" 
+                                data-id="${friends.id}">${friends.username}</a>
                          </div>
                     </div>`).join("")}
                 </div>
