@@ -125,7 +125,7 @@ export default function router(URI, Id) {
             },
             viewEvent: EventEvents
         },
-        '/group': {
+        '/group' : {
             returnView: Group,
             uri: `/group/${Id}`,
             title: 'Group',
@@ -143,7 +143,7 @@ export default function router(URI, Id) {
         },
         '/createEvent': {
             returnView: CreateEvent,
-            uri: '/createGroup',
+            uri: '/createEvent',
             title: 'Create Event',
             state: {
                 categories: "/api/categories/all"

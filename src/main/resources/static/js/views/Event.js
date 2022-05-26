@@ -35,13 +35,14 @@ export default function Event(props) {
                 </div>
             </div>
             <div class="col-md-5">
+                <div id="singleEventMap"></div>
                 <div class="eventCol border border-dark">
                     ${eventColHTML(props, timeFormat)}
                 </div>
                 <div class="singleEventPageEditForm">
                     ${eventEditFormHTML(props, timeFormat)}
                 </div>
-                <div id="singleEventMap"></div>
+                
             </div>
         </div>
     </div>
@@ -58,16 +59,14 @@ export function EventEvents() {
 	const OGEventDate = $("#OGEventDate").data("id");
 	const OGStatusOfEvent = $(".stateOfEvent").text();
 	const OGState = $("#OGState").text();
-	const OGStartingLong = $("#OGStartLong").text();
-	const OGStartingLat = $("#OGStartLat").text();
-	const OGEndingLong = $("#OGEndLong").text();
-	const OGEndingLat = $("#OGEndLat").text();
 	const OGCategories = $("#OGCategories").text().split(", ");
+	const OGOrigin = $("#OGFrom").text();
+	const OGDestination = $("#OGTo").text();
 
 	backToDiscover();
 	editEventBtn(OGState, OGStatusOfEvent, OGCategories);
 	cancelEditsBtn();
-	submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatusOfEvent, OGState, OGStartingLong, OGStartingLat, OGEndingLong, OGEndingLat, OGCategories);
+	submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatusOfEvent, OGState, OGCategories, OGOrigin, OGDestination);
 	joinEventBtn();
 	leaveEventBtn();
 	commentOnEvent();
@@ -375,7 +374,7 @@ function editEventBtn(OGState, OGStatusOfEvent, OGCategories) {
 	})
 }
 
-function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatusOfEvent, OGState, OGStartingLong, OGStartingLat, OGEndingLong, OGEndingLat, OGCategories) {
+function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatusOfEvent, OGState, OGCategories, OGOrigin, OGDestination) {
 	$("#submitEditedEventBtn").click(function () {
 		const eventId = $(this).data("id");
 		const titleOfEvent = $("#editedEventTitle").val();
@@ -384,11 +383,8 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 		const dateTime = $("#editedEventDate").val();
 		const eventDate = new Date(dateTime).getTime();
 		const stateOfEvent = $('#eventStatus').val();
-		const stateWhereEventTakesPlace = $('#states').val();
-		const startingLongitude = $("#startingLong").val();
-		const startingLatitude = $("#startingLatitude").val();
-		const endingLongitude = $("#endingLong").val();
-		const endingLatitude = $("#endingLatitude").val();
+		const origin = $("#from").val();
+		const destination = $("#to").val();
 
 		let selectedCategories = [];
 
@@ -409,11 +405,8 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 			OGLocation === eventLocation &&
 			OGEventDate === dateTime &&
 			OGStatusOfEvent === stateOfEvent &&
-			OGState === stateWhereEventTakesPlace &&
-			OGStartingLong === startingLongitude &&
-			OGStartingLat === startingLatitude &&
-			OGEndingLong === endingLongitude &&
-			OGEndingLat === endingLatitude &&
+			OGOrigin === origin &&
+			OGDestination === destination &&
 			OGCategories.toString() === checkCategories.toString()
 		) {
 			warningPTag.css("color", "red");
@@ -423,21 +416,44 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 			warningPTag.text("");
 		}
 
-		if (!titleOfEvent ||
-			!descriptionOfEvent ||
-			!eventLocation ||
-			!eventDate ||
-			!stateOfEvent ||
-			!stateWhereEventTakesPlace ||
-			!startingLongitude ||
-			!startingLatitude ||
-			!endingLongitude ||
-			!endingLatitude) {
-			warningPTag.css("color", "red");
-			warningPTag.text("Please fill in all fields!");
-			return;
+		if (OGDestination === "") {
+			console.log("dest empty")
+			if (!titleOfEvent ||
+				!descriptionOfEvent ||
+				!eventLocation ||
+				!eventDate ||
+				!origin ||
+				!stateOfEvent) {
+				warningPTag.css("color", "red");
+				warningPTag.text("Please fill in all fields!");
+				return;
+			} else {
+				warningPTag.text("")
+			}
 		} else {
-			warningPTag.text("")
+			console.log(OGOrigin)
+			console.log(OGDestination)
+			console.log("dest present")
+			console.log(titleOfEvent)
+			console.log(descriptionOfEvent)
+			console.log(eventLocation)
+			console.log(eventDate)
+			console.log(origin)
+			console.log(destination)
+			console.log(stateOfEvent)
+			if (!titleOfEvent ||
+				!descriptionOfEvent ||
+				!eventLocation ||
+				!eventDate ||
+				!origin ||
+				!destination ||
+				!stateOfEvent) {
+				warningPTag.css("color", "red");
+				warningPTag.text("Please fill in all fields!");
+				return;
+			} else {
+				warningPTag.text("")
+			}
 		}
 
 		const editedEvent = {
@@ -446,12 +462,9 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 			eventLocation,
 			eventDate,
 			stateOfEvent,
-			stateWhereEventTakesPlace,
-			startingLongitude,
-			startingLatitude,
-			endingLongitude,
-			endingLatitude,
-			categories
+			categories,
+			origin,
+			destination
 		}
 
 
@@ -538,14 +551,15 @@ function eventColHTML(props, timeFormat) {
 
         <p class="event-owner-${props.event.id}">Organizer: ${props.event.eventCreator.username}</p>
 
-        <p>Starting Longitude: <span id="OGStartLong">${props.event.startingLongitude}</span></p>
-        <p>Starting Latitude: <span id="OGStartLat">${props.event.startingLatitude}</span></p>
-        <p>Ending Longitude: <span id="OGEndLong">${props.event.endingLongitude}</span></p>
-        <p>Ending Latitude: <span id="OGEndLat">${props.event.endingLatitude}</span></p>
-
         <p>State of event: <span class="stateOfEvent">${props.event.stateOfEvent}</span></p>
-
-        <p>US State: <span id="OGState">${props.event.stateWhereEventTakesPlace}</span></p>
+		
+		`; if (props.event.isSingleLocationEvent) {
+			html += `<p>Location: <span id="OGFrom">${props.event.origin}</span></p>`;
+	} else {
+			html+= `<p>Origin: <span id="OGFrom">${props.event.origin}</span></p>
+					<p>Destination: <span id="OGTo">${props.event.destination}</span></p>`;
+	}
+	html+=`
 	`
 	if (userEmail() === props.event.eventCreator.email) {
 		html += `<button class= "editEventBtn btn btn-dark">Edit Event</button>`
@@ -586,62 +600,6 @@ function eventEditFormHTML(props, timeFormat) {
 
             </div>
 
-            <label for="states">Choose a state</label>
-
-            <select name="states" id="states">
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-            </select>
-
             <label for="eventStatus">Choose a status</label>
 
             <select name="eventStatus" id="eventStatus">
@@ -649,27 +607,26 @@ function eventEditFormHTML(props, timeFormat) {
                 <option value="INPROGRESS">IN PROGRESS</option>
                 <option value="COMPLETED">COMPLETED</option>
             </select>
-
-            <label for="startingLong">Starting Longitude</label>
-            <input value="${props.event.startingLongitude}" type="number" id="startingLong" name="startingLong">
-
-            <label for="startingLatitude">Starting Latitude</label>
-            <input value="${props.event.startingLatitude}" type="number" id="startingLatitude"
-                   name="startingLatitude">
-
-            <label for="endingLong">Ending Longitude</label>
-            <input value="${props.event.endingLongitude}" type="number" id="endingLong" name="endingLong">
-
-            <label for="endingLatitude">Ending Latitude</label>
-            <input value="${props.event.endingLatitude}" type="number" id="endingLatitude"
-                   name="endingLatitude">
-
-            <p id="character-warning-on-submit"></p>
-            <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
-            <input id="submitEditedEventBtn" data-id="${props.event.id}" class="btn btn-dark" type="button"
-                   value="Submit">
-            <button id="deleteEvent" data-id="${props.event.id}" class="btn btn-danger">Delete Event</button>
-        </form>
+			
+			`; if (props.event.isSingleLocationEvent) {
+					html+= `
+						<label for="from">Origin</label>
+						<input value="${props.event.origin}" type="text" id="from" name="from">`
+				} else {
+					html+= `
+						<label for="from">Origin</label>
+						<input value="${props.event.origin}" type="text" id="from" name="from">
+			
+						<label for="to">Starting Latitude</label>
+						<input value="${props.event.destination}" type="text" id="to" name="to">`
+						}
+						html+= `
+    			        <p id="character-warning-on-submit"></p>
+    			        <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
+    			        <input id="submitEditedEventBtn" data-id="${props.event.id}" class="btn btn-dark" type="button"
+    			               value="Submit">
+    			        <button id="deleteEvent" data-id="${props.event.id}" class="btn btn-danger">Delete Event</button>
+    			    </form>
 	`
 
 	return html;
