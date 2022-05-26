@@ -76,10 +76,8 @@ public class EventsController {
     @PutMapping("{id}")
     private void updateEvent(@PathVariable Long id, @RequestBody Events updatedEvent) {
         Events originalEvent = eventsRepository.getById(id);
-        originalEvent.setStartingLongitude(updatedEvent.getStartingLongitude());
-        originalEvent.setStartingLatitude(updatedEvent.getStartingLatitude());
-        originalEvent.setEndingLongitude(updatedEvent.getEndingLongitude());
-        originalEvent.setEndingLatitude(updatedEvent.getEndingLatitude());
+        originalEvent.setOrigin(updatedEvent.getOrigin());
+        originalEvent.setDestination(updatedEvent.getDestination());
         originalEvent.setEventDate(updatedEvent.getEventDate());
         originalEvent.setStateWhereEventTakesPlace(updatedEvent.getStateWhereEventTakesPlace());
         originalEvent.setTitleOfEvent(updatedEvent.getTitleOfEvent());

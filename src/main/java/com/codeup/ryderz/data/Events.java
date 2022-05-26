@@ -23,6 +23,14 @@ public class Events implements Comparable<Events>{
     private Long id;
 
     @Column
+    private String origin;
+
+    @Column
+    private String destination;
+
+    @Column Boolean isSingleLocationEvent;
+
+    @Column
     private Double startingLongitude;
 
     @Column

@@ -66,6 +66,8 @@ export function GroupEvents() {
 	deleteGroupBtn();
 	uploadGroupImgHeader();
 	clickOnCommentAuthorName();
+	const groupId = $(".leaveGroupBtn").data("id");
+
 }
 
 function joinGroupBtn() {

@@ -15,7 +15,7 @@ export default function CreateEvent(props) {
             <h1>Create Event</h1>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-md-6">
                 <form>
                     <label for="newEventTitle">Title: <span
                             id="event-title"></span></label><br>
@@ -46,66 +46,12 @@ export default function CreateEvent(props) {
                                 .join('')}
                     </div>
 
-                    <label for="states">Choose a state</label>
+					<label for="singleLocation">Single Location Event</label>
+					<input type="checkbox" id="singleLocation"><br>
+                    <label id="originLocation" for="origin">Origin</label>
+                    <input type="text" id="from" name="origin"><br>
 
-                    <select name="states" id="states">
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="DE">Delaware</option>
-                        <option value="DC">District Of Columbia</option>
-                        <option value="FL">Florida</option>
-                        <option value="GA">Georgia</option>
-                        <option value="HI">Hawaii</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option>
-                        <option value="KY">Kentucky</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option>
-                        <option value="MT">Montana</option>
-                        <option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NH">New Hampshire</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option>
-                        <option value="NY">New York</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="SD">South Dakota</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VT">Vermont</option>
-                        <option value="VA">Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option>
-                        <option value="WY">Wyoming</option>
-                    </select>
-
-                    <label for="origin">Origin</label>
-                    <input type="text" id="from" name="origin">
-
-                    <label for="destination">Destination</label>
+                    <label id="labelForDestination" for="destination">Destination</label>
                     <input type="text" id="to" name="destination">
 
                     <p id="character-warning-on-submit"></p>
@@ -114,7 +60,7 @@ export default function CreateEvent(props) {
                     <input id="newEventBtn" class="btn btn-dark" type="button" value="Submit">
                 </form>
             </div>
-            <div class="col">
+            <div class="col-md-6">
                 <div id="createEventMap"></div>
             </div>
         </div>
@@ -129,6 +75,7 @@ export function CreateEventEvents() {
 	createEventSubmitListener();
 	backToDiscoverBtn();
 	initMap();
+	checkBoxSingleLocation();
 }
 
 let map;
@@ -226,15 +173,12 @@ function initMap() {
 
 
 //create autocomplete objects for all inputs
-	var options = {
-		types: ['(cities)']
-	}
 
 	var input1 = document.getElementById("from");
-	var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
+	var autocomplete1 = new google.maps.places.Autocomplete(input1);
 
 	var input2 = document.getElementById("to");
-	var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+	var autocomplete2 = new google.maps.places.Autocomplete(input2);
 
 	$("#createRoute").click(function () {
 		calcRoute()
@@ -248,23 +192,47 @@ function backToDiscoverBtn() {
 	})
 }
 
+function checkBoxSingleLocation() {
+	$("#singleLocation").click(function () {
+		if (document.getElementById('singleLocation').checked) {
+			$("#originLocation").text("Location");
+			$("#labelForDestination").css('display', 'none');
+			$("#to").css('display', 'none');
+		} else {
+			$("#originLocation").text("Origin");
+			$("#labelForDestination").css('display', 'block');
+			$("#to").css('display', 'block');
+		}
+	})
+}
+
 function createEventSubmitListener() {
 	$("#newEventBtn").click(function () {
+		const warningTag = $("#character-warning-on-submit");
 		const titleOfEvent = $("#newEventTitle").val();
 		const descriptionOfEvent = $("#newEventDescription").val();
 		const eventLocation = $("#newEventLocation").val();
 		const dateTime = $("#eventDate").val();
 		const eventDate = new Date(dateTime).getTime();
-		const stateWhereEventTakesPlace = $("#states").val();
-		const startingLongitude = $("#startingLong").val();
-		const startingLatitude = $("#startingLatitude").val();
-		const endingLongitude = $("#endingLong").val();
-		const endingLatitude = $("#endingLatitude").val();
+		const origin = $("#from").val();
+		const destination = $("#to").val();
+		const isSingleLocationEvent = document.getElementById('singleLocation').checked;
 
-		if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !startingLongitude || !startingLatitude || !endingLongitude || !endingLatitude) {
-			$("#character-warning-on-submit").text("Fill all fields")
-			return;
+		if (isSingleLocationEvent) {
+			if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin) {
+				warningTag.text("Fill all fields");
+				warningTag.css('color', 'red');
+				return;
+			}
+		} else {
+			if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin || !destination) {
+				warningTag.text("Fill all fields");
+				warningTag.css('color', 'red');
+				return;
+			}
 		}
+
+
 
 		let selectedCategories = [];
 
@@ -279,15 +247,13 @@ function createEventSubmitListener() {
 		console.log(selectedCategories)
 
 		const newEvent = {
-			startingLongitude,
-			startingLatitude,
-			endingLongitude,
-			endingLatitude,
+			origin,
+			destination,
+			isSingleLocationEvent,
 			eventDate,
 			titleOfEvent,
 			descriptionOfEvent,
 			eventLocation,
-			stateWhereEventTakesPlace,
 			categories
 		}
 
