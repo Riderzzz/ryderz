@@ -4,6 +4,9 @@ import com.codeup.ryderz.data.Groups;
 import com.codeup.ryderz.data.User;
 import com.codeup.ryderz.data.UserRepository;
 import com.codeup.ryderz.services.S3Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,7 @@ public class UsersController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private S3Service s3Service;
+
 
     public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder, S3Service s3Service) {
         this.userRepository = userRepository;
@@ -139,9 +143,38 @@ public class UsersController {
         System.out.println("changing password to " + newPassword);
     }
 
+    @PutMapping("/updateAccountPassword")
+    private ResponseEntity<String> updateUsersPassword(@RequestBody String passwords, OAuth2Authentication auth) {
+        User user = userRepository.findByEmail(auth.getName());
+        String [] passwordsArray = passwords.split(",");
+        String oldPassword = passwordsArray[0];
+        String newPassword = passwordsArray[1];
+
+        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+            System.out.println("updating pass");
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            return new ResponseEntity<>("password updated", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("password didnt match", HttpStatus.ACCEPTED);
+    }
+
     @DeleteMapping("{userId}")
     private void deleteUser(@PathVariable Long userId) {
         System.out.println("ready to delete User." + userId);
+    }
+
+    @DeleteMapping("/deleteAccount/{userId}")
+    private ResponseEntity<String> deleteUserAccount(@RequestBody String password, @PathVariable Long userId) {
+        User user = userRepository.getById(userId);
+
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            System.out.println("passwords match");
+            System.out.println("user deleted");
+            return new ResponseEntity<>("user deleted", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Password does not match", HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/friends/{user2Id}")
