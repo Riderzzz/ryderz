@@ -12,7 +12,7 @@ export default function Group(props) {
     </head>
     <body>
     <div class="container">
-        <div class="row">
+        <div class="row group-bg-img">
             <img src="${props.group.groupPhotoUrl}" alt="">
         </div>
         <div class="row justify-content-center">

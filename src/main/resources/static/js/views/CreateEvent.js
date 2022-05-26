@@ -82,12 +82,12 @@ let map;
 
 function initMap() {
 	let map, infoWindow;
-	let myLatLng = {lat: 38.3460, lng: -0.4907};
+	let myLatLng = {lat: 39.8097343, lng: -98.5556199};
 
 	infoWindow = new google.maps.InfoWindow();
 
 	map = new google.maps.Map(document.getElementById("createEventMap"), {
-		center: {lat: -34.397, lng: 150.644},
+		center: {lat: 39.8097343, lng: -98.5556199},
 		zoom: 8,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 

@@ -72,23 +72,103 @@ export function EventEvents() {
 	commentOnEvent();
 	deleteEventBtn();
 	clickOnCommentAuthorName();
-	initMap();
+	initMap(OGOrigin, OGDestination);
 }
 
 let map;
 
-function initMap() {
+function initMap(OGOrigin, OGDestination) {
+	let geocoder;
+	geocoder = new google.maps.Geocoder();
 	let map, infoWindow;
+	let myLatLng = {lat: 39.8097343, lng: -98.5556199};
 
 	infoWindow = new google.maps.InfoWindow();
 
 	map = new google.maps.Map(document.getElementById("singleEventMap"), {
-		center: {lat: -34.397, lng: 150.644},
-		zoom: 8,
+		center: {lat: 39.8097343, lng: -98.5556199},
+		zoom: 10,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
 
+	//create a DirectionsService object to use the route method and get a result for our request
 	var directionsService = new google.maps.DirectionsService();
-	var directionsRenderer = new google.maps.DirectionsRenderer();
+
+//create a DirectionsRenderer object which we will use to display the route
+	var directionsDisplay = new google.maps.DirectionsRenderer();
+
+//bind the DirectionsRenderer to the map
+	directionsDisplay.setMap(map);
+
+	if (OGDestination === "") {
+
+		function codeAddress() {
+			var address = OGOrigin;
+			geocoder.geocode( { 'address': address}, function(results, status) {
+				if (status == 'OK') {
+					map.setCenter(results[0].geometry.location);
+					var marker = new google.maps.Marker({
+						map: map,
+						position: results[0].geometry.location
+					});
+				} else {
+					alert('Geocode was not successful for the following reason: ' + status);
+				}
+			});
+		}
+
+		codeAddress();
+
+	} else {
+		//define calcRoute function
+		function calcRoute() {
+			//create request
+			var request = {
+				origin: OGOrigin,
+				destination: OGDestination,
+				travelMode: google.maps.TravelMode.DRIVING, //WALKING, BYCYCLING, TRANSIT
+				unitSystem: google.maps.UnitSystem.IMPERIAL
+			}
+
+			//pass the request to the route method
+			directionsService.route(request, function (result, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+					console.log(result);
+					console.log(status);
+
+					//Get distance and time
+					// const output = document.querySelector('#output');
+					// output.innerHTML = "<div class='alert-info'>From: " + document.getElementById("from").value + ".<br />To: " + document.getElementById("to").value + ".<br /> Driving distance <i class='fas fa-road'></i> : " + result.routes[0].legs[0].distance.text + ".<br />Duration <i class='fas fa-hourglass-start'></i> : " + result.routes[0].legs[0].duration.text + ".</div>";
+
+					//display route
+					directionsDisplay.setDirections(result);
+				} else {
+					//delete route from map
+					directionsDisplay.setDirections({routes: []});
+					//center map in London
+					map.setCenter(myLatLng);
+					console.log(result);
+
+					//show error message
+					// output.innerHTML = "<div class='alert-danger'><i class='fas fa-exclamation-triangle'></i> Could not retrieve driving distance.</div>";
+				}
+			});
+		}
+
+		calcRoute();
+
+	}
+
+
+
+
+//create autocomplete objects for all inputs
+
+	var input1 = document.getElementById("from");
+	var autocomplete1 = new google.maps.places.Autocomplete(input1);
+
+	var input2 = document.getElementById("to");
+	var autocomplete2 = new google.maps.places.Autocomplete(input2);
 
 
 }
