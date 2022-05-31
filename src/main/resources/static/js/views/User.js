@@ -136,9 +136,6 @@ function passwordSettingsHtml(props) {
 					</div>
 				</div>
 			</form>
-			
-			
-
 		`
 
 	return html;

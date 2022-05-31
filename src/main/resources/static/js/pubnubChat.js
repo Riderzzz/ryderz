@@ -67,7 +67,9 @@ export function fetchOldMessages(currentChannel) {
             count: 50
         },
         (status, response) => {
-            appendOldMessagesToChatBox(response)
+            if (response !== null) {
+                appendOldMessagesToChatBox(response)
+            }
         }
     );
 }
