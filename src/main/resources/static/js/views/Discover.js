@@ -8,6 +8,7 @@ export default function Discover(props) {
     <head>
         <meta charset="UTF-8"/>
         <title>Discover</title>
+        <link rel="stylesheet" href="css/discover.css">
     </head>
     <body>
     <div class="container">

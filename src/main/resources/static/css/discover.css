@@ -1,8 +1,5 @@
 @import "https://unpkg.com/open-props";
 @import "https://unpkg.com/open-props/normalize.min.css";
-body {
-    overflow: scroll;
-}
 .groupDiv, .eventDiv {
     text-decoration: none;
     color: black;
