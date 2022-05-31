@@ -14,7 +14,7 @@ export function initPubNub(){
 
 export function setUUID() {
     let user = userEmail()
-    console.log(user)
+    // console.log(user)
     pubnub.set_uuid = user
     console.log(pubnub.uuid)
 }
@@ -25,13 +25,13 @@ export function pubNubListener(){
 
     const listener = { // <-- extract the listener
         message: function(msg) {
-            console.log(msg)
-            console.log(msg.publisher + ": " + msg.message.description)
+            // console.log(msg)
+            // console.log(msg.publisher + ": " + msg.message.description)
             appendToChatbox(msg)
         },
         presence: function (p) {
             const action = p.leave
-            console.log(action)
+            // console.log(action)
         }
     }
     pubnub.addListener(listener)
@@ -52,14 +52,14 @@ export function sendMsg(msg, currentChannel) {
             }
         }
         pubnub.publish(publishPayload, function(status, response) {
-            console.log(status, response);
+            // console.log(status, response);
         })
     }
 }
 
 export function fetchOldMessages(currentChannel) {
 
-    console.log(currentChannel)
+    // console.log(currentChannel)
     pubnub.fetchMessages(
         {
             channels: [currentChannel],
