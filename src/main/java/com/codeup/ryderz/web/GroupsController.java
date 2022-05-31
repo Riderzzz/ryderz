@@ -34,18 +34,30 @@ public class GroupsController {
 
     @GetMapping
     public List<Groups> getAll() {
-        return groupsRepository.findAll();
+
+        List<Groups> groups = groupsRepository.findAll();
+
+        for (Groups group : groups) {
+            if (group.getGroupImageName() != null) {
+                String groupImageUrl = service.getSignedURL(group.getGroupImageName());
+                group.setGroupPhotoUrl(groupImageUrl);
+            }
+        }
+
+        return groups;
     }
 
     @GetMapping("{groupId}")
     public Groups getGroupById(@PathVariable Long groupId) {
         Groups group = groupsRepository.findById(groupId).get();
-        String groupImageUrl = service.getSignedURL(group.getGroupImageName());
-        group.setGroupPhotoUrl(groupImageUrl);
+        if (group.getGroupImageName() != null) {
+            String groupImageUrl = service.getSignedURL(group.getGroupImageName());
+            group.setGroupPhotoUrl(groupImageUrl);
+        }
 
         Collection<Comments> groupComments = group.getComments();
 
-        for (Comments comment: groupComments) {
+        for (Comments comment : groupComments) {
             User commentAuthor = comment.getAuthor();
             String imageName = commentAuthor.getProfilePicture();
             String imageUrl = service.getSignedURL(imageName);
@@ -140,7 +152,7 @@ public class GroupsController {
     }
 
     @GetMapping("recentGroups")
-    public Collection<Groups> getRecentGroups(){
+    public Collection<Groups> getRecentGroups() {
         List<Groups> allGroups = groupsRepository.findAll();
 
         List<Groups> recentThree = new ArrayList<>();
