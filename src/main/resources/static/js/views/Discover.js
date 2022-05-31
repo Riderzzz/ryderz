@@ -12,75 +12,65 @@ export default function Discover(props) {
     <body>
     <div class="container">
 		<header>
-			<div>
+			<div class="my-3">
 				<h1>Discover New Roads</h1>
 			</div>
 			<div class="headerImgDiv">
-				<img class="discoverFeaturedEventImg" src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80">
+				<img class="discoverFeaturedEventImg" src="https://images.unsplash.com/photo-1552306062-29a5560e1c31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80">
 				<div class="featuredTitle">
-					<h3 class="featuredSubTitle">Featured Event!</h3>
-					<p class="featuredSubDetails">Featured event details!</p>
+					<h3 class="featuredSubTitle">Night Life Tour</h3>
+					<p class="featuredSubDetails">Join us on a late night route!</p>
 				</div>
 			</div>
 		</header>
-		<div class="row mt-5">
-			<h2>Events</h2>
-
-            <div class="media-scroller snaps-inline">
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
+		<div class="row my-3">
+			<div class="col-md-10">
+				<h2>Events</h2>
+			</div>
+			<div class="col-md-2">
+            	<button class="btn btn-dark mt-2 mx-2 createEventBtn">Create Event</button>
 			</div>
 		</div>
-        <div class="row mt-3">
-            <h2>Clubs</h2>
+		<div class="row my-3">
 
             <div class="media-scroller snaps-inline">
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
+				${props.events.reverse().map(event => 
+					`
+				<div class="media-element">
+					<a class="eventDiv" data-id="${event.id}">
+					<img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" alt="">
+                    <h5 class="title">${event.titleOfEvent}</h5>
+                    <p>Location: ${event.origin}</p>	
+                    <p>Date: ${new Date(event.eventDate).toLocaleDateString()}</p>			
+					</a>
                 </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
+`
+				).join('')}
+			</div>
+		</div>
+        <div class="row my-3">
+			<div class="col-md-10">
+            	<h2 class="d-inline">Clubs</h2>
+			</div>
+			<div class="col-md-2">
+            	<button class="d-inline btn btn-dark mt-2 mx-2 createGroupBtn">Create Club</button>
+			</div>
+		</div>
+		<div class="row my-3">
+
+            <div class="media-scroller mb-4 snaps-inline">
+                ${props.groups.reverse().map(group =>
+                        `
+				<div class="media-element">
+					<a class="groupDiv" data-id="${group.id}">
+					<img src="${group.groupPhotoUrl !== null ? group.groupPhotoUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
+                    <h5 class="title">${group.name}</h5>
+                    <p>Location: ${group.location}</p>		
+                    <p>Location: ${group.users.length}</p>		
+					</a>
                 </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
-                <div class="media-element">
-                    <img src="https://images.unsplash.com/photo-1641353989082-9b15fa661805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODcyOA&ixlib=rb-1.2.1&q=80&w=400" alt="">
-                    <p class="title">Short title</p>
-                </div>
+`
+                ).join('')}
             </div>
         </div>
     </div>

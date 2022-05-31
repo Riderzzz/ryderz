@@ -8,12 +8,12 @@ export default function Group(props) {
     <html lang="html">
     <head>
         <meta charset="UTF-8"/>
-        <title>Group</title>
+        <title>Club</title>
     </head>
     <body>
     <div class="container">
-        <div class="row group-bg-img">
-            <img src="${props.group.groupPhotoUrl}" alt="">
+        <div class="row">
+            <img class="group-bg-img" src="${props.group.groupPhotoUrl !== null ? props.group.groupPhotoUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
         </div>
         <div class="row justify-content-center">
             <div class="col-md-3">

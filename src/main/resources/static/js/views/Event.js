@@ -36,13 +36,12 @@ export default function Event(props) {
             </div>
             <div class="col-md-5">
                 <div id="singleEventMap"></div>
-                <div class="eventCol border border-dark">
+                <div class="mb-3 eventCol border border-dark">
                     ${eventColHTML(props, timeFormat)}
                 </div>
-                <div class="singleEventPageEditForm">
+                <div class="mb-3 singleEventPageEditForm">
                     ${eventEditFormHTML(props, timeFormat)}
                 </div>
-                
             </div>
         </div>
     </div>
@@ -358,14 +357,14 @@ function checkUserEventStatus(props) {
 	} else if (found && userEmail() !== props.event.eventCreator.email) {
 		//language=HTML
 		html += `
-            <button class="leaveEvent btn btn-danger" data-id="${props.event.id}">Leave Event</button>`
+            <button class="leaveEvent btn btn-danger mx-3" data-id="${props.event.id}">Leave Event</button>`
 	} else if (!found && userEmail() !== props.event.eventCreator.email) {
-		html += `<button class="joinEventBtn btn btn-dark" data-id="${props.event.id}">Join Event</button>`
+		html += `<button class="joinEventBtn btn btn-dark mx-3" data-id="${props.event.id}">Join Event</button>`
 	}
 	if (found || userEmail() === props.event.eventCreator.email) {
 		//language=HTML
 		html += `
-            <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
+            <button class="btn btn-dark mx-3" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseExample" aria-expanded="false"
                     aria-controls="collapseExample">
                 Comment
