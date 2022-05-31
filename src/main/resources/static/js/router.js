@@ -22,6 +22,7 @@ import CreatePost, {CreatePostEvents} from "./views/CreatePost.js";
 import EditPost, {EditPostEvents} from "./views/EditPost.js";
 import Profile, {showFriendsProfile} from "./views/Profile.js";
 import chatTest, {chatTestEvents} from "./views/chat.js";
+import Requests,{showRequests} from "./views/Requests.js";
 
 /**
  * Returns the route object for a specific route based on the given URI
@@ -192,6 +193,13 @@ export default function router(URI, Id) {
             state: {},
             title: 'Chat',
             viewEvent: chatTestEvents
+        },
+        '/request': {
+            returnView: Requests,
+            uri: '/request',
+            state: {},
+            title: 'Request',
+            viewEvent: showRequests
         }
     };
 
