@@ -86,6 +86,10 @@ function setTokens(responseData) {
     }
 }
 
+export function clearLocalStorage() {
+    localStorage.clear()
+}
+
 export function isLoggedIn() {
     if (localStorage.getItem('access_token')) {
         return true;

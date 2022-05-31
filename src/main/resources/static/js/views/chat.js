@@ -96,7 +96,7 @@ export function appendToChatbox(message){
 
 export function appendOldMessagesToChatBox(messageArray) {
 
-    if (messageArray.channels == null) {
+    if (messageArray.channels === null) {
         return
     }
 
