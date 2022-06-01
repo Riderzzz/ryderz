@@ -39,7 +39,7 @@ export function sendMsgBtn() {
         let messageText = message.val()
         // let channel = $(this).data("channel")
         message.val("")
-        console.log('ready to send: ' + messageText)
+        // console.log('ready to send: ' + messageText)
 
         sendMsg(messageText, channel)
     })
@@ -52,15 +52,15 @@ export function selectFriendsTabListener() {
         let friendId = $(this).data('id')
         let userId = $('.id').data('userid')
 
-        console.log('clicked on friend with id of: ' + friendId)
-        console.log('your id: ' + userId)
+        // console.log('clicked on friend with id of: ' + friendId)
+        // console.log('your id: ' + userId)
 
         unsubscribe(channel)
 
         channel = getFriendsChannel(userId, friendId)
 
-        console.log(channel)
-        console.log('setting channel to: ' + channel)
+        // console.log(channel)
+        // console.log('setting channel to: ' + channel)
         subscribeToChannel(channel)
         fetchOldMessages(channel)
     })
@@ -73,7 +73,7 @@ export function sendMsgEnter() {
             let messageText = $('#msg').val()
             $(this).val("")
 
-            console.log('ready to send: ' + messageText)
+            // console.log('ready to send: ' + messageText)
 
             sendMsg(messageText, channel)
         }
@@ -83,20 +83,33 @@ export function sendMsgEnter() {
 export function appendToChatbox(message){
     let feed = $('.feed')
 
-    feed.html(feed.html() + `
-        <div class="card chat-card">
-          <div class="card-body">
+    if (message.publisher === pubnub.getUUID()) {
+        feed.html(feed.html() + `
+        <div class="card chat-card ms-auto">
+          <div class="card-body p-2">
               <div class="name">${message.publisher}:</div>
               <div class="message">${message.message.description}</div> 
           </div>
         </div>
     `)
+    } else {
+        feed.html(feed.html() + `
+        <div class="card chat-card me-auto">
+          <div class="card-body p-2">
+              <div class="name">${message.publisher}:</div>
+              <div class="message">${message.message.description}</div> 
+          </div>
+        </div>
+    `)
+    }
+
+
     feed.scrollTop(feed[0].scrollHeight)
 }
 
 export function appendOldMessagesToChatBox(messageArray) {
 
-    if (messageArray.channels == null) {
+    if (messageArray.channels === null) {
         return
     }
 
@@ -172,7 +185,7 @@ function friendTabs(friend) {
 }
 
 export function getFriendsChannel(userId, friendId) {
-    console.log(typeof userId, typeof friendId)
+    // console.log(typeof userId, typeof friendId)
 
     if (userId > friendId) {
         userId += ""
