@@ -20,6 +20,34 @@ export default function Home(props) {
             
             </div> 
         </main>
+        <div class="features-main d-flex ">
+            <h2 class="features-title justify-content-center">Features</h2>
+            <div class="features-card justify-content-space-around">
+                <div class="features">
+                Host/Join Clubs
+                </div>
+                <div class="features">
+                Create/View Motorcycle Routes
+                </div>
+                <div class="features">
+                Add/Message Friends
+                </div>
+            </div>
+        </div>
+        <div class="features-main d-flex ">
+            <h2 class="features-title justify-content-center">Features</h2>
+            <div class="features-card justify-content-space-around">
+                <div class="features">
+                Host/Join Clubs
+                </div>
+                <div class="features">
+                Create/View Motorcycle Routes
+                </div>
+                <div class="features">
+                Add/Message Friends
+                </div>
+            </div>
+        </div>
     `;
 }
 
