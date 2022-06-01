@@ -104,10 +104,10 @@ public class User {
     @JsonIgnoreProperties("author")
     private Collection<Comments> comments;
 
-
-    @OneToMany()
-    @JoinColumn(name = "receiver")
-    private Collection<FriendRequest> friendsRequest;
+//
+//    @OneToMany()
+//    @JoinColumn(name = "receiver")
+//    private Collection<FriendRequest> friendsRequest;
 
     @ManyToMany(
             fetch = FetchType.LAZY,
