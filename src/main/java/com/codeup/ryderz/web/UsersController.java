@@ -2,6 +2,9 @@ package com.codeup.ryderz.web;
 
 import com.codeup.ryderz.data.*;
 import com.codeup.ryderz.services.S3Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,7 @@ public class UsersController {
     private PasswordEncoder passwordEncoder;
     private S3Service s3Service;
     private FriendRequestRepository friendRequestRepository;
+
 
     public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder, S3Service s3Service, FriendRequestRepository friendRequestRepository) {
         this.userRepository = userRepository;
@@ -59,6 +63,7 @@ public class UsersController {
             return userRepository.findByEmail("temp@temp.com");
         }
     }
+
     @GetMapping
     private List<User> getUser() {
         return userRepository.findAll();
@@ -138,14 +143,51 @@ public class UsersController {
         System.out.println("changing password to " + newPassword);
     }
 
+    @PutMapping("/updateAccountPassword")
+    private ResponseEntity<String> updateUsersPassword(@RequestBody String passwords, OAuth2Authentication auth) {
+        User user = userRepository.findByEmail(auth.getName());
+        String [] passwordsArray = passwords.split(",");
+        String oldPassword = passwordsArray[0];
+        String newPassword = passwordsArray[1];
+
+        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+            System.out.println("updating pass");
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            return new ResponseEntity<>("password updated", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("password didnt match", HttpStatus.ACCEPTED);
+    }
+
     @DeleteMapping("{userId}")
-    private void deleteUser(@PathVariable Long userId) {System.out.println("ready to delete User." + userId);
+    private void deleteUser(@PathVariable Long userId) {
+        System.out.println("ready to delete User." + userId);
+    }
+
+
+    @DeleteMapping("/deleteAccount/{userId}")
+    private ResponseEntity<String> deleteUserAccount(@RequestBody String password, @PathVariable Long userId) {
+        User user = userRepository.getById(userId);
+
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            System.out.println("passwords match");
+            System.out.println("user deleted");
+            return new ResponseEntity<>("user deleted", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Password does not match", HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/friendRequest/{user2Id}")
-    private void addFriendRequest(@PathVariable Long user2Id, OAuth2Authentication auth){
-      User sender = userRepository.findByEmail(auth.getName());
-      User receiver = userRepository.getById(user2Id);
+    private void addFriendRequest(@PathVariable Long user2Id, OAuth2Authentication auth) {
+        User sender = userRepository.findByEmail(auth.getName());
+        User receiver = userRepository.getById(user2Id);
+    }
+
+    @PostMapping("/friends/{user2Id}")
+    private void addFriend(@PathVariable Long user2Id, OAuth2Authentication auth){
+        User sender = userRepository.findByEmail(auth.getName());
+        User receiver = userRepository.getById(user2Id);
 
       // TODO: check to see if request already exist
 
