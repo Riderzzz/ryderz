@@ -477,8 +477,11 @@ function formatDate(d) {
     return splitDate[0] + " " + splitDate[1] + " " + splitDate[2] + ", " + splitDate[3];
 }
 
-function joinBtnIfLoggedInAndNotJoined(usersJoined, eventId) {
+function joinBtnIfLoggedInAndNotJoined(usersJoined, eventId, creator) {
     // console.log(eventId)
+    if (creator.email === userEmail()) {
+        return ``
+    }
 
     for (const user of usersJoined) {
         if (user.email === userEmail()) {
@@ -622,7 +625,7 @@ function newsfeedRecent(props) {
 function recentEventCard(event) {
     return `
             <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}" style='background-image: url("https://picsum.photos/id/${event.id + 1000}/200/100"); background-repeat: no-repeat'>
-              <img src="https://picsum.photos/id/${event.id + 1000}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
+              <img src="https://picsum.photos/id/${event.id + 1010}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
               <div class="card-body d-flex justify-content-between p-2">
                   <div>
                     <h6>${event.titleOfEvent}</h6>
@@ -714,7 +717,7 @@ function eventCard(event) {
 						</a>
 						<div class="event-header-right">
 						    <div class="join-leave-container-${event.id} me-2">
-							    ${joinBtnIfLoggedInAndNotJoined(event.usersId, event.id)}
+							    ${joinBtnIfLoggedInAndNotJoined(event.usersId, event.id, event.eventCreator)}
                             </div>
                         
 						<div class="header-right">	
@@ -735,8 +738,8 @@ function eventCard(event) {
 									
                                     <div class="content-and-map row my-3">
                                         <div class="col-12 col-lg-6">
-                                            <div class="starting-address mb-1">Starting: lat-${event.startingLatitude}Long-${event.startingLongitude}</div>
-                                            <div class="ending-address mb-1">Ending: lat-${event.endingLatitude}Long-${event.endingLongitude}</div>
+                                            <div class="starting-address mb-1">Starting: ${event.origin}</div>
+                                            <div class="ending-address mb-1">Ending: ${event.destination}</div>
                                             <div class="distance mb-1">Miles:(api data)</div>
                                             <p class="card-text" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
                                         </div>

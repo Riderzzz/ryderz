@@ -1,0 +1,50 @@
+.dashboard {
+    width: 75%;
+    color: white;
+    height: 80vh;
+}
+
+.tabs {
+    background-color: #282828;
+    padding: 0;
+    border-radius: 10px 0 0 10px;
+}
+
+.setting-tab {
+    background-color: inherit;
+    color: white;
+    border-color: rgba(255, 255, 255, 0.25);
+
+    cursor: pointer;
+}
+
+.setting-tab-highlighted {
+    background-color: #709775;
+}
+
+.contentForm {
+    background-color: #181818;
+    border-radius: 0 10px 10px 0;
+}
+
+.profileForm {
+    font-size: 1em;
+}
+
+.background {
+    height: 100vh;
+    background-color: #141414;
+    padding: 1em;
+}
+
+.settingForm {
+    background-color: #404040;
+    color: white;
+}
+
+.settingForm:focus {
+    border-color: #709775;
+    background-color: #404040;
+    color: white;
+    box-shadow: 0 0 0 .1em #709775;
+}

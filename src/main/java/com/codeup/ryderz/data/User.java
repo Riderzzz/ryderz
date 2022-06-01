@@ -104,14 +104,19 @@ public class User {
     @JsonIgnoreProperties("author")
     private Collection<Comments> comments;
 
+//
+//    @OneToMany()
+//    @JoinColumn(name = "receiver")
+//    private Collection<FriendRequest> friendsRequest;
+
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
             targetEntity = User.class)
     @JoinTable(
             name="friends",
-            joinColumns = {@JoinColumn(name = "user1_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name="user2_id", nullable = false, updatable = false)},
+            joinColumns = {@JoinColumn(name = "user_one_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="user_two_id", nullable = false, updatable = false)},
             foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )

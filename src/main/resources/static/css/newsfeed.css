@@ -173,6 +173,11 @@
     color: black;
 }
 
+.btn-red {
+    background-color: red;
+    color: black;
+}
+
 .bt {
     border-top: 1px rgba(255, 255, 255, 0.25) solid;
 }
@@ -193,5 +198,35 @@
 .recent-group-card:hover {
     opacity: .7;
     cursor: pointer;
+}
+
+.sidebar-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.sidebar-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.posts-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.posts-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.recent-events::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.recent-events {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
