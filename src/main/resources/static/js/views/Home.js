@@ -9,7 +9,7 @@ export default function Home(props) {
                 <div class="row">
                     <div class="col-7"></div>
                     <div class="col-5 mt-4">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad cupiditate dicta fugit libero magni minus qui recusandae rem rerum tenetur?</p>
+                        <p>Come join our community of like-minded riders and go on an adventure today!</p>
                         <div>
                             ${loginAndRegister()}
                         </div>    

@@ -8,7 +8,6 @@ export default function Discover(props) {
     <head>
         <meta charset="UTF-8"/>
         <title>Discover</title>
-        <link rel="stylesheet" href="css/discover.css">
     </head>
     <body>
     <div class="container">
@@ -67,7 +66,7 @@ export default function Discover(props) {
 					<img src="${group.groupPhotoUrl !== null ? group.groupPhotoUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
                     <h5 class="title">${group.name}</h5>
                     <p>Location: ${group.location}</p>		
-                    <p>Location: ${group.users.length}</p>		
+                    <p>Members: ${group.users.length}</p>		
 					</a>
                 </div>
 `
