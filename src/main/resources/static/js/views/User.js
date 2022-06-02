@@ -13,7 +13,7 @@ export default function User(props) {
 					<div class="user-image d-flex flex-column my-3 align-items-center">
 						<img class="shadow-profile-picture rounded-circle"
 							 src="${props.user.userPhotoUrl}"
-							 style="width: 150px; height: 150px;" alt="">
+							 style="width: 150px; height: 150px; aspect-ratio: 1/1" alt="">
 						<div class="my-2"><h4>${props.user.username}</h4></div>
 					</div>
 					<div>
@@ -78,6 +78,7 @@ export function UserEvent() {
 	deleteAccountListener()
 
 	editPasswordListener();
+	editImages();
 	editProfileBtnListener();
 }
 
@@ -86,6 +87,22 @@ function accountSettingsHtml(props) {
 	let html =
 		`
 			<form class="m-3">
+				<div class="row profileForm my-3">
+					<div class="">
+						<div>Avatar</div>
+						<div class="input-group">
+							<input type="file" class="form-control" id="userAvatarFile" aria-describedby="userAvatarFilebtn" aria-label="Upload">
+							<button class="btn btn-outline-secondary edit-images-btn btn-lightG" data-id="${props.user.id}" type="button" id="userAvatarFilebtn">Update avatar</button>
+						</div>
+					</div>
+					<div class="">
+						<div>Header</div>
+						<div class="input-group">
+							<input type="file" class="form-control" id="userHeaderFile" aria-describedby="userHeaderFilebtn" aria-label="Upload">
+							<button class="btn btn-outline-secondary btn-lightG" data-id="${props.user.id}" type="button" id="userHeaderFilebtn">Button</button>
+						</div>
+					</div>
+				</div>
 				<div class="row profileForm my-3">
 					<div class="col">
 						<label for="usernameForm">Username</label>
@@ -166,6 +183,33 @@ function removeAccountSettingsHtml(props) {
 		`
 
 	return html;
+}
+
+function editImages() {
+	$('.edit-images-btn').click(function (){
+		const userId = $(this).data('id');
+		const file = document.getElementById("userAvatarFile");
+		let formData = new FormData();
+		formData.append("file", file.files[0]);
+
+		const requestObject = {
+			method: "POST",
+			body: formData
+		}
+
+		fetch(`http://localhost:8081/api/users/changeAvatar/${userId}`, requestObject)
+			.then(res => {
+				console.log(res.status)
+				if (res.status !== 200) {
+					console.log(res);
+				}
+			})
+			.catch(error => {
+				console.log(error);
+				// warningPTag.text("Error submitting changes!");
+				// warningPTag.css("color", "red");
+			}).finally(() => createView('/user'))
+	})
 }
 
 function deleteAccountListener() {

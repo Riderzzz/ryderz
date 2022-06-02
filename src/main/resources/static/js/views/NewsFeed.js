@@ -647,7 +647,7 @@ function recentGroupCard(group) {
 
     return `
             <div class="card card-dark-bg m-3 recent-group-card" data-id="${group.id}">
-              <img src="https://picsum.photos/id/${group.id + 100}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
+              <img src="${group.groupPhotoUrl !== null ? group.groupPhotoUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" class="card-img-top discoverItemImg" alt="..." style="border-radius: 10px 10px 0 0">
               <div class="card-body p-2">
                 <h5>${group.name}</h5>
                 <p class="card-text">${group.location}</p>
@@ -758,6 +758,7 @@ function eventCard(event) {
                                     </p>
 									<div class="d-flex justify-content-between align-items-center">
 									    <div class="d-flex">
+									        <a href="#" class="event text-white me-2" data-id="${event.id}">Event page</a>
 									        <a class="show-comments collapsed text-white me-2" data-bs-toggle="collapse" href="#event-${event.id}-collapseComments" role="button" aria-expanded="false" aria-controls="event-${event.id}-collapseComments">
                                                 Comments <i class="bi bi-chevron-up icon"></i>
                                             </a>
@@ -769,7 +770,7 @@ function eventCard(event) {
 									<div class="collapse" id="event-${event.id}-collapseComments">
 										<div class="input-group my-3">
 											<input type="text" id="comment-content-${event.id}" class="form-control" data-postId="${event.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${event.id}">
-											<button class="btn btn-outline-secondary event-comment-btn" data-id="${event.id}" type="button" id="button-addon-${event.id}">comment</button>
+											<button class="btn btn-outline-secondary event-comment-btn comment-btn" data-id="${event.id}" type="button" id="button-addon-${event.id}">comment</button>
 										</div>
 										<div class="event-${event.id}-comments">
 										${event.comments.reverse().map(comment =>
@@ -1156,8 +1157,8 @@ function newsfeedInitMap(eventId, origin, destination) {
             //pass the request to the route method
             directionsService.route(request, function (result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
-                    console.log(result);
-                    console.log(status);
+                    // console.log(result);
+                    // console.log(status);
 
                     //Get distance and time
                     // const output = document.querySelector('#output');

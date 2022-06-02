@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
@@ -209,6 +210,23 @@ public class UsersController {
 
         userRepository.save(user1);
         userRepository.save(user2);
+    }
+
+    @PostMapping("/changeAvatar/{userId}")
+    public ResponseEntity<String> uploadFile(@PathVariable Long userId, @RequestParam(value = "file") MultipartFile file) {
+//        Groups group = groupsRepository.findById(groupId).get();
+
+        User user = userRepository.getById(userId);
+//        delete previous image if exists
+        if (user.getProfilePicture() != null) {
+            String previousImgName = user.getProfilePicture();
+            s3Service.deleteFile(previousImgName);
+        }
+        System.out.println(file);
+        String fileName = s3Service.uploadFile(file);
+        user.setProfilePicture(fileName);
+        userRepository.save(user);
+        return new ResponseEntity<>(fileName, HttpStatus.OK);
     }
 
 }
