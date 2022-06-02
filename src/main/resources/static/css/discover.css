@@ -38,6 +38,52 @@
     color: black !important;
 }
 
+.discoverContainer {
+    background-color: #181818;
+    border-radius: 10px;
+    padding: 0px 1em;
+}
+
+.createEventBtn {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+.createGroupBtn {
+    background-color: #a1cca5;
+    color: black;
+}
+
+.createEventBtn:hover {
+    background-color: #4eb455;
+}
+
+.createGroupBtn:hover {
+    background-color: #4eb455;
+}
+
+.discoverTitle {
+    font-weight: bolder;
+    margin-top: 1em;
+    font-size: 1.5em;
+}
+
+.discoverLocation {
+    margin-top: 1em;
+}
+
+.eventDate {
+    text-align: end;
+    padding-right: 2em;
+    margin-bottom: 0px;
+}
+
+.groupMembers {
+    text-align: end;
+    padding-right: 2em;
+    margin-bottom: 0px;
+}
+
 .media-scroller {
     --_spacer: .5em;
     display: grid;
@@ -49,6 +95,21 @@
 
     overflow-x: auto;
     overscroll-behavior-inline: contain;
+}
+
+.media-scroller::-webkit-scrollbar-track {
+    background: #181818;
+}
+
+.media-scroller::-webkit-scrollbar-thumb {
+    background: #4eb455;
+}
+
+.media-element {
+    color: white;
+    padding: 1em;
+    background-color: #404040;
+    border-radius: 10px;
 }
 
 .snaps-inline {
@@ -81,7 +142,7 @@
 
 .discoverFeaturedEventImg {
     width: 100%;
-    aspect-ratio: auto;
+    aspect-ratio: 21/9;
 }
 
 .featuredSubTitle {
