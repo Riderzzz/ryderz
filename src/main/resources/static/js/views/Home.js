@@ -9,7 +9,7 @@ export default function Home(props) {
                 <div class="row">
                     <div class="col-7"></div>
                     <div class="col-5 mt-4">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad cupiditate dicta fugit libero magni minus qui recusandae rem rerum tenetur?</p>
+                        <p>Come join our community of like-minded riders and go on an adventure today!</p>
                         <div>
                             ${loginAndRegister()}
                         </div>    
@@ -20,6 +20,34 @@ export default function Home(props) {
             
             </div> 
         </main>
+        <div class="features-main d-flex ">
+            <h2 class="features-title justify-content-center">Features</h2>
+            <div class="features-card justify-content-space-around">
+                <div class="features">
+                Host/Join Clubs
+                </div>
+                <div class="features">
+                Create/View Motorcycle Routes
+                </div>
+                <div class="features">
+                Add/Message Friends
+                </div>
+            </div>
+        </div>
+        <div class="features-main d-flex ">
+            <h2 class="features-title justify-content-center">Features</h2>
+            <div class="features-card justify-content-space-around">
+                <div class="features">
+                Host/Join Clubs
+                </div>
+                <div class="features">
+                Create/View Motorcycle Routes
+                </div>
+                <div class="features">
+                Add/Message Friends
+                </div>
+            </div>
+        </div>
     `;
 }
 

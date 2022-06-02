@@ -17,7 +17,9 @@ export default function Navbar(props) {
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-				<div class="logo text-white order-2 order-lg-1">LogoPlaceHolder</div>
+				<div class="logo text-white order-2 order-lg-1">
+					<div class="logo-container"></div>
+				</div>
                 <div class="collapse navbar-collapse justify-content-end order-4 order-lg-2" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto align-items-center">
                         <li class="nav-item">
