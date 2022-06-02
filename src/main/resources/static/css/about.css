@@ -29,6 +29,7 @@
     line-height: 1.33;
     letter-spacing: .3px;
     margin-bottom: 31px;
+    margin-left: 11px;
 }
 
 .story__name {
@@ -195,14 +196,61 @@
 #hidden {
     visibility: hidden;
 }
-#week-1 {
+
+.second-about-section {
+    box-sizing: border-box;
 }
 
-#week-2 {
-
+.second-about-section, .second-about-section:before, .second-about-section:after {
+    box-sizing: inherit;
 }
 
-#week-3 {
+.column {
+    float: left;
+    width: 25%;
+    margin-bottom: 16px;
+    padding: 0 8px;
 }
-#week-4 {
+
+@media screen and (max-width: 650px) {
+    .column {
+        width: 100%;
+        display: block;
+    }
+}
+
+.about-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+
+.about-container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.about-card-title {
+    color: grey;
+}
+
+.about-card-button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.about-card-button:hover {
+    background-color: #555;
+}
+
+#testing {
+    background: url(../images/hector.jpg);
 }

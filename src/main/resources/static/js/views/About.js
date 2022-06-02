@@ -2,15 +2,15 @@
 export default function About(props) {
     return `
     <div class="main-card container first-card">
-        <div class="h1 story__name block_text story-title--desktop">
+        <div class="h1 story__name block_text story-title--desktop" style="text-align: center;">
         Our development Process
         </div>
         <div class="our-story-card d-flex row">
             <h2>Ryderz Capstone</h2>
             <div id="capstone-card" class="col-6">
-                <p id="week-1-text">.</p>
-                <p id="week-2-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi fugiat, impedit laudantium quibusdam quidem quisquam tempore. Alias aliquam delectus fugit laudantium soluta? Accusantium debitis dicta recusandae sed sit temporibus tenetur.</p>
-                <p id="week-3-text"></p>
+                <div>
+                Given 4 weeks our group was tasked with creating very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking to meet up for pre-planned routes.
+                </div>
             </div>
             <ul class="col-6 d-flex row weeks-card">
                 <li id="week-1" class="col-3 week-effects">
@@ -28,53 +28,93 @@ export default function About(props) {
             </ul>
         </div>
     </div>
-   
-<!--../../images/password-icon.png-->
+   <div class="h1 story__name block_text story-title--desktop" style="text-align: center;">
+        About Us
+   </div>
+<!----about us cards----->
+<div class="second-about-section">
+   <div class="row">
+  <div class="column">
+    <div class="about-card">
+      <img src="../../images/arrow.jpg" alt="Jane" style="width:100%">
+      <div class="container about-container">
+        <h2>Jane Doe</h2>
+        <p class="about-card-title">Full-Stack Developer</p>
+        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+        <p>example@example.com</p>
+        <p><button class="about-card-button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="column">
+    <div class="about-card about-container">
+      <img src="../../images/hector.jpg" alt="Hector" style="width:100%; height:100%">
+      <div class="container">
+        <h2>Hector Mejia</h2>
+        <p class="about-card-title">Full-Stack Developer</p>
+        <p>Interested in working with some enterprise code!</p>
+        <p>mejiah6060@gmail.com</p>
+        <p><button class="about-card-button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="column">
+    <div class="about-card">
+<!--    <div id="testing" style="width:100%"> -->
+<!--    </div>-->
+      <img src="../../images/arrow.jpg" alt="John" style="width:100%">
+      <div class="container about-container">
+        <h2>John Doe</h2>
+        <p class="about-card-title">Full-Stack Developer</p>
+        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+        <p>example@example.com</p>
+        <p><button class="about-card-button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="column">
+    <div class="about-card">
+      <img src="../../images/arrow.jpg" alt="Jane" style="width:100%">
+      <div class="container about-container">
+        <h2>Jane Doe</h2>
+        <p class="about-card-title">Full-Stack Developer</p>
+        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+        <p>example@example.com</p>
+        <p><button class="about-card-button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
     `;
 }
-
-// function whichWeek() {
-//     if($(this).slice(-1) === 1 ) {
-//         return `<div>
-//                     week 1 we set in place the backend using a skeleton of the rest blog.
-//                 </div>`
-//     }
-// }
-// function whichWeek()
-// {
     export function capstoneText() {
         $('#week-1').hover(
             function() {
                 $('#capstone-card').html("Week 1 we used a skeleton of our rest blog to set up the foundation of our backend. Some of the methodology used includes SpringBoot for a relational database, javascript/jQuery, Oauth, ");
             }, function() {
-                $('#capstone-card').html("Given 4 weeks our group was tasked with creating our very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking looking to meet up for pre-planned routes.");
+                $('#capstone-card').html("Given 4 weeks our group was tasked with creating our very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking to meet up for pre-planned routes.");
             }
         );$('#week-2').hover(
             function() {
                 $('#capstone-card').html("Week 2 most of the time was spent setting up group events allowing users to log into their own accounts to create public group ride events");
             }, function() {
-                $('#capstone-card').html("Given 4 weeks our group was tasked with creating our very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking looking to meet up for pre-planned routes.");
+                $('#capstone-card').html("Given 4 weeks our group was tasked with creating our very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking to meet up for pre-planned routes.");
             }
         );$('#week-3').hover(
             function() {
                 $('#capstone-card').html("Week 3");
             }, function() {
-                $('#capstone-card').html("Given 4 weeks our group was tasked with creating very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking looking to meet up for pre-planned routes.");
+                $('#capstone-card').html("Given 4 weeks our group was tasked with creating very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking to meet up for pre-planned routes.");
             }
         );$('#week-4').hover(
             function() {
                 $('#capstone-card').html("Week 4");
             }, function() {
-                $('#capstone-card').html("Given 4 weeks our group was tasked with creating very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking looking to meet up for pre-planned routes.");
+                $('#capstone-card').html("Given 4 weeks our group was tasked with creating very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking to meet up for pre-planned routes.");
             }
         );
     }
-//  function showText() {
-// if($('#week-1').slice(-1) === 1) {
-//
-//     return `<div>
-//                 Week 1 we used the rest blogs skeleton to set up
-//             </div>`
-// }
-//      }
-// }
