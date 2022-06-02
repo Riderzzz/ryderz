@@ -23,13 +23,15 @@ public class UsersController {
     private PasswordEncoder passwordEncoder;
     private S3Service s3Service;
     private FriendRequestRepository friendRequestRepository;
+    private FriendsRepository friendsRepository;
 
 
-    public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder, S3Service s3Service, FriendRequestRepository friendRequestRepository) {
+    public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder, S3Service s3Service, FriendRequestRepository friendRequestRepository, FriendsRepository friendsRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.s3Service = s3Service;
         this.friendRequestRepository = friendRequestRepository;
+        this.friendsRepository = friendsRepository;
     }
 
     @GetMapping("me")
@@ -91,6 +93,16 @@ public class UsersController {
             User currentUser = (User) listOfFriends.toArray()[i];
             String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture());
             currentUser.setUserPhotoUrl(friendsPhotoUrl);
+        }
+
+        for (int i = 0; i < usersInfo.getPosts().size(); i++) {
+            Post currentPost = (Post) usersInfo.getPosts().toArray()[i];
+            Collection<Comments> postComments = currentPost.getComments();
+            for (int j = 0; j <postComments.size() ; j++) {
+                Comments comment = (Comments) postComments.toArray()[j];
+                String commentAuthorUrl = s3Service.getSignedURL(comment.getAuthor().getProfilePicture());
+                comment.getAuthor().setUserPhotoUrl(commentAuthorUrl);
+            }
         }
 
         Collection<Groups> listOfGroups = usersInfo.getGroupsJoined();
@@ -178,25 +190,27 @@ public class UsersController {
         return new ResponseEntity<>("Password does not match", HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/friendRequest/{user2Id}")
-    private void addFriendRequest(@PathVariable Long user2Id, OAuth2Authentication auth) {
-        User sender = userRepository.findByEmail(auth.getName());
-        User receiver = userRepository.getById(user2Id);
+    @GetMapping("/friendRequest")
+    private Collection<FriendRequest> getFriendsRequests(OAuth2Authentication auth) {
+        User receiver = userRepository.findByEmail(auth.getName());
+        Collection<FriendRequest> getAllUsersFriendsRequests = receiver.getFriendsRequest();
+        return getAllUsersFriendsRequests;
+
     }
 
     @PostMapping("/friends/{user2Id}")
-    private void addFriend(@PathVariable Long user2Id, OAuth2Authentication auth){
+    private void sendFriendRequest(@PathVariable Long user2Id, OAuth2Authentication auth){
         User sender = userRepository.findByEmail(auth.getName());
         User receiver = userRepository.getById(user2Id);
 
-      // TODO: check to see if request already exist
+        // TODO: check to see if request already exist
 
-      FriendRequest request = new FriendRequest();
+        FriendRequest request = new FriendRequest();
 
-      request.setSender(sender);
-      request.setReceiver(receiver);
+        request.setSender(sender);
+        request.setReceiver(receiver);
 
-      friendRequestRepository.save(request);
+        friendRequestRepository.save(request);
     }
 
     @DeleteMapping("{user1Id}/friends/{user2Id}")
@@ -209,6 +223,28 @@ public class UsersController {
 
         userRepository.save(user1);
         userRepository.save(user2);
+    }
+
+    @PostMapping("/addfriend/{addFriend}")
+    private void addFriend(@PathVariable Long addFriend, OAuth2Authentication auth){
+        User receiver = userRepository.findByEmail(auth.getName());
+        User sender = userRepository.getById(addFriend);
+
+        Friends newFriend = new Friends();
+
+        newFriend.setUserOne(sender);
+        newFriend.setUserTwo(receiver);
+
+        friendsRepository.save(newFriend);
+
+        Friends secondFriend = new Friends();
+
+        secondFriend.setUserTwo(sender);
+        secondFriend.setUserOne(receiver);
+
+        friendsRepository.save(secondFriend);
+
+        friendRequestRepository.deleteFriendsRequest(sender.getId(), receiver.getId());
     }
 
 }

@@ -84,6 +84,8 @@ export default function Navbar(props) {
 							<li><a class="dropdown-item" href="/user" data-link="User Info">Setting</a></li>
 							<li><hr class="dropdown-divider m-0"></li>
 							<li><a class="dropdown-item" href="/logout" data-link>Logout</a></li>
+							<li><hr class="dropdown-divider m-0"></li>
+							<li><a class="dropdown-item" href="/request" data-link="Request">Requests</a></li>
 						</ul>
 					</div>
 				</div>`
