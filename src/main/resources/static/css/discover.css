@@ -1,29 +1,49 @@
-.groupDiv, .eventDiv {
+.groupDiv {
     text-decoration: none;
-    color: black;
+    color: black !important;
 }
 
-.groupDiv, .eventDiv :hover {
+.groupDiv:hover {
     cursor: pointer;
     color: black !important;
 }
 
-.groupDiv, .eventDiv :visited {
+.groupDiv:visited {
     cursor: pointer;
-    color: black;
+    color: black !important;
 }
 
-.groupDiv, .eventDiv :active {
+.groupDiv:active {
     cursor: pointer;
-    color: black;
+    color: black !important;
+}
+
+.eventDiv {
+    text-decoration: none;
+    color: black !important;
+}
+
+.eventDiv:hover {
+    cursor: pointer;
+    color: black !important;
+}
+
+.eventDiv:visited {
+    cursor: pointer;
+    color: black !important;
+}
+
+.eventDiv:active {
+    cursor: pointer;
+    color: black !important;
 }
 
 .media-scroller {
-    --_spacer: var(--size-3);
+    --_spacer: .5em;
     display: grid;
-    gap: var(--_spacer);
+    gap: 1em;
     grid-auto-flow: column;
-    grid-auto-columns: 21%;
+    grid-auto-columns: 100%;
 
     padding: 0 var(--_spacer) var(--_spacer);
 
@@ -37,12 +57,13 @@
 }
 
 .section-title {
-    padding-inline-start: var(--size-6);
-    margin-block: var(--size-9) var(--size-3);
+    padding-inline-start: 6em;
+    margin-block: 9em 3em;
 }
 
-.media-element > img {
+.discoverItemImg {
     inline-size: 100%;
+    width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
 }
@@ -59,13 +80,100 @@
 }
 
 .discoverFeaturedEventImg {
-    aspect-ratio: 21/9;
+    width: 100%;
+    aspect-ratio: auto;
 }
 
 .featuredSubTitle {
     color: white;
+    font-size: 1.5em;
 }
 
 .featuredSubDetails {
     color: white;
+    font-size: .75em;
 }
+
+/*// Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    .media-scroller {
+        --_spacer: .5em;
+        display: grid;
+        gap: 1em;
+        grid-auto-flow: column;
+        grid-auto-columns: 100%;
+
+        padding: 0 var(--_spacer) var(--_spacer);
+
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+    }
+
+    .featuredSubTitle {
+        color: white;
+        font-size: 1.5em;
+    }
+
+    .featuredSubDetails {
+        color: white;
+        font-size: .75em;
+    }
+}
+
+/*// Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .media-scroller {
+        --_spacer: .5em;
+        display: grid;
+        gap: 1em;
+        grid-auto-flow: column;
+        grid-auto-columns: 50%;
+
+        padding: 0 var(--_spacer) var(--_spacer);
+
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+    }
+
+    .featuredSubTitle {
+        color: white;
+        font-size: 2em;
+    }
+
+    .featuredSubDetails {
+        color: white;
+        font-size: 1em;
+    }
+}
+
+/*// Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .media-scroller {
+        --_spacer: .5em;
+        display: grid;
+        gap: 1em;
+        grid-auto-flow: column;
+        grid-auto-columns: 30%;
+
+        padding: 0 var(--_spacer) var(--_spacer);
+
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+    }
+
+    .featuredSubTitle {
+        color: white;
+        font-size: 4em;
+    }
+
+    .featuredSubDetails {
+        color: white;
+        font-size: 1.5em;
+    }
+}
+
+/*// X-Large devices (large desktops, 1200px and up)*/
+/*@media (min-width: 1200px) { ... }*/
+
+/*// XX-Large devices (larger desktops, 1400px and up)*/
+/*@media (min-width: 1400px) { ... }*/

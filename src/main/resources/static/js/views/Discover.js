@@ -38,7 +38,7 @@ export default function Discover(props) {
 					`
 				<div class="media-element">
 					<a class="eventDiv" data-id="${event.id}">
-					<img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" alt="">
+					<img class="discoverItemImg" src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" alt="">
                     <h5 class="title">${event.titleOfEvent}</h5>
                     <p>Location: ${event.origin}</p>	
                     <p>Date: ${new Date(event.eventDate).toLocaleDateString()}</p>			
@@ -63,7 +63,7 @@ export default function Discover(props) {
                         `
 				<div class="media-element">
 					<a class="groupDiv" data-id="${group.id}">
-					<img src="${group.groupPhotoUrl !== null ? group.groupPhotoUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
+					<img class="discoverItemImg" src="${group.groupPhotoUrl !== null ? group.groupPhotoUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
                     <h5 class="title">${group.name}</h5>
                     <p>Location: ${group.location}</p>		
                     <p>Members: ${group.users.length}</p>		
