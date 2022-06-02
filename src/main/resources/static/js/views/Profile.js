@@ -155,7 +155,7 @@ function addFriendButtonListener() {
             headers: getHeaders(),
         }
 
-        fetch(`${BASE_URI}/friendsRequest/${id}`, request)
+        fetch(`${BASE_URI}/friends/${id}`, request)
             .then(res => {
                 console.log(res.status);
                 createView(`/profile`, id)
@@ -247,7 +247,7 @@ function refreshComments(id) {
             }
         });
 
-        console.log(state)
+
         commentSection.html(displayComments(state));
     }).catch(error => {
         console.log(error);

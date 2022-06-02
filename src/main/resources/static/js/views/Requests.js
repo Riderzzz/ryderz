@@ -5,51 +5,65 @@ import {getHeaders} from "../auth.js";
 const BASE_URI = 'http://localhost:8081/api/users';
 
 
-export default function Requests(props){
+export default function Requests(props) {
+    console.log(props)
+    console.log(props.request[0].sender)
+    //language=html
     return `
-    <!DOCTYPE html>
-    <html lang="html">
+        <!DOCTYPE html>
+        <html lang="html">
         <head>
             <meta charset="UTF-8"/>
-            <title>${props.user.username}</title>
+            <title>requests</title>
         </head>
         <body>
-            <div class="show-requests-${props.user.id} ">
-               ${getNewFriendsRequests(props.user.id)}
-            </div>
+        <h1>This is your friends requests</h1>
+        <div class="d-flex row">
+            ${showAllRequests(props)}
+        </div>
+
         </body>
-    </html>`
+        </html>`
 }
 
-export function showRequests(){
-
+export function showRequests() {
+    addFriend()
 }
 
-function getNewFriendsRequests(id){
-    let  populateRequests = $(".show-requests-" + id)
-
-    const requestObject = {
-        method: "GET",
-        headers: getHeaders()
-    }
-
-    fetch(`${BASE_URI}/request/${id}`, requestObject)
-       .then(res =>{
-          populateRequests.html( showFriendRequests(res));
-           createView("/request", id)
-       }).catch(e =>{
-        console.log(e)
-        createView("/request", id)
-    })
-}
-function showFriendRequests(res) {
-let html =`
-<div>
-    <div>
-        <div>${props.profile.username}</div>
-        <div>${props.profile.id}</div>
-    </div>
-</div>
-`
+function showAllRequests(props) {
+    let html = `
+       ${props.request.map(m => `
+         <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                         <h5 class="card-title">${m.sender.username}</h5>
+                         <div class="d-flex justify-content-end">
+                        <button href="#" class="btn-primary accept-friend" data-id="${m.sender.id}">accept</button>
+                        <button href="#" class="btn-danger decline-friend">decline</button>
+                        </div>
+                    </div>
+                </div>
+       `).join("")}
+       `
     return html;
+}
+
+function addFriend() {
+    $(".accept-friend").click(function () {
+        const id = $(this).data("id");
+
+        const request = {
+            method: "POST",
+            headers: getHeaders(),
+        }
+
+        fetch(`${BASE_URI}/addfriend/${id}`, request)
+            .then(res => {
+                console.log(res.status);
+                createView(`/request`)
+            }).catch(error => {
+            console.log(error);
+            createView(`/request`);
+        });
+
+    })
 }

@@ -18,15 +18,12 @@ public class Friends {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   @OneToOne(cascade = CascadeType.ALL)
+   @ManyToOne
     @JoinColumn(name = "user_one_id", referencedColumnName = "id")
     User userOne;
 
-   @OneToOne(cascade = CascadeType.ALL)
+   @ManyToOne
     @JoinColumn(name = "user_two_id", referencedColumnName = "id")
     User UserTwo;
-
-
-
 
 }
