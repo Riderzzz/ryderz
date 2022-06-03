@@ -8,7 +8,6 @@ import {getHeaders} from "./auth.js";
  * @param URI
  */
 export default function createView(URI, Id) {
-    console.log(Id)
     let route = router(URI, Id);
 
     // Store the title because the loading screen render overwrites it.
@@ -32,6 +31,7 @@ export default function createView(URI, Id) {
         // document.title = currentTitle;
         // Add the current page to the history stack
         history.pushState({...props, lastUri: route.uri}, null, route.uri)
+        localStorage.setItem("Id", Id);
         render(props, route);
     });
 }
@@ -40,7 +40,9 @@ export default function createView(URI, Id) {
 window.addEventListener('popstate', (e) => {
     if (e?.state?.lastUri) {
         console.log(`Back to ${e.state.lastUri}!`)
+        const splitURI = e.state.lastUri.split("/")
+        const Id = splitURI[2];
         const {lastUri, ...props} = e.state
-        render(props, router(lastUri))
+        render(props, router("/" + splitURI[1], Id));
     }
 });
