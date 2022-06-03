@@ -133,5 +133,10 @@ body {
     width: 15%;
 }
 
+.group-img-profile{
+    display: flex;
+    justify-content: center;
+}
+
 
 
