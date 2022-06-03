@@ -246,3 +246,11 @@
     box-shadow: 0 0 0 .1em #709775;
 }
 
+#searchedUsersContainer {
+
+}
+
+.transparentBg {
+    background-color: transparent;
+}
+

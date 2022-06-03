@@ -6,6 +6,7 @@ import {chatBoxHtml, selectFriendsTabListener, sendMsgBtn, sendMsgEnter, toggleC
 const COMMENT_URI = "http://localhost:8081/api/comments";
 const POST_URI = "http://localhost:8081/api/posts";
 const EVENT_URI = "http://localhost:8081/api/events";
+const USER_URI = "http://localhost:8081/api/users";
 
 export let editPostId;
 export let editPostTitle;
@@ -96,31 +97,41 @@ export function NewsFeedEvents() {
 
     newsfeedInitAllMaps()
 }
+function userSearchListener() {
+    $('.userSearched').click(function (){
+        const userId = $(this).data('id')
+        console.log('clicked on user with id of: ' + userId)
+        createView("/profile", `${userId}`);
+    })
+}
+
+function searchedUsersHtml(users) {
+    //language=html
+    console.log(users)
+    let html = ''
+
+    users.map(user => {html += `<li><a class="list-group-item userSearched" data-id="${user.id}" href="#">${user.username}</a></li>`}).join("")
+
+    return html
+}
 
 function navSearchListener() {
     $('.nav-search').keypress(function (event){
         var keycode = event.keyCode
         if(keycode == '13'){
             event.preventDefault()
-            let searchedString = $(this).val().toLowerCase()
-            console.log('Searching for: ' + searchedString)
-        }
-        let searchedString = $(this).val().toLowerCase()
-        //
-        //
-        // for (let prop of sortedProps) {
-        //     if (prop.type === 'post'){
-        //         if (prop.title.toLowerCase().includes(searchedString)) {
-        //             console.log(prop.title)
-        //         }
-        //     }
-        //     if (prop.type === 'event') {
-        //         if (prop.titleOfEvent.toLowerCase().includes(searchedString)) {
-        //             console.log(prop.titleOfEvent)
-        //         }
-        //     }
-        // }
 
+            let searchedString = $(this).val().toLowerCase()
+            console.log('searched: ' + searchedString)
+            if (searchedString.length > 0) {
+                fetch(`${USER_URI}/getUsersByUsername/${searchedString}`).then(response => {
+                    return response.json()
+                }).then(data => {
+                    $('#searchedUsersContainer').html(searchedUsersHtml(data))
+                    userSearchListener()
+                })
+            }
+        }
     })
 }
 

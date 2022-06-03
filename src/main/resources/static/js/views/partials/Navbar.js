@@ -7,7 +7,6 @@ export default function Navbar(props) {
 	if (props != null) {
 		console.log(props);
 	}
-	// console.log(data)
 	// language=HTML
 	let html = `
         <nav class="navbar navbar-expand-lg navbar-dark navbar-dark-bg">
@@ -50,9 +49,11 @@ export default function Navbar(props) {
                 <a class="nav-link" href="/logout" data-link>Logout</a>
             </li>
 			<li class="nav-item d-none d-lg-block">
-				<form class="d-flex">
-					<input class="form-control me-2 nav-search" type="text" placeholder="Search">
-				</form>
+				<div class="dropdown">
+					<input class="form-control me-2 nav-search dropdown-toggle settingForm" type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search">
+					<ul class="dropdown-menu w-100 transparentBg" id="searchedUsersContainer" aria-labelledby="dropdownMenuButton1">
+					</ul>
+				</div>
 			</li>
 			`;
 	} else {
