@@ -66,3 +66,48 @@
 #to {
     width: 100%;
 }
+
+.eventCommentCollapseBtn {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+.eventCommentCollapseBtn:hover {
+    background-color: #4eb455;
+}
+
+.comment-btn {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+.comment-btn:hover {
+    background-color: #4eb455;
+}
+
+#cancelEdits {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+#cancelEdits:hover {
+    background-color: #4eb455;
+}
+
+#submitEditedEventBtn {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+#submitEditedEventBtn:hover {
+    background-color: #4eb455;
+}
+
+.editEventBtn {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+.editEventBtn:hover {
+    background-color: #4eb455;
+}

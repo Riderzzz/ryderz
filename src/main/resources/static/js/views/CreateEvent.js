@@ -11,31 +11,30 @@ export default function CreateEvent(props) {
     </head>
     <body>
     <div class="container">
-        <div class="row mt-4">
-            <h1>Create Event</h1>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+        <div class="row justify-content-center my-4">
+            <div class="col-md-6 createEventForm">
+                <h1>Create Event</h1>
                 <form>
                     <label for="newEventTitle">Title: <span
                             id="event-title"></span></label><br>
-                    <input class="form-control" type="text" id="newEventTitle" name="newEventTitle">
+                    <input class="settingForm form-control" type="text" id="newEventTitle" name="newEventTitle">
 
 
                     <label for="newEventDescription" class="mt-2">Event Description<span
                             id="group-bio"></span></label><br>
-                    <textarea class="form-control mb-2" id="newEventDescription"
+                    <textarea class="settingForm form-control mb-2" id="newEventDescription"
                               name="newEventDescription"></textarea>
 
                     <label for="newEventLocation">Location: <span
                             id="event-location"></span></label><br>
-                    <input class="form-control" type="text" id="newEventLocation" name="newEventLocation">
+                    <input class="settingForm form-control" type="text" id="newEventLocation" name="newEventLocation">
 
-                    <label for="eventDate">Event Date
-                        <input type="datetime-local" id="eventDate" name="eventDate">
+                    <label class="mt-4" for="eventDate">Event Date & Time
+                        <input class="settingForm form-control" type="datetime-local" id="eventDate" name="eventDate">
                     </label>
 
-                    <div class="mb-3">
+                    <div class="my-3">
+						<h3>Choose Categories</h3>
                         ${props.categories.map(cat =>
                                 `
                                 <div class="form-check form-check-inline">
@@ -48,19 +47,19 @@ export default function CreateEvent(props) {
 
 					<label for="singleLocation">Single Location Event</label>
 					<input type="checkbox" id="singleLocation"><br>
-                    <label id="originLocation" for="origin">Origin</label>
-                    <input type="text" id="from" name="origin"><br>
+                    <label class="mt-4" id="originLocation" for="origin">Origin</label>
+                    <input class="settingForm form-control" type="text" id="from" name="origin"><br>
 
                     <label id="labelForDestination" for="destination">Destination</label>
-                    <input type="text" id="to" name="destination">
+                    <input class="settingForm form-control" type="text" id="to" name="destination">
 
                     <p id="character-warning-on-submit"></p>
-                    <button id="createRoute" class="btn btn-dark" type="button">Show Route</button>
-                    <button class="backToDiscover btn btn-dark">Back to discover</button>
-                    <input id="newEventBtn" class="btn btn-dark" type="button" value="Submit">
+                    <button id="createRoute" class="btn" type="button">Show Route</button>
+                    <button class="backToDiscover btn">Back to discover</button>
+                    <input id="newEventBtn" class="btn settingForm" type="button" value="Submit">
                 </form>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 createEventMapContainer">
                 <div id="createEventMap"></div>
             </div>
         </div>
