@@ -434,14 +434,65 @@ function showPostsOnly(props) {
     return html;
 
 }
+function verifyUsersAboutProfile(props){
+    if(props.profile.email === userEmail()){
+        let html = `
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aboutModal">
+                    Edit about me
+          </button>
+        `
+        return html;
+    }
+
+}
 
 function showAboutPageOnly(props) {
     //language=HTML
     let html = `
-        <div class="card about-card shadow-light">
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+                <h5 class="card-title">About Me</h5>
+                <h6 class="card-subtitle mb-2 text-muted">${props.profile.username}</h6>
+                <p class="card-text">${aboutMe(props)}</p>
+                ${verifyUsersAboutProfile(props)}
+            </div>
+        </div>
+
+        <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit About Me</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <textarea style="width: 100%;height: 100%" maxlength="500" placeholder="Write About Yourself...."></textarea>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel Changes</button>
+                        <button type="button" class="btn btn-primary save-about-edit">Save changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
     `
     return html;
+}
+
+function aboutMeEditButtonListener(){
+    $(".save-about-edit").click(function (){
+
+    })
+
+
+}
+
+function aboutMe(props){
+    let bioText = props.profile.bio;
+
+    return bioText;
 }
 
 function showFriendsOnly(props) {

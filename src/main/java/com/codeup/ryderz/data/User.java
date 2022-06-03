@@ -54,6 +54,9 @@ public class User {
     @Column(name = "header_picture")
     public String headerPicture;
 
+    @Column(name = "bio")
+    public String bio;
+
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties({"author"})
     private Collection<Post> posts;
