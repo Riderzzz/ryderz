@@ -1,5 +1,9 @@
 .singleEventPageEditForm {
     display: none;
+    background-color: #4C4C4C;
+    padding: 1em;
+    border-radius: 10px;
+    color: white;
 }
 
 .deleteIcon {
@@ -25,4 +29,40 @@
     /* The height is 400 pixels */
     width: 100%;
     /* The width is the width of the web page */
+    border-radius: 10px;
+}
+
+.eventTitles {
+    background-color: #4C4C4C;
+    border-radius: 10px;
+    color: white;
+    margin-bottom: 2em;
+    padding: 1em;
+}
+
+.eventCol {
+    background-color: #4C4C4C;
+    border-radius: 10px;
+    color: white;
+    padding: 1em;
+}
+
+.eventComments {
+    background-color: #4C4C4C;
+    border-radius: 10px;
+    padding: 1em;
+    color: white;
+    margin-bottom: 1em;
+}
+
+.eventComment {
+    color: black;
+}
+
+#from {
+    width: 100%;
+}
+
+#to {
+    width: 100%;
 }

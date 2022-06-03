@@ -76,6 +76,13 @@ export function CreateEventEvents() {
 	backToDiscoverBtn();
 	initMap();
 	checkBoxSingleLocation();
+
+	flatpickr("#eventDate", {
+		minDate: "today",
+		maxDate: new Date().fp_incr(90),
+		enableTime: true,
+		dateFormat: "Y-m-d H:i",
+	});
 }
 
 let map;
