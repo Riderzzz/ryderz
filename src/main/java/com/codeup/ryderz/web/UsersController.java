@@ -205,25 +205,36 @@ public class UsersController {
         User receiver = userRepository.getById(user2Id);
 
         // TODO: check to see if request already exist
+        FriendRequest existingFriendRequest = friendRequestRepository.getFriendsRequest(sender.getId(), receiver.getId());
+        System.out.println(existingFriendRequest);
+        if(existingFriendRequest == null){
 
-        FriendRequest request = new FriendRequest();
+            FriendRequest request = new FriendRequest();
 
-        request.setSender(sender);
-        request.setReceiver(receiver);
+            request.setSender(sender);
+            request.setReceiver(receiver);
 
-        friendRequestRepository.save(request);
+            friendRequestRepository.save(request);
+        }
+
     }
 
-    @DeleteMapping("{user1Id}/friends/{user2Id}")
-    private void deleteFriend(@PathVariable User user1Id, @PathVariable Long user2Id){
-        User user1 = user1Id;
-        User user2 = userRepository.getById(user2Id);
+    @DeleteMapping("/friendRequest/{user2id}")
+    private void deleteFriendsRequest(@PathVariable Long user2id, OAuth2Authentication auth){
+        User sender = userRepository.findByEmail(auth.getName());
+        User receiver = userRepository.getById(user2id);
 
-        user1.getFriends().remove(user2);
-        user2.getFriends().remove(user1);
+        friendRequestRepository.deleteFriendsRequest(sender.getId(), receiver.getId());
+    }
 
-        userRepository.save(user1);
-        userRepository.save(user2);
+    @DeleteMapping("/friends/{user2Id}")
+    private void deleteFriend(@PathVariable Long user2Id, OAuth2Authentication auth){
+        User friend1 = userRepository.findByEmail(auth.getName());
+        User friend2 = userRepository.getById(user2Id);
+
+        friendsRepository.deleteFriends(friend1.getId(), friend2.getId());
+        friendsRepository.deleteFriends(friend2.getId(), friend1.getId());
+
     }
 
 

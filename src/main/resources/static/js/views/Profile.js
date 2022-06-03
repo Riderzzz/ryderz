@@ -1,5 +1,5 @@
 import createView from "../createView.js";
-import {getHeaders} from "../auth.js";
+import {getHeaders, userEmail} from "../auth.js";
 
 const BASE_URI = 'http://localhost:8081/api/users';
 const COMMENT_URI = "http://localhost:8081/api/comments";
@@ -55,17 +55,13 @@ export default function Profile(props) {
                 </div>
                 <!--Right Buttons-->
                 <div class="">
-                    
+
                     <button type="button" class="btn btn-light mr-2"><i
                             class="far fa-envelope mr-2"></i> Message
                     </button>
-                    
-                    <button type="button" 
-                            class="btn btn-light mr-2 add-friend-btn" 
-                            data-id="${props.profile.id}">Add Friend 
-                        <i class="fas fa-plus ml-2"></i>
-                    </button>
-                    
+
+                    ${addOrRemoveFriends(props)}
+
                 </div>
             </section>
 
@@ -74,9 +70,9 @@ export default function Profile(props) {
     <!-- Bottom gray portion of the page-->
     <section class="">
         <div class="container">
-            
+
             <div class="row bottom-profile">
-                
+
                 <div class="col-5 mb-4 mb-md-0">
                     <!--Groups joined on users profile-->
                     ${showUsersGroups(props)}
@@ -88,24 +84,24 @@ export default function Profile(props) {
                 <div class="col-7 mb-4 mb-md-0">
                     ${showUsersPosts(props)}
                 </div>
-                
+
             </div>
 
             <!-- show contents based on button pressed-->
             <div class="row posts-page">
-                
+
                 <div class="col">
                     ${showPostsOnly(props)}
                 </div>
-                
+
             </div>
 
             <div class="row about-page">
-                
+
                 <div class="col">
                     ${showAboutPageOnly(props)}
                 </div>
-                
+
             </div>
 
             <div class="row friends-page">
@@ -127,6 +123,8 @@ export function showFriendsProfile() {
     aboutButtonlistener();
     friendsButtonListener();
     addFriendButtonListener();
+    removeFriendButtonListener();
+    cancelFriendButtonListener();
     showProfilePage();
     commentsButtonListener();
     commentFromUserProfile();
@@ -157,6 +155,47 @@ function addFriendButtonListener() {
         }
 
         fetch(`${BASE_URI}/friends/${id}`, request)
+            .then(res => {
+                console.log(res.status);
+                createView(`/profile`, id)
+            }).catch(error => {
+            console.log(error);
+            createView(`/profile`, id);
+        });
+    });
+}
+
+function removeFriendButtonListener() {
+    $(".remove-friend-btn").click(i => {
+        const id = $(".remove-friend-btn").data(`id`);
+
+        const request = {
+            method: "DELETE",
+            headers: getHeaders(),
+        }
+
+        fetch(`${BASE_URI}/friends/${id}`, request)
+            .then(res => {
+                console.log(res.status);
+                createView(`/profile`, id)
+            }).catch(error => {
+            console.log(error);
+            createView(`/profile`, id);
+        });
+    });
+}
+
+function cancelFriendButtonListener() {
+    $(".cancel-friend-btn").click(i => {
+        const id = $(".cancel-friend-btn").data(`id`);
+        console.log(id)
+
+        const request = {
+            method: "DELETE",
+            headers: getHeaders(),
+        }
+
+        fetch(`${BASE_URI}/friendRequest/${id}`, request)
             .then(res => {
                 console.log(res.status);
                 createView(`/profile`, id)
@@ -230,7 +269,7 @@ function commentFromUserProfile() {
 }
 
 function refreshComments(id) {
-    let  userId = $(".comments-" + id + "-show").data("id");
+    let userId = $(".comments-" + id + "-show").data("id");
     let commentSection = $(".comments-" + id + "-show");
 
     const requestObject = {
@@ -428,3 +467,39 @@ function showFriendsOnly(props) {
     `
     return html;
 }
+
+function addOrRemoveFriends(props) {
+
+    for (let i = 0; i < props.profile.friendsRequest.length; i++){
+        if (props.profile.friendsRequest[i].sender.email === userEmail()) {
+            let html = `
+                <button type="button" 
+                            class="btn btn-light mr-2 cancel-friend-btn" 
+                            data-id="${props.profile.id}">Cancel Request
+                        <i class="fas fa-plus ml-2"></i>
+                    </button>`
+            return html
+        }
+    }
+
+    for (let i = 0; i < props.profile.friends.length; i++) {
+        if (props.profile.friends[i].email === userEmail()) {
+            let html = `
+                <button type="button" 
+                            class="btn btn-light mr-2 remove-friend-btn" 
+                            data-id="${props.profile.id}">Remove Friend 
+                        <i class="fas fa-plus ml-2"></i>
+                    </button>`
+            return html
+        }
+    }
+
+    let html = `
+                <button type="button" 
+                            class="btn btn-light mr-2 add-friend-btn" 
+                            data-id="${props.profile.id}">Add Friend
+                        <i class="fas fa-plus ml-2"></i>
+                    </button>`
+    return html
+}
+
