@@ -24,16 +24,43 @@ export default function Home(props) {
             <h2 class="features-title d-flex justify-content-center">Features</h2>
         </div>
         <div class="features-card">
-                <div class="features">
-                <i class="bi bi-calendar-date"></i>Host/Join Clubs
+            <div class="features">
+                <div>   
+                    <i class="bi bi-calendar-date" style="font-size: 4rem;"></i>
                 </div>
-                <div class="features">
-                <i class="bi bi-pin-map"></i>Create/View Motorcycle Routes
+                <div>
+                    Host/Join Clubs
                 </div>
-                <div class="features">
-                <i class="bi bi-person-plus"></i>Add/Message Friends
+                <p class="first-features"> 
+                    Host or join events with other motorcylists
+                </p>
+                <p class="second-features">
+                 Choose your date and time!
+                </p>
+            </div>
+            <div class="features">
+                <div>
+                    <i class="bi bi-pin-map" style="font-size: 4rem;"></i>
+                </div>
+                <div>
+                    Create/View Motorcycle Routes
+                </div>
+                <p class="first-features"> 
+                    Using google's map api, users can set markers on a map to show route start locations
+                </p>
+                <p> 
+                Find motorcycle riding events nearby!
+                </p>
+            </div>
+            <div class="features">
+                <div>
+                    <i class="bi bi-person-plus" style="font-size: 4rem;"></i>
+                </div>
+                <div>
+                    Add/Message Friends
                 </div>
             </div>
+        </div>
         
     `;
 }

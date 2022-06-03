@@ -36,7 +36,7 @@ export default function About(props) {
    <div class="row">
   <div class="column">
     <div class="about-card">
-      <img src="../../images/arrow.jpg" alt="Jane" style="width:100%">
+      <img src="../../images/doggie.png" alt="Jane" style="width:100%">
       <div class="container about-container">
         <h2>Jane Doe</h2>
         <p class="about-card-title">Full-Stack Developer</p>
@@ -49,7 +49,7 @@ export default function About(props) {
   
   <div class="column">
     <div class="about-card about-container">
-      <img src="../../images/hector.jpg" alt="Hector" style="width:100%; height:100%">
+      <img src="../../images/hector.jpg" alt="Hector" style="width:100%; height:80%">
       <div class="container">
         <h2>Hector Mejia</h2>
         <p class="about-card-title">Full-Stack Developer</p>
@@ -62,11 +62,9 @@ export default function About(props) {
   
   <div class="column">
     <div class="about-card">
-<!--    <div id="testing" style="width:100%"> -->
-<!--    </div>-->
-      <img src="../../images/arrow.jpg" alt="John" style="width:100%">
+      <img src="../../images/doggie.png" alt="Irvin" style="width:100%; height:80%">
       <div class="container about-container">
-        <h2>John Doe</h2>
+        <h2>Irvin Ruiz</h2>
         <p class="about-card-title">Full-Stack Developer</p>
         <p>Some text that describes me lorem ipsum ipsum lorem.</p>
         <p>example@example.com</p>
