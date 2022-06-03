@@ -807,28 +807,28 @@ function showComment(comment, username) {
 function createPostModal(props) {
     return `
 <!-- Modal -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+<div class="modal fade text-white" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header card-dark-bg">
         <h5 class="modal-title" id="createModalLabel">Create Post</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body card-dark-bg">
         <form class="m-3">
                         <div class="mb-3">
                           <label for="createPostTitle" class="form-label">Title</label>
-                          <input type="email" class="form-control" id="createPostTitle">
+                          <input type="email" class="form-control settingForm" id="createPostTitle">
                         </div>
                         <div class="mb-3">
                           <label for="createPostContent" class="form-label">Content</label>
-                          <textarea class="form-control" id="createPostContent" rows="3"></textarea>
+                          <textarea class="form-control settingForm" id="createPostContent" rows="3"></textarea>
                         </div>
                         <div class="mb-3">
                          ${props.categories.map(cat =>
         `
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="category-${cat.id}" value="${cat.name}">
+                                    <input class="form-check-input checkboxForm" type="checkbox" id="category-${cat.id}" value="${cat.name}">
                                     <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
                                 </div>
                             `)
@@ -839,9 +839,9 @@ function createPostModal(props) {
 <!--                        </div>-->
                     </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-dark create-post-btn" data-bs-dismiss="modal">Create</button>
+      <div class="modal-footer card-dark-bg">
+        <button type="button" class="btn btn-lightG" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn create-post-btn btn-lightG" data-bs-dismiss="modal">Create</button>
       </div>
     </div>
   </div>
@@ -851,22 +851,22 @@ function createPostModal(props) {
 function editPostModal(props) {
     // console.log(props)
     return `<!-- Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+<div class="modal fade text-white" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header card-dark-bg">
         <h5 class="modal-title" id="editModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body card-dark-bg">
         <form class="m-3">
                         <div class="mb-3">
                           <label for="editPostTitle" class="form-label">Title</label>
-                          <input type="email" class="form-control" id="editPostTitle">
+                          <input type="email" class="form-control settingForm" id="editPostTitle">
                         </div>
                         <div class="mb-3">
                           <label for="editPostContent" class="form-label">Content</label>
-                          <textarea class="form-control" id="editPostContent" rows="3"></textarea>
+                          <textarea class="form-control settingForm" id="editPostContent" rows="3"></textarea>
                         </div>
                         <div class="mb-3">
                          ${props.categories.map(cat => {
@@ -877,7 +877,7 @@ function editPostModal(props) {
         // if(editPostCategories.includes(cat.name)){
         //     categoriesHtml += `<input class="form-check-input" type="checkbox" id="category-${cat.id}" value="${cat.name}" checked>`
         // } else {
-        categoriesHtml += `<input class="form-check-input edit-post-checkbox" type="checkbox" id="category-${cat.id}" value="${cat.name}">`
+        categoriesHtml += `<input class="form-check-input edit-post-checkbox checkboxForm" type="checkbox" id="category-${cat.id}" value="${cat.name}">`
         // }
         categoriesHtml += `
                                     <label class="form-check-label" for="category-${cat.id}">${cat.name}</label>
@@ -890,9 +890,9 @@ function editPostModal(props) {
                     
                     </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-dark edit-post-btn" data-bs-dismiss="modal">Save changes</button>
+      <div class="modal-footer card-dark-bg">
+        <button type="button" class="btn btn-lightG" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-lightG edit-post-btn" data-bs-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>

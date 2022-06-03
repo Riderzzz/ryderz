@@ -250,7 +250,7 @@ public class UsersController {
     }
 
     @PostMapping("/changeAvatar/{userId}")
-    public ResponseEntity<String> uploadFile(@PathVariable Long userId, @RequestParam(value = "file") MultipartFile file) {
+    public ResponseEntity<String> uploadAvatarFile(@PathVariable Long userId, @RequestParam(value = "file") MultipartFile file) {
 //        Groups group = groupsRepository.findById(groupId).get();
 
         User user = userRepository.getById(userId);
@@ -262,6 +262,23 @@ public class UsersController {
         System.out.println(file);
         String fileName = s3Service.uploadFile(file);
         user.setProfilePicture(fileName);
+        userRepository.save(user);
+        return new ResponseEntity<>(fileName, HttpStatus.OK);
+    }
+
+    @PostMapping("/changeHeader/{userId}")
+    public ResponseEntity<String> uploadHeaderFile(@PathVariable Long userId, @RequestParam(value = "file") MultipartFile file) {
+//        Groups group = groupsRepository.findById(groupId).get();
+
+        User user = userRepository.getById(userId);
+//        delete previous image if exists
+        if (user.getHeaderPicture() != null) {
+            String previousImgName = user.getHeaderPicture();
+            s3Service.deleteFile(previousImgName);
+        }
+        System.out.println(file);
+        String fileName = s3Service.uploadFile(file);
+        user.setHeaderPicture(fileName);
         userRepository.save(user);
         return new ResponseEntity<>(fileName, HttpStatus.OK);
     }
