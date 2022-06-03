@@ -158,8 +158,8 @@ export function chatBoxHtml(friends) {
             <div class="type-bar d-flex">
                 <div class="bottom">
                     <div class="input-group">
-                      <input type="text" class="form-control" name="msgField" id="msg" data-channel="${channel}" aria-label="Recipient's username" aria-describedby="button-addon2">
-                      <button class="btn btn-outline-dark send-msg-btn" type="button" id="button-addon2" data-channel="${channel}">Send</button>
+                      <input type="text" class="form-control settingForm" name="msgField" id="msg" data-channel="${channel}" aria-label="Recipient's username" aria-describedby="button-addon2">
+                      <button class="btn btn-outline-light send-msg-btn btn-lightG" type="button" id="button-addon2" data-channel="${channel}">Send</button>
                     </div>
                 </div>
             </div>

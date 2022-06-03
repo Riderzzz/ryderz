@@ -51,7 +51,7 @@ export default function Navbar(props) {
             </li>
 			<li class="nav-item d-none d-lg-block">
 				<form class="d-flex">
-					<input class="form-control me-2 nav-search" type="search" placeholder="Search" aria-label="Search">
+					<input class="form-control me-2 nav-search" type="text" placeholder="Search">
 				</form>
 			</li>
 			`;

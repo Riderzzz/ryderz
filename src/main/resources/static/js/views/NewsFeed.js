@@ -1,6 +1,6 @@
 import {getHeaders, isLoggedIn, userEmail} from "../auth.js";
 import createView from "../createView.js";
-import {fetchOldMessages, subscribeToChannel} from "../pubnubChat.js";
+import {fetchOldMessages, sendMsg, subscribeToChannel} from "../pubnubChat.js";
 import {chatBoxHtml, selectFriendsTabListener, sendMsgBtn, sendMsgEnter, toggleChatboxBtn} from "./chat.js";
 
 const COMMENT_URI = "http://localhost:8081/api/comments";
@@ -98,22 +98,28 @@ export function NewsFeedEvents() {
 }
 
 function navSearchListener() {
-    $('.nav-search').keyup(function (e){
-        let searchedString = $(this).val().toLowerCase()
-
-
-        for (let prop of sortedProps) {
-            if (prop.type === 'post'){
-                if (prop.title.toLowerCase().includes(searchedString)) {
-                    console.log(prop.title)
-                }
-            }
-            if (prop.type === 'event') {
-                if (prop.titleOfEvent.toLowerCase().includes(searchedString)) {
-                    console.log(prop.titleOfEvent)
-                }
-            }
+    $('.nav-search').keypress(function (event){
+        var keycode = event.keyCode
+        if(keycode == '13'){
+            event.preventDefault()
+            let searchedString = $(this).val().toLowerCase()
+            console.log('Searching for: ' + searchedString)
         }
+        let searchedString = $(this).val().toLowerCase()
+        //
+        //
+        // for (let prop of sortedProps) {
+        //     if (prop.type === 'post'){
+        //         if (prop.title.toLowerCase().includes(searchedString)) {
+        //             console.log(prop.title)
+        //         }
+        //     }
+        //     if (prop.type === 'event') {
+        //         if (prop.titleOfEvent.toLowerCase().includes(searchedString)) {
+        //             console.log(prop.titleOfEvent)
+        //         }
+        //     }
+        // }
 
     })
 }
