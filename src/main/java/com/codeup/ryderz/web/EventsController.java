@@ -77,7 +77,11 @@ public class EventsController {
     private void updateEvent(@PathVariable Long id, @RequestBody Events updatedEvent) {
         Events originalEvent = eventsRepository.getById(id);
         originalEvent.setOrigin(updatedEvent.getOrigin());
-        originalEvent.setDestination(updatedEvent.getDestination());
+        if (updatedEvent.getDestination() == null) {
+            originalEvent.setDestination("");
+        } else {
+            originalEvent.setDestination(updatedEvent.getDestination());
+        }
         originalEvent.setEventDate(updatedEvent.getEventDate());
         originalEvent.setStateWhereEventTakesPlace(updatedEvent.getStateWhereEventTakesPlace());
         originalEvent.setTitleOfEvent(updatedEvent.getTitleOfEvent());

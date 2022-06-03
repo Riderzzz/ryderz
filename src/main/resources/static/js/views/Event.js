@@ -2,6 +2,7 @@ import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
 
 export default function Event(props) {
+	console.log(props);
 	const timeFormat = getTimeFormat(props);
 	// language=HTML
 	let html = `<!DOCTYPE html>
@@ -14,7 +15,8 @@ export default function Event(props) {
     <div class="container">
         <div class="row mt-4 justify-content-center">
             <div class="col-md-7">
-                <div>
+                <div id="singleEventMap"></div>
+                <div class="eventTitles">
                     ${checkUserEventStatus(props)}
                 </div>
                 <div>
@@ -29,14 +31,13 @@ export default function Event(props) {
                             </button>
                         </div>
                     </div>
-                    <div class="commentSection-${props.event.id}">
+                    <div class="commentSection-${props.event.id} eventComments">
                         ${checkIfCommentsExist(props)}
                     </div>
                 </div>
             </div>
             <div class="col-md-5">
-                <div id="singleEventMap"></div>
-                <div class="mb-3 eventCol border border-dark">
+                <div class="eventCol mb-3">
                     ${eventColHTML(props, timeFormat)}
                 </div>
                 <div class="mb-3 singleEventPageEditForm">
@@ -72,6 +73,13 @@ export function EventEvents() {
 	deleteEventBtn();
 	clickOnCommentAuthorName();
 	initMap(OGOrigin, OGDestination);
+
+	flatpickr("#editedEventDate", {
+		minDate: "today",
+		maxDate: new Date().fp_incr(90),
+		enableTime: true,
+		dateFormat: "Y-m-d H:i",
+	});
 }
 
 let map;
@@ -349,8 +357,8 @@ function checkUserEventStatus(props) {
 			}
 		})
 	}
-	let html = `<h1>${props.event.titleOfEvent}</h1>
-    <h4>${props.event.descriptionOfEvent}</h4>`
+	let html = `<h1 class="text-white">${props.event.titleOfEvent}</h1>
+    <h4 class="text-white">${props.event.descriptionOfEvent}</h4>`
 
 	if (userEmail() === props.event.eventCreator.email) {
 		html += ``;
@@ -382,12 +390,12 @@ function checkIfCommentsExist(props) {
 	if (props.event.comments.length > 0) {
 		//language=HTML
 		let html = `
-            <h1>Latest From This Event</h1>
+            <h1 class="text-white">Latest From This Event</h1>
             <div id="eventCommentsContainer">
                 ${props.event.comments.reverse().map(comment =>
                         `<div class="card card-body p-2 m-3">
                         <div class="d-flex">
-                            <div class="info d-flex">
+                            <div class="eventComment info d-flex">
 <!--                            TODO: add delete icon to delete comment-->
 								<a class="commentATag" data-id="${comment.author.id}">
                                 <div class="pic"><img class="event-comment-profile-pic" src="${comment.author.userPhotoUrl}" alt=""></div>
@@ -456,6 +464,7 @@ function editEventBtn(OGState, OGStatusOfEvent, OGCategories) {
 function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatusOfEvent, OGState, OGCategories, OGOrigin, OGDestination) {
 	$("#submitEditedEventBtn").click(function () {
 		const eventId = $(this).data("id");
+		const isSingleLocation = $(this).data("location");
 		const titleOfEvent = $("#editedEventTitle").val();
 		const descriptionOfEvent = $("#editedEventDescription").val();
 		const eventLocation = $("#editedEventLocation").val();
@@ -463,7 +472,11 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 		const eventDate = new Date(dateTime).getTime();
 		const stateOfEvent = $('#eventStatus').val();
 		const origin = $("#from").val();
-		const destination = $("#to").val();
+		let destination = $("#to").val();
+
+		if (isSingleLocation) {
+			destination = "";
+		}
 
 		let selectedCategories = [];
 
@@ -479,24 +492,7 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 
 		const categories = selectedCategories;
 
-		if (OGTitle === titleOfEvent &&
-			OGDescription === descriptionOfEvent &&
-			OGLocation === eventLocation &&
-			OGEventDate === dateTime &&
-			OGStatusOfEvent === stateOfEvent &&
-			OGOrigin === origin &&
-			OGDestination === destination &&
-			OGCategories.toString() === checkCategories.toString()
-		) {
-			warningPTag.css("color", "red");
-			warningPTag.text("No changes were made!");
-			return;
-		} else {
-			warningPTag.text("");
-		}
-
 		if (OGDestination === "") {
-			console.log("dest empty")
 			if (!titleOfEvent ||
 				!descriptionOfEvent ||
 				!eventLocation ||
@@ -510,16 +506,6 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 				warningPTag.text("")
 			}
 		} else {
-			console.log(OGOrigin)
-			console.log(OGDestination)
-			console.log("dest present")
-			console.log(titleOfEvent)
-			console.log(descriptionOfEvent)
-			console.log(eventLocation)
-			console.log(eventDate)
-			console.log(origin)
-			console.log(destination)
-			console.log(stateOfEvent)
 			if (!titleOfEvent ||
 				!descriptionOfEvent ||
 				!eventLocation ||
@@ -609,8 +595,6 @@ function deleteEventBtn() {
 function eventColHTML(props, timeFormat) {
 	//language=HTML
 	let html = `
-        <h4 class="event-name-${props.event.id}">Title: <span id="OGTitle">${props.event.titleOfEvent}</span></h4>
-
         <h5 class="event-location-${props.event.id}">Event Location:<span
                 id="OGLocation">${props.event.eventLocation}</span></h5>
 
@@ -670,12 +654,10 @@ function eventEditFormHTML(props, timeFormat) {
             <input class="form-control" type="text" id="editedEventLocation" name="newEventLocation"
                    value="${props.event.eventLocation}">
 
-            <label for="editedEventDate">Event Date
-
-                <input type="datetime-local" id="editedEventDate" name="eventDate" value="${timeFormat}">
+            <label class="mt-3" for="editedEventDate">Event Date
+			<input type="datetime-local" id="editedEventDate" name="eventDate" value="${timeFormat}">
             </label>
-
-            <div class="mb-3 formCategories">
+            <div class="my-3 formCategories">
 
             </div>
 
@@ -686,6 +668,8 @@ function eventEditFormHTML(props, timeFormat) {
                 <option value="INPROGRESS">IN PROGRESS</option>
                 <option value="COMPLETED">COMPLETED</option>
             </select>
+			<br>
+			<br>
 			
 			`; if (props.event.isSingleLocationEvent) {
 					html+= `
@@ -696,7 +680,7 @@ function eventEditFormHTML(props, timeFormat) {
 						<label for="from">Origin</label>
 						<input value="${props.event.origin}" type="text" id="from" name="from">
 			
-						<label for="to">Starting Latitude</label>
+						<label class="mt-3" for="to">Destination</label>
 						<input value="${props.event.destination}" type="text" id="to" name="to">`
 						}
 						html+= `
@@ -704,7 +688,7 @@ function eventEditFormHTML(props, timeFormat) {
     			        <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
     			        <input id="submitEditedEventBtn" data-id="${props.event.id}" class="btn btn-dark" type="button"
     			               value="Submit">
-    			        <button id="deleteEvent" data-id="${props.event.id}" class="btn btn-danger">Delete Event</button>
+    			        <button id="deleteEvent" data-id="${props.event.id}" data-location="${props.event.isSingleLocationEvent}" class="btn btn-danger">Delete Event</button>
     			    </form>
 	`
 
