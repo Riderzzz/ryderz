@@ -173,6 +173,11 @@
     color: black;
 }
 
+.btn-lightG:focus {
+    border-color: #709775;
+    box-shadow: 0 0 0 .1em #709775;
+}
+
 .btn-red {
     background-color: red;
     color: black;
@@ -228,5 +233,16 @@
 .recent-events {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+}
+
+.checkboxForm:checked {
+    background-color: #709775;
+    color: black;
+    border-color: white;
+}
+
+.checkboxForm:focus {
+    border-color: #709775;
+    box-shadow: 0 0 0 .1em #709775;
 }
 
