@@ -5,7 +5,6 @@ import com.codeup.ryderz.services.S3Service;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -300,11 +298,22 @@ public class UsersController {
     @GetMapping("/getUsersByUsername/{username}")
     public List<User> getSearchedUsers(@PathVariable String username) {
         System.out.println(username);
-
-
-
-
         return userRepository.findAllByUsernameContains(username);
+    }
+
+
+    @PostMapping("/updateUsersBio/{id}")
+    public void updateUsersBio(@PathVariable Long id, @RequestBody String bio){
+        User currentUser = userRepository.getById(id);
+        currentUser.setBio(bio);
+        userRepository.save(currentUser);
+    }
+
+    @GetMapping("/getUsersBio/{id}")
+    public String getUsersBio(@PathVariable Long id){
+        User currentUser = userRepository.getById(id);
+        currentUser.setBio(currentUser.getBio());
+        return currentUser.getBio();
     }
 
 }

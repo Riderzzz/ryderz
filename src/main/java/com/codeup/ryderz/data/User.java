@@ -57,6 +57,7 @@ public class User {
     @Column(name = "header_picture")
     public String headerPicture;
 
+    @JsonView(View.bio.class)
     @Column(name = "bio")
     public String bio;
 

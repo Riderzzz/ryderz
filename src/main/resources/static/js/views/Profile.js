@@ -5,8 +5,6 @@ const BASE_URI = 'http://localhost:8081/api/users';
 const COMMENT_URI = "http://localhost:8081/api/comments";
 
 export default function Profile(props) {
-    console.log(props)
-    console.log(props.profile)
 
 // language=HTML
     return `<!DOCTYPE html>
@@ -38,7 +36,7 @@ export default function Profile(props) {
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-6">
                         <h2><strong>${props.profile.username}</strong></h2>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p class="text-muted">${props.profile.bio}</p>
                     </div>
                 </div>
             </section>
@@ -129,6 +127,7 @@ export function showFriendsProfile() {
     commentsButtonListener();
     commentFromUserProfile();
     showGroupPage();
+    aboutMeEditButtonListener();
 }
 
 function showProfilePage() {
@@ -156,11 +155,9 @@ function addFriendButtonListener() {
 
         fetch(`${BASE_URI}/friends/${id}`, request)
             .then(res => {
-                console.log(res.status);
                 createView(`/profile`, id)
             }).catch(error => {
-            console.log(error);
-            createView(`/profile`, id);
+                createView(`/profile`, id);
         });
     });
 }
@@ -176,10 +173,8 @@ function removeFriendButtonListener() {
 
         fetch(`${BASE_URI}/friends/${id}`, request)
             .then(res => {
-                console.log(res.status);
                 createView(`/profile`, id)
             }).catch(error => {
-            console.log(error);
             createView(`/profile`, id);
         });
     });
@@ -188,7 +183,6 @@ function removeFriendButtonListener() {
 function cancelFriendButtonListener() {
     $(".cancel-friend-btn").click(i => {
         const id = $(".cancel-friend-btn").data(`id`);
-        console.log(id)
 
         const request = {
             method: "DELETE",
@@ -197,10 +191,8 @@ function cancelFriendButtonListener() {
 
         fetch(`${BASE_URI}/friendRequest/${id}`, request)
             .then(res => {
-                console.log(res.status);
                 createView(`/profile`, id)
             }).catch(error => {
-            console.log(error);
             createView(`/profile`, id);
         });
     });
@@ -351,7 +343,6 @@ function showUsersFriends(props) {
 
 function showUsersPosts(props) {
     //language=HTML
-    console.log(props)
     let html = `
         ${props.profile.posts.map(post => ` 
             <div class="card posts-card shadow-light mb-4">
@@ -434,6 +425,7 @@ function showPostsOnly(props) {
     return html;
 
 }
+
 function verifyUsersAboutProfile(props){
     if(props.profile.email === userEmail()){
         let html = `
@@ -443,7 +435,6 @@ function verifyUsersAboutProfile(props){
         `
         return html;
     }
-
 }
 
 function showAboutPageOnly(props) {
@@ -453,8 +444,10 @@ function showAboutPageOnly(props) {
             <div class="card-body">
                 <h5 class="card-title">About Me</h5>
                 <h6 class="card-subtitle mb-2 text-muted">${props.profile.username}</h6>
-                <p class="card-text">${aboutMe(props)}</p>
-                ${verifyUsersAboutProfile(props)}
+                    <div class="about-${props.profile.id}-show" data-id="${props.profile.id}">
+                        <p class="card-text">${aboutMe(props)}</p>
+                    </div>
+                    ${verifyUsersAboutProfile(props)}
             </div>
         </div>
 
@@ -467,12 +460,12 @@ function showAboutPageOnly(props) {
                     </div>
                     <div class="modal-body">
                         <form>
-                            <textarea style="width: 100%;height: 100%" maxlength="500" placeholder="Write About Yourself...."></textarea>
+                            <textarea style="width: 100%;height: 100%" maxlength="500" placeholder="Write About Yourself...." class="edit-bio"></textarea>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel Changes</button>
-                        <button type="button" class="btn btn-primary save-about-edit">Save changes</button>
+                        <button type="button" class="btn btn-primary save-about-edit" data-bs-dismiss="modal" data-id="${props.profile.id}">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -483,10 +476,41 @@ function showAboutPageOnly(props) {
 
 function aboutMeEditButtonListener(){
     $(".save-about-edit").click(function (){
+        let id = $(this).data("id");
+        let newBio = $(".edit-bio").val();
+
+        const requestObj = {
+            method: "POST",
+            headers: getHeaders(),
+            body: newBio
+        }
+
+        fetch(`${BASE_URI}/updateUsersBio/${id}`, requestObj)
+            .then(data => {
+               refreshAboutMe(id)
+            }).catch(error => {
+            console.log(error);
+        });
 
     })
+}
 
+function refreshAboutMe(id) {
+    let userId = $(".about-" + id + "-show").data("id");
+    let aboutMeSection = $(".about-" + id + "-show");
 
+    const requestObject = {
+        method: "GET",
+        headers: getHeaders()
+    }
+
+    fetch(`${BASE_URI}/${userId}`, requestObject)
+        .then(res => res.json()).then(data => {
+        let state = {profile: data}
+        aboutMeSection.html(aboutMe(state));
+    }).catch(error => {
+        console.log(error);
+    })
 }
 
 function aboutMe(props){
