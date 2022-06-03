@@ -74,11 +74,12 @@ export default function User(props) {
 }
 
 export function UserEvent() {
-	tabSelectListener()
-	deleteAccountListener()
+	tabSelectListener();
+	deleteAccountListener();
 
 	editPasswordListener();
-	editImages();
+	editAvatarImage();
+	editHeaderImage();
 	editProfileBtnListener();
 }
 
@@ -88,18 +89,16 @@ function accountSettingsHtml(props) {
 		`
 			<form class="m-3">
 				<div class="row profileForm my-3">
-					<div class="">
+					<div class="col">
 						<div>Avatar</div>
 						<div class="input-group">
-							<input type="file" class="form-control" id="userAvatarFile" aria-describedby="userAvatarFilebtn" aria-label="Upload">
-							<button class="btn btn-outline-secondary edit-images-btn btn-lightG" data-id="${props.user.id}" type="button" id="userAvatarFilebtn">Update avatar</button>
+							<input type="file" class="form-control settingForm" id="userAvatarFile" data-id="${props.user.id}" title="${props.user.profilePicture}">
 						</div>
 					</div>
-					<div class="">
+					<div class="col">
 						<div>Header</div>
 						<div class="input-group">
-							<input type="file" class="form-control" id="userHeaderFile" aria-describedby="userHeaderFilebtn" aria-label="Upload">
-							<button class="btn btn-outline-secondary btn-lightG" data-id="${props.user.id}" type="button" id="userHeaderFilebtn">Button</button>
+							<input type="file" class="form-control settingForm" id="userHeaderFile" data-id="${props.user.id}">
 						</div>
 					</div>
 				</div>
@@ -185,10 +184,50 @@ function removeAccountSettingsHtml(props) {
 	return html;
 }
 
-function editImages() {
-	$('.edit-images-btn').click(function (){
+function editHeaderImage() {
+	$('#userHeaderFile').on('change', function () {
+		const userId = $(this).data('id');
+		const file = document.getElementById("userHeaderFile");
+		let image = file.files[0]
+		console.log(image.image)
+		console.log(file.files)
+
+		// $('.user-image').append(`<img src="${image.image}" alt="">`)
+
+		let formData = new FormData();
+		formData.append("file", file.files[0]);
+
+		const requestObject = {
+			method: "POST",
+			body: formData
+		}
+
+		fetch(`http://localhost:8081/api/users/changeHeader/${userId}`, requestObject)
+			.then(res => {
+				console.log(res.status)
+				if (res.status !== 200) {
+					console.log(res);
+				}
+			})
+			.catch(error => {
+				console.log(error);
+				// warningPTag.text("Error submitting changes!");
+				// warningPTag.css("color", "red");
+			})
+			.finally(() => createView('/user'))
+	})
+}
+
+function editAvatarImage() {
+	$('#userAvatarFile').on('change', function (){
 		const userId = $(this).data('id');
 		const file = document.getElementById("userAvatarFile");
+		let image = file.files[0]
+		console.log(image.image)
+		console.log(file.files)
+
+		// $('.user-image').append(`<img src="${image.image}" alt="">`)
+
 		let formData = new FormData();
 		formData.append("file", file.files[0]);
 
@@ -208,8 +247,10 @@ function editImages() {
 				console.log(error);
 				// warningPTag.text("Error submitting changes!");
 				// warningPTag.css("color", "red");
-			}).finally(() => createView('/user'))
+			})
+			.finally(() => createView('/user'))
 	})
+
 }
 
 function deleteAccountListener() {
