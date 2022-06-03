@@ -143,6 +143,7 @@
 .discoverFeaturedEventImg {
     width: 100%;
     aspect-ratio: 21/9;
+    border-radius: 10px;
 }
 
 .featuredSubTitle {

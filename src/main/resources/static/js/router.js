@@ -122,7 +122,7 @@ export default function router(URI, Id) {
         },
         '/event': {
             returnView: Event,
-            uri: `/event/${Id}`,
+            uri: `/event`,
             title: 'Event',
             state: {
                 event: `/api/events/${Id}`
@@ -131,7 +131,7 @@ export default function router(URI, Id) {
         },
         '/group' : {
             returnView: Group,
-            uri: `/group/${Id}`,
+            uri: `/group`,
             title: 'Group',
             state: {
                 group: `/api/groups/${Id}`
@@ -175,7 +175,7 @@ export default function router(URI, Id) {
         },
         '/profile': {
             returnView: Profile,
-            uri: `/profile/${Id}`,
+            uri: `/profile`,
             title: 'Profile',
             state : {
                 profile: `/api/users/${Id}`

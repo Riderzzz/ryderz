@@ -26,6 +26,7 @@ public class CommentsController {
 
     @PostMapping
     public void createComment(@RequestBody Comments newComment, OAuth2Authentication auth){
+        System.out.println(newComment.toString());
         User user = userRepository.findByEmail(auth.getName());
         newComment.setAuthor(user);
         commentsRepository.save(newComment);

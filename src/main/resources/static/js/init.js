@@ -9,9 +9,11 @@ export default function init() {
  * When the DOM loads, build the view given the current endpoint.
  */
 function loadViewOnPageRequest() {
+    let Id = localStorage.getItem("Id");
+    history.pushState(localStorage.getItem("History"), null, localStorage.getItem("Route"));
     window.addEventListener('DOMContentLoaded', function() {
         // Switched to location.pathname so the route would be accurate to current view
-        createView(location.pathname);
+        createView(location.pathname, Id);
     });
 }
 
