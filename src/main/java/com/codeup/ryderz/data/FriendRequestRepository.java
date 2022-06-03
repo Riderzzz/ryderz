@@ -14,4 +14,7 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequest, Lo
     @Query(value = "delete from friends_request WHERE sender = :sender_id and receiver = :receiver_id", nativeQuery = true)
     void deleteFriendsRequest(@Param("sender_id") Long senderId, @Param("receiver_id") Long receiverId );
 
+    @Transactional
+    @Query(value = "select * from friends_request WHERE sender = :sender_id and receiver = :receiver_id", nativeQuery = true)
+    FriendRequest getFriendsRequest(@Param("sender_id") Long senderId, @Param("receiver_id") Long receiverId );
 }
