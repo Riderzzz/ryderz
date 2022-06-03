@@ -15,18 +15,18 @@ export default function Event(props) {
     <div class="container">
         <div class="row mt-4 justify-content-center">
             <div class="col-md-7">
-                <div id="singleEventMap"></div>
                 <div class="eventTitles">
                     ${checkUserEventStatus(props)}
                 </div>
                 <div>
                     <div class="collapse" id="collapseExample">
+						<p class="commentPostWarning"></p>
                         <div class="input-group my-3">
-                            <input type="text" id="comment-content" class="form-control"
+                            <input type="text" id="comment-content" class="form-control settingForm"
                                    data-postId="${props.event.id}" placeholder="Your thoughts..."
                                    aria-label="Comment"
                                    aria-describedby="button-addon">
-                            <button class="btn btn-dark comment-btn" data-id="${props.event.id}"
+                            <button class="comment-btn btn" data-id="${props.event.id}"
                                     type="button" id="button-addon">Submit
                             </button>
                         </div>
@@ -43,6 +43,7 @@ export default function Event(props) {
                 <div class="mb-3 singleEventPageEditForm">
                     ${eventEditFormHTML(props, timeFormat)}
                 </div>
+                <div id="singleEventMap"></div>
             </div>
         </div>
     </div>
@@ -277,8 +278,14 @@ function commentOnEvent() {
 		let comment = $("#comment-content");
 		const eventId = $(this).data("id");
 		let content = comment.val();
-		let warningPTag = $("#character-warning-on-submit");
+		let warningPTag = $(".commentPostWarning");
 		comment.val("");
+
+		if (content === "" || content === null || content.trim() === "") {
+			warningPTag.text("No content in comment!");
+			warningPTag.css("color", "red");
+			return;
+		}
 
 		const commentObject = {
 			content,
@@ -372,7 +379,7 @@ function checkUserEventStatus(props) {
 	if (found || userEmail() === props.event.eventCreator.email) {
 		//language=HTML
 		html += `
-            <button class="btn btn-dark mx-3" type="button" data-bs-toggle="collapse"
+            <button class="btn eventCommentCollapseBtn mx-3" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseExample" aria-expanded="false"
                     aria-controls="collapseExample">
                 Comment
@@ -454,7 +461,7 @@ function editEventBtn(OGState, OGStatusOfEvent, OGCategories) {
                             `)
 					.join('')}`
 				$(".formCategories").html(html)
-			})
+			})``
 			.catch(error => {
 				console.log(error);
 			})
@@ -638,24 +645,24 @@ function eventEditFormHTML(props, timeFormat) {
             <label for="editedEventTitle">Title: <span
                     id="event-title"></span></label><br>
 
-            <input class="form-control" value="${props.event.titleOfEvent}" type="text" id="editedEventTitle"
+            <input class="settingForm form-control" value="${props.event.titleOfEvent}" type="text" id="editedEventTitle"
                    name="newEventTitle">
 
 
             <label for="editedEventDescription" class="mt-2">Event Description<span
                     id="group-bio"></span></label><br>
 
-            <textarea class="form-control mb-2" id="editedEventDescription"
+            <textarea class="settingForm form-control mb-2" id="editedEventDescription"
                       name="newEventDescription">${props.event.descriptionOfEvent}</textarea>
 
             <label for="editedEventLocation">Location: <span
                     id="event-location"></span></label><br>
 
-            <input class="form-control" type="text" id="editedEventLocation" name="newEventLocation"
+            <input class="settingForm form-control" type="text" id="editedEventLocation" name="newEventLocation"
                    value="${props.event.eventLocation}">
 
             <label class="mt-3" for="editedEventDate">Event Date
-			<input type="datetime-local" id="editedEventDate" name="eventDate" value="${timeFormat}">
+			<input type="datetime-local" class="settingForm form-control" id="editedEventDate" name="eventDate" value="${timeFormat}">
             </label>
             <div class="my-3 formCategories">
 
@@ -674,20 +681,19 @@ function eventEditFormHTML(props, timeFormat) {
 			`; if (props.event.isSingleLocationEvent) {
 					html+= `
 						<label for="from">Origin</label>
-						<input value="${props.event.origin}" type="text" id="from" name="from">`
+						<input class="settingForm form-control" value="${props.event.origin}" type="text" id="from" name="from">`
 				} else {
 					html+= `
 						<label for="from">Origin</label>
-						<input value="${props.event.origin}" type="text" id="from" name="from">
+						<input class="settingForm form-control" value="${props.event.origin}" type="text" id="from" name="from">
 			
 						<label class="mt-3" for="to">Destination</label>
-						<input value="${props.event.destination}" type="text" id="to" name="to">`
+						<input class="settingForm form-control" value="${props.event.destination}" type="text" id="to" name="to">`
 						}
 						html+= `
     			        <p id="character-warning-on-submit"></p>
-    			        <button class="btn btn-dark" id="cancelEdits">Cancel Edits</button>
-    			        <input id="submitEditedEventBtn" data-id="${props.event.id}" class="btn btn-dark" type="button"
-    			               value="Submit">
+    			        <button class="btn" id="cancelEdits">Cancel Edits</button>
+    			        <button class="btn" id="submitEditedEventBtn" data-id="${props.event.id}">Submit Changes</button>
     			        <button id="deleteEvent" data-id="${props.event.id}" data-location="${props.event.isSingleLocationEvent}" class="btn btn-danger">Delete Event</button>
     			    </form>
 	`
