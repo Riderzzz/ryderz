@@ -2,6 +2,7 @@ package com.codeup.ryderz.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,8 +24,10 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.idAndUsername.class)
     private Long id;
 
+    @JsonView(View.idAndUsername.class)
     @Column(nullable = false, length = 100, unique = true)
     private String username;
 
@@ -53,6 +56,9 @@ public class User {
 
     @Column(name = "header_picture")
     public String headerPicture;
+
+    @Column(name = "bio")
+    public String bio;
 
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties({"author"})
