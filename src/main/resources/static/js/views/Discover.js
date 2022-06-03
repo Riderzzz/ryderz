@@ -9,14 +9,14 @@ export default function Discover(props) {
         <meta charset="UTF-8"/>
         <title>Discover</title>
     </head>
-    <body>
-    <div class="container">
+    <body class="discoverBody">
+    <div class="container discoverContainer">
 		<header>
 			<div class="my-3">
-				<h1>Discover New Roads</h1>
+				<h1 class="text-white">Discover New Roads</h1>
 			</div>
 			<div class="headerImgDiv">
-				<img class="discoverFeaturedEventImg" src="https://images.unsplash.com/photo-1552306062-29a5560e1c31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80">
+				<img class="discoverFeaturedEventImg" src="https://images.unsplash.com/photo-1498084393753-b411b2d26b34?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80">
 				<div class="featuredTitle">
 					<h3 class="featuredSubTitle">Night Life Tour</h3>
 					<p class="featuredSubDetails">Join us on a late night route!</p>
@@ -25,10 +25,10 @@ export default function Discover(props) {
 		</header>
 		<div class="row my-3">
 			<div class="col-md-10">
-				<h2>Events</h2>
+				<h2 class="text-white">Events</h2>
 			</div>
 			<div class="col-md-2">
-            	<button class="btn btn-dark mt-2 mx-2 createEventBtn">Create Event</button>
+            	<button class="btn mt-2 mx-2 createEventBtn">Create Event</button>
 			</div>
 		</div>
 		<div class="row my-3">
@@ -38,10 +38,10 @@ export default function Discover(props) {
 					`
 				<div class="media-element">
 					<a class="eventDiv" data-id="${event.id}">
-					<img class="discoverItemImg" src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" alt="">
-                    <h5 class="title">${event.titleOfEvent}</h5>
-                    <p>Location: ${event.origin}</p>	
-                    <p>Date: ${new Date(event.eventDate).toLocaleDateString()}</p>			
+					<img class="discoverItemImg shadow" src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" alt="">
+                    <h5 class="discoverTitle text-white">${event.titleOfEvent}</h5>
+                    <p class="discoverLocation text-white">Location: ${event.origin}</p>	
+                    <p class="eventDate text-white">Date: ${new Date(event.eventDate).toLocaleDateString()}</p clas>			
 					</a>
                 </div>
 `
@@ -50,10 +50,10 @@ export default function Discover(props) {
 		</div>
         <div class="row my-3">
 			<div class="col-md-10">
-            	<h2 class="d-inline">Clubs</h2>
+            	<h2 class="d-inline text-white">Clubs</h2>
 			</div>
 			<div class="col-md-2">
-            	<button class="d-inline btn btn-dark mt-2 mx-2 createGroupBtn">Create Club</button>
+            	<button class="d-inline btn mt-2 mx-2 createGroupBtn">Create Club</button>
 			</div>
 		</div>
 		<div class="row my-3">
@@ -63,10 +63,10 @@ export default function Discover(props) {
                         `
 				<div class="media-element">
 					<a class="groupDiv" data-id="${group.id}">
-					<img class="discoverItemImg" src="${group.groupPhotoUrl !== null ? group.groupPhotoUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
-                    <h5 class="title">${group.name}</h5>
-                    <p>Location: ${group.location}</p>		
-                    <p>Members: ${group.users.length}</p>		
+					<img class="discoverItemImg shadow" src="${group.groupPhotoUrl !== null ? group.groupPhotoUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
+                    <h5 class="discoverTitle text-white">${group.name}</h5>
+                    <p class="discoverLocation text-white">Location: ${group.location}</p>		
+                    <p class="groupMembers text-white">Members: ${group.users.length}</p>		
 					</a>
                 </div>
 `

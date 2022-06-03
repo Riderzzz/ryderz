@@ -51,7 +51,7 @@ export default function Profile(props) {
                     <button type="button" class="btn btn-light profile-btn about-button">About</button>
                     <button type="button" class="btn btn-light profile-btn friends-button">Friends <small
                             class="text-muted">${props.profile.friends.length}</small></button>
-                    <button type="button" class="btn btn-light profile-btn">Photos</button>
+                    <button type="button" class="btn btn-light profile-btn photos-button">Photos</button>
                 </div>
                 <!--Right Buttons-->
                 <div class="">
@@ -60,9 +60,10 @@ export default function Profile(props) {
                             class="far fa-envelope mr-2"></i> Message
                     </button>
                     
-                    <button type="button" class="btn btn-light mr-2 add-friend-btn" data-id="${props.profile.id}">Add
-                        Friends ${props.profile.id}<i
-                                class="fas fa-plus ml-2"></i>
+                    <button type="button" 
+                            class="btn btn-light mr-2 add-friend-btn" 
+                            data-id="${props.profile.id}">Add Friend 
+                        <i class="fas fa-plus ml-2"></i>
                     </button>
                     
                 </div>
@@ -229,7 +230,7 @@ function commentFromUserProfile() {
 }
 
 function refreshComments(id) {
-
+    let  userId = $(".comments-" + id + "-show").data("id");
     let commentSection = $(".comments-" + id + "-show");
 
     const requestObject = {
@@ -237,7 +238,7 @@ function refreshComments(id) {
         headers: getHeaders()
     }
 
-    fetch(`${BASE_URI}/${id}`, requestObject)
+    fetch(`${BASE_URI}/${userId}`, requestObject)
         .then(res => res.json()).then(data => {
         let state = {};
 
@@ -246,8 +247,6 @@ function refreshComments(id) {
                 state = post;
             }
         });
-
-
         commentSection.html(displayComments(state));
     }).catch(error => {
         console.log(error);
@@ -264,18 +263,16 @@ function showUsersGroups(props) {
                 <div class="d-flex flex-wrap flex-row">
                     ${props.profile.groupsJoined.map(groups => `
                         <div class="col-4 d-flex mb-3 justify-content-center">
-                            <div>
-                                <!--group photo within users page-->
-                                <div class="justify-content-center">
+                            <div class="justify-content-center">
+                                <div class="group-img-profile">
                                     <img src="${groups.groupPhotoUrl}"
                                         alt="image 1" class="rounded-circle"
                                         style="width: 90px;height: 90px;">
                                 </div>
-                                <!-- group name within users page-->
                                 <div class="text-center">
-                                    <a class="show-users-group-profile" data-id="${groups.id}">${groups.name}</a>
+                                    <a class="show-users-group-profile" 
+                                          data-id="${groups.id}">${groups.name}</a>
                                 </div>
-                                
                             </div>
                        </div>`).join("")}
                 </div>
@@ -315,6 +312,7 @@ function showUsersFriends(props) {
 
 function showUsersPosts(props) {
     //language=HTML
+    console.log(props)
     let html = `
         ${props.profile.posts.map(post => ` 
             <div class="card posts-card shadow-light mb-4">
@@ -343,7 +341,7 @@ function showUsersPosts(props) {
                     </div>
                     
                     <div class="collapse" id="post-${post.id}">
-                        <div class="comments-${post.id}-show">
+                        <div class="comments-${post.id}-show" data-id="${props.profile.id}">
                             ${displayComments(post)}
                         </div>
                     </div>
@@ -354,10 +352,9 @@ function showUsersPosts(props) {
 }
 
 function displayComments(props) {
-    console.log(props)
     //language=HTML
     let html = `
-        ${props.comments.map(posts => `
+        ${props.comments.reverse().map(posts => `
             <div class="card card-body p-2 mb-1">
                 <div class="d-flex">
                    <div class="info d-flex">
