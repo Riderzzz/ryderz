@@ -1,4 +1,54 @@
 #createEventMap {
     height: 100%;
     width: 100%;
+    border-radius: 10px;
+}
+
+.createEventForm {
+    background-color: #4C4C4C;
+    padding: 1em;
+    border-radius: 10px;
+    color: white;
+}
+
+#createRoute {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+.backToDiscover {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+#newEventBtn {
+    background-color: #A1CCA5;
+    color: black;
+}
+
+#createRoute:hover {
+    background-color: #4eb455;
+}
+
+.backToDiscover:hover {
+    background-color: #4eb455;
+}
+
+#newEventBtn:hover {
+    background-color: #4eb455;
+}
+
+@media (max-width: 768px) {
+    .createEventMapContainer {
+        height: 37em;
+        margin-top: 1em;
+        margin-bottom: 4em;
+    }
+
+    .createEventForm {
+        width: 95%;
+    }
+
+    .createEventMap {
+    }
 }
