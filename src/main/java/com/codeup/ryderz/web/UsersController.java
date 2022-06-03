@@ -2,6 +2,7 @@ package com.codeup.ryderz.web;
 
 import com.codeup.ryderz.data.*;
 import com.codeup.ryderz.services.S3Service;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -281,6 +283,17 @@ public class UsersController {
         user.setHeaderPicture(fileName);
         userRepository.save(user);
         return new ResponseEntity<>(fileName, HttpStatus.OK);
+    }
+
+    @JsonView(View.idAndUsername.class)
+    @GetMapping("/getUsersByUsername/{username}")
+    public List<User> getSearchedUsers(@PathVariable String username) {
+        System.out.println(username);
+
+
+
+
+        return userRepository.findAllByUsernameContains(username);
     }
 
 }
