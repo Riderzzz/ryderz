@@ -18,7 +18,6 @@ let sortedProps = ''
 let eventIdsArray = [];
 
 export default function NewsFeed(props) {
-    console.log(props)
     allProps = props
     let mixedProps = [];
     for (let post of props.posts) {
@@ -148,7 +147,6 @@ function hideChatbox() {
 function showProfilePage() {
     $(".view-profile-page").click(function () {
         const profileId = $(this).data("id");
-        console.log(profileId)
         createView("/profile", `${profileId}`);
     });
 }
@@ -601,10 +599,7 @@ function newsfeedSidebarHtml(userProps) {
 
 
 function newsfeedPostsHtml(sortedProps) {
-    console.log(sortedProps)
     //language=HTML
-
-
     let html = `
         <header class="d-flex justify-content-between m-3">
             <div class="mx-4"><h3>News Feed</h3></div>

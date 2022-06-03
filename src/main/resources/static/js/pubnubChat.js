@@ -23,15 +23,14 @@ export function setUUID() {
 
 export function pubNubListener(){
 
-    const listener = { // <-- extract the listener
+    const listener = {
         message: function(msg) {
-            // console.log(msg)
-            // console.log(msg.publisher + ": " + msg.message.description)
+
             appendToChatbox(msg)
         },
         presence: function (p) {
             const action = p.leave
-            // console.log(action)
+
         }
     }
     pubnub.addListener(listener)
@@ -52,7 +51,6 @@ export function sendMsg(msg, currentChannel) {
             }
         }
         pubnub.publish(publishPayload, function(status, response) {
-            // console.log(status, response);
         })
     }
 }

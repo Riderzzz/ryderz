@@ -25,12 +25,6 @@ import chatTest, {chatTestEvents} from "./views/chat.js";
 import {capstoneText} from "./views/About.js";
 import Requests,{showRequests} from "./views/Requests.js";
 
-
-/**
- * Returns the route object for a specific route based on the given URI
- * @param URI
- * @returns {*}
- */
 export default function router(URI, Id) {
     const routes = {
         '/': {

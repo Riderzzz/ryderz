@@ -5,9 +5,7 @@ export default function init() {
     loadViewOnPageRequest();
     addListenerToNavLinks();
 }
-/**
- * When the DOM loads, build the view given the current endpoint.
- */
+
 function loadViewOnPageRequest() {
     let Id = localStorage.getItem("Id");
     history.pushState(localStorage.getItem("History"), null, localStorage.getItem("Route"));
@@ -17,9 +15,6 @@ function loadViewOnPageRequest() {
     });
 }
 
-/**
- * Add a listener that will change the view if a nav link is clicked.
- */
 function addListenerToNavLinks() {
     document.addEventListener('click', (event) => {
         // we want checkboxes and labels to keep their default behavior when clicked

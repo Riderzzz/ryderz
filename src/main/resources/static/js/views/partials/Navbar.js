@@ -4,9 +4,6 @@ export default function Navbar(props) {
 
 	// let data = getData().then(d => {})
 	const loggedIn = isLoggedIn();
-	if (props != null) {
-		console.log(props);
-	}
 	// language=HTML
 	let html = `
         <nav class="navbar navbar-expand-lg navbar-dark navbar-dark-bg">

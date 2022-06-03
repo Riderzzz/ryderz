@@ -5,15 +5,12 @@ import {initPubNub, pubNubListener, unsubscribe} from "./pubnubChat.js";
 import {fetchUserData} from "./views/NewsFeed.js";
 
 export let pubnub;
-/**
- * Adds a login event to allow the user to initially obtain a new OAuth2.0 token
- * On a successful response, sets the tokens into storage and redirects to the root
- */
+
 export default function addLoginEvent() {
 
     document.querySelector("#login-btn").addEventListener("click", function () {
         let obj = {
-            username: document.querySelector("#username").value,
+            username: document.querySelector("#email").value,
             password: document.querySelector("#password").value,
             grant_type: 'password'
         }
@@ -48,8 +45,6 @@ export default function addLoginEvent() {
 
             //inializing pubnub here because this is the point whenever the user has successfully logged in
             pubnubInitWithUserUsername()
-
-
 
             createView("/");
         });
@@ -106,7 +101,6 @@ export function userEmail() {
         const payload = parts[1];
         const decodedPayload = atob(payload);
         const payloadObject = JSON.parse(decodedPayload);
-        // console.log(payloadObject)
         return payloadObject.user_name;
     }
 

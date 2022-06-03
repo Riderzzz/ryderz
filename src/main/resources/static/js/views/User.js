@@ -32,13 +32,6 @@ export default function User(props) {
 			</div>
 		</div>
 		
-		
-		
-		
-		
-		
-		
-		
         <div class="container d-none">
 			<h1 class="text-center mt-4">Hello ${props.user.username}</h1>
             <div class="row mt-4">
@@ -48,23 +41,16 @@ export default function User(props) {
                     <h5 id="show-id">User ID: ${props.user.id}</h5>
                     <h5>Username: <span data-username="${props.user.username}" contenteditable="true" id="show-username">${props.user.username}</span></h5>
                     <h5>Email: <span data-email="${props.user.email}" contenteditable="true" id="show-email">${props.user.email}</span></h5>
-					
-					
-					
 					<h2 class="mt-4">Your Posts (${props.user.posts.length})</h2>
-                    <div>${props.user.posts.map(post => {
-                        `
+                    <div>${props.user.posts.map(post => {`
                  <div>  
                     <h1 id="title-${post.id}">${post.title}</h1> 
                     <h1 id="content-${post.id}">${post.content}</h1> 
-                 </div>
-            `
-                    }).join('')
+                 </div>`}).join('')
                     }
                     </div>
                 </div>
                 <div class="col-md-5">
-					
                 </div>
             </div>
         </div>
