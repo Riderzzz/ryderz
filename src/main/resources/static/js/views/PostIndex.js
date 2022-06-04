@@ -16,7 +16,7 @@ export default function PostIndex(props) {
             <div id="posts-container">
                 ${props.posts.map(post => {
         return `
-<div class="card">
+<div class="card-about">
     <h4 class="card-header">
         <span id="title-${post.id}">${post.title}</span>
         <span style="float:right" id="author-${post.id}">Author: ${post.author.username}</span>

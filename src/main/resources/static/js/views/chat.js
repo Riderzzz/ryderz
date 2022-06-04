@@ -85,7 +85,7 @@ export function appendToChatbox(message){
 
     if (message.publisher === pubnub.getUUID()) {
         feed.html(feed.html() + `
-        <div class="card chat-card ms-auto">
+        <div class="card-about chat-card ms-auto">
           <div class="card-body p-2">
               <div class="name">${message.publisher}:</div>
               <div class="message">${message.message.description}</div> 
@@ -94,7 +94,7 @@ export function appendToChatbox(message){
     `)
     } else {
         feed.html(feed.html() + `
-        <div class="card chat-card me-auto">
+        <div class="card-about chat-card me-auto">
           <div class="card-body p-2">
               <div class="name">${message.publisher}:</div>
               <div class="message">${message.message.description}</div> 
@@ -121,7 +121,7 @@ export function appendOldMessagesToChatBox(messageArray) {
         // console.log(`${msg.uuid}: ${msg.message.description}`)
         if (msg.uuid === pubnub.getUUID()) {
             feed.html(feed.html() + `
-        <div class="card chat-card ms-auto">
+        <div class="card-about chat-card ms-auto">
           <div class="card-body p-2">
             <div class="name">${msg.uuid}:</div>
             <div class="message">${msg.message.description}</div> 
@@ -130,7 +130,7 @@ export function appendOldMessagesToChatBox(messageArray) {
         `)
         } else {
             feed.html(feed.html() + `
-        <div class="card chat-card me-auto">
+        <div class="card-about chat-card me-auto">
           <div class="card-body p-2">
             <div class="name">${msg.uuid}:</div>
             <div class="message">${msg.message.description}</div> 

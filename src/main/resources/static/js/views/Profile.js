@@ -258,7 +258,7 @@ function refreshComments(id) {
 function showUsersGroups(props) {
     //language=HTML
     let html = `
-        <div class="card groups-card shadow-light mb-4">
+        <div class="card-about groups-card shadow-light mb-4">
             <div class="card-title"><strong>Groups</strong></div>
             <div class="card-body">
                 <div class="d-flex flex-wrap flex-row">
@@ -287,7 +287,7 @@ function showUsersGroups(props) {
 function showUsersFriends(props) {
     //language=HTML
     let html = `
-        <div class="card friends-card shadow-light">
+        <div class="card-about friends-card shadow-light">
             <div class="card-title"><strong>Friends</strong></div>
             <div class="card-body">
                 <div class="d-flex flex-wrap flex-row">
@@ -317,7 +317,7 @@ function showUsersPosts(props) {
     //language=HTML
     let html = `
         ${props.profile.posts.map(post => ` 
-            <div class="card posts-card shadow-light mb-4">
+            <div class="card-about posts-card shadow-light mb-4">
             <!--head for card-->
                 <div class="profile-card-header d-flex">
                     <img src="${props.profile.userPhotoUrl}"
@@ -358,7 +358,7 @@ function displayComments(props) {
     //language=HTML
     let html = `
         ${props.comments.map(posts => `
-            <div class="card card-body p-2 mb-1">
+            <div class="card-about card-body p-2 mb-1">
                 <div class="d-flex">
                    <div class="info d-flex">
                         <img src="${posts.author.userPhotoUrl}" alt="lightbox image 1" class="rounded-circle" style="width: 45px;height: 45px;">
@@ -376,7 +376,7 @@ function displayComments(props) {
 function showPostsOnly(props) {
     let html = `
         ${props.profile.posts.map(post => ` 
-            <div class="card posts-card shadow-light mb-4">
+            <div class="card-about posts-card shadow-light mb-4">
                 <!--head for card-->
                 <div class="profile-card-header d-flex">
                     <img src="${props.profile.userPhotoUrl}"
@@ -402,7 +402,7 @@ function showPostsOnly(props) {
 function showAboutPageOnly(props) {
     //language=HTML
     let html = `
-        <div class="card about-card shadow-light">
+        <div class="card-about about-card shadow-light">
         </div>
     `
     return html;
@@ -411,7 +411,7 @@ function showAboutPageOnly(props) {
 function showFriendsOnly(props) {
     //language=HTML
     let html = `
-        <div class="card friends-card shadow-light">
+        <div class="card-about friends-card shadow-light">
             <div class="card-title"><strong>Friends</strong></div>
             <div class="card-body">
                 <div class="d-flex flex-wrap flex-row">

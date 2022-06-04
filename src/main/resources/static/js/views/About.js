@@ -1,7 +1,115 @@
 
 export default function About(props) {
     return `
-    <div class="main-card container first-card">
+<!----about us cards----->
+<div class="card-container-about">
+      <div class="card-about">
+        <div class="front">
+          <img class="about-images" src="../../images/hectors.jpg" alt="hector"/>
+        </div>
+        <div class="back">
+          <div class="details">
+            <div class="caption">
+              " I have a passion for all things involving blockchain technology"
+            </div>
+            <h2>Hector Mejia</h2>
+            <span>Software Engineer</span>
+
+            <div class="social-icon">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-about">
+        <div class="front">
+          <img src="https://assets.biztimes.com/uploads/2019/06/Madison-Goldbeck-2018.11.30-WEB-300x400.jpg" alt=""/>
+        </div>
+        <div class="back">
+          <div class="details">
+            <div class="caption">
+              " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus
+              quisquam iure in! Corporis expedita consequatur tenetur rem
+              ratione saepe, perferendis ipsam alias quam. Libero illum maxime,
+              unde itaque ratione "
+            </div>
+            <h2>Derek Johnson</h2>
+            <span>Senior Illustrator</span>
+
+            <div class="social-icon">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-about">
+        <div class="front">
+          <img
+            src="http://masterbeautyphotography.com/wp-content/uploads/2016/11/Low-Key-Portrait_web-300x400.jpg"
+            alt=""
+          />
+        </div>
+        <div class="back">
+          <div class="details">
+            <div class="caption">
+              " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus
+              quisquam iure in! Corporis expedita consequatur tenetur rem
+              ratione saepe, perferendis ipsam alias quam. Libero illum maxime,
+              unde itaque ratione "
+            </div>
+            <h2>Capella Fiona</h2>
+            <span>Senior Designer</span>
+
+            <div class="social-icon">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-about">
+        <div class="front">
+          <img
+            src="https://www.tavistockwood.com/wp-content/uploads/2019/03/Frecheville-James-Headshot-300x400.jpg"
+            alt=""
+          />
+        </div>
+        <div class="back">
+          <div class="details">
+            <div class="caption">
+              " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus
+              quisquam iure in! Corporis expedita consequatur tenetur rem
+              ratione saepe, perferendis ipsam alias quam. Libero illum maxime,
+              unde itaque ratione "
+            </div>
+            <h2>James Bond</h2>
+            <span>CEO</span>
+
+            <div class="social-icon">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+    
+<div class="main-card container first-card">
         <div class="h1 story__name block_text story-title--desktop" style="text-align: center;">
         Our development Process
         </div>
@@ -31,62 +139,8 @@ export default function About(props) {
    <div class="h1 story__name block_text story-title--desktop" style="text-align: center;">
         About Us
    </div>
-<!----about us cards----->
-<div class="second-about-section">
-   <div class="row">
-  <div class="column">
-    <div class="about-card">
-      <img src="../../images/doggie.png" alt="Jane" style="width:100%">
-      <div class="container about-container">
-        <h2>Jane Doe</h2>
-        <p class="about-card-title">Full-Stack Developer</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>example@example.com</p>
-        <p><button class="about-card-button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="column">
-    <div class="about-card about-container">
-      <img src="../../images/hector.jpg" alt="Hector" style="width:100%; height:80%">
-      <div class="container">
-        <h2>Hector Mejia</h2>
-        <p class="about-card-title">Full-Stack Developer</p>
-        <p>Interested in working with some enterprise code!</p>
-        <p>mejiah6060@gmail.com</p>
-        <p><button class="about-card-button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="column">
-    <div class="about-card">
-      <img src="../../images/doggie.png" alt="Irvin" style="width:100%; height:80%">
-      <div class="container about-container">
-        <h2>Irvin Ruiz</h2>
-        <p class="about-card-title">Full-Stack Developer</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>example@example.com</p>
-        <p><button class="about-card-button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="column">
-    <div class="about-card">
-      <img src="../../images/arrow.jpg" alt="Jane" style="width:100%">
-      <div class="container about-container">
-        <h2>Jane Doe</h2>
-        <p class="about-card-title">Full-Stack Developer</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>example@example.com</p>
-        <p><button class="about-card-button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+    
+
     `;
 }
     export function capstoneText() {

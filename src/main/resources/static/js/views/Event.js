@@ -385,7 +385,7 @@ function checkIfCommentsExist(props) {
             <h1>Latest From This Event</h1>
             <div id="eventCommentsContainer">
                 ${props.event.comments.reverse().map(comment =>
-                        `<div class="card card-body p-2 m-3">
+                        `<div class="card-about card-body p-2 m-3">
                         <div class="d-flex">
                             <div class="info d-flex">
 <!--                            TODO: add delete icon to delete comment-->

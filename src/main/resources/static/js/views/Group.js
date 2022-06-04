@@ -447,7 +447,7 @@ function populateGroupCommentsHTML(props) {
 		let html = `
             <div id="groupCommentsContainer">
                 ${props.group.comments.reverse().map(comment =>
-                        `<div class="card card-body p-2 m-3">
+                        `<div class="card-about card-body p-2 m-3">
                         <div class="d-flex">
                             <div class="info d-flex">
 <!--                            TODO: add delete icon to delete comment-->

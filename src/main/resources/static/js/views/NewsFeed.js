@@ -624,7 +624,7 @@ function newsfeedRecent(props) {
 
 function recentEventCard(event) {
     return `
-            <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}" style='background-image: url("https://picsum.photos/id/${event.id + 1000}/200/100"); background-repeat: no-repeat'>
+            <div class="card-about card-dark-bg m-3 recent-event-card" data-id="${event.id}" style='background-image: url("https://picsum.photos/id/${event.id + 1000}/200/100"); background-repeat: no-repeat'>
               <img src="https://picsum.photos/id/${event.id + 1010}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
               <div class="card-body d-flex justify-content-between p-2">
                   <div>
@@ -642,7 +642,7 @@ function recentEventCard(event) {
 function recentGroupCard(group) {
 
     return `
-            <div class="card card-dark-bg m-3 recent-group-card" data-id="${group.id}">
+            <div class="card-about card-dark-bg m-3 recent-group-card" data-id="${group.id}">
               <img src="https://picsum.photos/id/${group.id + 100}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
               <div class="card-body p-2">
                 <h5>${group.name}</h5>
