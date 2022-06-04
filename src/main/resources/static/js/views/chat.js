@@ -152,7 +152,7 @@ export function setFeedToBottom() {
 export function chatBoxHtml(friends) {
     // console.log(friends)
     return `<div class="chat-box-container row d-none">
-        <div class="contacts col-4 py-3"><hr>${friends.map(friend => `${friendTabs(friend)}`).join("")}</div>
+        <div class="contacts col-5 col-md-4 py-3"><hr>${friends.map(friend => `${friendTabs(friend)}`).join("")}</div>
         <div class="chat col-7 p-0">
             <div class="feed m-1"></div>
             <div class="type-bar d-flex">
