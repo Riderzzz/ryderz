@@ -15,7 +15,7 @@ export default function Profile(props) {
     </head>
     <body>
     <!--Filler for top white portion of page-->
-    <section class="bg-white shadow">
+    <section class="user-profile-top shadow-light">
         <div class="container">
 
             <section class="user-images mb-5">
@@ -32,7 +32,7 @@ export default function Profile(props) {
             </section>
 
             <!--Section: User Data-->
-            <section class="text-center border-bottom">
+            <section class="text-center border-bottom-profile">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-6">
                         <h2><strong>${props.profile.username}</strong></h2>
@@ -45,16 +45,15 @@ export default function Profile(props) {
             <section class="py-3 d-flex justify-content-between align-items-center mb-4">
                 <!--Left Buttons-->
                 <div class="">
-                    <button type="button" class="btn btn-light profile-btn posts-button">Posts</button>
-                    <button type="button" class="btn btn-light profile-btn about-button">About</button>
-                    <button type="button" class="btn btn-light profile-btn friends-button">Friends <small
+                    <button type="button" class="btn btn-lightG-2 profile-btn posts-button">Posts</button>
+                    <button type="button" class="btn btn-lightG-2 profile-btn about-button">About</button>
+                    <button type="button" class="btn btn-lightG-2 profile-btn friends-button">Friends <small
                             class="text-muted">${props.profile.friends.length}</small></button>
-                    <button type="button" class="btn btn-light profile-btn photos-button">Photos</button>
                 </div>
                 <!--Right Buttons-->
                 <div class="">
 
-                    <button type="button" class="btn btn-light mr-2"><i
+                    <button type="button" class="btn btn-lightG-2 mr-2"><i
                             class="far fa-envelope mr-2"></i> Message
                     </button>
 
@@ -204,6 +203,9 @@ function postsButtonlistener() {
         $(".friends-page").css("display", "none")
         $(".about-page").css("display", "none")
         $(".posts-page").css("display", "contents")
+        $(".posts-button").addClass("when-active")
+        $(".about-button").removeClass("when-active")
+        $(".friends-button").removeClass("when-active")
     });
 }
 
@@ -213,6 +215,9 @@ function aboutButtonlistener() {
         $(".bottom-profile").css("display", "none")
         $(".friends-page").css("display", "none")
         $(".about-page").css("display", "contents")
+        $(".posts-button").removeClass("when-active")
+        $(".about-button").addClass("when-active")
+        $(".friends-button").removeClass("when-active")
     });
 }
 
@@ -222,6 +227,9 @@ function friendsButtonListener() {
         $(".about-page").css("display", "none")
         $(".bottom-profile").css("display", "none")
         $(".friends-page").css("display", "contents")
+        $(".posts-button").removeClass("when-active")
+        $(".about-button").removeClass("when-active")
+        $(".friends-button").addClass("when-active")
     });
 }
 
@@ -288,8 +296,8 @@ function refreshComments(id) {
 function showUsersGroups(props) {
     //language=HTML
     let html = `
-        <div class="card groups-card shadow-light mb-4">
-            <div class="card-title"><strong>Groups</strong></div>
+        <div class="card groups-card shadow mb-4">
+            <div class="card-title" style="margin-left: 10px"><strong>Groups</strong></div>
             <div class="card-body">
                 <div class="d-flex flex-wrap flex-row">
                     ${props.profile.groupsJoined.map(groups => `
@@ -315,8 +323,8 @@ function showUsersGroups(props) {
 function showUsersFriends(props) {
     //language=HTML
     let html = `
-        <div class="card friends-card shadow-light">
-            <div class="card-title"><strong>Friends</strong></div>
+        <div class="card friends-card shadow">
+            <div class="card-title" style="margin-left: 10px"><strong>Friends</strong></div>
             <div class="card-body">
                 <div class="d-flex flex-wrap flex-row">
                     ${props.profile.friends.map(friends => `
@@ -345,7 +353,7 @@ function showUsersPosts(props) {
     //language=HTML
     let html = `
         ${props.profile.posts.map(post => ` 
-            <div class="card posts-card shadow-light mb-4">
+            <div class="card posts-card shadow mb-4">
             <!--head for card-->
                 <div class="profile-card-header d-flex">
                     <img src="${props.profile.userPhotoUrl}"
@@ -362,11 +370,11 @@ function showUsersPosts(props) {
                 <div class="card-body">
                     <p class="card-text">${post.content}</p>
                     <input class="comment-users-${post.id} comment-users-posts mt-1" placeholder="Write a comment...." data-id="${post.id}">
-                    <button type="submit" class="submit-comment" data-id="${post.id}">Comment</button>
+                    <button type="submit" class="submit-comment btn-lightG" data-id="${post.id}">Comment</button>
                     
                     <div class="d-flex justify-content-end mt-1">
                         <div class="" id="${post.id}-container">
-                            <button class="comments-link" data-bs-toggle="collapse" data-bs-target="#post-${post.id}" aria-controls="post-${post.id}"><small>comments</small></button>
+                            <button class="comments-link btn-lightG-2" data-bs-toggle="collapse" data-bs-target="#post-${post.id}" aria-controls="post-${post.id}"><small>comments</small></button>
                         </div>
                     </div>
                     
@@ -403,7 +411,7 @@ function displayComments(props) {
 function showPostsOnly(props) {
     let html = `
         ${props.profile.posts.map(post => ` 
-            <div class="card posts-card shadow-light mb-4">
+            <div class="card posts-card shadow mb-4">
                 <!--head for card-->
                 <div class="profile-card-header d-flex">
                     <img src="${props.profile.userPhotoUrl}"
@@ -429,7 +437,7 @@ function showPostsOnly(props) {
 function verifyUsersAboutProfile(props){
     if(props.profile.email === userEmail()){
         let html = `
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aboutModal">
+        <button type="button" class="btn btn-lightG-2" data-bs-toggle="modal" data-bs-target="#aboutModal">
                     Edit about me
           </button>
         `
@@ -440,7 +448,7 @@ function verifyUsersAboutProfile(props){
 function showAboutPageOnly(props) {
     //language=HTML
     let html = `
-        <div class="card" style="width: 100%">
+        <div class="card  shadow" style="width: 100%">
             <div class="card-body">
                 <h5 class="card-title">About Me</h5>
                 <h6 class="card-subtitle mb-2 text-muted">${props.profile.username}</h6>
@@ -465,7 +473,7 @@ function showAboutPageOnly(props) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel Changes</button>
-                        <button type="button" class="btn btn-primary save-about-edit" data-bs-dismiss="modal" data-id="${props.profile.id}">Save changes</button>
+                        <button type="button" class="btn btn-lightG save-about-edit" data-bs-dismiss="modal" data-id="${props.profile.id}">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -549,7 +557,7 @@ function addOrRemoveFriends(props) {
         if (props.profile.friendsRequest[i].sender.email === userEmail()) {
             let html = `
                 <button type="button" 
-                            class="btn btn-light mr-2 cancel-friend-btn" 
+                            class="btn btn-lightG mr-2 cancel-friend-btn" 
                             data-id="${props.profile.id}">Cancel Request
                         <i class="fas fa-plus ml-2"></i>
                     </button>`
@@ -561,7 +569,7 @@ function addOrRemoveFriends(props) {
         if (props.profile.friends[i].email === userEmail()) {
             let html = `
                 <button type="button" 
-                            class="btn btn-light mr-2 remove-friend-btn" 
+                            class="btn btn-lightG-2 mr-2 remove-friend-btn" 
                             data-id="${props.profile.id}">Remove Friend 
                         <i class="fas fa-plus ml-2"></i>
                     </button>`
@@ -571,7 +579,7 @@ function addOrRemoveFriends(props) {
 
     let html = `
                 <button type="button" 
-                            class="btn btn-light mr-2 add-friend-btn" 
+                            class="btn btn-lightG-2 mr-2 add-friend-btn" 
                             data-id="${props.profile.id}">Add Friend
                         <i class="fas fa-plus ml-2"></i>
                     </button>`
