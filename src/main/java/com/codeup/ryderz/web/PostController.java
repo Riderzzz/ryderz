@@ -108,7 +108,7 @@ public class PostController {
     @GetMapping("friendsPost")
     public Collection<Post> getNewsfeedPosts(OAuth2Authentication auth) {
         User mainUser = userRepository.findByEmail(auth.getName());
-        mainUser.setUserPhotoUrl(s3Service.getSignedURL(mainUser.getProfilePicture()));
+        mainUser.setUserPhotoUrl(s3Service.getSignedURL(mainUser.getProfilePicture(),5L));
 
         Collection<User> userFriends = mainUser.getFriends();
         List<Post> usersFriendsPost = new ArrayList<>();
@@ -118,7 +118,7 @@ public class PostController {
 
         for (User friend : userFriends) {
             usersFriendsPost.addAll(postRepository.findPostByAuthor_Username(friend.getUsername()));
-            friend.setUserPhotoUrl(s3Service.getSignedURL(friend.getProfilePicture()));
+            friend.setUserPhotoUrl(s3Service.getSignedURL(friend.getProfilePicture(),5L));
         }
 
         Collections.sort(usersFriendsPost);

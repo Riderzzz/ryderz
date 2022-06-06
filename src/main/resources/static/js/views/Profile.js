@@ -5,7 +5,7 @@ const BASE_URI = `${URI}/api/users`;
 const COMMENT_URI = `${URI}/api/comments`;
 
 export default function Profile(props) {
-
+    console.log(props)
 // language=HTML
     return `<!DOCTYPE html>
     <html lang="html">
@@ -53,7 +53,7 @@ export default function Profile(props) {
                 <!--Right Buttons-->
                 <div class="">
 
-                    <button type="button" class="btn btn-lightG-2 mr-2"><i
+                    <button type="button" class="btn btn-lightG-2 mr-2 message-button"><i
                             class="far fa-envelope mr-2"></i> Message
                     </button>
 
@@ -106,7 +106,6 @@ export default function Profile(props) {
                     ${showFriendsOnly(props)}
                 </div>
             </div>
-
             <!--end of showing contents when buttons pressed-->
         </div>
     </section>
@@ -117,6 +116,7 @@ export default function Profile(props) {
     </body>
     </html>`;
 }
+
 
 export function showFriendsProfile() {
     postsButtonlistener();
@@ -131,6 +131,7 @@ export function showFriendsProfile() {
     showGroupPage();
     aboutMeEditButtonListener();
 }
+
 
 function showProfilePage() {
     $(".show-users-friends-profile").click(function () {

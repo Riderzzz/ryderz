@@ -36,17 +36,22 @@ export default function NewsFeed(props) {
     //language=HTML
     let html =
         `
+            <div class="newsfeedSelect d-flex d-lg-none">
+                <div class="selectTab" data-id="1">Sidebar</div>
+                <div class="selectTab bottom-border" data-id="2">Feed</div>
+                <div class="selectTab" data-id="3">Recents</div>
+            </div>
             <div class="container-fluid">
                 <div class="username" data-username="${props.user.username}"></div>
                 <div class="id" data-userid="${props.user.id}"></div>
                 <div class="row">
-                    <div class="sidebar-container col-2  d-none d-lg-block">
+                    <div class="sidebar-container col-12 col-lg-2  d-none d-lg-block">
                         ${newsfeedSidebarHtml(props.user)}
                     </div>
                     <div class="posts-container col-12 col-lg-7">
                         ${newsfeedPostsHtml(sortedProps)}
                     </div>
-                    <div class="recent-events d-none d-lg-block col-3">
+                    <div class="recent-events d-none d-lg-block col-12 col-lg-3">
                         ${newsfeedRecent(props)}
                     </div>
                 </div>
@@ -82,21 +87,49 @@ export function NewsFeedEvents() {
     leaveEvent();
 
     //left side-bar functions
-    goToRecentEventBtn()
-    goToRecentGroupBtn()
+    goToRecentEventBtn();
+    goToRecentGroupBtn();
 
     //chat functions
-    subscribeToChannel(channel)
-    fetchOldMessages(channel)
-    sendMsgBtn()
-    sendMsgEnter()
-    toggleChatboxBtn()
-    selectFriendsTabListener()
-    hideChatbox()
+    subscribeToChannel(channel);
+    fetchOldMessages(channel);
+    sendMsgBtn();
+    sendMsgEnter();
+    toggleChatboxBtn();
+    selectFriendsTabListener();
+    hideChatbox();
+
 
     showMap()
     // newsfeedInitAllMaps()
+    newsFeedMobileSelect()
 }
+
+function newsFeedMobileSelect() {
+    $('.selectTab').click(function (){
+        $('.selectTab').removeClass('bottom-border')
+        $(this).addClass('bottom-border')
+        let id = $(this).data('id')
+        let leftSidebar = $('.sidebar-container')
+        let centerFeed = $('.posts-container')
+        let rightSidebar = $('.recent-events')
+
+        leftSidebar.addClass('d-none')
+        centerFeed.addClass('d-none')
+        rightSidebar.addClass('d-none')
+        console.log(id)
+
+        switch (id) {
+            case 1 : leftSidebar.removeClass('d-none')
+                break;
+            case 2: centerFeed.removeClass('d-none')
+                break;
+            case 3: rightSidebar.removeClass('d-none')
+                break;
+        }
+    })
+}
+
 function showMap() {
     $('.show-map').click(function (){
         $(this).remove()
@@ -129,22 +162,32 @@ function searchedUsersHtml(users) {
 }
 
 function navSearchListener() {
-    $('.nav-search').keypress(function (event){
+    $('.nav-search').keyup(function (event){
+        $('#searchedUsersContainer').html("")
         var keycode = event.keyCode
-        if(keycode == '13'){
-            event.preventDefault()
-
-            let searchedString = $(this).val().toLowerCase()
-            console.log('searched: ' + searchedString)
-            if (searchedString.length > 0) {
-                fetch(`${USER_URI}/getUsersByUsername/${searchedString}`).then(response => {
-                    return response.json()
-                }).then(data => {
-                    $('#searchedUsersContainer').html(searchedUsersHtml(data))
-                    userSearchListener()
-                })
-            }
+        let searchedString = $(this).val().toLowerCase()
+        if (searchedString.length >= 3) {
+            fetch(`${USER_URI}/getUsersByUsername/${searchedString}`).then(response => {
+                            return response.json()
+                        }).then(data => {
+                            $('#searchedUsersContainer').html(searchedUsersHtml(data))
+                            userSearchListener()
+                        })
         }
+        // if(keycode == '13'){
+        //     event.preventDefault()
+        //
+        //     let searchedString = $(this).val().toLowerCase()
+        //     console.log('searched: ' + searchedString)
+        //     if (searchedString.length > 0) {
+        //         fetch(`${USER_URI}/getUsersByUsername/${searchedString}`).then(response => {
+        //             return response.json()
+        //         }).then(data => {
+        //             $('#searchedUsersContainer').html(searchedUsersHtml(data))
+        //             userSearchListener()
+        //         })
+        //     }
+        // }
     })
 }
 
@@ -616,8 +659,8 @@ function newsfeedPostsHtml(sortedProps) {
     //language=HTML
     let html = `
         <header class="d-flex justify-content-between m-3">
-            <div class="mx-4"><h3>News Feed</h3></div>
-            <button class="btn btn-lightG mx-4" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
+            <div class=""><h3>News Feed</h3></div>
+            <button class="btn btn-lightG mx-1 mx-lg-4" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
         </header>
         <div class="post">
             ${sortedProps.map(post => {
@@ -683,7 +726,7 @@ function recentGroupCard(group) {
 
 function postCard(post) {
     //card-header begin
-    let html = `<div class="card m-3 post-num-${post.id} shadow-light card-dark-bg">
+    let html = `<div class="card m-lg-3 my-3 mx-1 post-num-${post.id} shadow-light card-dark-bg">
 					<div class="post-header mb-2 d-flex justify-content-between">
 						<a class="view-profile-page d-flex align-items-end" data-id="${post.author.id}">
 							 <div class="me-2 newsfeed-profile-pic-container">
@@ -738,7 +781,7 @@ function postCard(post) {
 
 function eventCard(event) {
     eventIdsArray.push(event)
-    let html = `<div class="card m-3 event-num-${event.id} shadow-light card-dark-bg">
+    let html = `<div class="card m-lg-3 my-3 mx-1 event-num-${event.id} shadow-light card-dark-bg">
 					<div class="post-header d-flex justify-content-between mb-2">
 						<a class="view-profile-page d-flex align-items-end" data-id="${event.eventCreator.id}">
 							 <div class="me-2 newsfeed-profile-pic-container">
