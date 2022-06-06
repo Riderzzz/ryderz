@@ -34,9 +34,9 @@ jobs:
             cd ${{ secrets.DEPLOY_DIR }}
             git checkout deploy
             git pull origin deploy
-            cat "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
-            cat "${{ secrets.KEYS_JS }}" > src/main/resources/static/js/keys.js
-            cat "${{ secrets.CONFIG_JS }}" > src/main/resources/static/js/config.js
+            printf "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
+            printf "${{ secrets.KEYS_JS }}" > src/main/resources/static/js/keys.js
+            printf "${{ secrets.CONFIG_JS }}" > src/main/resources/static/js/config.js
             pm2 reload all
           
 # end of deployment script
