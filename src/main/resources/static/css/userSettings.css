@@ -1,5 +1,5 @@
 .dashboard {
-    width: 75%;
+    width: 100%;
     color: white;
     height: 80vh;
 }
@@ -7,7 +7,6 @@
 .tabs {
     background-color: #282828;
     padding: 0;
-    border-radius: 10px 0 0 10px;
 }
 
 .setting-tab {
@@ -24,7 +23,6 @@
 
 .contentForm {
     background-color: #181818;
-    border-radius: 0 10px 10px 0;
 }
 
 .profileForm {
@@ -69,4 +67,20 @@
     background-color:  #A1CCA5;
     border: 2px solid #709775;
     opacity: .7%;
+}
+
+@media screen and (min-width:776px) {
+    .dashboard {
+        width: 75%;
+        color: white;
+        height: 80vh;
+    }
+
+    .tabs {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .contentForm {
+        border-radius: 0 10px 10px 0;
+    }
 }

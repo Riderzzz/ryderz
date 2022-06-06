@@ -7,9 +7,9 @@ export default function User(props) {
 	//language=HTML
 	let html = `
 		
-		<div class="background">
-			<div class="dashboard row mx-auto pt-5">
-				<div class="tabs col-3">
+		
+			<div class="dashboard row mx-auto pt-lg-5">
+				<div class="tabs col-12 col-lg-3">
 					<div class="user-image d-flex flex-column my-3 align-items-center">
 						<img class="shadow-profile-picture rounded-circle"
 							 src="${props.user.userPhotoUrl}"
@@ -24,13 +24,13 @@ export default function User(props) {
 						</ul>
 					</div>
 				</div>
-				<div class="contentForm col-9">
+				<div class="contentForm col-12 col-lg-9">
 					<div class="account">${accountSettingsHtml(props)}</div>
 					<div class="password d-none">${passwordSettingsHtml(props)}</div>
 					<div class="remove-account d-none">${removeAccountSettingsHtml(props)}</div>
 				</div>
 			</div>
-		</div>
+		
 		
         <div class="container d-none">
 			<h1 class="text-center mt-4">Hello ${props.user.username}</h1>
@@ -41,6 +41,7 @@ export default function User(props) {
                     <h5 id="show-id">User ID: ${props.user.id}</h5>
                     <h5>Username: <span data-username="${props.user.username}" contenteditable="true" id="show-username">${props.user.username}</span></h5>
                     <h5>Email: <span data-email="${props.user.email}" contenteditable="true" id="show-email">${props.user.email}</span></h5>
+					<div id="show-bio" data-bio="${props.user.bio}"></div>
 					<h2 class="mt-4">Your Posts (${props.user.posts.length})</h2>
                     <div>${props.user.posts.map(post => {`
                  <div>  
@@ -96,6 +97,12 @@ function accountSettingsHtml(props) {
 					<div class="col">
 						<label for="emailForm">Email</label>
 						<input type="text" class="form-control settingForm"  aria-label="email" id="emailForm" value="${props.user.email}">
+					</div>
+				</div>
+				<div class="row profileForm my-3">
+					<div class="col">
+						<label for="bioForm">Bio</label>
+						<textarea class="form-control settingForm" aria-label="bio" id="bioForm">${props.user.bio}</textarea>
 					</div>
 				</div>
 				<div class="my-3 d-flex align-items-center">
@@ -156,7 +163,7 @@ function removeAccountSettingsHtml(props) {
 				<div class="row my-3">
 					<div class="col-6">
 						<label for="currentPassword">Your password</label>
-						<input type="password" class="form-control settingForm" aria-label="First name" id="currentPassword">
+						<input type="password" class="form-control settingForm" aria-label="First name" id="currentPassword" autocomplete="false">
 					</div>
 				</div>
 				<div class="my-3 d-flex align-items-center">
@@ -188,7 +195,7 @@ function editHeaderImage() {
 			body: formData
 		}
 
-		fetch(`http://localhost:8081/api/users/changeHeader/${userId}`, requestObject)
+		fetch(`${URI}/api/users/changeHeader/${userId}`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -222,7 +229,7 @@ function editAvatarImage() {
 			body: formData
 		}
 
-		fetch(`http://localhost:8081/api/users/changeAvatar/${userId}`, requestObject)
+		fetch(`${URI}/api/users/changeAvatar/${userId}`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -257,7 +264,7 @@ function deleteAccountListener() {
 			body: password
 		}
 
-		fetch(`http://localhost:8081/api/users/deleteAccount/${userId}`, requestObject).then(r => {
+		fetch(`${URI}/api/users/deleteAccount/${userId}`, requestObject).then(r => {
 			if (r.status === 200) {
 				clearLocalStorage()
 				createView('/')
@@ -326,7 +333,7 @@ function editPasswordListener(){
 			body: oldPassword + "," + newPassword
 		}
 
-		fetch(`http://localhost:8081/api/users/updateAccountPassword`, request)
+		fetch(`${URI}/api/users/updateAccountPassword`, request)
 			.then(response => {
 				if (response.status === 200) {
 					createView('/user')
@@ -344,9 +351,12 @@ function editProfileBtnListener() {
 	$(".edit-profile").click(function () {
 		const originalUsername = $("#show-username").data("username");
 		const originalEmail = $("#show-email").data("email");
+		const originalBio = $('#show-bio').data('bio');
 		const userId = $(this).data("id");
 		const username = $("#usernameForm").val();
 		const email = $("#emailForm").val();
+		const bio = $('#bioForm').val();
+		console.log(bio)
 		const validation = $("#validation");
 
 		if (!username || !email) {
@@ -355,7 +365,7 @@ function editProfileBtnListener() {
 			return;
 		}
 
-		if (username === originalUsername && email === originalEmail) {
+		if (username === originalUsername && email === originalEmail && bio === originalBio) {
 			validation.text("No fields were changed!");
 			validation.css("color", "red");
 			return;
@@ -363,7 +373,8 @@ function editProfileBtnListener() {
 
 		const user = {
 			username,
-			email
+			email,
+			bio
 		}
 
 		const request = {
@@ -372,7 +383,7 @@ function editProfileBtnListener() {
 			body: JSON.stringify(user)
 		}
 
-		fetch(`http://localhost:8081/api/users/${userId}`, request)
+		fetch(`${URI}/api/users/${userId}`, request)
 			.then(res => {
 				console.log(res.status)
 				window.localStorage.clear()

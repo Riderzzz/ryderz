@@ -1,8 +1,8 @@
 import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
 
-const BASE_URI = 'http://localhost:8081/api/users';
-const COMMENT_URI = "http://localhost:8081/api/comments";
+const BASE_URI = `${URI}/api/users`;
+const COMMENT_URI = `${URI}/api/comments`;
 
 export default function Profile(props) {
     console.log(props)
@@ -109,6 +109,9 @@ export default function Profile(props) {
             <!--end of showing contents when buttons pressed-->
         </div>
     </section>
+    <div>
+        
+    </div>
 
     </body>
     </html>`;

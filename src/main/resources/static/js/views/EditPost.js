@@ -2,7 +2,7 @@ import {getHeaders} from "../auth.js";
 import createView from "../createView.js";
 import {editPostContent, editPostId, editPostTitle} from "./NewsFeed.js";
 
-const POST_URI = 'http://localhost:8081/api/posts'
+const POST_URI = `${URI}/api/posts`
 
 export default function EditPost(props) {
     console.log(props)

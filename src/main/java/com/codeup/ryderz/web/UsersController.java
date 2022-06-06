@@ -152,6 +152,7 @@ public class UsersController {
         User originalUser = userRepository.getById(id);
         originalUser.setEmail(newUser.getEmail());
         originalUser.setUsername(newUser.getUsername());
+        originalUser.setBio(newUser.getBio());
         userRepository.save(originalUser);
         System.out.println("User updated!");
     }

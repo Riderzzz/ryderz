@@ -77,7 +77,7 @@ function createGroupSubmitListener() {
 			body: JSON.stringify(newGroup)
 		}
 
-		fetch(`http://localhost:8081/api/groups`, request)
+		fetch(`${URI}/api/groups`, request)
 			.then(res => {
 				console.log(res.status)
 				createView("/discover")

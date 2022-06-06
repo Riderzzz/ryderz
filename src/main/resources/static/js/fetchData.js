@@ -8,7 +8,7 @@
 export default function fetchData(state, request) {
     const promises = [];
     //TODO: this needs to be moved to a prop file or env variable
-    const baseUri = "http://localhost:8081";
+    const baseUri = URI;
 
     for (let pieceOfState of Object.keys(state)) {
 

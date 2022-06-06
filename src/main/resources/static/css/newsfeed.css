@@ -164,7 +164,7 @@
 }
 
 .users-username:hover {
-    color: #9d2e2e;
+    color: #A1CCA5;
     cursor: pointer;
 }
 .shadow-light {
@@ -268,5 +268,23 @@
 
 .transparentBg {
     background-color: transparent;
+}
+
+.newsfeedSelect {
+    border-top: 1px solid #404040;
+}
+
+.selectTab {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 1.5em;
+    background-color: #181818;
+    padding-top: .25em;
+    padding-bottom: .25em;
+}
+
+.bottom-border {
+    border-bottom: 2px solid #A1CCA5;
 }
 

@@ -45,9 +45,9 @@ export default function Navbar(props) {
             <li class="nav-item d-lg-none">
                 <a class="nav-link" href="/logout" data-link>Logout</a>
             </li>
-			<li class="nav-item d-none d-lg-block">
+			<li class="nav-item">
 				<div class="dropdown">
-					<input class="form-control me-2 nav-search dropdown-toggle settingForm" type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search" autocomplete="off">
+					<input class="form-control me-2 nav-search dropdown-toggle settingForm" type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search" value=" ">
 					<ul class="dropdown-menu w-100 transparentBg" id="searchedUsersContainer" aria-labelledby="dropdownMenuButton1">
 					</ul>
 				</div>
