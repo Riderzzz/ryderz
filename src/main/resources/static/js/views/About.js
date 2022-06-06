@@ -5,7 +5,7 @@ export default function About(props) {
 <div class="card-container-about">
       <div class="card-about">
         <div class="front">
-          <img class="about-images" src="../../images/hectors.jpg" alt="hector"/>
+          <img class="about-images" src="../../images/hector.jpg" alt="hector"/>
         </div>
         <div class="back">
           <div class="details">
@@ -14,11 +14,10 @@ export default function About(props) {
             </div>
             <h2>Hector Mejia</h2>
             <span>Software Engineer</span>
-
             <div class="social-icon">
-              <a href="#"><i class="fab fa-facebook"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://github.com/Hector7Mejia?tab=repositories" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/hector-mejia-/"><i class="fab fa-linkedin-in"></i></a>
+              <a href="mailto:mejiah6060@gmail.com"><i class="fa-brands fa-google"></i></a>
               <a href="#"><i class="fab fa-pinterest"></i></a>
             </div>
           </div>
@@ -27,7 +26,7 @@ export default function About(props) {
 
       <div class="card-about">
         <div class="front">
-          <img src="https://assets.biztimes.com/uploads/2019/06/Madison-Goldbeck-2018.11.30-WEB-300x400.jpg" alt=""/>
+          <img class="about-images" src="../../images/william.jpg" alt="william"/>
         </div>
         <div class="back">
           <div class="details">
@@ -37,13 +36,13 @@ export default function About(props) {
               ratione saepe, perferendis ipsam alias quam. Libero illum maxime,
               unde itaque ratione "
             </div>
-            <h2>Derek Johnson</h2>
-            <span>Senior Illustrator</span>
+            <h2>William Withers</h2>
+            <span>Software Engineer</span>
 
             <div class="social-icon">
-              <a href="#"><i class="fab fa-facebook"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://github.com/withers56" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/william-withers1/"><i class="fab fa-linkedin-in"></i></a>
+              <a href="mailto:william.k.withers@gmail.com"><i class="fa-brands fa-google"></i></a>
               <a href="#"><i class="fab fa-pinterest"></i></a>
             </div>
           </div>
@@ -52,9 +51,9 @@ export default function About(props) {
 
       <div class="card-about">
         <div class="front">
-          <img
-            src="http://masterbeautyphotography.com/wp-content/uploads/2016/11/Low-Key-Portrait_web-300x400.jpg"
-            alt=""
+          <img class="about-images"
+            src="../../images/doggie.png"
+            alt="Irvin Ruiz"
           />
         </div>
         <div class="back">
@@ -65,13 +64,13 @@ export default function About(props) {
               ratione saepe, perferendis ipsam alias quam. Libero illum maxime,
               unde itaque ratione "
             </div>
-            <h2>Capella Fiona</h2>
-            <span>Senior Designer</span>
+            <h2>Irvin Ruiz</h2>
+            <span>Software Engineer</span>
 
             <div class="social-icon">
-              <a href="#"><i class="fab fa-facebook"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://github.com/lucidawareness" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/irvinruiz/"><i class="fab fa-linkedin-in"></i></a>
+              <a href="mailto:mejiah6060@gmail.com"><i class="fa-brands fa-google"></i></a>
               <a href="#"><i class="fab fa-pinterest"></i></a>
             </div>
           </div>
@@ -80,7 +79,7 @@ export default function About(props) {
 
       <div class="card-about">
         <div class="front">
-          <img
+          <img class="about-images"
             src="https://www.tavistockwood.com/wp-content/uploads/2019/03/Frecheville-James-Headshot-300x400.jpg"
             alt=""
           />
@@ -93,13 +92,13 @@ export default function About(props) {
               ratione saepe, perferendis ipsam alias quam. Libero illum maxime,
               unde itaque ratione "
             </div>
-            <h2>James Bond</h2>
-            <span>CEO</span>
+            <h2>Daniel Ficci</h2>
+            <span>Software Engineer</span>
 
             <div class="social-icon">
-              <a href="#"><i class="fab fa-facebook"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://github.com/DFicci" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/daniel-ficci/"><i class="fab fa-linkedin-in"></i></a>
+              <a href="mailto:danielficci@gmail.com"><i class="fa-brands fa-google"></i></a>
               <a href="#"><i class="fab fa-pinterest"></i></a>
             </div>
           </div>

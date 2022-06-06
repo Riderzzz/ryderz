@@ -28,11 +28,22 @@ function addListenerToNavLinks() {
         if(event.target.matches('label')) {
             return;
         }
+        if(event.target.parentElement && event.target.parentElement.href && event.target.parentElement.href.matches('github')){
+            return;
+        }
+        if(event.target.parentElement && event.target.parentElement.href && event.target.parentElement.href.matches('linkedin')){
+            return;
+        }
+        if(event.target.parentElement && event.target.parentElement.href && event.target.parentElement.href.matches('mailto')){
+            return;
+        }
+        console.log(event);
         event.preventDefault();
         if (event.target.dataset['link'] !== undefined) {
             const URI = event.target.href.substring(location.origin.length);
             createView(URI);
         }
+
     });
 }
 

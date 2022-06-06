@@ -6,6 +6,7 @@ body h1 {
     height: 400px;
     width: 300px;
 }
+
 .card-container-about {
     left: 50%;
     top: 50%;
@@ -16,7 +17,12 @@ body h1 {
     background: black;
     align-self: center;
     margin-top: 70px;
-    box-sizing: unset;
+}
+
+.card-container-about,
+.card-container-about * {
+    box-sizing: content-box;
+    background: black;
 }
 
 .card-about {
