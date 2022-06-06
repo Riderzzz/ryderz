@@ -13,7 +13,7 @@ export default function Discover(props) {
     <div class="container discoverContainer">
 		<header>
 			<div class="my-3">
-				<h1 class="text-white">Discover New Roads</h1>
+				<h1 class="pt-3 text-white">Discover New Roads</h1>
 			</div>
 			<div class="headerImgDiv">
 				<img class="discoverFeaturedEventImg" src="https://images.unsplash.com/photo-1498084393753-b411b2d26b34?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80">

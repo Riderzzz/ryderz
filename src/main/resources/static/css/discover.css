@@ -41,7 +41,7 @@
 .discoverContainer {
     background-color: #181818;
     border-radius: 10px;
-    padding: 0px 1em;
+    padding: 0 1em;
 }
 
 .createEventBtn {
@@ -55,11 +55,11 @@
 }
 
 .createEventBtn:hover {
-    background-color: #4eb455;
+    background-color: #415D43;
 }
 
 .createGroupBtn:hover {
-    background-color: #4eb455;
+    background-color: #415D43;
 }
 
 .discoverTitle {
@@ -89,7 +89,7 @@
     display: grid;
     gap: 1em;
     grid-auto-flow: column;
-    grid-auto-columns: 100%;
+    grid-auto-columns: 77%;
 
     padding: 0 var(--_spacer) var(--_spacer);
 
@@ -136,8 +136,11 @@
 
 .featuredTitle {
     position: absolute;
-    top: 45%;
+    top: 38%;
     left: 10%;
+    background-color: rgba(76, 76, 76, 0.7);
+    border-radius: 10px;
+    padding: 1em;
 }
 
 .discoverFeaturedEventImg {
@@ -154,6 +157,7 @@
 .featuredSubDetails {
     color: white;
     font-size: .75em;
+    margin-bottom: 0;
 }
 
 /*// Small devices (landscape phones, 576px and up)*/
@@ -163,7 +167,7 @@
         display: grid;
         gap: 1em;
         grid-auto-flow: column;
-        grid-auto-columns: 100%;
+        grid-auto-columns: 84%;
 
         padding: 0 var(--_spacer) var(--_spacer);
 
@@ -189,7 +193,7 @@
         display: grid;
         gap: 1em;
         grid-auto-flow: column;
-        grid-auto-columns: 50%;
+        grid-auto-columns: 40%;
 
         padding: 0 var(--_spacer) var(--_spacer);
 

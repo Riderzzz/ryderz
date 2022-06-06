@@ -25,7 +25,7 @@
 }
 
 #singleEventMap {
-    height: 100%;
+    height: 420px;
     /* The height is 400 pixels */
     width: 100%;
     /* The width is the width of the web page */
@@ -37,6 +37,7 @@
     border-radius: 10px;
     color: white;
     margin-bottom: 2em;
+    margin-top: 2em;
     padding: 1em;
 }
 
@@ -45,6 +46,7 @@
     border-radius: 10px;
     color: white;
     padding: 1em;
+    margin-top: 2em;
 }
 
 .eventComments {
@@ -52,7 +54,11 @@
     border-radius: 10px;
     padding: 1em;
     color: white;
-    margin-bottom: 1em;
+    margin-bottom: 10em;
+}
+
+.eventLeftCol {
+    background-color: #4C4C4C;
 }
 
 .eventComment {
@@ -110,4 +116,16 @@
 
 .editEventBtn:hover {
     background-color: #4eb455;
+}
+
+.eventContainer {
+    background-color: #181818;
+    border-radius: 10px;
+    padding: 0 1em;
+}
+
+@media (max-width: 768px) {
+    .eventComments {
+        margin-bottom: 1em;
+    }
 }
