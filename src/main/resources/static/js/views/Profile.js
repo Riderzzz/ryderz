@@ -110,6 +110,9 @@ export default function Profile(props) {
             <!--end of showing contents when buttons pressed-->
         </div>
     </section>
+    <div>
+        
+    </div>
 
     </body>
     </html>`;
