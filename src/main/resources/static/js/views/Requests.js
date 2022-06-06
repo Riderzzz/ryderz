@@ -34,8 +34,11 @@ function showAllRequests(props) {
     let html = `
        ${props.request.map(m => `
          <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                         <h5 class="card-title">${m.sender.username}</h5>
+                    <div class="card-body request-card">
+                         <img src="${m.sender.userProfilePictureUrl}"
+                         alt="lightbox image 1" class="rounded-circle"
+                         style="width: 45px;height: 45px;">
+                         <h5 class="card-title request-username">${m.sender.username}</h5>
                          <div class="d-flex justify-content-end">
                         <button href="#" class="btn-primary accept-friend" data-id="${m.sender.id}">accept</button>
                         <button href="#" class="btn-danger decline-friend">decline</button>
