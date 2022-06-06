@@ -12,7 +12,7 @@ export default function Event(props) {
         <title>Event</title>
     </head>
     <body>
-    <div class="container">
+    <div class="container eventContainer">
         <div class="row mt-4 justify-content-center">
             <div class="col-md-7">
                 <div class="eventTitles">
