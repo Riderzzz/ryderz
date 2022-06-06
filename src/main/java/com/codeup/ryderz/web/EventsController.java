@@ -35,7 +35,7 @@ public class EventsController {
         for (Comments comment: eventComments) {
             User commentAuthor = comment.getAuthor();
             String imageName = commentAuthor.getProfilePicture();
-            String imageUrl = s3Service.getSignedURL(imageName);
+            String imageUrl = s3Service.getSignedURL(imageName, 5L);
             commentAuthor.setUserPhotoUrl(imageUrl);
         }
 
@@ -134,7 +134,7 @@ public class EventsController {
     @GetMapping("friendsEvents")
     public Collection<Events> getNewsfeedEvents(OAuth2Authentication auth) {
         User mainUser = userRepository.findByEmail(auth.getName());
-        mainUser.setUserPhotoUrl(s3Service.getSignedURL(mainUser.getProfilePicture()));
+        mainUser.setUserPhotoUrl(s3Service.getSignedURL(mainUser.getProfilePicture(), 5L));
 
         Collection<User> userFriends = mainUser.getFriends();
         List<Events> usersFriendsEvents = new ArrayList<>();
@@ -144,7 +144,7 @@ public class EventsController {
 
         for (User friend : userFriends) {
             usersFriendsEvents.addAll(eventsRepository.findEventsByEventCreator_Username(friend.getUsername()));
-            friend.setUserPhotoUrl(s3Service.getSignedURL(friend.getProfilePicture()));
+            friend.setUserPhotoUrl(s3Service.getSignedURL(friend.getProfilePicture(),5L));
         }
 
         Collections.sort(usersFriendsEvents);

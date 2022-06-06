@@ -39,7 +39,7 @@ public class GroupsController {
 
         for (Groups group : groups) {
             if (group.getGroupImageName() != null) {
-                String groupImageUrl = service.getSignedURL(group.getGroupImageName());
+                String groupImageUrl = service.getSignedURL(group.getGroupImageName(), 5L);
                 group.setGroupPhotoUrl(groupImageUrl);
             }
         }
@@ -51,7 +51,7 @@ public class GroupsController {
     public Groups getGroupById(@PathVariable Long groupId) {
         Groups group = groupsRepository.findById(groupId).get();
         if (group.getGroupImageName() != null) {
-            String groupImageUrl = service.getSignedURL(group.getGroupImageName());
+            String groupImageUrl = service.getSignedURL(group.getGroupImageName(), 5L);
             group.setGroupPhotoUrl(groupImageUrl);
         }
 
@@ -60,7 +60,7 @@ public class GroupsController {
         for (Comments comment : groupComments) {
             User commentAuthor = comment.getAuthor();
             String imageName = commentAuthor.getProfilePicture();
-            String imageUrl = service.getSignedURL(imageName);
+            String imageUrl = service.getSignedURL(imageName, 5L);
             commentAuthor.setUserPhotoUrl(imageUrl);
         }
 
@@ -163,7 +163,7 @@ public class GroupsController {
 
         for (Groups group : recentThree) {
             String groupPhotoName = group.getGroupImageName();
-            String signedUrl = service.getSignedURL(groupPhotoName);
+            String signedUrl = service.getSignedURL(groupPhotoName, 5L);
             group.setGroupPhotoUrl(signedUrl);
         }
 
