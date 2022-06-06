@@ -1,4 +1,4 @@
-import {getHeaders, isLoggedIn, userEmail} from "../auth.js";
+import {getHeaders, isLoggedIn, pubnubInitWithUserUsername, userEmail} from "../auth.js";
 import createView from "../createView.js";
 import {fetchOldMessages, sendMsg, subscribeToChannel} from "../pubnubChat.js";
 import {chatBoxHtml, selectFriendsTabListener, sendMsgBtn, sendMsgEnter, toggleChatboxBtn} from "./chat.js";
@@ -94,8 +94,22 @@ export function NewsFeedEvents() {
     selectFriendsTabListener()
     hideChatbox()
 
-    newsfeedInitAllMaps()
+    showMap()
+    // newsfeedInitAllMaps()
 }
+function showMap() {
+    $('.show-map').click(function (){
+        $(this).remove()
+        let mapId = $(this).data('id')
+        let origin = $(this).data('origin')
+        let destination = $(this).data('destination')
+
+        $(`.map[data-id=${mapId}]`).removeClass('blur')
+
+        newsfeedInitMap(mapId, origin, destination)
+    })
+}
+
 function userSearchListener() {
     $('.userSearched').click(function (){
         const userId = $(this).data('id')
@@ -320,7 +334,7 @@ function editPostBtn() {
             content,
             categories
         }
-        console.log(postObject);
+        // console.log(postObject);
         const requestObject = {
             method: "PUT",
             headers: getHeaders(),
@@ -439,16 +453,16 @@ function leaveEvent() {
         }
 
         fetch(`${EVENT_URI}/${eventId}/remove-user`, requestObject).then(r => {
-            console.log('left')
+            // console.log('left')
         }).catch(r => {
 
         }).finally(() => {
             fetchUserData().then(d => {
-                console.log(d)
+                // console.log(d)
                 $('.sidebar-container').html(newsfeedSidebarHtml(d))
             })
             fetchPostsAndEventsData().then(d => {
-                console.log(d)
+                // console.log(d)
                 $('.posts-container').html(newsfeedPostsHtml(d))
                 NewsFeedEvents()
             })
@@ -702,7 +716,7 @@ function postCard(post) {
 									</div>
 									<div class="collapse" id="post-${post.id}-collapseComments">
 										<div class="input-group my-3">
-											<input type="text" id="comment-content-${post.id}" class="form-control" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
+											<input type="text" id="comment-content-${post.id}" class="form-control settingForm" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
 											<button class="btn btn-outline-secondary post-comment-btn comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
 										</div>
 										<div class="post-${post.id}-comments">
@@ -761,8 +775,8 @@ function eventCard(event) {
                                             <p class="card-text" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
                                         </div>
                                         <div class="map-container d-none d-lg-block col-lg-6 mx-auto">
-                                            <div id="map-${event.id}" class="map"></div>
-                                            
+                                            <div id="map-${event.id}" class="map blur" data-id="${event.id}"></div>        
+                                            <button type="button" class="btn btn-lightG show-map" data-id="${event.id}" data-origin="${event.origin}" data-destination="${event.destination}">View</button>
                                         </div>
                                     </div>
 									<p class="card-text" id="post-categories-${event.id}">
@@ -781,7 +795,7 @@ function eventCard(event) {
 									
 									<div class="collapse" id="event-${event.id}-collapseComments">
 										<div class="input-group my-3">
-											<input type="text" id="comment-content-${event.id}" class="form-control" data-postId="${event.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${event.id}">
+											<input type="text" id="comment-content-${event.id}" class="form-control settingForm" data-postId="${event.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${event.id}">
 											<button class="btn btn-outline-secondary event-comment-btn comment-btn" data-id="${event.id}" type="button" id="button-addon-${event.id}">comment</button>
 										</div>
 										<div class="event-${event.id}-comments">
@@ -1013,12 +1027,12 @@ function fetchPostsAndEventsData() {
 
         const sortedProps = mixedProps.sort((a, b) => b.date - a.date)
 
-        console.log(sortedProps)
-        console.log(data);
+        // console.log(sortedProps)
+        // console.log(data);
         return sortedProps
     }).catch(function (error) {
         // if there's an error, log it
-        console.log(error);
+        // console.log(error);
     });
 }
 
