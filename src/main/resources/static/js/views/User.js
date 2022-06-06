@@ -7,9 +7,9 @@ export default function User(props) {
 	//language=HTML
 	let html = `
 		
-		<div class="background">
-			<div class="dashboard row mx-auto pt-5">
-				<div class="tabs col-3">
+		
+			<div class="dashboard row mx-auto pt-lg-5">
+				<div class="tabs col-12 col-lg-3">
 					<div class="user-image d-flex flex-column my-3 align-items-center">
 						<img class="shadow-profile-picture rounded-circle"
 							 src="${props.user.userPhotoUrl}"
@@ -24,13 +24,13 @@ export default function User(props) {
 						</ul>
 					</div>
 				</div>
-				<div class="contentForm col-9">
+				<div class="contentForm col-12 col-lg-9">
 					<div class="account">${accountSettingsHtml(props)}</div>
 					<div class="password d-none">${passwordSettingsHtml(props)}</div>
 					<div class="remove-account d-none">${removeAccountSettingsHtml(props)}</div>
 				</div>
 			</div>
-		</div>
+		
 		
         <div class="container d-none">
 			<h1 class="text-center mt-4">Hello ${props.user.username}</h1>
@@ -163,7 +163,7 @@ function removeAccountSettingsHtml(props) {
 				<div class="row my-3">
 					<div class="col-6">
 						<label for="currentPassword">Your password</label>
-						<input type="password" class="form-control settingForm" aria-label="First name" id="currentPassword">
+						<input type="password" class="form-control settingForm" aria-label="First name" id="currentPassword" autocomplete="false">
 					</div>
 				</div>
 				<div class="my-3 d-flex align-items-center">
