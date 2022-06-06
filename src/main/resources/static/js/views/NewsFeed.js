@@ -336,7 +336,7 @@ function editPostBtn() {
             content,
             categories
         }
-        console.log(postObject);
+        // console.log(postObject);
         const requestObject = {
             method: "PUT",
             headers: getHeaders(),
@@ -455,16 +455,16 @@ function leaveEvent() {
         }
 
         fetch(`${EVENT_URI}/${eventId}/remove-user`, requestObject).then(r => {
-            console.log('left')
+            // console.log('left')
         }).catch(r => {
 
         }).finally(() => {
             fetchUserData().then(d => {
-                console.log(d)
+                // console.log(d)
                 $('.sidebar-container').html(newsfeedSidebarHtml(d))
             })
             fetchPostsAndEventsData().then(d => {
-                console.log(d)
+                // console.log(d)
                 $('.posts-container').html(newsfeedPostsHtml(d))
                 NewsFeedEvents()
             })
@@ -615,7 +615,7 @@ function newsfeedSidebarHtml(userProps) {
 
 
 function newsfeedPostsHtml(sortedProps) {
-    console.log(sortedProps)
+    // console.log(sortedProps)
     //language=HTML
 
 
@@ -721,7 +721,7 @@ function postCard(post) {
 									</div>
 									<div class="collapse" id="post-${post.id}-collapseComments">
 										<div class="input-group my-3">
-											<input type="text" id="comment-content-${post.id}" class="form-control" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
+											<input type="text" id="comment-content-${post.id}" class="form-control settingForm" data-postId="${post.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${post.id}">
 											<button class="btn btn-outline-secondary post-comment-btn comment-btn" data-id="${post.id}" type="button" id="button-addon-${post.id}">comment</button>
 										</div>
 										<div class="post-${post.id}-comments">
@@ -800,7 +800,7 @@ function eventCard(event) {
 									
 									<div class="collapse" id="event-${event.id}-collapseComments">
 										<div class="input-group my-3">
-											<input type="text" id="comment-content-${event.id}" class="form-control" data-postId="${event.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${event.id}">
+											<input type="text" id="comment-content-${event.id}" class="form-control settingForm" data-postId="${event.id}" placeholder="Your thoughts..." aria-label="Comment" aria-describedby="button-addon-${event.id}">
 											<button class="btn btn-outline-secondary event-comment-btn comment-btn" data-id="${event.id}" type="button" id="button-addon-${event.id}">comment</button>
 										</div>
 										<div class="event-${event.id}-comments">
@@ -1032,12 +1032,12 @@ function fetchPostsAndEventsData() {
 
         const sortedProps = mixedProps.sort((a, b) => b.date - a.date)
 
-        console.log(sortedProps)
-        console.log(data);
+        // console.log(sortedProps)
+        // console.log(data);
         return sortedProps
     }).catch(function (error) {
         // if there's an error, log it
-        console.log(error);
+        // console.log(error);
     });
 }
 
