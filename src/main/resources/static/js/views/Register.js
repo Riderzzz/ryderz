@@ -112,7 +112,7 @@ export function RegisterEvent() {
             body: JSON.stringify(newUser)
         }
 
-        fetch("http://localhost:8081/api/users", request)
+        fetch(`${URI}/api/users`, request)
             .then(response => {
                 if (response.status === 500) {
                     ifAccountAlreadyCreated();

@@ -3,10 +3,10 @@ import createView from "../createView.js";
 import {fetchOldMessages, sendMsg, subscribeToChannel} from "../pubnubChat.js";
 import {chatBoxHtml, selectFriendsTabListener, sendMsgBtn, sendMsgEnter, toggleChatboxBtn} from "./chat.js";
 
-const COMMENT_URI = "http://localhost:8081/api/comments";
-const POST_URI = "http://localhost:8081/api/posts";
-const EVENT_URI = "http://localhost:8081/api/events";
-const USER_URI = "http://localhost:8081/api/users";
+const COMMENT_URI = `${URI}/api/comments`;
+const POST_URI = `${URI}/api/posts`;
+const EVENT_URI = `${URI}/api/events`;
+const USER_URI = `${URI}/api/users`;
 
 export let editPostId;
 export let editPostTitle;
@@ -991,7 +991,7 @@ export function fetchUserData() {
         method: 'GET',
         headers: getHeaders()
     }
-    return fetch(`http://localhost:8081/api/users/me`, requestObject).then(r => {
+    return fetch(`${URI}/api/users/me`, requestObject).then(r => {
         return r.json()
     }).then(data => data)
 }
@@ -1002,8 +1002,8 @@ function fetchPostsAndEventsData() {
         headers: getHeaders()
     }
     return Promise.all([
-        fetch("http://localhost:8081/api/posts/friendsPost", requestObject),
-        fetch("http://localhost:8081/api/events/friendsEvents", requestObject),
+        fetch(`${URI}/api/posts/friendsPost`, requestObject),
+        fetch(`${URI}/api/events/friendsEvents`, requestObject),
     ]).then(function (responses) {
         // Get a JSON object from each of the responses
         return Promise.all(responses.map(function (response) {

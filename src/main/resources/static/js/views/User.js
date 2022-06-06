@@ -188,7 +188,7 @@ function editHeaderImage() {
 			body: formData
 		}
 
-		fetch(`http://localhost:8081/api/users/changeHeader/${userId}`, requestObject)
+		fetch(`${URI}/api/users/changeHeader/${userId}`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -222,7 +222,7 @@ function editAvatarImage() {
 			body: formData
 		}
 
-		fetch(`http://localhost:8081/api/users/changeAvatar/${userId}`, requestObject)
+		fetch(`${URI}/api/users/changeAvatar/${userId}`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -257,7 +257,7 @@ function deleteAccountListener() {
 			body: password
 		}
 
-		fetch(`http://localhost:8081/api/users/deleteAccount/${userId}`, requestObject).then(r => {
+		fetch(`${URI}/api/users/deleteAccount/${userId}`, requestObject).then(r => {
 			if (r.status === 200) {
 				clearLocalStorage()
 				createView('/')
@@ -326,7 +326,7 @@ function editPasswordListener(){
 			body: oldPassword + "," + newPassword
 		}
 
-		fetch(`http://localhost:8081/api/users/updateAccountPassword`, request)
+		fetch(`${URI}/api/users/updateAccountPassword`, request)
 			.then(response => {
 				if (response.status === 200) {
 					createView('/user')
@@ -372,7 +372,7 @@ function editProfileBtnListener() {
 			body: JSON.stringify(user)
 		}
 
-		fetch(`http://localhost:8081/api/users/${userId}`, request)
+		fetch(`${URI}/api/users/${userId}`, request)
 			.then(res => {
 				console.log(res.status)
 				window.localStorage.clear()

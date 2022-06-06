@@ -1,7 +1,7 @@
 import {getHeaders} from "../auth.js";
 import createView from "../createView.js";
 
-const POST_URI = 'http://localhost:8081/api/posts'
+const POST_URI = `${URI}/api/posts`
 
 export default function CreatePost(props) {
     console.log(props)

@@ -223,7 +223,7 @@ function joinEventBtn() {
 			headers: getHeaders()
 		}
 
-		fetch(`http://localhost:8081/api/events/${eventId}/adduser`, request)
+		fetch(`${URI}/api/events/${eventId}/adduser`, request)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -254,7 +254,7 @@ function leaveEventBtn() {
 			headers: getHeaders()
 		}
 
-		fetch(`http://localhost:8081/api/events/${eventId}/remove-user`, request)
+		fetch(`${URI}/api/events/${eventId}/remove-user`, request)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -300,7 +300,7 @@ function commentOnEvent() {
 			body: JSON.stringify(commentObject)
 		}
 
-		fetch(`http://localhost:8081/api/comments`, requestObject)
+		fetch(`${URI}/api/comments`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -327,7 +327,7 @@ function refreshComments(eventId) {
 		headers: getHeaders()
 	}
 
-	fetch(`http://localhost:8081/api/events/${eventId}`, requestObject)
+	fetch(`${URI}/api/events/${eventId}`, requestObject)
 		.then(res => res.json())
 		.then(data => {
 			let state = {event: data}
@@ -447,7 +447,7 @@ function editEventBtn(OGState, OGStatusOfEvent, OGCategories) {
 			headers: getHeaders()
 		}
 
-		fetch(`http://localhost:8081/api/categories/all`)
+		fetch(`${URI}/api/categories/all`)
 			.then(res => res.json())
 			.then(data => {
 				console.log(data)
@@ -546,7 +546,7 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 			body: JSON.stringify(editedEvent)
 		}
 
-		fetch(`http://localhost:8081/api/events/${eventId}`, request)
+		fetch(`${URI}/api/events/${eventId}`, request)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -579,7 +579,7 @@ function deleteEventBtn() {
 			headers: getHeaders()
 		}
 
-		fetch(`http://localhost:8081/api/events/${eventId}`, requestObject)
+		fetch(`${URI}/api/events/${eventId}`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {

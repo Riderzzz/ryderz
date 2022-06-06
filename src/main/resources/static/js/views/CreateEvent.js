@@ -270,7 +270,7 @@ function createEventSubmitListener() {
 			body: JSON.stringify(newEvent)
 		}
 
-		fetch(`http://localhost:8081/api/events`, request)
+		fetch(`${URI}/api/events`, request)
 			.then(res => {
 				console.log(res.status)
 				createView("/discover")

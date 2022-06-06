@@ -2,7 +2,7 @@ import createView from "../createView.js";
 import {getHeaders} from "../auth.js";
 
 
-const BASE_URI = 'http://localhost:8081/api/posts';
+const BASE_URI = `${URI}/api/posts`;
 
 export default function PostIndex(props) {
     // language=HTML

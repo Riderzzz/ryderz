@@ -81,7 +81,7 @@ function joinGroupBtn() {
 			headers: getHeaders()
 		}
 
-		fetch(`http://localhost:8081/api/groups/${groupId}/adduser`, request)
+		fetch(`${URI}/api/groups/${groupId}/adduser`, request)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -110,7 +110,7 @@ function leaveGroupBtn() {
 			headers: getHeaders()
 		}
 
-		fetch(`http://localhost:8081/api/groups/${groupId}/remove-user`, request)
+		fetch(`${URI}/api/groups/${groupId}/remove-user`, request)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -184,7 +184,7 @@ function editGroupSubmitBtn(groupName, OGBio, OGLocation) {
 			body: JSON.stringify(editedGroup)
 		}
 
-		fetch(`http://localhost:8081/api/groups/${groupId}`, request)
+		fetch(`${URI}/api/groups/${groupId}`, request)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -217,7 +217,7 @@ function deleteGroupBtn() {
 			headers: getHeaders()
 		}
 
-		fetch(`http://localhost:8081/api/groups/${groupId}`, requestObject)
+		fetch(`${URI}/api/groups/${groupId}`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -257,7 +257,7 @@ function createCommentListener() {
 			body: JSON.stringify(commentObject)
 		}
 
-		fetch(`http://localhost:8081/api/comments`, requestObject)
+		fetch(`${URI}/api/comments`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
@@ -287,7 +287,7 @@ function refreshComments(groupId) {
 		headers: getHeaders()
 	}
 
-	fetch(`http://localhost:8081/api/groups/${groupId}`, requestObject)
+	fetch(`${URI}/api/groups/${groupId}`, requestObject)
 		.then(res => res.json())
 		.then(data => {
 			let state = {group: data}
@@ -314,7 +314,7 @@ function uploadGroupImgHeader() {
 			body: formData
 		}
 
-		fetch(`http://localhost:8081/api/groups/${groupId}/groupUpload`, requestObject)
+		fetch(`${URI}/api/groups/${groupId}/groupUpload`, requestObject)
 			.then(res => {
 				console.log(res.status)
 				if (res.status !== 200) {
