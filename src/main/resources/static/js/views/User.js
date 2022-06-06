@@ -41,6 +41,7 @@ export default function User(props) {
                     <h5 id="show-id">User ID: ${props.user.id}</h5>
                     <h5>Username: <span data-username="${props.user.username}" contenteditable="true" id="show-username">${props.user.username}</span></h5>
                     <h5>Email: <span data-email="${props.user.email}" contenteditable="true" id="show-email">${props.user.email}</span></h5>
+					<div id="show-bio" data-bio="${props.user.bio}"></div>
 					<h2 class="mt-4">Your Posts (${props.user.posts.length})</h2>
                     <div>${props.user.posts.map(post => {`
                  <div>  
@@ -96,6 +97,12 @@ function accountSettingsHtml(props) {
 					<div class="col">
 						<label for="emailForm">Email</label>
 						<input type="text" class="form-control settingForm"  aria-label="email" id="emailForm" value="${props.user.email}">
+					</div>
+				</div>
+				<div class="row profileForm my-3">
+					<div class="col">
+						<label for="bioForm">Bio</label>
+						<textarea class="form-control settingForm" aria-label="bio" id="bioForm">${props.user.bio}</textarea>
 					</div>
 				</div>
 				<div class="my-3 d-flex align-items-center">
@@ -344,9 +351,12 @@ function editProfileBtnListener() {
 	$(".edit-profile").click(function () {
 		const originalUsername = $("#show-username").data("username");
 		const originalEmail = $("#show-email").data("email");
+		const originalBio = $('#show-bio').data('bio');
 		const userId = $(this).data("id");
 		const username = $("#usernameForm").val();
 		const email = $("#emailForm").val();
+		const bio = $('#bioForm').val();
+		console.log(bio)
 		const validation = $("#validation");
 
 		if (!username || !email) {
@@ -355,7 +365,7 @@ function editProfileBtnListener() {
 			return;
 		}
 
-		if (username === originalUsername && email === originalEmail) {
+		if (username === originalUsername && email === originalEmail && bio === originalBio) {
 			validation.text("No fields were changed!");
 			validation.css("color", "red");
 			return;
@@ -363,7 +373,8 @@ function editProfileBtnListener() {
 
 		const user = {
 			username,
-			email
+			email,
+			bio
 		}
 
 		const request = {
