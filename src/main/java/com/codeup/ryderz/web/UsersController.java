@@ -23,18 +23,26 @@ import java.util.List;
 @RequestMapping(value = "/api/users", headers = "Accept=application/json")
 public class UsersController {
     private UserRepository userRepository;
+    private CommentsRepository commentsRepository;
+    private PostsRepository postsRepository;
+    private EventsRepository eventsRepository;
+    private GroupsRepository groupsRepository;
     private PasswordEncoder passwordEncoder;
     private S3Service s3Service;
     private FriendRequestRepository friendRequestRepository;
     private FriendsRepository friendsRepository;
 
 
-    public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder, S3Service s3Service, FriendRequestRepository friendRequestRepository, FriendsRepository friendsRepository) {
+    public UsersController(UserRepository userRepository, PasswordEncoder passwordEncoder, S3Service s3Service, FriendRequestRepository friendRequestRepository, FriendsRepository friendsRepository, CommentsRepository commentsRepository, PostsRepository postsRepository, EventsRepository eventsRepository, GroupsRepository groupsRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.s3Service = s3Service;
         this.friendRequestRepository = friendRequestRepository;
         this.friendsRepository = friendsRepository;
+        this.commentsRepository = commentsRepository;
+        this.postsRepository = postsRepository;
+        this.eventsRepository = eventsRepository;
+        this.groupsRepository = groupsRepository;
     }
 
     @GetMapping("me")
@@ -176,6 +184,7 @@ public class UsersController {
 
     @DeleteMapping("{userId}")
     private void deleteUser(@PathVariable Long userId) {
+
         System.out.println("ready to delete User." + userId);
     }
 
@@ -187,6 +196,17 @@ public class UsersController {
         if (passwordEncoder.matches(password, user.getPassword())) {
             System.out.println("passwords match");
             System.out.println("user deleted");
+            User userToBeDeleted = userRepository.getById(userId);
+            //deleting all users comments
+            commentsRepository.deleteAll(userToBeDeleted.getComments());
+            //deleting all users posts
+            postsRepository.deleteAll(userToBeDeleted.getPosts());
+            //deleting all users events
+            eventsRepository.deleteAll(userToBeDeleted.getEvents());
+            //deleting all users groups
+            groupsRepository.deleteAll(userToBeDeleted.getGroupsOwned());
+
+            userRepository.delete(userToBeDeleted);
             return new ResponseEntity<>("user deleted", HttpStatus.OK);
         }
 
