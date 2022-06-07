@@ -445,9 +445,9 @@ function populateGroupCommentsHTML(props) {
             <div id="groupCommentsContainer">
                 ${props.group.comments.reverse().map(comment =>
                         `<div class="card card-body groupComment p-2 m-3">
-                        <div class="d-flex">
+                        	<div class="d-flex">
                             <div class="info d-flex">
-<!--                            TODO: add delete icon to delete comment-->
+								<!--TODO: add delete icon to delete comment-->
 								<a class="commentATag" data-id="${comment.author.id}">
                                 <div class="pic"><img class="group-comment-profile-pic" src="${comment.author.userPhotoUrl}" alt=""></div>
                                 </a>
