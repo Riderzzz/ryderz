@@ -2,6 +2,7 @@
 export default function About(props) {
     return `
 <!----about us cards----->
+<body id="about-body">
 <div class="card-container-about">
       <div class="card-about">
         <div class="front">
@@ -15,9 +16,9 @@ export default function About(props) {
             <h2>Hector Mejia</h2>
             <span>Software Engineer</span>
             <div class="social-icon">
-              <a href="https://github.com/Hector7Mejia?tab=repositories" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a href="https://github.com/Hector7Mejia?tab=repositories" target="_blank"><i class="fa-brands fa-github fab"></i></a>
               <a href="https://www.linkedin.com/in/hector-mejia-/"><i class="fab fa-linkedin-in"></i></a>
-              <a href="mailto:mejiah6060@gmail.com"><i class="fa-brands fa-google"></i></a>
+              <a href="mailto:mejiah6060@gmail.com"><i class="fab fa-google"></i></a>
               <a href="#"><i class="fab fa-pinterest"></i></a>
             </div>
           </div>
@@ -40,9 +41,9 @@ export default function About(props) {
             <span>Software Engineer</span>
 
             <div class="social-icon">
-              <a href="https://github.com/withers56" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a href="https://github.com/withers56" target="_blank"><i class="fa-brands fa-github fab"></i></a>
               <a href="https://www.linkedin.com/in/william-withers1/"><i class="fab fa-linkedin-in"></i></a>
-              <a href="mailto:william.k.withers@gmail.com"><i class="fa-brands fa-google"></i></a>
+              <a href="mailto:william.k.withers@gmail.com"><i class="fab fa-google"></i></a>
               <a href="#"><i class="fab fa-pinterest"></i></a>
             </div>
           </div>
@@ -68,9 +69,9 @@ export default function About(props) {
             <span>Software Engineer</span>
 
             <div class="social-icon">
-              <a href="https://github.com/lucidawareness" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a href="https://github.com/lucidawareness" target="_blank"><i class="fa-brands fa-github fab"></i></a>
               <a href="https://www.linkedin.com/in/irvinruiz/"><i class="fab fa-linkedin-in"></i></a>
-              <a href="mailto:mejiah6060@gmail.com"><i class="fa-brands fa-google"></i></a>
+              <a href="mailto:mejiah6060@gmail.com"><i class="fab fa-google"></i></a>
               <a href="#"><i class="fab fa-pinterest"></i></a>
             </div>
           </div>
@@ -96,9 +97,9 @@ export default function About(props) {
             <span>Software Engineer</span>
 
             <div class="social-icon">
-              <a href="https://github.com/DFicci" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a href="https://github.com/DFicci" target="_blank"><i class="fa-brands fa-github fab""></i></a>
               <a href="https://www.linkedin.com/in/daniel-ficci/"><i class="fab fa-linkedin-in"></i></a>
-              <a href="mailto:danielficci@gmail.com"><i class="fa-brands fa-google"></i></a>
+              <a href="mailto:danielficci@gmail.com"><i class="fab fa-google"></i></a>
               <a href="#"><i class="fab fa-pinterest"></i></a>
             </div>
           </div>
@@ -138,7 +139,7 @@ export default function About(props) {
    <div class="h1 story__name block_text story-title--desktop" style="text-align: center;">
         About Us
    </div>
-    
+    </body>
 
     `;
 }
