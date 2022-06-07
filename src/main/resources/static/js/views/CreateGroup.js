@@ -7,34 +7,36 @@ export default function CreateGroup() {
     <html lang="html">
     <head>
         <meta charset="UTF-8"/>
-        <title>Create Group</title>
+        <title>Create Club</title>
     </head>
     <body>
-    <div class="container">
-        <div class="row mt-4">
-            <h1>Create Group</h1>
+    <div class="container createGroupDiv">
+        <div class="row mt-4 text-center">
+            <h1>Create Club</h1>
         </div>
-        <div class="row">
-            <form>
-                <label for="newGroupName">Name: <span
-                        id="group-name"></span></label><br>
-                <input class="form-control" type="text" id="newGroupName" name="newGroupName">
-				
-				
-                <label for="newGroupBio" class="mt-2">Group Bio <span
-                        id="group-bio"></span></label><br>
-                <textarea class="form-control mb-2" id="newGroupBio"
-                          name="newGroupBio"></textarea>
-
-                <label for="newGroupLocation">Location: <span
-                        id="group-location"></span></label><br>
-                <input class="form-control" type="text" id="newGroupLocation" name="newGroupLocation">
+        <div class="row justify-content-center">
+			<div class="col-11">
+                <form>
+                    <label for="newGroupName">Name: <span
+                            id="group-name"></span></label><br>
+                    <input class="settingForm form-control" type="text" id="newGroupName" name="newGroupName">
 
 
-                <p id="character-warning-on-submit"></p>
-                <button class="backToDiscover btn btn-dark">Back to discover</button>
-                <input id="newGroupSubmit" class="btn btn-dark" type="button" value="Submit">
-            </form>
+                    <label for="newGroupBio" class="mt-2">Group Bio <span
+                            id="group-bio"></span></label><br>
+                    <textarea class="settingForm form-control mb-2" id="newGroupBio"
+                              name="newGroupBio"></textarea>
+
+                    <label for="newGroupLocation">Location: <span
+                            id="group-location"></span></label><br>
+                    <input class="settingForm form-control" type="text" id="newGroupLocation" name="newGroupLocation">
+
+
+                    <p id="character-warning-on-submit"></p>
+                    <button class="backToDiscover btn btn-dark mt-4">Back to discover</button>
+                    <input id="newGroupSubmit" class="btn btn-dark groupGreenButton mt-4" type="button" value="Submit">
+                </form>
+			</div>
         </div>
     </div>
 
