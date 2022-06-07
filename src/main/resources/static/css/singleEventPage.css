@@ -130,3 +130,13 @@
         margin-bottom: 1em;
     }
 }
+
+.content {
+    color: white;
+}
+
+.event-bg-img {
+    inline-size: 100%;
+    aspect-ratio: 3/1;
+    object-fit: cover;
+}
