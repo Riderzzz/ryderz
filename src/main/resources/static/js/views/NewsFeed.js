@@ -72,6 +72,7 @@ export function NewsFeedEvents() {
     navSearchListener()
 
     commentOnPost();
+    createEventBtn();
     createPostBtn();
     populateEditPostBtn();
     deletePostBtn();
@@ -337,6 +338,7 @@ function createPostBtn() {
     })
 }
 
+
 function populateEditPostBtn() {
     $(".post-edit-btn").click(function () {
         let editPostCheckboxes = $('.edit-post-checkbox')
@@ -367,6 +369,12 @@ function populateEditPostBtn() {
 
         // createView('/editPost')
     });
+}
+
+function createEventBtn() {
+    $('.create-event-btn').click(function (){
+        createView('/createEvent')
+    })
 }
 
 function editPostBtn() {
@@ -676,7 +684,10 @@ function newsfeedPostsHtml(sortedProps) {
     let html = `
         <header class="d-flex justify-content-between m-3">
             <div class=""><h3>News Feed</h3></div>
-            <button class="btn btn-lightG mx-1 mx-lg-4" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
+            <div class="">
+                <button class="btn btn-lightG ms-1 fontResponsive" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
+                <button class="btn btn-lightG ms-1 fontResponsive create-event-btn">Create event</button>
+            </div>
         </header>
         <div class="post">
             ${sortedProps.map(post => {
@@ -713,7 +724,7 @@ function newsfeedRecent(props) {
 function recentEventCard(event) {
     // console.log(event)
     return `
-            <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}" style='background-image: url("https://picsum.photos/id/${event.id + 1000}/200/100"); background-repeat: no-repeat'>
+            <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}">
               <img src="${event.eventImageUrl !== null ? event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
               <div class="card-body d-flex justify-content-between p-2">
                   <div>
@@ -882,7 +893,7 @@ function showComment(comment, username) {
                                                     <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
                                                     <div class="names">
                                                         <div class="username">${username}</div>
-                                                        <div class="content">${comment.content}</div>
+                                                        <div class="content-comment">${comment.content}</div>
                                                     </div>
                                                 </div>
                                             </div>

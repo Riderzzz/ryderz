@@ -93,7 +93,7 @@
     font-weight: bold;
 }
 
-.content {
+.content-comment {
     font-size: .75em;
 }
 
@@ -292,5 +292,15 @@
 
 .bottom-border {
     border-bottom: 2px solid #A1CCA5;
+}
+
+.fontResponsive {
+    font-size: .75em;
+}
+
+@media screen and (min-width:776px) {
+    .fontResponsive {
+        font-size: 1em;
+    }
 }
 
