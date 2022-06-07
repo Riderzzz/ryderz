@@ -17,9 +17,11 @@ export default function Requests(props) {
             <title>requests</title>
         </head>
         <body>
-        <h1>This is your friends requests</h1>
-        <div class="d-flex row">
-            ${showAllRequests(props)}
+        <div class="container">
+             <h1 class="friends-requests-header text-center">Friends Requests</h1>
+            <div class="d-flex row justify-content-center friends-requests">
+                ${showAllRequests(props)}
+            </div>
         </div>
 
         </body>
@@ -33,15 +35,18 @@ export function showRequests() {
 function showAllRequests(props) {
     let html = `
        ${props.request.map(m => `
-         <div class="card" style="width: 18rem;">
-                    <div class="card-body request-card">
-                         <img src="${m.sender.userProfilePictureUrl}"
-                         alt="lightbox image 1" class="rounded-circle"
-                         style="width: 45px;height: 45px;">
-                         <h5 class="card-title request-username">${m.sender.username}</h5>
+         <div class="card request-card" style="width: 18rem;">
+                    <div class="card-body ">
+                    <div class="d-flex">
+                            <img class="requesters-img rounded-circle"src="${m.sender.userProfilePictureUrl !== null ? m.sender.userProfilePictureUrl : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}"
+                             alt="" style="height: 45px; width: 45px">
+                        <div>
+                            <h5 class="card-title request-username">${m.sender.username}</h5>
+                         </div>
+                    </div>     
                          <div class="d-flex justify-content-end">
-                        <button href="#" class="btn-primary accept-friend" data-id="${m.sender.id}">accept</button>
-                        <button href="#" class="btn-danger decline-friend">decline</button>
+                        <button href="#" class="btn-accept accept-friend" data-id="${m.sender.id}">accept</button>
+                        <button href="#" class="btn-decline decline-friend">decline</button>
                         </div>
                     </div>
                 </div>
