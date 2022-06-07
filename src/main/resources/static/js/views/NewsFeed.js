@@ -722,7 +722,7 @@ function newsfeedRecent(props) {
 }
 
 function recentEventCard(event) {
-    // console.log(event)
+    console.log(event)
     return `
             <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}">
               <img src="${event.eventImageUrl !== null ? event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
@@ -806,6 +806,18 @@ function postCard(post) {
     return html;
 }
 
+function checkForTwoLocations(event) {
+    if (event.isSingleLocationEvent) {
+        return ``
+    } else if (!event.routeDistance || !event.routeDuration) {
+        return ``
+    }
+    return `
+                <div class="ending-address mb-1">Ending: ${event.destination}</div>
+                <div class="distance mb-1">Miles: ${event.routeDistance}</div>
+           `
+}
+
 function eventCard(event) {
     eventIdsArray.push(event)
     let html = `<div class="card m-lg-3 my-3 mx-1 event-num-${event.id} shadow-light card-dark-bg">
@@ -840,8 +852,7 @@ function eventCard(event) {
                                     <div class="content-and-map row my-3">
                                         <div class="col-12 col-lg-6">
                                             <div class="starting-address mb-1">Starting: ${event.origin}</div>
-                                            <div class="ending-address mb-1">Ending: ${event.destination}</div>
-                                            <div class="distance mb-1">Miles:(api data)</div>
+                                            ${checkForTwoLocations(event)}
                                             <p class="card-text" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
                                         </div>
                                         <div class="map-container d-none d-lg-block col-lg-6 mx-auto">
