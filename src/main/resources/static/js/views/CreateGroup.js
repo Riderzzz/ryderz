@@ -1,5 +1,6 @@
 import {getHeaders} from "../auth.js";
 import createView from "../createView.js";
+import {enableSearchIfLogged} from "./Home.js";
 
 export default function CreateGroup() {
 	//language=HTML
@@ -47,6 +48,8 @@ export default function CreateGroup() {
 export function CreateGroupEvents() {
 	createGroupSubmitListener();
 	backToDiscoverBtn();
+
+	enableSearchIfLogged();
 }
 
 function backToDiscoverBtn() {

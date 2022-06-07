@@ -1,4 +1,5 @@
 import createView from "../createView.js";
+import {enableSearchIfLogged} from "./Home.js";
 
 export default function Discover(props) {
 	console.log(props)
@@ -106,4 +107,6 @@ export function DiscoverEvents() {
 	$(".createEventBtn").click(function () {
 		createView('/createEvent')
 	})
+
+	enableSearchIfLogged()
 }
