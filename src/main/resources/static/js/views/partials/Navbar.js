@@ -47,7 +47,7 @@ export default function Navbar(props) {
             </li>
 			<li class="nav-item">
 				<div class="dropdown">
-					<input class="form-control me-2 nav-search dropdown-toggle settingForm" type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search" value=" ">
+					<input class="form-control me-2 nav-search dropdown-toggle settingForm" type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search">
 					<ul class="dropdown-menu w-100 transparentBg" id="searchedUsersContainer" aria-labelledby="dropdownMenuButton1">
 					</ul>
 				</div>
