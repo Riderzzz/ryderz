@@ -27,7 +27,7 @@ export default function Profile(props) {
 
                 <div class="d-flex justify-content-center">
                     <img class="shadow-profile-picture rounded-circle position-absolute"
-                         src="${props.profile.userPhotoUrl !== null ? props.profile.userPhotoUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}"
+                         src="${props.profile.userPhotoUrl  !== null ? props.profile.userPhotoUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}"
                          style="width: 168px; height: 168px; margin-top: -140px" alt="">
                 </div>
             </section>
@@ -590,13 +590,23 @@ function addOrRemoveFriends(props) {
         }
     }
 
-    let html = `
+    if(props.profile.email !== userEmail()){
+        let html = `
                 <button type="button" 
                             class="btn btn-lightG-2 mr-2 add-friend-btn" 
                             data-id="${props.profile.id}">Add Friend
                         <i class="fas fa-plus ml-2"></i>
                     </button>`
-    return html
+        return html
+    } else if (props.profile.email === userEmail()){
+        let html = `
+        <a type="button" 
+                   class="btn btn-lightG-2 mr-2">Edit Profile
+               <i class="fas fa-plus ml-2"></i>
+        </a>`
+        return html
+    }
+
 }
 
 

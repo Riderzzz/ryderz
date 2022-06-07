@@ -10,11 +10,14 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+
+
 
 @CrossOrigin
 @RestController
@@ -92,7 +95,7 @@ public class UsersController {
         Collection<User> listOfFriends = usersInfo.getFriends();
         for (int i = 0; i < usersInfo.getFriends().size() ; i++) {
             User currentUser = (User) listOfFriends.toArray()[i];
-            String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture(),5L);
+            String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture(), 5L);
             currentUser.setUserPhotoUrl(friendsPhotoUrl);
         }
 
