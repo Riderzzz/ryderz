@@ -272,6 +272,10 @@
     border: 1px solid #A1CCA5;
 }
 
+.userSearched:hover {
+    color: #A1CCA5;
+}
+
 .transparentBg {
     background-color: transparent;
 }

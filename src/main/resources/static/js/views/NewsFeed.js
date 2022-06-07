@@ -239,7 +239,7 @@ function commentOnPost() {
             }
         }
 
-        console.log(commentObject)
+        // console.log(commentObject)
 
         const requestObject = {
             method: "POST",
@@ -248,7 +248,7 @@ function commentOnPost() {
         }
 
         fetch(COMMENT_URI, requestObject).then(function () {
-            console.log("Comment created");
+            // console.log("Comment created");
         }).catch(function () {
             console.log("error")
         }).finally(function () {
@@ -353,7 +353,7 @@ function populateEditPostBtn() {
         let postId = editPostId
         let editPostCategories = $('#post-categories-' + postId).text();
         editPostCategories = editPostCategories.split(" ");
-        console.log(editPostCategories)
+        // console.log(editPostCategories)
 
         editPostCheckboxes.each(function() {
             if (editPostCategories.includes($(this).val())) {
@@ -381,7 +381,7 @@ function editPostBtn() {
     $('.edit-post-btn').click(e => {
 
         let postId = editPostId
-        console.log(postId)
+        // console.log(postId)
 
         let selectedCategories = [];
 
@@ -409,7 +409,7 @@ function editPostBtn() {
         }
 
         fetch(`${POST_URI}/${postId}`, requestObject).then(r => {
-            console.log("post edited")
+            // console.log("post edited")
         }).catch(r => {
             console.log('error')
         }).finally(r => {
@@ -437,7 +437,7 @@ function deletePostBtn() {
         }
 
         fetch(`${POST_URI}/${postId}`, requestObject).then(r => {
-            console.log("Post deleted")
+            // console.log("Post deleted")
         }).catch(r => {
             console.log("error")
         }).finally(() => {
