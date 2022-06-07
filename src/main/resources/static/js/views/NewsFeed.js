@@ -1138,7 +1138,7 @@ function newsfeedInitMap(eventId, origin, destination) {
     map = new google.maps.Map(document.getElementById(`map-${eventId}`), {
         center: {lat: 39.8097343, lng: -98.5556199},
         disableDefaultUI: true,
-        zoom: 8,
+        zoom: 3,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         styles: [
             { elementType: "geometry", stylers: [{ color: "#181818" }] },
