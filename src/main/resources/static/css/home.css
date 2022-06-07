@@ -3,7 +3,6 @@
 }
 
 .pic-large{
-    background-image: url("../js/temp/Biker.png");
     background-size: 100% 100%;
     height: 100vh;
     width: 100%;
@@ -14,8 +13,46 @@
 }
 
 .pic-small {
-    background-image: url("../js/temp/Biker.png");
     background-size: 100% 100%;
     height: 40vh;
     width: 100%;
+}
+.features-main {
+    background: black;
+    padding: 100px 0;
+}
+
+.features-title {
+    color: white;
+    font-size: 75px;
+    width: 1130px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.features-card {
+    display: flex;
+    justify-content: space-around;
+    background: black;
+}
+
+.features {
+    width: 345px;
+    height: 345px;
+    padding: 20px 35px;
+    border: 15px darkolivegreen;
+    color: white;
+    background: darkslategrey;
+    border-radius: 20px;
+    margin: 15px;
+    text-align: center;
+}
+
+.first-features {
+    padding-top: 25px;
+    margin-bottom: 3rem;
+}
+
+.second-features {
+
 }
