@@ -66,10 +66,14 @@ public class S3Service {
         return convertedFile;
     }
 
-    public String getSignedURL(String fileName) {
+    public String getSignedURL(String fileName, Long expireMinutes) {
+        if(fileName == null){
+            return null;
+        }
+
         java.util.Date expiration = new java.util.Date();
         long expTimeMillis = Instant.now().toEpochMilli();
-        expTimeMillis += 1000 * 60 * 5; // default to 5 minute expiration
+        expTimeMillis += 1000 * 60 * expireMinutes; // default to 5 minute expiration
         expiration.setTime(expTimeMillis);
 
         // Generate the presigned URL.
@@ -81,4 +85,5 @@ public class S3Service {
         URL url = s3Client.generatePresignedUrl(generatePresignedUrlRequest);
         return url.toString();
     }
+
 }

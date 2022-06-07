@@ -87,17 +87,18 @@ export function NewsFeedEvents() {
     leaveEvent();
 
     //left side-bar functions
-    goToRecentEventBtn()
-    goToRecentGroupBtn()
+    goToRecentEventBtn();
+    goToRecentGroupBtn();
 
     //chat functions
-    subscribeToChannel(channel)
-    fetchOldMessages(channel)
-    sendMsgBtn()
-    sendMsgEnter()
-    toggleChatboxBtn()
-    selectFriendsTabListener()
-    hideChatbox()
+    subscribeToChannel(channel);
+    fetchOldMessages(channel);
+    sendMsgBtn();
+    sendMsgEnter();
+    toggleChatboxBtn();
+    selectFriendsTabListener();
+    hideChatbox();
+
 
     showMap()
     // newsfeedInitAllMaps()

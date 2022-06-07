@@ -63,6 +63,21 @@ public class Events implements Comparable<Events>{
     @Column
     private String eventLocation;
 
+    @Transient
+    private String eventImageUrl;
+
+    @Column(name="event_image_name")
+    private String eventImageName;
+
+    @Column
+    private String routeDistance;
+
+    @Column
+    private String routeDuration;
+
+    @Column
+    private String routeSummary;
+
     @PrePersist
     void setCreatedDate() {
         this.createdDate  = new Date();

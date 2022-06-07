@@ -10,11 +10,14 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+
+
 
 @CrossOrigin
 @RestController
@@ -49,8 +52,8 @@ public class UsersController {
             String userName = auth.getName();
             User usersInfo = userRepository.findByEmail(userName);
 
-            String signedPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
-            String signedHeaderUrl = s3Service.getSignedURL(usersInfo.getHeaderPicture());
+            String signedPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture(), 5L);
+            String signedHeaderUrl = s3Service.getSignedURL(usersInfo.getHeaderPicture(),5L);
 
             usersInfo.setUserPhotoUrl(signedPhotoUrl);
             usersInfo.setUserHeaderUrl(signedHeaderUrl);
@@ -58,14 +61,14 @@ public class UsersController {
             Collection<User> listOfFriends = usersInfo.getFriends();
             for (int i = 0; i < usersInfo.getFriends().size() ; i++) {
                 User currentUser = (User) listOfFriends.toArray()[i];
-                String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture());
+                String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture(),5L);
                 currentUser.setUserPhotoUrl(friendsPhotoUrl);
             }
 
             Collection<Groups> listOfGroups = usersInfo.getGroupsJoined();
             for (int i = 0; i < usersInfo.getGroupsJoined().size() ; i++) {
                 Groups currentUser = (Groups) listOfGroups.toArray()[i];
-                String groupPhotoUrl = s3Service.getSignedURL(currentUser.getGroupImageName());
+                String groupPhotoUrl = s3Service.getSignedURL(currentUser.getGroupImageName(),5L);
                 currentUser.setGroupPhotoUrl(groupPhotoUrl);
             }
 
@@ -92,15 +95,15 @@ public class UsersController {
     @GetMapping("{userID}")
     public User getUserById(@PathVariable Long userID) {
         User usersInfo = userRepository.findById(userID).get();
-        String usersPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture());
-        String usersHeaderUrl = s3Service.getSignedURL(usersInfo.getHeaderPicture());
+        String usersPhotoUrl = s3Service.getSignedURL(usersInfo.getProfilePicture(),5L);
+        String usersHeaderUrl = s3Service.getSignedURL(usersInfo.getHeaderPicture(),5L);
         usersInfo.setUserHeaderUrl(usersHeaderUrl);
         usersInfo.setUserPhotoUrl(usersPhotoUrl);
 
         Collection<User> listOfFriends = usersInfo.getFriends();
         for (int i = 0; i < usersInfo.getFriends().size() ; i++) {
             User currentUser = (User) listOfFriends.toArray()[i];
-            String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture());
+            String friendsPhotoUrl = s3Service.getSignedURL(currentUser.getProfilePicture(), 5L);
             currentUser.setUserPhotoUrl(friendsPhotoUrl);
         }
 
@@ -109,7 +112,7 @@ public class UsersController {
             Collection<Comments> postComments = currentPost.getComments();
             for (int j = 0; j <postComments.size() ; j++) {
                 Comments comment = (Comments) postComments.toArray()[j];
-                String commentAuthorUrl = s3Service.getSignedURL(comment.getAuthor().getProfilePicture());
+                String commentAuthorUrl = s3Service.getSignedURL(comment.getAuthor().getProfilePicture(),5L);
                 comment.getAuthor().setUserPhotoUrl(commentAuthorUrl);
             }
         }
@@ -117,7 +120,7 @@ public class UsersController {
         Collection<Groups> listOfGroups = usersInfo.getGroupsJoined();
         for (int i = 0; i < usersInfo.getGroupsJoined().size() ; i++) {
             Groups currentUser = (Groups) listOfGroups.toArray()[i];
-            String groupPhotoUrl = s3Service.getSignedURL(currentUser.getGroupImageName());
+            String groupPhotoUrl = s3Service.getSignedURL(currentUser.getGroupImageName(),5L);
             currentUser.setGroupPhotoUrl(groupPhotoUrl);
         }
 
@@ -294,6 +297,8 @@ public class UsersController {
         System.out.println(file);
         String fileName = s3Service.uploadFile(file);
         user.setProfilePicture(fileName);
+        String saveSignedUrl = s3Service.getSignedURL(fileName, 10080L);
+        user.setUserProfilePictureUrl(saveSignedUrl);
         userRepository.save(user);
         return new ResponseEntity<>(fileName, HttpStatus.OK);
     }

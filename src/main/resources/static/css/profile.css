@@ -31,10 +31,6 @@ body {
     text-decoration: none;
 }
 
-.card {
-    border-radius: 10px;
-}
-
 .minutes-ago {
     margin-left: 5px;
     font-size: x-small;
@@ -46,6 +42,7 @@ body {
     background-color: #4C4C4C;
     border: none;
     width: 80%;
+    color: black;
 }
 
 ::placeholder {
@@ -55,6 +52,11 @@ body {
 .edit-post-button {
     margin-left: auto;
     margin-right: 10px;
+    color: #a1cca5;
+}
+.edit-post-button:hover{
+    color: #4C4C4C;
+    cursor: pointer;
 }
 
 .dropdown-menu {
@@ -88,6 +90,7 @@ body {
 
 .comments-link:hover{
     cursor: pointer;
+    color: #4C4C4C;
 }
 
 .comments-show{
@@ -101,7 +104,7 @@ body {
 
 .show-users-group-profile:hover{
     cursor: pointer;
-    text-decoration: underline;
+    color: #4C4C4C;
 }
 
 .show-users-friends-profile{
@@ -111,12 +114,12 @@ body {
 
 .show-users-friends-profile:hover{
     cursor: pointer;
-    color: red;
+    color: #4C4C4C;
 }
 
 .go-to-profile-top:hover{
     cursor: pointer;
-    color: red;
+    color: #4C4C4C;
 }
 
 .submit-comment{
@@ -126,6 +129,12 @@ body {
     width: 15%;
 }
 
+.submit-comment-only{
+    border-radius: 18px;
+    color: white;
+    background-color: black;
+    width: 15%;
+}
 .group-img-profile{
     display: flex;
     justify-content: center;
@@ -135,10 +144,6 @@ body {
     background-color: #404040;
 }
 
-.card{
-    background-color: #181818;
-    filter: drop-shadow(0px 0px 2px white);
-}
  .navbar{
      z-index: 1000;
  }
@@ -154,32 +159,50 @@ body {
  .btn-lightG-2{
      color: #a1cca5;
  }
+.btn-delete{
+    color: #9d2e2e;
+}
 
- .btn-lightG-2:focus {
-     border-top-color: transparent;
-     border-left-color: transparent;
-     border-right-color: transparent;
-     box-shadow: none;
- }
+.btn-lightG-2:focus {
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    box-shadow: none;
+}
+.back-to-home{
+    font-size: 30px;
+    text-decoration: none;
+    color: white;
+}
 
- h2{
+.back-to-home:hover{
+    cursor: pointer;
+    color: #4C4C4C;
+}
+
+.card-profile{
+    background-color: #181818;
+    filter: drop-shadow(0px 0px 2px white);
+    border-radius: 10px;
+}
+
+ .card-text-profile{
      color: white;
  }
 
- .card-text{
+ .card-title-profile{
      color: white;
  }
 
- .card-title{
+ .card-subtitle-profile{
      color: white;
  }
 
- .card-subtitle{
+ .card-body-profile{
      color: white;
  }
-
- .card-body{
-     color: white;
+ .bio-text{
+     color: #CCDBDC;
  }
 
 

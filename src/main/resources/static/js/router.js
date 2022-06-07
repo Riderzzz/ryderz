@@ -179,6 +179,7 @@ export default function router(URI, Id) {
         '/myProfile': {
             returnView: Profile,
             uri: `/myProfile`,
+            title: 'My Profile',
             state : {
                 profile: `/api/users/me`
             },
