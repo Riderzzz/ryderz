@@ -456,6 +456,7 @@ function verifyUsersAboutProfile(props){
         `
         return html;
     }
+    return  "";
 }
 
 function showAboutPageOnly(props) {
