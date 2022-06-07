@@ -402,7 +402,7 @@ function groupInfoPopulateHTML(props) {
             <h3>Change header image</h3>
             <p id="file-warning-on-submit"></p>
             <input class="fileUploadBtn" id="groupHeaderFile" type="file" accept="image/*">
-			<button type="submit" class="groupGreenButton btn mt-3" data-id="${props.group.id}" id="submitGroupHeaderImg">Save Changes</button>
+			<button type="submit" class="groupGreenButton btn mt-3" data-id="${props.group.id}" id="submitGroupHeaderImg">Change Image</button>
         </div>
 	`
 	return html;
