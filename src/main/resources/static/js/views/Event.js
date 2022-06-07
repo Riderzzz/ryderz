@@ -702,7 +702,7 @@ function eventEditFormHTML(props, timeFormat) {
     			        <h3>Change header image</h3>
             			<p id="file-warning-on-submit"></p>
             			<input class="fileUploadBtn mt-3" id="eventHeaderFile" type="file" accept="image/*">
-						<button type="submit" class="groupGreenButton btn mt-3" data-id="${props.event.id}" id="submitEventHeaderImg">Save Changes</button>
+						<button type="submit" class="groupGreenButton btn" data-id="${props.event.id}" id="submitEventHeaderImg">Change Image</button>
     			    </form>
 	`
 
