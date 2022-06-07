@@ -54,9 +54,9 @@ export default function CreateEvent(props) {
                     <input class="settingForm form-control" type="text" id="to" name="destination">
 
                     <p id="character-warning-on-submit"></p>
-                    <button id="createRoute" class="btn" type="button">Show Route</button>
-                    <button class="backToDiscover btn">Back to discover</button>
-                    <input id="newEventBtn" class="btn settingForm" type="button" value="Submit">
+                    <button id="createRoute" class="btn mt-3" type="button">Show Route</button>
+                    <button class="backToDiscover btn mt-3">Back to discover</button>
+                    <input id="newEventBtn" class="btn settingForm mt-3" type="button" value="Submit">
                 </form>
             </div>
             <div class="col-md-6 createEventMapContainer">

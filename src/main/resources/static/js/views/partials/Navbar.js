@@ -14,7 +14,7 @@ export default function Navbar(props) {
                     <span class="navbar-toggler-icon"></span>
                 </button>
 				<div class="logo text-white order-2 order-lg-1">
-					<div class="logo-container"></div>
+					<div class="logo-container"><a class="nav-link logoNavLink" href="/" data-link></a></div>
 				</div>
                 <div class="collapse navbar-collapse justify-content-end order-4 order-lg-2" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto align-items-center">
