@@ -1,5 +1,6 @@
 import createView from "../createView.js";
 import {getHeaders} from "../auth.js";
+import {enableSearchIfLogged} from "./Home.js";
 
 
 const BASE_URI = `${URI}/api/users`;
@@ -30,6 +31,7 @@ export default function Requests(props) {
 
 export function showRequests() {
     addFriend()
+    enableSearchIfLogged()
 }
 
 function showAllRequests(props) {

@@ -103,6 +103,22 @@ export function NewsFeedEvents() {
     showMap()
     // newsfeedInitAllMaps()
     newsFeedMobileSelect()
+
+    windowSizeListener()
+}
+
+function windowSizeListener() {
+    window.addEventListener('resize', function (){
+        let width = document.documentElement.clientWidth
+        let leftSidebar = $('.sidebar-container')
+        let centerFeed = $('.posts-container')
+        let rightSidebar = $('.recent-events')
+        if (width >= 992) {
+            leftSidebar.removeClass('d-none')
+            centerFeed.removeClass('d-none')
+            rightSidebar.removeClass('d-none')
+        }
+    })
 }
 
 function newsFeedMobileSelect() {
@@ -117,7 +133,6 @@ function newsFeedMobileSelect() {
         leftSidebar.addClass('d-none')
         centerFeed.addClass('d-none')
         rightSidebar.addClass('d-none')
-        console.log(id)
 
         switch (id) {
             case 1 : leftSidebar.removeClass('d-none')
@@ -153,7 +168,7 @@ function userSearchListener() {
 
 function searchedUsersHtml(users) {
     //language=html
-    console.log(users)
+    // console.log(users)
     let html = ''
 
     users.map(user => {html += `<li><a class="list-group-item userSearched" data-id="${user.id}" href="#">${user.username}</a></li>`}).join("")
@@ -161,11 +176,12 @@ function searchedUsersHtml(users) {
     return html
 }
 
-function navSearchListener() {
+export function navSearchListener() {
     $('.nav-search').keyup(function (event){
         $('#searchedUsersContainer').html("")
         var keycode = event.keyCode
-        let searchedString = $(this).val().toLowerCase()
+        let searchedString = $(this).val()
+        // console.log(searchedString)
         if (searchedString.length >= 3) {
             fetch(`${USER_URI}/getUsersByUsername/${searchedString}`).then(response => {
                             return response.json()
@@ -698,7 +714,7 @@ function recentEventCard(event) {
     // console.log(event)
     return `
             <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}" style='background-image: url("https://picsum.photos/id/${event.id + 1000}/200/100"); background-repeat: no-repeat'>
-              <img src="https://picsum.photos/id/${event.id + 1010}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
+              <img src="${event.eventImageUrl !== null ? event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
               <div class="card-body d-flex justify-content-between p-2">
                   <div>
                     <h6>${event.titleOfEvent}</h6>

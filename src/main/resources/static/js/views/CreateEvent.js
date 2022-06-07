@@ -1,5 +1,6 @@
 import {getHeaders} from "../auth.js";
 import createView from "../createView.js";
+import {enableSearchIfLogged} from "./Home.js";
 
 export default function CreateEvent(props) {
 	//language=HTML
@@ -75,6 +76,8 @@ export function CreateEventEvents() {
 	backToDiscoverBtn();
 	initMap();
 	checkBoxSingleLocation();
+
+	enableSearchIfLogged()
 
 	flatpickr("#eventDate", {
 		minDate: "today",
