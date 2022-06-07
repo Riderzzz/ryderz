@@ -3,7 +3,7 @@ import {getHeaders, userEmail} from "../auth.js";
 
 const BASE_URI = `${URI}/api/users`;
 const COMMENT_URI = `${URI}/api/comments`;
-
+const POST_URI = `${URI}/api/posts`;
 
 export default function Profile(props) {
     console.log(props)
@@ -83,7 +83,7 @@ export default function Profile(props) {
                     <!--users photo's on users profile-->
                 </div>
                 <!--Posts start-->
-                <div class="col-7 mb-4 mb-md-0">
+                <div class="col-7 mb-4 mb-md-0 post-refresh">
                     ${showUsersPosts(props)}
                 </div>
 
@@ -129,6 +129,8 @@ export function showFriendsProfile() {
     showGroupPage();
     aboutMeEditButtonListener();
     goBackToHome();
+    editPostFromProfile();
+    editPostButtonListener();
 }
 
 function goBackToHome(){
@@ -170,7 +172,7 @@ function addFriendButtonListener() {
             .then(res => {
                 createView(`/profile`, id)
             }).catch(error => {
-                createView(`/profile`, id);
+            createView(`/profile`, id);
         });
     });
 }
@@ -379,7 +381,7 @@ function showUsersPosts(props) {
                   
             <!--body of card-->
                 <div class="card-body card-body-profile">
-                    <p class="card-text card-text-profile">${post.content}</p>
+                    <p class="card-text card-text-profile post-content-${post.id}" data-content="${post.content}">${post.content}</p>
                     <input class="comment-users-${post.id} comment-users-posts mt-1" placeholder="Write a comment...." data-id="${post.id}">
                     <button type="submit" class="submit-comment btn-lightG" data-id="${post.id}">Comment</button>
                     
@@ -407,7 +409,7 @@ function showUsersPosts(props) {
                         </div>
                         <div class="modal-body">
                             <form>
-                                <textarea style="width: 100%;height: 100%" maxlength="500" placeholder="${post.content}" class="edit-post"></textarea>
+                                <input style="width: 100%;height: 100%"  class="edit-post">
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -419,6 +421,35 @@ function showUsersPosts(props) {
             </div>`).join("")}`
 
     return html;
+}
+
+function editPostButtonListener(){
+    $(".save-post-edit").click(function (){
+        let id = $(this).data("id")
+        let content = $(".edit-post").val();
+
+        const requestObject = {
+            method: "PUT",
+            headers: getHeaders(),
+            body: content
+        }
+
+        fetch(`${POST_URI}/profile/${id}`, requestObject)
+            .then(data =>{
+                    console.log(data)
+                }
+            ).catch(e => {
+            console.log(e)
+        })
+    })
+}
+
+function editPostFromProfile(){
+    $(".edit-post-button").click(function (){
+        let id = $(this).data("id")
+        let content = $(".post-content-" + id).data("content")
+        $(".edit-post").val(content)
+    })
 }
 
 function displayCommentsButton(post){
@@ -446,7 +477,7 @@ function displayComments(props) {
                    </div>
                 </div>
             </div>`
-        ).join("")}`
+    ).join("")}`
     return html;
 }
 
@@ -512,7 +543,7 @@ function aboutMeEditButtonListener(){
 
         fetch(`${BASE_URI}/updateUsersBio/${id}`, requestObj)
             .then(data => {
-               refreshAboutMe(id)
+                refreshAboutMe(id)
             }).catch(error => {
             console.log(error);
         });
@@ -612,5 +643,3 @@ function addOrRemoveFriends(props) {
     }
 
 }
-
-
