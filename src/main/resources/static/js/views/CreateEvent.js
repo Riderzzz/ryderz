@@ -52,6 +52,9 @@ export default function CreateEvent(props) {
 
                     <label id="labelForDestination" for="destination">Destination</label>
                     <input class="settingForm form-control" type="text" id="to" name="destination">
+					<p class="eventMilesPTag mt-3">Miles: <span class="eventMiles"></span></p>
+					<p class="eventDurationPTag">Duration: <span class="eventDuration"></span></p>
+					<p class="eventSummaryPTag">Summary: <span class="eventSummary"></span></p>
 
                     <p id="character-warning-on-submit"></p>
                     <button id="createRoute" class="btn mt-3" type="button">Show Route</button>
@@ -71,7 +74,6 @@ export default function CreateEvent(props) {
 }
 
 export function CreateEventEvents() {
-	createEventSubmitListener();
 	backToDiscoverBtn();
 	initMap();
 	checkBoxSingleLocation();
@@ -139,10 +141,12 @@ function initMap() {
 
 //bind the DirectionsRenderer to the map
 	directionsDisplay.setMap(map);
-
+let distance;
+let duration;
+let summary;
 
 //define calcRoute function
-	function calcRoute() {
+	async function calcRoute() {
 		//create request
 		var request = {
 			origin: document.getElementById("from").value,
@@ -152,10 +156,20 @@ function initMap() {
 		}
 
 		//pass the request to the route method
-		directionsService.route(request, function (result, status) {
+		await directionsService.route(request, function (result, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
 				console.log(result);
 				console.log(status);
+				console.log(result.routes[0].legs[0].distance.text)
+				distance = result.routes[0].legs[0].distance.text;
+				console.log(distance);
+				console.log(result.routes[0].legs[0].duration.text)
+				duration = result.routes[0].legs[0].duration.text;
+				console.log(result.routes[0].summary)
+				summary = result.routes[0].summary;
+				$(".eventMiles").text(distance);
+				$(".eventDuration").text(duration);
+				$(".eventSummary").text(summary);
 
 				//Get distance and time
 				// const output = document.querySelector('#output');
@@ -163,7 +177,10 @@ function initMap() {
 
 				//display route
 				directionsDisplay.setDirections(result);
+				return result;
 			} else {
+				$("#character-warning-on-submit").text("Error creating route, please check location inputs!");
+				$("#character-warning-on-submit").css("color", "red");
 				//delete route from map
 				directionsDisplay.setDirections({routes: []});
 				//center map in London
@@ -187,7 +204,88 @@ function initMap() {
 	var autocomplete2 = new google.maps.places.Autocomplete(input2);
 
 	$("#createRoute").click(function () {
-		calcRoute()
+		calcRoute();
+	})
+
+	$("#newEventBtn").click(async function () {
+		let results = await calcRoute();
+			const warningTag = $("#character-warning-on-submit");
+			const titleOfEvent = $("#newEventTitle").val();
+			const descriptionOfEvent = $("#newEventDescription").val();
+			const eventLocation = $("#newEventLocation").val();
+			const dateTime = $("#eventDate").val();
+			const eventDate = new Date(dateTime).getTime();
+			const origin = $("#from").val();
+			const destination = $("#to").val();
+			const isSingleLocationEvent = document.getElementById('singleLocation').checked;
+			console.log(distance)
+
+			let routeDistance = distance;
+			let routeDuration = duration;
+			let routeSummary = summary;
+			console.log(routeDistance)
+
+			if (isSingleLocationEvent) {
+				if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin) {
+					warningTag.text("Fill all fields");
+					warningTag.css('color', 'red');
+					return;
+				}
+			} else {
+				if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin || !destination) {
+					warningTag.text("Fill all fields");
+					warningTag.css('color', 'red');
+					return;
+				}
+			}
+
+
+
+			let selectedCategories = [];
+
+			$('input[type="checkbox"]:checked').each(function () {
+				console.log(this.value);
+				selectedCategories.push({name: this.value})
+
+			});
+
+			const categories = selectedCategories;
+
+			console.log(selectedCategories)
+
+			const newEvent = {
+				origin,
+				destination,
+				isSingleLocationEvent,
+				eventDate,
+				titleOfEvent,
+				descriptionOfEvent,
+				eventLocation,
+				categories,
+				routeDistance,
+				routeDuration,
+				routeSummary
+			}
+
+
+			let request = {
+				method: "POST",
+				headers: getHeaders(),
+				body: JSON.stringify(newEvent)
+			}
+
+			fetch(`${URI}/api/events`, request)
+				.then(res => {
+					console.log(res.status);
+					createView("/discover");
+				})
+				.catch(error => {
+					const warningTag = $("#character-warning-on-submit");
+					warningTag.text("Error creating event!");
+					warningTag.css("color", "red");
+					console.log(error);
+				})
+
 	})
 
 }
@@ -204,80 +302,18 @@ function checkBoxSingleLocation() {
 			$("#originLocation").text("Location");
 			$("#labelForDestination").css('display', 'none');
 			$("#to").css('display', 'none');
+			$("#createRoute").css("display", "none");
+			$(".eventMilesPTag").css("display", "none");
+			$(".eventDurationPTag").css("display", "none");
+			$(".eventSummaryPTag").css("display", "none");
 		} else {
 			$("#originLocation").text("Origin");
 			$("#labelForDestination").css('display', 'block');
 			$("#to").css('display', 'block');
+			$("#createRoute").css("display", "inline");
+			$(".eventMilesPTag").css("display", "block");
+			$(".eventDurationPTag").css("display", "block");
+			$(".eventSummaryPTag").css("display", "block");
 		}
-	})
-}
-
-function createEventSubmitListener() {
-	$("#newEventBtn").click(function () {
-		const warningTag = $("#character-warning-on-submit");
-		const titleOfEvent = $("#newEventTitle").val();
-		const descriptionOfEvent = $("#newEventDescription").val();
-		const eventLocation = $("#newEventLocation").val();
-		const dateTime = $("#eventDate").val();
-		const eventDate = new Date(dateTime).getTime();
-		const origin = $("#from").val();
-		const destination = $("#to").val();
-		const isSingleLocationEvent = document.getElementById('singleLocation').checked;
-
-		if (isSingleLocationEvent) {
-			if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin) {
-				warningTag.text("Fill all fields");
-				warningTag.css('color', 'red');
-				return;
-			}
-		} else {
-			if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin || !destination) {
-				warningTag.text("Fill all fields");
-				warningTag.css('color', 'red');
-				return;
-			}
-		}
-
-
-
-		let selectedCategories = [];
-
-		$('input[type="checkbox"]:checked').each(function () {
-			console.log(this.value);
-			selectedCategories.push({name: this.value})
-
-		});
-
-		const categories = selectedCategories;
-
-		console.log(selectedCategories)
-
-		const newEvent = {
-			origin,
-			destination,
-			isSingleLocationEvent,
-			eventDate,
-			titleOfEvent,
-			descriptionOfEvent,
-			eventLocation,
-			categories
-		}
-
-
-		let request = {
-			method: "POST",
-			headers: getHeaders(),
-			body: JSON.stringify(newEvent)
-		}
-
-		fetch(`${URI}/api/events`, request)
-			.then(res => {
-				console.log(res.status)
-				createView("/discover")
-			})
-			.catch(error => {
-				console.log(error)
-				createView("/discover")
-			})
 	})
 }

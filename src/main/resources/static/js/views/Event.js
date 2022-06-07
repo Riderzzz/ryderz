@@ -397,7 +397,6 @@ function checkUserEventStatus(props) {
 
 function checkIfCommentsExist(props) {
 	let html;
-	console.log(props);
 	if (props.event.comments.length > 0) {
 		//language=HTML
 		let html = `
@@ -626,6 +625,10 @@ function eventColHTML(props, timeFormat) {
         <p class="event-owner-${props.event.id}">Organizer: ${props.event.eventCreator.username}</p>
 
         <p>State of event: <span class="stateOfEvent">${props.event.stateOfEvent}</span></p>
+		
+		<p>Route Details</p>
+		
+		<p>Miles: ${props.event.routeDistance}, Duration: ${props.event.routeDuration}, Summary: ${props.event.routeSummary}</p>
 		
 		`; if (props.event.isSingleLocationEvent) {
 			html += `<p>Location: <span id="OGFrom">${props.event.origin}</span></p>`;
