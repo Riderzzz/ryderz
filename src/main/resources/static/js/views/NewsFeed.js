@@ -642,7 +642,7 @@ function newsfeedSidebarHtml(userProps) {
 				</p>
 				<div class="collapse me-auto" id="collapseGroups">
 					<div class="">
-						${userProps.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
+						${userProps.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#" class="hover-green">- ${group.name}</a></div>`).join("")}
 					</div>
 				</div>
 				
@@ -654,7 +654,7 @@ function newsfeedSidebarHtml(userProps) {
 				</p>
 				<div class="collapse me-auto" id="collapseEvents">
 					<div class="">
-						${userProps.eventsJoined.map(event => `<div class="p-1 event" data-id="${event.id}"><a href="#">-${event.titleOfEvent}</a></div>`).join("")}
+						${userProps.eventsJoined.map(event => `<div class="p-1 event" data-id="${event.id}"><a href="#" class="hover-green">-${event.titleOfEvent}</a></div>`).join("")}
 					</div>
 				</div>
 				
@@ -667,7 +667,7 @@ function newsfeedSidebarHtml(userProps) {
 				</p>
 				<div class="collapse me-auto" id="collapseFriends">
 					<div class="">
-						${userProps.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
+						${userProps.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#" class="hover-green">- ${friend.username}</a></div>`).join("")}
 					</div>
 				</div>
 				

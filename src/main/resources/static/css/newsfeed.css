@@ -302,6 +302,10 @@
     font-size: .75em;
 }
 
+.hover-green:hover {
+    color: #A1CCA5;
+}
+
 @media screen and (min-width:776px) {
     .fontResponsive {
         font-size: 1em;
