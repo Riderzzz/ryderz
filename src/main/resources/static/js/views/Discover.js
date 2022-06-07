@@ -38,10 +38,10 @@ export default function Discover(props) {
 					`
 				<div class="media-element">
 					<a class="eventDiv" data-id="${event.id}">
-					<img class="discoverItemImg shadow" src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" alt="">
+					<img class="discoverItemImg shadow" src="${event.eventImageUrl !== null ? event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
                     <h5 class="discoverTitle text-white">${event.titleOfEvent}</h5>
                     <p class="discoverLocation text-white">Location: ${event.origin}</p>	
-                    <p class="eventDate text-white">Date: ${new Date(event.eventDate).toLocaleDateString()}</p clas>			
+                    <p class="eventDate text-white">Date: ${new Date(event.eventDate).toLocaleDateString()}</p>	
 					</a>
                 </div>
 `

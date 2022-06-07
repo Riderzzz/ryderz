@@ -13,6 +13,9 @@ export default function Event(props) {
     </head>
     <body>
     <div class="container eventContainer">
+		<div class="row">
+			<img class="event-bg-img" src="${props.event.eventImageUrl !== null ? props.event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
+		</div>
         <div class="row mt-4 justify-content-center">
             <div class="col-md-7">
                 <div class="eventTitles">
@@ -74,6 +77,7 @@ export function EventEvents() {
 	deleteEventBtn();
 	clickOnCommentAuthorName();
 	initMap(OGOrigin, OGDestination);
+	uploadEventImgHeader();
 
 	flatpickr("#editedEventDate", {
 		minDate: "today",
@@ -461,7 +465,7 @@ function editEventBtn(OGState, OGStatusOfEvent, OGCategories) {
                             `)
 					.join('')}`
 				$(".formCategories").html(html)
-			})``
+			})
 			.catch(error => {
 				console.log(error);
 			})
@@ -695,8 +699,43 @@ function eventEditFormHTML(props, timeFormat) {
     			        <button class="btn" id="cancelEdits">Cancel Edits</button>
     			        <button class="btn" id="submitEditedEventBtn" data-id="${props.event.id}">Submit Changes</button>
     			        <button id="deleteEvent" data-id="${props.event.id}" data-location="${props.event.isSingleLocationEvent}" class="btn btn-danger">Delete Event</button>
+    			        <h3>Change header image</h3>
+            			<p id="file-warning-on-submit"></p>
+            			<input class="fileUploadBtn mt-3" id="eventHeaderFile" type="file" accept="image/*">
+						<button type="submit" class="groupGreenButton btn" data-id="${props.event.id}" id="submitEventHeaderImg">Change Image</button>
     			    </form>
 	`
 
 	return html;
+}
+
+function uploadEventImgHeader() {
+	$("#submitEventHeaderImg").click(function () {
+		let eventId = $(this).data("id");
+		let file = document.getElementById("eventHeaderFile");
+		let warningPTag = $("#file-warning-on-submit");
+		let formData = new FormData();
+
+		formData.append("file", file.files[0]);
+
+		const requestObject = {
+			method: "POST",
+			body: formData
+		}
+
+		fetch(`${URI}/api/events/${eventId}/eventUpload`, requestObject)
+			.then(res => {
+				console.log(res.status)
+				if (res.status !== 200) {
+					console.log(res);
+					return;
+				}
+				createView('/event', eventId);
+			})
+			.catch(error => {
+				console.log(error);
+				warningPTag.text("Error submitting changes!");
+				warningPTag.css("color", "red");
+			})
+	})
 }
