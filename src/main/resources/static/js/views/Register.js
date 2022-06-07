@@ -7,7 +7,6 @@ export default function Register(props) {
         <!DOCTYPE html>
         <section class="vh-100 register-bg-image"
                  style="background-image: url('../../images/scenic.jpg');">
-
             <div class="mask d-flex align-items-center h-100 gradient-custom-3">
                 <div class="container h-100">
                     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -61,38 +60,7 @@ export default function Register(props) {
                     </div>
                 </div>
             </div>
-        </section>
-
-
-        <!--        <html>-->
-        <!--        <head>-->
-        <!--            <meta charset="UTF-8"/>-->
-        <!--            <title>Register</title>-->
-        <!--        </head>-->
-        <!--        <body>-->
-        <!--        <h1>Register</h1>-->
-        <!--        <form>-->
-        <!--            <div class="form-group">-->
-        <!--                <label for="username">Username</label>-->
-        <!--                <input type="text" class="form-control" id="username" aria-describedby="username"-->
-        <!--                       placeholder="Enter username">-->
-        <!--                <label for="email">Email address</label>-->
-        <!--                <input type="email" class="form-control" id="email" aria-describedby="emailHelp"-->
-        <!--                       placeholder="Enter email">-->
-        <!--                <small id="emailHelp" class="form-text">We'll never share your email with anyone-->
-        <!--                    else.</small>-->
-        <!--            </div>-->
-        <!--            <div class="form-group">-->
-        <!--                <label for="password">Password</label>-->
-        <!--                <input type="password" class="form-control" id="password" placeholder="Password">-->
-        <!--            </div>-->
-        <!--            -->
-        <!--            <button type="submit" class="btn btn-primary mt-3 " id="register-btn">Submit</button>-->
-        <!--            <hr>-->
-        <!--        </form>-->
-        <!--        </body>-->
-        <!--        </html>-->
-    `;
+        </section>`
 }
 
 export function RegisterEvent() {
