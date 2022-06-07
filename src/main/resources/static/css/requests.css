@@ -1,3 +1,48 @@
 .request-card{
-    margin-leftt: 20px;
+    margin-left: 20px;
+    background-color: #4C4C4C;
 }
+
+.btn-decline{
+    background-color: transparent;
+    border: none;
+    color: red;
+}
+
+.btn-accept{
+    background-color: transparent;
+    border: none;
+    color: #a1cca5;
+}
+.request-username{
+    margin-top: 10px;
+    margin-left:  10px;
+}
+.requesters-img{
+    border: 1px solid #4C4C4C;
+    filter: drop-shadow(0px 0px 1px white);
+}
+
+.btn-accept:hover{
+    text-decoration: underline;
+}
+
+.btn-decline:hover{
+    text-decoration: underline;
+}
+
+.friends-requests-header{
+    color: white;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.friends-requests{
+    border: 1px #4C4C4C;
+    border-radius: 20px;
+}
+
+
+
+
+
