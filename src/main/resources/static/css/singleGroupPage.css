@@ -14,3 +14,50 @@
     aspect-ratio: 3/1;
     object-fit: cover;
 }
+
+.groupContainer {
+    background-color: #1B1B1B;
+    padding: 1em;
+    color: white;
+    margin-top: 1em;
+    border-radius: 10px;
+}
+
+.groupLeftCol {
+    background-color: #4C4C4C;
+    border-radius: 10px;
+    padding: 1em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.rightColTopRow {
+    background-color: #4C4C4C;
+    border-radius: 10px;
+    padding: .5em;
+}
+
+.groupCommentsDiv {
+    background-color: #4C4C4C;
+    border-radius: 10px;
+    margin-top: 1em;
+}
+
+.groupComment {
+    /*color: white;*/
+}
+
+.rightColDiv {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.groupMainRow {
+    margin: 1em;
+}
+
+.fileUploadBtn::file-selector-button {
+    background-color: #A1CCA5;
+    color: black;
+}

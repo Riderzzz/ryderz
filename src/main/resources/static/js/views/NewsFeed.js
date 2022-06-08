@@ -72,6 +72,7 @@ export function NewsFeedEvents() {
     navSearchListener()
 
     commentOnPost();
+    createEventBtn();
     createPostBtn();
     populateEditPostBtn();
     deletePostBtn();
@@ -103,6 +104,22 @@ export function NewsFeedEvents() {
     showMap()
     // newsfeedInitAllMaps()
     newsFeedMobileSelect()
+
+    windowSizeListener()
+}
+
+function windowSizeListener() {
+    window.addEventListener('resize', function (){
+        let width = document.documentElement.clientWidth
+        let leftSidebar = $('.sidebar-container')
+        let centerFeed = $('.posts-container')
+        let rightSidebar = $('.recent-events')
+        if (width >= 992) {
+            leftSidebar.removeClass('d-none')
+            centerFeed.removeClass('d-none')
+            rightSidebar.removeClass('d-none')
+        }
+    })
 }
 
 function newsFeedMobileSelect() {
@@ -117,7 +134,6 @@ function newsFeedMobileSelect() {
         leftSidebar.addClass('d-none')
         centerFeed.addClass('d-none')
         rightSidebar.addClass('d-none')
-        console.log(id)
 
         switch (id) {
             case 1 : leftSidebar.removeClass('d-none')
@@ -153,7 +169,7 @@ function userSearchListener() {
 
 function searchedUsersHtml(users) {
     //language=html
-    console.log(users)
+    // console.log(users)
     let html = ''
 
     users.map(user => {html += `<li><a class="list-group-item userSearched" data-id="${user.id}" href="#">${user.username}</a></li>`}).join("")
@@ -161,11 +177,12 @@ function searchedUsersHtml(users) {
     return html
 }
 
-function navSearchListener() {
+export function navSearchListener() {
     $('.nav-search').keyup(function (event){
         $('#searchedUsersContainer').html("")
         var keycode = event.keyCode
-        let searchedString = $(this).val().toLowerCase()
+        let searchedString = $(this).val()
+        // console.log(searchedString)
         if (searchedString.length >= 3) {
             fetch(`${USER_URI}/getUsersByUsername/${searchedString}`).then(response => {
                             return response.json()
@@ -222,7 +239,7 @@ function commentOnPost() {
             }
         }
 
-        console.log(commentObject)
+        // console.log(commentObject)
 
         const requestObject = {
             method: "POST",
@@ -231,7 +248,7 @@ function commentOnPost() {
         }
 
         fetch(COMMENT_URI, requestObject).then(function () {
-            console.log("Comment created");
+            // console.log("Comment created");
         }).catch(function () {
             console.log("error")
         }).finally(function () {
@@ -321,6 +338,7 @@ function createPostBtn() {
     })
 }
 
+
 function populateEditPostBtn() {
     $(".post-edit-btn").click(function () {
         let editPostCheckboxes = $('.edit-post-checkbox')
@@ -335,7 +353,7 @@ function populateEditPostBtn() {
         let postId = editPostId
         let editPostCategories = $('#post-categories-' + postId).text();
         editPostCategories = editPostCategories.split(" ");
-        console.log(editPostCategories)
+        // console.log(editPostCategories)
 
         editPostCheckboxes.each(function() {
             if (editPostCategories.includes($(this).val())) {
@@ -353,11 +371,17 @@ function populateEditPostBtn() {
     });
 }
 
+function createEventBtn() {
+    $('.create-event-btn').click(function (){
+        createView('/createEvent')
+    })
+}
+
 function editPostBtn() {
     $('.edit-post-btn').click(e => {
 
         let postId = editPostId
-        console.log(postId)
+        // console.log(postId)
 
         let selectedCategories = [];
 
@@ -385,7 +409,7 @@ function editPostBtn() {
         }
 
         fetch(`${POST_URI}/${postId}`, requestObject).then(r => {
-            console.log("post edited")
+            // console.log("post edited")
         }).catch(r => {
             console.log('error')
         }).finally(r => {
@@ -413,7 +437,7 @@ function deletePostBtn() {
         }
 
         fetch(`${POST_URI}/${postId}`, requestObject).then(r => {
-            console.log("Post deleted")
+            // console.log("Post deleted")
         }).catch(r => {
             console.log("error")
         }).finally(() => {
@@ -618,7 +642,7 @@ function newsfeedSidebarHtml(userProps) {
 				</p>
 				<div class="collapse me-auto" id="collapseGroups">
 					<div class="">
-						${userProps.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#">- ${group.name}</a></div>`).join("")}
+						${userProps.groupsJoined.map(group => `<div class="p-1 group" data-id="${group.id}"><a href="#" class="hover-green">- ${group.name}</a></div>`).join("")}
 					</div>
 				</div>
 				
@@ -630,7 +654,7 @@ function newsfeedSidebarHtml(userProps) {
 				</p>
 				<div class="collapse me-auto" id="collapseEvents">
 					<div class="">
-						${userProps.eventsJoined.map(event => `<div class="p-1 event" data-id="${event.id}"><a href="#">-${event.titleOfEvent}</a></div>`).join("")}
+						${userProps.eventsJoined.map(event => `<div class="p-1 event" data-id="${event.id}"><a href="#" class="hover-green">-${event.titleOfEvent}</a></div>`).join("")}
 					</div>
 				</div>
 				
@@ -643,7 +667,7 @@ function newsfeedSidebarHtml(userProps) {
 				</p>
 				<div class="collapse me-auto" id="collapseFriends">
 					<div class="">
-						${userProps.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#">- ${friend.username}</a></div>`).join("")}
+						${userProps.friends.map(friend => `<div class="p-1 friend" data-id="${friend.id}"><a href="#" class="hover-green">- ${friend.username}</a></div>`).join("")}
 					</div>
 				</div>
 				
@@ -660,7 +684,10 @@ function newsfeedPostsHtml(sortedProps) {
     let html = `
         <header class="d-flex justify-content-between m-3">
             <div class=""><h3>News Feed</h3></div>
-            <button class="btn btn-lightG mx-1 mx-lg-4" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
+            <div class="">
+                <button class="btn btn-lightG ms-1 fontResponsive" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
+                <button class="btn btn-lightG ms-1 fontResponsive create-event-btn">Create event</button>
+            </div>
         </header>
         <div class="post">
             ${sortedProps.map(post => {
@@ -695,10 +722,10 @@ function newsfeedRecent(props) {
 }
 
 function recentEventCard(event) {
-    // console.log(event)
+    console.log(event)
     return `
-            <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}" style='background-image: url("https://picsum.photos/id/${event.id + 1000}/200/100"); background-repeat: no-repeat'>
-              <img src="https://picsum.photos/id/${event.id + 1010}/200/100" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
+            <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}">
+              <img src="${event.eventImageUrl !== null ? event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
               <div class="card-body d-flex justify-content-between p-2">
                   <div>
                     <h6>${event.titleOfEvent}</h6>
@@ -779,6 +806,18 @@ function postCard(post) {
     return html;
 }
 
+function checkForTwoLocations(event) {
+    if (event.isSingleLocationEvent) {
+        return ``
+    } else if (!event.routeDistance || !event.routeDuration) {
+        return ``
+    }
+    return `
+                <div class="ending-address mb-1">Ending: ${event.destination}</div>
+                <div class="distance mb-1">Miles: ${event.routeDistance}</div>
+           `
+}
+
 function eventCard(event) {
     eventIdsArray.push(event)
     let html = `<div class="card m-lg-3 my-3 mx-1 event-num-${event.id} shadow-light card-dark-bg">
@@ -813,8 +852,7 @@ function eventCard(event) {
                                     <div class="content-and-map row my-3">
                                         <div class="col-12 col-lg-6">
                                             <div class="starting-address mb-1">Starting: ${event.origin}</div>
-                                            <div class="ending-address mb-1">Ending: ${event.destination}</div>
-                                            <div class="distance mb-1">Miles:(api data)</div>
+                                            ${checkForTwoLocations(event)}
                                             <p class="card-text" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
                                         </div>
                                         <div class="map-container d-none d-lg-block col-lg-6 mx-auto">
@@ -866,7 +904,7 @@ function showComment(comment, username) {
                                                     <div class="pic"><i class="bi bi-person-square comment-avatar me-2"></i></div>
                                                     <div class="names">
                                                         <div class="username">${username}</div>
-                                                        <div class="content">${comment.content}</div>
+                                                        <div class="content-comment">${comment.content}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1100,7 +1138,7 @@ function newsfeedInitMap(eventId, origin, destination) {
     map = new google.maps.Map(document.getElementById(`map-${eventId}`), {
         center: {lat: 39.8097343, lng: -98.5556199},
         disableDefaultUI: true,
-        zoom: 8,
+        zoom: 3,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         styles: [
             { elementType: "geometry", stylers: [{ color: "#181818" }] },

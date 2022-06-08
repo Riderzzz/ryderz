@@ -1,9 +1,10 @@
 import createView from "../createView.js";
+import {enableSearchIfLogged} from "./Home.js";
 
 export default function Discover(props) {
 	console.log(props)
 	// language=html
-	return `<!DOCTYPE html>
+	let html = `<!DOCTYPE html>
     <html lang="html">
     <head>
         <meta charset="UTF-8"/>
@@ -38,10 +39,11 @@ export default function Discover(props) {
 					`
 				<div class="media-element">
 					<a class="eventDiv" data-id="${event.id}">
-					<img class="discoverItemImg shadow" src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80" alt="">
+					<img class="discoverItemImg shadow" src="${event.eventImageUrl !== null ? event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
                     <h5 class="discoverTitle text-white">${event.titleOfEvent}</h5>
-                    <p class="discoverLocation text-white">Location: ${event.origin}</p>	
-                    <p class="eventDate text-white">Date: ${new Date(event.eventDate).toLocaleDateString()}</p clas>			
+                    <p class="discoverLocation text-white">Location: ${event.origin}</p>
+                    <p class="text-white">${getRouteInfo(event)}</p>
+                    <p class="eventDate text-white">Date: ${new Date(event.eventDate).toLocaleDateString()}</p>	
 					</a>
                 </div>
 `
@@ -78,6 +80,8 @@ export default function Discover(props) {
     </body>
     </html>`;
 
+	return html;
+
 }
 
 export function DiscoverEvents() {
@@ -106,4 +110,16 @@ export function DiscoverEvents() {
 	$(".createEventBtn").click(function () {
 		createView('/createEvent')
 	})
+
+	enableSearchIfLogged();
+}
+
+function getRouteInfo(event) {
+	if (event.isSingleLocationEvent) {
+		return ``
+	} else if (!event.routeDistance || !event.routeDuration) {
+		return ``
+	} else {
+	return `Miles: ${event.routeDistance} Duration: ${event.routeDuration}`
+	}
 }

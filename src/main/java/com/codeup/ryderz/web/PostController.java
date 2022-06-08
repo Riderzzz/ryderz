@@ -52,17 +52,11 @@ public class PostController {
 
         postRepository.save(newPost);
     }
-//get email address of currently logged-in user, get user object with that email address. then compare user
-//ID and author of the post.
+
     @PutMapping("{postId}")
     private void updatePost(@PathVariable Long postId, @RequestBody Post newPost, OAuth2Authentication auth) {
         System.out.printf("Backend wants to update post id %d with %s\n", postId, newPost);
 
-        /*
-            initializing and empty array of categories. loops through the categories array sent through the
-            request body and checks to see if the name matches the categories name in the database. if it does
-            it adds the actual category to the array list to be set to the post
-         */
         Collection<Category> categories = new ArrayList<>();
 
         for (Category category : newPost.getCategories()) {
@@ -124,6 +118,15 @@ public class PostController {
         Collections.sort(usersFriendsPost);
 
         return usersFriendsPost;
+    }
+
+    @PutMapping("/profile/{id}")
+    private void updatePostFromProfile(@RequestBody String updateContent,@PathVariable Long id){
+        Post currentPost = postRepository.getById(id);
+
+        currentPost.setContent(updateContent);
+
+        postRepository.save(currentPost);
     }
 
 

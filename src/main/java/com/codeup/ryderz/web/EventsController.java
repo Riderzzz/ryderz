@@ -2,8 +2,11 @@ package com.codeup.ryderz.web;
 
 import com.codeup.ryderz.data.*;
 import com.codeup.ryderz.services.S3Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -29,6 +32,11 @@ public class EventsController {
     @GetMapping("/{id}")
     public Events getEventById(@PathVariable Long id){
         Events event = eventsRepository.findById(id).get();
+
+        if (event.getEventImageName() != null) {
+            String eventImageUrl = s3Service.getSignedURL(event.getEventImageName(), 5L);
+            event.setEventImageUrl(eventImageUrl);
+        }
 
         Collection<Comments> eventComments = event.getComments();
 
@@ -70,7 +78,15 @@ public class EventsController {
 
     @GetMapping()
     public List<Events> getAllEvents() {
-        return eventsRepository.findAll();
+        List<Events> events = eventsRepository.findAll();
+
+        for (Events event: events) {
+            if (event.getEventImageName() != null) {
+                String eventImageName = s3Service.getSignedURL(event.getEventImageName(), 5L);
+                event.setEventImageUrl(eventImageName);
+            }
+        }
+        return events;
     }
 
     @PutMapping("{id}")
@@ -125,6 +141,10 @@ public class EventsController {
     @DeleteMapping("/{eventId}")
     private void deleteEvent(@PathVariable Long eventId) {
         Events event = eventsRepository.getById(eventId);
+        if (event.getEventImageName() != null) {
+            String imageToDeleteName = event.getEventImageName();
+            s3Service.deleteFile(imageToDeleteName);
+        }
         event.setUsersId(null);
         Collection<Comments> comments = event.getComments();
         commentRepository.deleteAll(comments);
@@ -155,14 +175,36 @@ public class EventsController {
     @GetMapping("recentEvents")
     public Collection<Events> getRecentEvents(){
         List<Events> allEvents = eventsRepository.findAll();
+        Events event1 = allEvents.get(allEvents.size() - 1);
+        Events event2 = allEvents.get(allEvents.size() - 2);
+        Events event3 = allEvents.get(allEvents.size() - 3);
+
+        event1.setEventImageUrl(s3Service.getSignedURL(event1.getEventImageName(), 5L));
+        event2.setEventImageUrl(s3Service.getSignedURL(event2.getEventImageName(), 5L));
+        event3.setEventImageUrl(s3Service.getSignedURL(event3.getEventImageName(), 5L));
 
         List<Events> recentThree = new ArrayList<>();
 
-        recentThree.add(allEvents.get(allEvents.size() - 1));
-        recentThree.add(allEvents.get(allEvents.size() - 2));
-        recentThree.add(allEvents.get(allEvents.size() - 3));
+        recentThree.add(event1);
+        recentThree.add(event2);
+        recentThree.add(event3);
 
         return recentThree;
+    }
+
+    @PostMapping("{eventId}/eventUpload")
+    public ResponseEntity<String> uploadFile(@PathVariable Long eventId, @RequestParam(value="file") MultipartFile file) {
+        Events event = eventsRepository.findById(eventId).get();
+
+        if(event.getEventImageName() != null) {
+            String previousImgName = event.getEventImageName();
+            s3Service.deleteFile(previousImgName);
+        }
+        System.out.println(file);
+        String fileName = s3Service.uploadFile(file);
+        event.setEventImageName(fileName);
+        eventsRepository.save(event);
+        return new ResponseEntity<>(fileName, HttpStatus.OK);
     }
 }
 

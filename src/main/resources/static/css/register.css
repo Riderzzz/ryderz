@@ -3,13 +3,17 @@
     background-size: cover;
 }
 #username {
-    background: white url(../images/user-icon.png) right no-repeat;
+    background: #404040 url(../images/user-icon.png) right no-repeat;
     /* height: 10px; */
     margin-right: 10px;
     padding-left: 10px;
     background-size: 30px 30px;
 }
 
+.registerCardBody {
+    background-color: #181818;
+    border-radius: 15px;
+ }
 
 #email {
     background: white url(../images/email-icon.png) right no-repeat;
@@ -31,21 +35,21 @@ margin-bottom: 1px;
 .gradient-custom-3 {
 
     /* fallback for old browsers */
-    background: #84fab0;
+    background: #709775;
 
     /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+    background: -webkit-linear-gradient(to right, rgba(91, 178, 124, 0.5), rgba(143, 211, 244, 0.5));
 
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+    background: linear-gradient(to right, rgba(91, 178, 124, 0.5), rgba(143, 211, 244, 0.5))
 }
 .gradient-custom-4 {
     /* fallback for old browsers */
-    background: #84fab0;
+    background: #709775;
 
     /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+    background: -webkit-linear-gradient(to right, rgba(91, 178, 124, 0.5), rgba(143, 211, 244, 1));
 
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
+    background: linear-gradient(to right, rgba(91, 178, 124, 0.5), rgba(143, 211, 244, 1))
 }
