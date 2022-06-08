@@ -102,7 +102,89 @@ function initMap(OGOrigin, OGDestination) {
 	map = new google.maps.Map(document.getElementById("singleEventMap"), {
 		center: {lat: 39.8097343, lng: -98.5556199},
 		zoom: 10,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		styles: [
+			{ elementType: "geometry", stylers: [{ color: "#181818" }] },
+			{ elementType: "labels.text.stroke", stylers: [{ color: "#000000" }] },
+			{ elementType: "labels.text.fill", stylers: [{ color: "#709775" }] },
+			{
+				featureType: "administrative.locality",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#709775" }],
+			},
+			{
+				featureType: "poi",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#709775" }],
+			},
+			{
+				featureType: "poi.park",
+				elementType: "geometry",
+				stylers: [{ color: "#263c3f" }],
+			},
+			{
+				featureType: "poi.park",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#6b9a76" }],
+			},
+			{
+				featureType: "road",
+				elementType: "geometry",
+				stylers: [{ color: "#38414e" }],
+			},
+			{
+				featureType: "road",
+				elementType: "geometry.stroke",
+				stylers: [{ color: "#212a37" }],
+			},
+			{
+				featureType: "road",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#9ca5b3" }],
+			},
+			{
+				featureType: "road.highway",
+				elementType: "geometry",
+				stylers: [{ color: "#606060" }],
+			},
+			{
+				featureType: "road.highway",
+				elementType: "geometry.stroke",
+				stylers: [{ color: "#1f2835" }],
+			},
+			{
+				featureType: "road.highway",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#f3d19c" }],
+			},
+			{
+				featureType: "transit",
+				elementType: "geometry",
+				stylers: [{ color: "#2f3948" }],
+			},
+			{
+				featureType: "transit.station",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#709775" }],
+			},
+			{
+				featureType: "water",
+				elementType: "geometry",
+				stylers: [{ color: "#17263c" }],
+			},
+			{
+				featureType: "water",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#515c6d" }],
+			},
+			{
+				featureType: "water",
+				elementType: "labels.text.stroke",
+				stylers: [{ color: "#17263c" }],
+			},
+		]
+
+
 	});
 
 	//create a DirectionsService object to use the route method and get a result for our request
