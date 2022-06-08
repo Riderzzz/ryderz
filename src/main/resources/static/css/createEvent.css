@@ -11,6 +11,22 @@
     color: white;
 }
 
+.pac-item-query {
+    color: #709775;
+}
+
+.pac-item:hover {
+    background-color: #4C4C4C;
+}
+
+.pac-container{
+    background-color: #181818;
+}
+
+.pac-matched {
+    color: #A1CCA5;
+}
+
 #createRoute {
     background-color: #A1CCA5;
     color: black;
