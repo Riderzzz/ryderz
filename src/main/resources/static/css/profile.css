@@ -47,6 +47,10 @@ body {
 ::placeholder {
     color: darkgray;
 }
+.edit-bio{
+    background-color: #181818;
+    color: white;
+}
 
 .edit-post-button {
     margin-left: auto;
@@ -217,9 +221,15 @@ body {
 .content-within-comments{
     color: #CCDBDC;
 }
+.comment-users-posts{
+    color: #CCDBDC
+}
+.modal-content{
+    background-color: #4C4C4C;
+    color: white;
+}
 
-
-@media (min-width: 375px) {
+@media (max-width: 425px) {
 .submit-comment{
     display: flex;
     width: 30%;

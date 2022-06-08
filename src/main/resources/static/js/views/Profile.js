@@ -428,7 +428,7 @@ function showUsersPosts(props) {
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">Delete Comment</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -614,7 +614,7 @@ function showAboutPageOnly(props) {
     let html = `
         <div class="card  card-profile shadow" style="width: 100%">
             <div class="card-body card-body-profile">
-                <h5 class="card-title card-title-profile">About Me</h5>
+                <h5 class="card-title card-title-profile mb-2">About Me</h5>
                 <h6 class="card-subtitle  card-subtitle-profile mb-2 text-muted">${props.profile.username}</h6>
                     <div class="about-${props.profile.id}-show" data-id="${props.profile.id}">
                         <p class="card-text card-text-profile">${aboutMe(props)}</p>

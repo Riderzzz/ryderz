@@ -477,7 +477,7 @@ function checkIfCommentsExist(props) {
             <h1 class="text-white">Latest From This Event</h1>
             <div id="eventCommentsContainer">
                 ${props.event.comments.reverse().map(comment =>
-                        `<div class="card card-body p-2 m-3">
+                        `<div class="card card-body p-2 m-3 event-indv-card">
                         <div class="d-flex">
                             <div class="eventComment info d-flex">
 <!--                            TODO: add delete icon to delete comment-->
@@ -486,9 +486,9 @@ function checkIfCommentsExist(props) {
                                 </a>
                                 <div class="ms-2 names">
                                 	<a class="commentATag" data-id="${comment.author.id}">
-                                    	<div class="username">${comment.author.username}</div>
+                                    	<div class="event-username">${comment.author.username}</div>
                                     </a>
-                                    <div class="content">${comment.content}</div>
+                                    <div class="event-content">${comment.content}</div>
                                 </div>
                                 <div class="deleteIcon ml-auto"><i class="bi bi-x-square-fill"></i></div>
                             </div>
