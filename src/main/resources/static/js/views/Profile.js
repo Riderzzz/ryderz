@@ -95,7 +95,7 @@ export default function Profile(props) {
 
             <div class="row friends-page">
                 <div class="col">
-                    ${showFriendsOnly(props)}
+                    ${showUsersFriends(props)}
                 </div>
             </div>
             <!--end of showing contents when buttons pressed-->
@@ -461,6 +461,7 @@ function refreshPosts(userId){
         };
         postSection.html(showUsersPosts(state));
         commentFromUserProfile();
+        deletePostButtonListener();
         deleteCommentOnPost();
         editPostButtonListener();
         editPostFromProfile();
@@ -691,30 +692,6 @@ function aboutMe(props){
     return bioText;
 }
 
-function showFriendsOnly(props) {
-    //language=HTML
-    let html = `
-        <div class="card card-profile friends-card shadow-light">
-            <div class="card-title card-title-profile"><strong>Friends</strong></div>
-            <div class="card-body card-body-profile">
-                <div class="d-flex flex-wrap flex-row">
-                    ${props.profile.friends.map(friends => `
-                    <div class="col-4 d-flex mb-3 justify-content-center">
-                         <div class="justify-content-center">
-                            <img src="${friends.userPhotoUrl !== null ? friends.userPhotoUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}"
-                                alt="image 1" class="rounded-circle"
-                                style="width: 90px;height: 90px;">
-                            <a class="text-center show-users-friends-profile" 
-                                data-id="${friends.id}">${friends.username}</a>
-                         </div>
-                    </div>`).join("")}
-                </div>
-            </div>
-        </div>
-    `
-    return html;
-}
-
 function addOrRemoveFriends(props) {
 
     for (let i = 0; i < props.profile.friendsRequest.length; i++){
@@ -722,7 +699,7 @@ function addOrRemoveFriends(props) {
             let html = `
                 <button type="button" 
                             class="btn btn-lightG mr-2 cancel-friend-btn" 
-                            data-id="${props.profile.id}">Cancel Request
+                            data-id="${props.profile.id}">Cancel Request <i class="bi bi-x-circle"></i>
                     </button>`
             return html
         }
@@ -732,8 +709,8 @@ function addOrRemoveFriends(props) {
         if (props.profile.friends[i].email === userEmail()) {
             let html = `
                 <button type="button" 
-                            class="btn btn-lightG-2 mr-2 remove-friend-btn" 
-                            data-id="${props.profile.id}">Remove Friend 
+                            class="btn btn-lightG mr-2 remove-friend-btn" 
+                            data-id="${props.profile.id}">Remove Friend <i class="bi bi-eraser"></i>
                     </button>`
             return html
         }
@@ -742,14 +719,14 @@ function addOrRemoveFriends(props) {
     if(props.profile.email !== userEmail()){
         let html = `
                 <button type="button" 
-                            class="btn btn-lightG-2 mr-2 add-friend-btn" 
-                            data-id="${props.profile.id}">Add Friend
-                    </button>`
+                            class="btn btn-lightG mr-2 add-friend-btn" 
+                            data-id="${props.profile.id}">Add Friend <i class="bi bi-person-plus-fill"></i>
+                </button>`
         return html
     } else if (props.profile.email === userEmail()){
         let html = `
         <a type="button" 
-                   class="btn btn-lightG-2 mr-2 edit-profile-btn">Edit Profile
+                   class="btn btn-lightG mr-2 edit-profile-btn">Edit Profile <i class="bi bi-pencil-square"></i>
         </a>`
         return html
     }

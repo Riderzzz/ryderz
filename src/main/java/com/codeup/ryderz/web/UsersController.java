@@ -243,12 +243,9 @@ public class UsersController {
 
     }
 
-    @DeleteMapping("/friendRequest/{user2id}")
-    private void deleteFriendsRequest(@PathVariable Long user2id, OAuth2Authentication auth){
-        User sender = userRepository.findByEmail(auth.getName());
-        User receiver = userRepository.getById(user2id);
-
-        friendRequestRepository.deleteFriendsRequest(sender.getId(), receiver.getId());
+    @DeleteMapping("/friendRequest/{id}")
+    private void deleteFriendsRequest(@PathVariable Long id){
+        friendRequestRepository.deleteById(id);
     }
 
     @DeleteMapping("/friends/{user2Id}")
