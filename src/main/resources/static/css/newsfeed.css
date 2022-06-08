@@ -140,11 +140,9 @@
 }
 
 .show-map {
-    position: absolute;
-    top: 45%;
-    right: 30%;
-    left: 30%;
+    cursor: pointer;
 }
+
 .newsfeed-profile-pic {
     margin-top: 10px;
     width: 45px;
