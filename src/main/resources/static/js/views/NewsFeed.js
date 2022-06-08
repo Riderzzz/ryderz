@@ -1,6 +1,6 @@
 import {getHeaders, isLoggedIn, pubnubInitWithUserUsername, userEmail} from "../auth.js";
 import createView from "../createView.js";
-import {fetchOldMessages, sendMsg, subscribeToChannel} from "../pubnubChat.js";
+import {fetchOldMessages, sendMsg, subscribeToChannel, unsubscribe} from "../pubnubChat.js";
 import {chatBoxHtml, selectFriendsTabListener, sendMsgBtn, sendMsgEnter, toggleChatboxBtn} from "./chat.js";
 
 const COMMENT_URI = `${URI}/api/comments`;
@@ -93,8 +93,9 @@ export function NewsFeedEvents() {
     goToRecentGroupBtn();
 
     //chat functions
-    subscribeToChannel(channel);
-    fetchOldMessages(channel);
+    unsubscribe(channel)
+    // subscribeToChannel(channel);
+    // fetchOldMessages(channel);
     sendMsgBtn();
     sendMsgEnter();
     toggleChatboxBtn();
@@ -120,6 +121,11 @@ function windowSizeListener() {
             leftSidebar.removeClass('d-none')
             centerFeed.removeClass('d-none')
             rightSidebar.removeClass('d-none')
+        }
+        if (width < 992) {
+            leftSidebar.addClass('d-none')
+            centerFeed.removeClass('d-none')
+            rightSidebar.addClass('d-none')
         }
     })
 }
