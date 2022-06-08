@@ -1,8 +1,5 @@
-/*body h1 {*/
-/*    text-align: center;*/
-/*}*/
 
-#about-body, h1 {
+#about-body h1 {
     text-align: center;
     box-sizing: content-box;
 }
@@ -152,7 +149,22 @@ span {
         font-size: 1.875rem;
         margin-bottom: 3.75rem;
     }
+
+    .second-weeks-card {
+        display: none;
+    }
 }
+
+@media (max-width: 767px) {
+    .weeks-card {
+        display: none!important;
+    }
+
+    #capstone-card {
+        height: 0!important;
+    }
+}
+
 .story .block_text {
     width: 60%;
     text-align: center;

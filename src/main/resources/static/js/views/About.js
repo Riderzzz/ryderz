@@ -1,4 +1,3 @@
-
 export default function About(props) {
     return `
 <!----about us cards----->
@@ -102,9 +101,9 @@ export default function About(props) {
       </div>
       
       
-    </div>
+</div>
     
-<div class="main-card container first-card">
+    <div class="main-card container first-card">
         <div class="h1 story__name block_text story-title--desktop" style="text-align: center;">
         Our development Process
         </div>
@@ -129,33 +128,51 @@ export default function About(props) {
                 week 4
                 </li>
             </ul>
+            <div class="second-weeks-card">   
+                <p> 
+                    Week 1 we used a skeleton of our rest blog to set up the foundation of our backend. Some of the methodology used includes SpringBoot for a relational database, javascript/jQuery, Oauth security.
+                </p>
+                <p> 
+                    Week 2 most of the time was spent setting up group events allowing users to log into their own accounts to create public group ride events
+                </p>
+                <p> 
+                    Week 3
+                </p>
+                <p> 
+                    Week 4
+                </p>
+            </div>
         </div>
     </div>
     `;
 }
+
 export function capstoneText() {
     $('#week-1').hover(
-        function() {
+        function () {
             $('#capstone-card').html("Week 1 we used a skeleton of our rest blog to set up the foundation of our backend. Some of the methodology used includes SpringBoot for a relational database, javascript/jQuery, Oauth, ");
-        }, function() {
+        }, function () {
             $('#capstone-card').html("Given 4 weeks our group was tasked with creating our very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking to meet up for pre-planned routes.");
         }
-    );$('#week-2').hover(
-        function() {
+    );
+    $('#week-2').hover(
+        function () {
             $('#capstone-card').html("Week 2 most of the time was spent setting up group events allowing users to log into their own accounts to create public group ride events");
-        }, function() {
+        }, function () {
             $('#capstone-card').html("Given 4 weeks our group was tasked with creating our very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking to meet up for pre-planned routes.");
         }
-    );$('#week-3').hover(
-        function() {
+    );
+    $('#week-3').hover(
+        function () {
             $('#capstone-card').html("Week 3");
-        }, function() {
+        }, function () {
             $('#capstone-card').html("Given 4 weeks our group was tasked with creating very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking to meet up for pre-planned routes.");
         }
-    );$('#week-4').hover(
-        function() {
+    );
+    $('#week-4').hover(
+        function () {
             $('#capstone-card').html("Week 4");
-        }, function() {
+        }, function () {
             $('#capstone-card').html("Given 4 weeks our group was tasked with creating very own programming design/implementation as our final project. After many hours of deliberation and the fact that we were the last group to decide. Our group decided to create a social media site for motorcycle riders looking to meet up for pre-planned routes.");
         }
     );
