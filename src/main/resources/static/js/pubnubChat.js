@@ -1,4 +1,4 @@
-import {isLoggedIn, pubnub, userEmail} from "./auth.js";
+import {isLoggedIn, pubnub, pubnubInitWithUserUsername, userEmail} from "./auth.js";
 import {appendOldMessagesToChatBox, appendToChatbox} from "./views/chat.js";
 
 let count = 1;

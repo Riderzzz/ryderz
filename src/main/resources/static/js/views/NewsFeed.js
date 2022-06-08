@@ -1,6 +1,6 @@
 import {getHeaders, isLoggedIn, pubnubInitWithUserUsername, userEmail} from "../auth.js";
 import createView from "../createView.js";
-import {fetchOldMessages, sendMsg, subscribeToChannel} from "../pubnubChat.js";
+import {fetchOldMessages, sendMsg, subscribeToChannel, unsubscribe} from "../pubnubChat.js";
 import {chatBoxHtml, selectFriendsTabListener, sendMsgBtn, sendMsgEnter, toggleChatboxBtn} from "./chat.js";
 
 const COMMENT_URI = `${URI}/api/comments`;
@@ -93,8 +93,9 @@ export function NewsFeedEvents() {
     goToRecentGroupBtn();
 
     //chat functions
-    subscribeToChannel(channel);
-    fetchOldMessages(channel);
+    unsubscribe(channel)
+    // subscribeToChannel(channel);
+    // fetchOldMessages(channel);
     sendMsgBtn();
     sendMsgEnter();
     toggleChatboxBtn();

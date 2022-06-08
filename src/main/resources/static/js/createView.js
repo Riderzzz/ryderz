@@ -1,7 +1,7 @@
 import render from './render.js';
 import router from './router.js';
 import fetchData from "./fetchData.js";
-import {getHeaders} from "./auth.js";
+import {getHeaders, initPubIfUndefined, isLoggedIn, pubnub, pubnubInitWithUserUsername} from "./auth.js";
 
 /**
  * Finds the correct route for a given view, builds a loading view, fetches data and builds the final rendered view.
@@ -9,6 +9,8 @@ import {getHeaders} from "./auth.js";
  */
 export default function createView(URI, Id) {
     let route = router(URI, Id);
+
+    initPubIfUndefined()
 
     // Store the title because the loading screen render overwrites it.
     // let currentTitle = "ryderz";

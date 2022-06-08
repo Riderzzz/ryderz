@@ -120,7 +120,12 @@ export function pubnubInitWithUserUsername() {
             pubNubListener()
         })
     }
+}
 
+export function initPubIfUndefined(){
+    if (typeof pubnub === 'undefined' && isLoggedIn()) {
+        pubnubInitWithUserUsername()
+    }
 }
 
 
