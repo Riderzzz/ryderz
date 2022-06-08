@@ -33,7 +33,6 @@ body {
 
 .minutes-ago {
     margin-left: 5px;
-    font-size: x-small;
     margin-top: 26px;
 }
 
@@ -87,7 +86,18 @@ body {
     border: none;
     text-decoration: underline;
 }
+.delete-link{
+    color: #a1cca5;
+    background-color: transparent;
+    margin-right: 42px;
+    border: none;
+    text-decoration: underline;
+}
 
+.delete-link:hover{
+    cursor: pointer;
+    color: #4C4C4C;
+}
 .comments-link:hover{
     cursor: pointer;
     color: #4C4C4C;
@@ -204,6 +214,21 @@ body {
  .bio-text{
      color: #CCDBDC;
  }
+.content-within-comments{
+    color: #CCDBDC;
+}
+
+
+@media (min-width: 375px) {
+.submit-comment{
+    display: flex;
+    width: 30%;
+    margin-top: 5px;
+}
+    .comment-users-posts{
+        width: 100%;
+    }
+}
 
 
 
