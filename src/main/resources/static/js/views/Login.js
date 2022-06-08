@@ -1,6 +1,6 @@
 export default function Login(props) {
     return `<!DOCTYPE html>
-<section class="background-radial-gradient overflow-hidden" xmlns="http://www.w3.org/1999/html">
+<section class="overflow-hidden" xmlns="http://www.w3.org/1999/html">
   <style>
     .background-radial-gradient {
       background-color: hsl(218, 41%, 15%);
@@ -43,14 +43,14 @@ export default function Login(props) {
     }
   </style>
 
-  <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+  <div class="container px-4 py-md-5 px-md-5 text-center text-lg-start my-2 mt-md-5 mb-md-3">
     <div class="row gx-lg-5 align-items-center mb-5">
-      <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+      <div class="col-lg-6 mb-4 mb-lg-0" style="z-index: 10">
+        <h1 class="my-4 my-md-5 display-5 fw-bold ls-tight" style="color: white">
           Connect With Your <br />
-          <span style="color: hsl(218, 81%, 75%)">Fellow Ryderz</span>
+          <span style="color: #A1CCA5">Fellow Ryderz</span>
         </h1>
-        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+        <p class="mb-4" style="color: #fa0000">
           Send messages, set custom routes/events, track ryderz in real-time
         </p>
       </div>
@@ -59,21 +59,21 @@ export default function Login(props) {
         <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
         <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
 
-        <div class="card bg-glass">
-          <div class="card-body px-4 py-5 px-md-5">
+        <div class="card card-darker-bg">
+          <div class="card-body card-darker-bg px-4 py-5 px-md-5">
             <form>
               <!-- Email input -->
               <div class="form-outline mb-4" id="login-form">
                 
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter Email" />
-                <label class="form-label" for="form3Example3">Username</label>
+                <input type="email" class="form-control settingForm" id="email" aria-describedby="emailHelp" placeholder="Enter Email" />
+                <label class="form-label text-white" for="form3Example3">Email</label>
                 <small id="wrongMessage"></small>
               </div>
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input type="password" class="form-control" id="password" placeholder="Password">
-                <label class="form-label" for="form3Example4">Password</label>
+                <input type="password" class="form-control settingForm" id="password" placeholder="Password">
+                <label class="form-label text-white " for="form3Example4">Password</label>
               </div>
 
 <!--               Submit button -->
@@ -90,8 +90,25 @@ export default function Login(props) {
     </div>
   </div>
 </section>
+<div class="footerLine mx-auto d-flex flex-column">
+    <hr>
+    <div class="iconLinks d-flex justify-content-between mx-auto">
+        <a href="https://github.com/Riderzzz" target="_blank" class="text-white githubLink"><i class="bi bi-github icon-link githubLink"></i></a> 
+        <i class="bi bi-twitter icon-link"></i>
+        <i class="bi bi-instagram icon-link"></i>
+    </div>
+</div>
 <!-- Section: Design Block -->`;
 
+}
+
+// githubLinkListener()
+
+export function githubLinkListener() {
+    $('.githubLink').click(function (){
+        window.open("https://github.com/Riderzzz", 'git')
+        console.log('clicked github')
+    })
 }
 
 export function ifUserUnauthorized() {

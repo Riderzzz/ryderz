@@ -1,4 +1,4 @@
-import Home from "./views/Home.js";
+import Home, {HomeEvent} from "./views/Home.js";
 import PostIndex from "./views/PostIndex.js";
 import About from "./views/About.js";
 import Error404 from "./views/Error404.js";
@@ -31,7 +31,8 @@ export default function router(URI, Id) {
             returnView: Home,
             state: {},
             uri: '/',
-            title: 'Home'
+            title: 'Home',
+            viewEvent: HomeEvent
         },
         '/login': {
             returnView: Login,

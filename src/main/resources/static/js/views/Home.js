@@ -1,4 +1,5 @@
 import {isLoggedIn} from "../auth.js";
+import {navSearchListener} from "./NewsFeed.js";
 
 export default function Home(props) {
 
@@ -49,6 +50,16 @@ export default function Home(props) {
             </div>
         </div>
     `;
+}
+
+export function HomeEvent() {
+    enableSearchIfLogged()
+}
+
+export function enableSearchIfLogged(){
+    if (isLoggedIn()) {
+        navSearchListener()
+    }
 }
 
 function loginAndRegister() {
