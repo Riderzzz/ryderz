@@ -317,12 +317,12 @@ function createPostBtn() {
         let selectedCategories = [];
 
         $('input[type="checkbox"]:checked').each(function() {
-            console.log(this.value);
+
             selectedCategories.push({name: this.value})
 
         });
 
-        console.log(selectedCategories)
+
 
         const title = $('#createPostTitle').val();
         const content = $('#createPostContent').val();
@@ -334,7 +334,7 @@ function createPostBtn() {
             content,
             categories
         }
-        console.log(postObject);
+
         const requestObject = {
             method: "POST",
             headers: getHeaders(),
@@ -347,7 +347,6 @@ function createPostBtn() {
             console.log('error')
         }).finally(r => {
             fetchPostsAndEventsData().then(d => {
-                console.log(d)
                 $('.posts-container').html(newsfeedPostsHtml(d))
                 NewsFeedEvents()
             })
@@ -374,7 +373,6 @@ function populateEditPostBtn() {
 
         editPostCheckboxes.each(function() {
             if (editPostCategories.includes($(this).val())) {
-                console.log($(this).val())
                 $(this).prop('checked', true)
             }
         });
@@ -557,7 +555,6 @@ function leaveEvent() {
 function sideBarGroupBtn() {
     $('.group').click(function () {
         const groupId = $(this).data("id")
-        console.log("this groupss id is: " + groupId)
         createView("/group", groupId)
     })
 }
@@ -565,7 +562,6 @@ function sideBarGroupBtn() {
 function sideBarEventBtn() {
     $('.event').click(function (){
         const eventId = $(this).data("id")
-        console.log("this events id is: " + eventId)
         createView("/event", eventId)
     })
 }

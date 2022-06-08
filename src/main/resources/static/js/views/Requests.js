@@ -33,6 +33,7 @@ export function showRequests() {
 }
 
 function showAllRequests(props) {
+    console.log(props)
     let html = `
        ${props.request.map(m => `
          <div class="card request-card" style="width: 18rem;">

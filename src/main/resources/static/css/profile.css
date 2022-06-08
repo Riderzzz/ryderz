@@ -30,11 +30,12 @@ body {
     margin-top: 20px;
     color: white;
     text-decoration: none;
+    font-size: large;
 }
 
 .minutes-ago {
     margin-left: 5px;
-    margin-top: 26px;
+    margin-top: 23px;
 }
 
 .comment-users-posts {
