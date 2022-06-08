@@ -527,6 +527,9 @@ function joinEvent() {
             fetchUserData().then(d => {
                 console.log(d)
                 $('.sidebar-container').html(newsfeedSidebarHtml(d))
+                sideBarGroupBtn();
+                sideBarEventBtn();
+                sideBarFriendBtn();
             })
             fetchPostsAndEventsData().then(d => {
                 console.log(d)
@@ -546,9 +549,6 @@ function joinEvent() {
                 showMapMap()
                 // newsfeedInitAllMaps()
                 newsFeedMobileSelect()
-                sideBarGroupBtn();
-                sideBarEventBtn();
-                sideBarFriendBtn();
                 createBtnClearListener()
             })
         })
@@ -576,6 +576,9 @@ function leaveEvent() {
             fetchUserData().then(d => {
                 // console.log(d)
                 $('.sidebar-container').html(newsfeedSidebarHtml(d))
+                sideBarGroupBtn();
+                sideBarEventBtn();
+                sideBarFriendBtn();
             })
             fetchPostsAndEventsData().then(d => {
                 // console.log(d)
@@ -595,9 +598,7 @@ function leaveEvent() {
                 showMapMap()
                 // newsfeedInitAllMaps()
                 newsFeedMobileSelect()
-                sideBarGroupBtn();
-                sideBarEventBtn();
-                sideBarFriendBtn();
+
                 createBtnClearListener()
             })
         })
