@@ -549,6 +549,7 @@ function displayCommentsButton(post){
 }
 
 function displayComments(props) {
+    console.log(props)
     //language=HTML
     let html = `
         ${props.comments.reverse().map(posts => `
@@ -562,15 +563,26 @@ function displayComments(props) {
                         </div>
                    </div>
                         <div class="justify-content-end">
-                            <button type="button" class="btn delete-link" data-bs-toggle="modal" data-bs-target="#deleteComments" data-id="${posts.id}">
-                                delete
-                             </button>
+                                ${verifyUsersDeleteButton(posts)}
                         </div>
                 </div>
             </div>`
     ).join("")}`
     return html;
 }
+
+
+function verifyUsersDeleteButton(props){
+    if(props.author.email === userEmail()){
+        let html =`
+               <button type="button" class="btn delete-link" data-bs-toggle="modal" data-bs-target="#deleteComments" data-id="${props.id}">
+                   delete
+              </button>`
+        return html;
+    }
+    return "";
+}
+
 function deleteCommentOnPost(){
     $(".confirm-delete-comment").click(function (){
             let commentId = $(".delete-link").data("id")
