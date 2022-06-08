@@ -121,6 +121,11 @@ function windowSizeListener() {
             centerFeed.removeClass('d-none')
             rightSidebar.removeClass('d-none')
         }
+        if (width < 992) {
+            leftSidebar.addClass('d-none')
+            centerFeed.removeClass('d-none')
+            rightSidebar.addClass('d-none')
+        }
     })
 }
 
