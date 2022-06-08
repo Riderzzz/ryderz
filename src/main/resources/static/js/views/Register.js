@@ -85,10 +85,10 @@ export function RegisterEvent() {
 			return;
 		}
 
-		if (!newUser.email.contains("@") || !newUser.email.containes(".")) {
-			warningTag.text("Not correct email format!");
-			warningTag.css("color", "red");
-		}
+		// if (!newUser.email.contains("@") || !newUser.email.contains(".")) {
+		// 	warningTag.text("Not correct email format!");
+		// 	warningTag.css("color", "red");
+		// }
 
 		if (newUser.password.length < 7) {
 			warningTag.text("Password must be longer than 6 characters!");
