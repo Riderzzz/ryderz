@@ -86,6 +86,7 @@ export function NewsFeedEvents() {
     editPostBtn();
     joinEvent();
     leaveEvent();
+    createBtnClearListener()
 
     //left side-bar functions
     goToRecentEventBtn();
@@ -348,7 +349,22 @@ function createPostBtn() {
         }).finally(r => {
             fetchPostsAndEventsData().then(d => {
                 $('.posts-container').html(newsfeedPostsHtml(d))
-                NewsFeedEvents()
+                // NewsFeedEvents()
+                commentOnPost();
+                populateEditPostBtn();
+                deletePostBtn();
+                showProfilePage();
+                editEventBtn();
+                deleteEventBtn();
+                commentOnEvent();
+                editPostBtn();
+                joinEvent();
+                leaveEvent();
+                showMap()
+                showMapMap()
+                // newsfeedInitAllMaps()
+                newsFeedMobileSelect()
+                createBtnClearListener()
             })
         })
     })
@@ -515,7 +531,25 @@ function joinEvent() {
             fetchPostsAndEventsData().then(d => {
                 console.log(d)
                 $('.posts-container').html(newsfeedPostsHtml(d))
-                NewsFeedEvents()
+                // NewsFeedEvents()
+                commentOnPost();
+                populateEditPostBtn();
+                deletePostBtn();
+                showProfilePage();
+                editEventBtn();
+                deleteEventBtn();
+                commentOnEvent();
+                editPostBtn();
+                joinEvent();
+                leaveEvent();
+                showMap()
+                showMapMap()
+                // newsfeedInitAllMaps()
+                newsFeedMobileSelect()
+                sideBarGroupBtn();
+                sideBarEventBtn();
+                sideBarFriendBtn();
+                createBtnClearListener()
             })
         })
     })
@@ -546,7 +580,25 @@ function leaveEvent() {
             fetchPostsAndEventsData().then(d => {
                 // console.log(d)
                 $('.posts-container').html(newsfeedPostsHtml(d))
-                NewsFeedEvents()
+                // NewsFeedEvents()
+                commentOnPost();
+                populateEditPostBtn();
+                deletePostBtn();
+                showProfilePage();
+                editEventBtn();
+                deleteEventBtn();
+                commentOnEvent();
+                editPostBtn();
+                joinEvent();
+                leaveEvent();
+                showMap()
+                showMapMap()
+                // newsfeedInitAllMaps()
+                newsFeedMobileSelect()
+                sideBarGroupBtn();
+                sideBarEventBtn();
+                sideBarFriendBtn();
+                createBtnClearListener()
             })
         })
     })
@@ -698,7 +750,7 @@ function newsfeedPostsHtml(sortedProps) {
         <header class="d-flex justify-content-between m-3">
             <div class=""><h3>News Feed</h3></div>
             <div class="">
-                <button class="btn btn-lightG ms-1 fontResponsive" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
+                <button class="btn btn-lightG ms-1 fontResponsive createBtnTop" data-bs-toggle="modal" data-bs-target="#createModal">Create Post</button>
                 <button class="btn btn-lightG ms-1 fontResponsive create-event-btn">Create event</button>
             </div>
         </header>
@@ -717,6 +769,16 @@ function newsfeedPostsHtml(sortedProps) {
 				
 				`;
     return html;
+}
+
+function createBtnClearListener() {
+    $('.createBtnTop').click(function (){
+
+
+        $('#createPostTitle').val("");
+        $('#createPostContent').val("");
+
+    })
 }
 
 function newsfeedRecent(props) {
