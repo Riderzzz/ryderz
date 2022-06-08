@@ -1,12 +1,13 @@
 import fetchData from "./fetchData.js";
 import createView from "./createView.js";
-import {ifUserUnauthorized} from "./views/Login.js";
+import {githubLinkListener, ifUserUnauthorized} from "./views/Login.js";
 import {initPubNub, pubNubListener, unsubscribe} from "./pubnubChat.js";
 import {fetchUserData} from "./views/NewsFeed.js";
 
 export let pubnub;
 
 export default function addLoginEvent() {
+    githubLinkListener()
 
     document.querySelector("#login-btn").addEventListener("click", function () {
         let obj = {
