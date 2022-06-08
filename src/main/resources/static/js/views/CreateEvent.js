@@ -35,7 +35,7 @@ export default function CreateEvent(props) {
                     </label>
 
                     <div class="my-3">
-						<h3>Choose Categories</h3>
+                        <h3>Choose Categories</h3>
                         ${props.categories.map(cat =>
                                 `
                                 <div class="form-check form-check-inline">
@@ -46,16 +46,16 @@ export default function CreateEvent(props) {
                                 .join('')}
                     </div>
 
-					<label for="singleLocation">Single Location Event</label>
-					<input type="checkbox" id="singleLocation"><br>
+                    <label for="singleLocation">Single Location Event</label>
+                    <input type="checkbox" id="singleLocation"><br>
                     <label class="mt-4" id="originLocation" for="origin">Origin</label>
                     <input class="settingForm form-control" type="text" id="from" name="origin"><br>
 
                     <label id="labelForDestination" for="destination">Destination</label>
                     <input class="settingForm form-control" type="text" id="to" name="destination">
-					<p class="eventMilesPTag mt-3">Miles: <span class="eventMiles"></span></p>
-					<p class="eventDurationPTag">Duration: <span class="eventDuration"></span></p>
-					<p class="eventSummaryPTag">Summary: <span class="eventSummary"></span></p>
+                    <p class="eventMilesPTag mt-3">Miles: <span class="eventMiles"></span></p>
+                    <p class="eventDurationPTag">Duration: <span class="eventDuration"></span></p>
+                    <p class="eventSummaryPTag">Summary: <span class="eventSummary"></span></p>
 
                     <p id="character-warning-on-submit"></p>
                     <button id="createRoute" class="btn mt-3" type="button">Show Route</button>
@@ -102,86 +102,85 @@ function initMap() {
 		zoom: 8,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		styles: [
-			{ elementType: "geometry", stylers: [{ color: "#181818" }] },
-			{ elementType: "labels.text.stroke", stylers: [{ color: "#000000" }] },
-			{ elementType: "labels.text.fill", stylers: [{ color: "#709775" }] },
+			{elementType: "geometry", stylers: [{color: "#181818"}]},
+			{elementType: "labels.text.stroke", stylers: [{color: "#000000"}]},
+			{elementType: "labels.text.fill", stylers: [{color: "#709775"}]},
 			{
 				featureType: "administrative.locality",
 				elementType: "labels.text.fill",
-				stylers: [{ color: "#709775" }],
+				stylers: [{color: "#709775"}],
 			},
 			{
 				featureType: "poi",
 				elementType: "labels.text.fill",
-				stylers: [{ color: "#709775" }],
+				stylers: [{color: "#709775"}],
 			},
 			{
 				featureType: "poi.park",
 				elementType: "geometry",
-				stylers: [{ color: "#263c3f" }],
+				stylers: [{color: "#263c3f"}],
 			},
 			{
 				featureType: "poi.park",
 				elementType: "labels.text.fill",
-				stylers: [{ color: "#6b9a76" }],
+				stylers: [{color: "#6b9a76"}],
 			},
 			{
 				featureType: "road",
 				elementType: "geometry",
-				stylers: [{ color: "#38414e" }],
+				stylers: [{color: "#38414e"}],
 			},
 			{
 				featureType: "road",
 				elementType: "geometry.stroke",
-				stylers: [{ color: "#212a37" }],
+				stylers: [{color: "#212a37"}],
 			},
 			{
 				featureType: "road",
 				elementType: "labels.text.fill",
-				stylers: [{ color: "#9ca5b3" }],
+				stylers: [{color: "#9ca5b3"}],
 			},
 			{
 				featureType: "road.highway",
 				elementType: "geometry",
-				stylers: [{ color: "#606060" }],
+				stylers: [{color: "#606060"}],
 			},
 			{
 				featureType: "road.highway",
 				elementType: "geometry.stroke",
-				stylers: [{ color: "#1f2835" }],
+				stylers: [{color: "#1f2835"}],
 			},
 			{
 				featureType: "road.highway",
 				elementType: "labels.text.fill",
-				stylers: [{ color: "#f3d19c" }],
+				stylers: [{color: "#f3d19c"}],
 			},
 			{
 				featureType: "transit",
 				elementType: "geometry",
-				stylers: [{ color: "#2f3948" }],
+				stylers: [{color: "#2f3948"}],
 			},
 			{
 				featureType: "transit.station",
 				elementType: "labels.text.fill",
-				stylers: [{ color: "#709775" }],
+				stylers: [{color: "#709775"}],
 			},
 			{
 				featureType: "water",
 				elementType: "geometry",
-				stylers: [{ color: "#17263c" }],
+				stylers: [{color: "#17263c"}],
 			},
 			{
 				featureType: "water",
 				elementType: "labels.text.fill",
-				stylers: [{ color: "#515c6d" }],
+				stylers: [{color: "#515c6d"}],
 			},
 			{
 				featureType: "water",
 				elementType: "labels.text.stroke",
-				stylers: [{ color: "#17263c" }],
+				stylers: [{color: "#17263c"}],
 			},
 		]
-
 
 
 	});
@@ -226,9 +225,9 @@ function initMap() {
 
 //bind the DirectionsRenderer to the map
 	directionsDisplay.setMap(map);
-let distance;
-let duration;
-let summary;
+	let distance;
+	let duration;
+	let summary;
 
 //define calcRoute function
 	async function calcRoute() {
@@ -287,77 +286,78 @@ let summary;
 	})
 
 	$("#newEventBtn").click(async function () {
-		let results = await calcRoute();
-			const warningTag = $("#character-warning-on-submit");
-			const titleOfEvent = $("#newEventTitle").val();
-			const descriptionOfEvent = $("#newEventDescription").val();
-			const eventLocation = $("#newEventLocation").val();
-			const dateTime = $("#eventDate").val();
-			const eventDate = new Date(dateTime).getTime();
-			const origin = $("#from").val();
-			const destination = $("#to").val();
-			const isSingleLocationEvent = document.getElementById('singleLocation').checked;
+		const isSingleLocationEvent = document.getElementById('singleLocation').checked;
+		if (!isSingleLocationEvent) {
+			let results = await calcRoute();
+		}
+		const warningTag = $("#character-warning-on-submit");
+		const titleOfEvent = $("#newEventTitle").val();
+		const descriptionOfEvent = $("#newEventDescription").val();
+		const eventLocation = $("#newEventLocation").val();
+		const dateTime = $("#eventDate").val();
+		const eventDate = new Date(dateTime).getTime();
+		const origin = $("#from").val();
+		const destination = $("#to").val();
 
-			let routeDistance = distance;
-			let routeDuration = duration;
-			let routeSummary = summary;
+		let routeDistance = distance;
+		let routeDuration = duration;
+		let routeSummary = summary;
 
-			if (isSingleLocationEvent) {
-				if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin) {
-					warningTag.text("Fill all fields");
-					warningTag.css('color', 'red');
-					return;
-				}
-			} else {
-				if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin || !destination) {
-					warningTag.text("Fill all fields");
-					warningTag.css('color', 'red');
-					return;
-				}
+		if (isSingleLocationEvent) {
+			if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin) {
+				warningTag.text("Fill all fields");
+				warningTag.css('color', 'red');
+				return;
 			}
-
-
-
-			let selectedCategories = [];
-
-			$('input[type="checkbox"]:checked').each(function () {
-				selectedCategories.push({name: this.value})
-
-			});
-
-			const categories = selectedCategories;
-
-			const newEvent = {
-				origin,
-				destination,
-				isSingleLocationEvent,
-				eventDate,
-				titleOfEvent,
-				descriptionOfEvent,
-				eventLocation,
-				categories,
-				routeDistance,
-				routeDuration,
-				routeSummary
+		} else {
+			if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin || !destination) {
+				warningTag.text("Fill all fields");
+				warningTag.css('color', 'red');
+				return;
 			}
+		}
 
 
-			let request = {
-				method: "POST",
-				headers: getHeaders(),
-				body: JSON.stringify(newEvent)
-			}
+		let selectedCategories = [];
 
-			fetch(`${URI}/api/events`, request)
-				.then(res => {
-					createView("/discover");
-				})
-				.catch(error => {
-					const warningTag = $("#character-warning-on-submit");
-					warningTag.text("Error creating event!");
-					warningTag.css("color", "red");
-					console.log(error);
-				})
+		$('input[type="checkbox"]:checked').each(function () {
+			selectedCategories.push({name: this.value})
+
+		});
+
+		const categories = selectedCategories;
+
+		const newEvent = {
+			origin,
+			destination,
+			isSingleLocationEvent,
+			eventDate,
+			titleOfEvent,
+			descriptionOfEvent,
+			eventLocation,
+			categories,
+			routeDistance,
+			routeDuration,
+			routeSummary
+		}
+
+
+		let request = {
+			method: "POST",
+			headers: getHeaders(),
+			body: JSON.stringify(newEvent)
+		}
+
+		fetch(`${URI}/api/events`, request)
+			.then(res => {
+				createView("/discover");
+			})
+			.catch(error => {
+				const warningTag = $("#character-warning-on-submit");
+				warningTag.text("Error creating event!");
+				warningTag.css("color", "red");
+				console.log(error);
+			})
 
 	})
 
