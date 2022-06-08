@@ -4,10 +4,9 @@ import {enableSearchIfLogged} from "./Home.js";
 
 const BASE_URI = `${URI}/api/users`;
 const COMMENT_URI = `${URI}/api/comments`;
-
+const POST_URI = `${URI}/api/posts`;
 
 export default function Profile(props) {
-    console.log(props)
 // language=HTML
     return `<!DOCTYPE html>
     <html lang="html">
@@ -54,13 +53,7 @@ export default function Profile(props) {
                 </div>
                 <!--Right Buttons-->
                 <div class="">
-
-                    <button type="button" class="btn btn-lightG-2 mr-2 message-button"><i
-                            class="far fa-envelope mr-2"></i> Message
-                    </button>
-
                     ${addOrRemoveFriends(props)}
-
                 </div>
             </section>
 
@@ -72,7 +65,7 @@ export default function Profile(props) {
            
             <div class="row bottom-profile">
 
-                <div class="col-5 mb-4 mb-md-0">
+                <div class="col-12 mb-4 mb-md-0 col-md-5">
                     <!--Groups joined on users profile-->
                     <div>
                     ${showUsersGroups(props)}
@@ -84,7 +77,7 @@ export default function Profile(props) {
                     <!--users photo's on users profile-->
                 </div>
                 <!--Posts start-->
-                <div class="col-7 mb-4 mb-md-0">
+                <div class="col-12 mb-4 mb-md-0 post-refresh col-md-7">
                     ${showUsersPosts(props)}
                 </div>
 
@@ -130,8 +123,13 @@ export function showFriendsProfile() {
     showGroupPage();
     aboutMeEditButtonListener();
     goBackToHome();
-
+    editPostFromProfile();
+    editPostButtonListener();
     enableSearchIfLogged()
+    goToSettings();
+    deletePostButtonListener();
+    deleteCommentOnPost();
+    editProfileButtonListener();
 }
 
 function goBackToHome(){
@@ -173,7 +171,7 @@ function addFriendButtonListener() {
             .then(res => {
                 createView(`/profile`, id)
             }).catch(error => {
-                createView(`/profile`, id);
+            createView(`/profile`, id);
         });
     });
 }
@@ -257,6 +255,7 @@ function commentFromUserProfile() {
     $(".submit-comment").click(function () {
         let id = $(this).data("id");
         let content = $(".comment-users-" + id).val();
+        let userId = $(".submit-comment").data("user")
         $(".comment-users-" + id).val("");
 
         const comment = {
@@ -274,6 +273,9 @@ function commentFromUserProfile() {
 
         fetch(COMMENT_URI, requestObj)
             .then(function () {
+                editPostButtonListener();
+                editPostFromProfile();
+                refreshPosts(userId);
                 refreshComments(id);
             }).catch(error => {
             console.log(error);
@@ -362,12 +364,11 @@ function showUsersFriends(props) {
     return html;
 }
 
-
 function showUsersPosts(props) {
     //language=HTML
     let html = `
         ${props.profile.posts.reverse().map(post => ` 
-            <div class="card card-profile posts-card shadow mb-4">
+            <div class="card card-profile posts-card shadow mb-4 posts-card-${post.id}" data-id="${post.id}">
             <!--head for card-->
                 <div class="profile-card-header d-flex">
                     <img src="${props.profile.userPhotoUrl  !== null ? props.profile.userPhotoUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}"
@@ -377,14 +378,14 @@ function showUsersPosts(props) {
                         <strong>${props.profile.username}</strong>
                     </a>
                     <p class="text-muted minutes-ago"><small>${new Date(post.createDate).toLocaleString()}</small></p>
-                    <a class="edit-post-button" data-id="${post.id}"  data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-ellipsis-h"></i></a>
+                    ${showEditIfValidUser(post, props)}
                 </div>
                   
             <!--body of card-->
                 <div class="card-body card-body-profile">
-                    <p class="card-text card-text-profile">${post.content}</p>
+                    <p class="card-text card-text-profile post-content-${post.id}" data-content="${post.content}">${post.content}</p>
                     <input class="comment-users-${post.id} comment-users-posts mt-1" placeholder="Write a comment...." data-id="${post.id}">
-                    <button type="submit" class="submit-comment btn-lightG" data-id="${post.id}">Comment</button>
+                    <button type="submit" class="submit-comment btn-lightG" data-id="${post.id}" data-user="${props.profile.id}">Comment</button>
                     
                     <div class="d-flex justify-content-end mt-1">
                         <div class="display-comments" id="${post.id}-container">
@@ -393,7 +394,7 @@ function showUsersPosts(props) {
                     </div>
                     
                     <div class="collapse" id="post-${post.id}">
-                        <div class="comments-${post.id}-show" data-id="${props.profile.id}">
+                        <div class="comments-${post.id}-show comments-section" data-id="${props.profile.id}" data-post="${post.id}">
                             ${displayComments(post)}
                         </div>
                     </div>
@@ -401,27 +402,136 @@ function showUsersPosts(props) {
             </div>
             
             <!-- Modal for edit post button-->
-            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog  modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <textarea style="width: 100%;height: 100%" maxlength="500" placeholder="${post.content}" class="edit-post"></textarea>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-delete" data-bs-dismiss="modal">Delete Posts</button>
-                            <button type="button" class="btn btn-lightG save-post-edit" data-bs-dismiss="modal" data-id="${post.id}">Save changes</button>
-                        </div>
+`).join("")}
+<!--        Modal for editing  posts-->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <input style="width: 100%;height: 100%"  class="edit-post">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn delete-post-btn" data-bs-dismiss="modal" data-user="${props.profile.id}">Delete Post</button>
+                        <button type="button" class="btn btn-lightG save-post-edit" data-bs-dismiss="modal" data-user="${props.profile.id}">Save changes</button>
                     </div>
                 </div>
-            </div>`).join("")}`
+            </div>
+        </div>
+        <!-- modal for deleting comments on post-->
+        <div class="modal" id="deleteComments" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete your post? It will be permanently deleted.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary confirm-delete-comment" data-bs-dismiss="modal" data-id="${props.profile.id}">Delete Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>`
 
     return html;
+}
+
+function refreshPosts(userId){
+    let postSection = $(".post-refresh");
+
+    const requestObject = {
+        method: "GET",
+        headers: getHeaders()
+    }
+
+    fetch(`${BASE_URI}/${userId}`, requestObject)
+        .then(res => res.json()).then(data => {
+
+        let state = {
+            profile: data
+        };
+        postSection.html(showUsersPosts(state));
+        commentFromUserProfile();
+        deleteCommentOnPost();
+        editPostButtonListener();
+        editPostFromProfile();
+    }).catch(error => {
+        console.log(error);
+    })
+}
+
+function deletePostButtonListener(){
+    $(".delete-post-btn").click(function (){
+        let postId = $(this).data("id")
+        let userId = $(this).data("user")
+        const requestObject = {
+            method: "DELETE",
+            headers: getHeaders()
+        }
+
+        fetch(`${POST_URI}/${postId}`, requestObject)
+            .then(data =>{
+                refreshPosts(userId)
+                console.log(data)
+                }
+            ).catch(e => {
+            console.log(e)
+        })
+
+    })
+}
+
+function showEditIfValidUser(post ,props){
+    if(props.profile.email === userEmail()){
+        let html =
+            `
+        <a class="edit-post-button" data-id="${post.id}"  data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-ellipsis-h"></i></a>`
+        return html;
+    }
+    return "";
+}
+
+function editPostButtonListener(){
+    $(".save-post-edit").click(function (){
+        let postId = $(this).data("id")
+        let content = $(".edit-post").val();
+        let userId = $(this).data("user")
+
+        const requestObject = {
+            method: "PUT",
+            headers: getHeaders(),
+            body: content
+        }
+
+        fetch(`${POST_URI}/profile/${postId}`, requestObject)
+            .then(data =>{
+                refreshPosts(userId)
+                console.log(data)
+                }
+            ).catch(e => {
+            console.log(e)
+        })
+    })
+}
+
+function editPostFromProfile(){
+    $(".edit-post-button").click(function (){
+        let id = $(this).data("id")
+        let content = $(".post-content-" + id).data("content")
+
+        $(".delete-post-btn").attr('data-id' , `${id}`)
+        $(".save-post-edit").attr('data-id', `${id}`)
+        $(".edit-post").val(content)
+    })
 }
 
 function displayCommentsButton(post){
@@ -438,19 +548,53 @@ function displayComments(props) {
     //language=HTML
     let html = `
         ${props.comments.reverse().map(posts => `
-            <div class="card card-profile card-body card-body-profile p-2 mb-1">
-                <div class="d-flex">
+            <div class="card card-profile card-body card-body-profile p-2 mb-2">
+                <div class="d-flex justify-content-between">
                    <div class="info d-flex">
                         <img src="${posts.author.userPhotoUrl  !== null ? posts.author.userPhotoUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}" alt="lightbox image 1" class="rounded-circle" style="width: 45px;height: 45px;">
                         <div class="name">
                             <div class="username">${posts.author.username}</div>
-                            <div class="content">${posts.content}</div>
+                            <div class="content-within-comments">${posts.content}</div>
                         </div>
                    </div>
+                        <div class="justify-content-end">
+                                ${verifyUsersDeleteButton(posts)}
+                        </div>
                 </div>
             </div>`
-        ).join("")}`
+    ).join("")}`
     return html;
+}
+
+
+function verifyUsersDeleteButton(props){
+    if(props.author.email === userEmail()){
+        let html =`
+               <button type="button" class="btn delete-link" data-bs-toggle="modal" data-bs-target="#deleteComments" data-id="${props.id}">
+                   delete
+              </button>`
+        return html;
+    }
+    return "";
+}
+
+function deleteCommentOnPost(){
+    $(".confirm-delete-comment").click(function (){
+            let commentId = $(".delete-link").data("id")
+            let userId = $(".confirm-delete-comment").data("id")
+
+            let requestObject = {
+                method: "DELETE",
+                headers: getHeaders()
+            }
+
+            fetch(`${COMMENT_URI}/${commentId}`, requestObject)
+                .then( data =>{
+                    editPostFromProfile();
+                    refreshPosts(userId)
+                    console.log(data)
+                })
+    })
 }
 
 function verifyUsersAboutProfile(props){
@@ -515,7 +659,7 @@ function aboutMeEditButtonListener(){
 
         fetch(`${BASE_URI}/updateUsersBio/${id}`, requestObj)
             .then(data => {
-               refreshAboutMe(id)
+                refreshAboutMe(id)
             }).catch(error => {
             console.log(error);
         });
@@ -608,7 +752,7 @@ function addOrRemoveFriends(props) {
     } else if (props.profile.email === userEmail()){
         let html = `
         <a type="button" 
-                   class="btn btn-lightG-2 mr-2">Edit Profile
+                   class="btn btn-lightG-2 mr-2 edit-profile-btn">Edit Profile
                <i class="fas fa-plus ml-2"></i>
         </a>`
         return html
@@ -616,4 +760,15 @@ function addOrRemoveFriends(props) {
 
 }
 
+function editProfileButtonListener(){
+    $(".edit-profile-btn").click(function (){
+        createView("/user")
+    })
+}
 
+
+function goToSettings(){
+    $(".edit-profile-btn").click(function (){
+        createView("/user")
+    })
+}

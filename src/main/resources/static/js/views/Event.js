@@ -2,7 +2,6 @@ import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
 
 export default function Event(props) {
-	console.log(props);
 	const timeFormat = getTimeFormat(props);
 	// language=HTML
 	let html = `<!DOCTYPE html>
@@ -102,7 +101,89 @@ function initMap(OGOrigin, OGDestination) {
 	map = new google.maps.Map(document.getElementById("singleEventMap"), {
 		center: {lat: 39.8097343, lng: -98.5556199},
 		zoom: 10,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		styles: [
+			{ elementType: "geometry", stylers: [{ color: "#181818" }] },
+			{ elementType: "labels.text.stroke", stylers: [{ color: "#000000" }] },
+			{ elementType: "labels.text.fill", stylers: [{ color: "#709775" }] },
+			{
+				featureType: "administrative.locality",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#709775" }],
+			},
+			{
+				featureType: "poi",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#709775" }],
+			},
+			{
+				featureType: "poi.park",
+				elementType: "geometry",
+				stylers: [{ color: "#263c3f" }],
+			},
+			{
+				featureType: "poi.park",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#6b9a76" }],
+			},
+			{
+				featureType: "road",
+				elementType: "geometry",
+				stylers: [{ color: "#38414e" }],
+			},
+			{
+				featureType: "road",
+				elementType: "geometry.stroke",
+				stylers: [{ color: "#212a37" }],
+			},
+			{
+				featureType: "road",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#9ca5b3" }],
+			},
+			{
+				featureType: "road.highway",
+				elementType: "geometry",
+				stylers: [{ color: "#606060" }],
+			},
+			{
+				featureType: "road.highway",
+				elementType: "geometry.stroke",
+				stylers: [{ color: "#1f2835" }],
+			},
+			{
+				featureType: "road.highway",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#f3d19c" }],
+			},
+			{
+				featureType: "transit",
+				elementType: "geometry",
+				stylers: [{ color: "#2f3948" }],
+			},
+			{
+				featureType: "transit.station",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#709775" }],
+			},
+			{
+				featureType: "water",
+				elementType: "geometry",
+				stylers: [{ color: "#17263c" }],
+			},
+			{
+				featureType: "water",
+				elementType: "labels.text.fill",
+				stylers: [{ color: "#515c6d" }],
+			},
+			{
+				featureType: "water",
+				elementType: "labels.text.stroke",
+				stylers: [{ color: "#17263c" }],
+			},
+		]
+
+
 	});
 
 	//create a DirectionsService object to use the route method and get a result for our request
@@ -148,8 +229,6 @@ function initMap(OGOrigin, OGDestination) {
 			//pass the request to the route method
 			directionsService.route(request, function (result, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
-					console.log(result);
-					console.log(status);
 
 					//Get distance and time
 					// const output = document.querySelector('#output');
@@ -219,7 +298,6 @@ function backToDiscover() {
 function joinEventBtn() {
 	$(".joinEventBtn").click(function () {
 		const eventId = $(this).data("id");
-		console.log(eventId);
 
 		let warningPTag = $("#character-warning-on-submit");
 
@@ -230,9 +308,7 @@ function joinEventBtn() {
 
 		fetch(`${URI}/api/events/${eventId}/adduser`, request)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
-					console.log(res);
 					warningPTag.text("Error submitting changes!");
 					warningPTag.css("color", "red");
 					return;
@@ -250,7 +326,6 @@ function joinEventBtn() {
 function leaveEventBtn() {
 	$(".leaveEvent").click(function () {
 		const eventId = $(this).data("id");
-		console.log(eventId);
 
 		let warningPTag = $("#character-warning-on-submit");
 
@@ -261,7 +336,6 @@ function leaveEventBtn() {
 
 		fetch(`${URI}/api/events/${eventId}/remove-user`, request)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -307,7 +381,6 @@ function commentOnEvent() {
 
 		fetch(`${URI}/api/comments`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					return;
@@ -454,7 +527,6 @@ function editEventBtn(OGState, OGStatusOfEvent, OGCategories) {
 		fetch(`${URI}/api/categories/all`)
 			.then(res => res.json())
 			.then(data => {
-				console.log(data)
 				//feed categories to form
 				let html = `
 					${data.map(cat => `
@@ -536,7 +608,6 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 
 		fetch(`${URI}/api/events/${eventId}`, request)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -569,7 +640,6 @@ function deleteEventBtn() {
 
 		fetch(`${URI}/api/events/${eventId}`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -706,7 +776,6 @@ function uploadEventImgHeader() {
 
 		fetch(`${URI}/api/events/${eventId}/eventUpload`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					return;

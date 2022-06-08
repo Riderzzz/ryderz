@@ -102,6 +102,7 @@ export function NewsFeedEvents() {
 
 
     showMap()
+    showMapMap()
     // newsfeedInitAllMaps()
     newsFeedMobileSelect()
 
@@ -149,6 +150,18 @@ function newsFeedMobileSelect() {
 function showMap() {
     $('.show-map').click(function (){
         $(this).remove()
+        let mapId = $(this).data('id')
+        let origin = $(this).data('origin')
+        let destination = $(this).data('destination')
+
+        $(`.map[data-id=${mapId}]`).removeClass('blur')
+
+        newsfeedInitMap(mapId, origin, destination)
+    })
+}
+
+function showMapMap() {
+    $('.show-map-map').click(function (){
         let mapId = $(this).data('id')
         let origin = $(this).data('origin')
         let destination = $(this).data('destination')
@@ -636,7 +649,7 @@ function newsfeedSidebarHtml(userProps) {
 				
 				<p class="mx-auto my-3">
 					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
-                        <div><i class="bi bi-people ms-1 me-1"></i>Groups</div>
+                        <div><i class="bi bi-people ms-1 me-1"></i>Clubs</div>
                         <div><i class="bi bi-caret-up icon mx-2"></i></div>
 					</button>
 				</p>
@@ -711,7 +724,7 @@ function newsfeedRecent(props) {
     let html =
         `
         <div class="recent-events">
-            <h4>Recent groups...</h4>
+            <h4>Recent clubs...</h4>
             ${props.recentGroups.map(group => `${recentGroupCard(group)}`).join("")}
             <h4>Recent events...</h4>
             ${props.recentEvents.map(event => `${recentEventCard(event)}`).join("")}
@@ -722,7 +735,6 @@ function newsfeedRecent(props) {
 }
 
 function recentEventCard(event) {
-    console.log(event)
     return `
             <div class="card card-dark-bg m-3 recent-event-card" data-id="${event.id}">
               <img src="${event.eventImageUrl !== null ? event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" class="card-img-top" alt="..." style="border-radius: 10px 10px 0 0">
@@ -856,8 +868,8 @@ function eventCard(event) {
                                             <p class="card-text" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
                                         </div>
                                         <div class="map-container d-none d-lg-block col-lg-6 mx-auto">
-                                            <div id="map-${event.id}" class="map blur" data-id="${event.id}"></div>        
-                                            <button type="button" class="btn btn-lightG show-map" data-id="${event.id}" data-origin="${event.origin}" data-destination="${event.destination}">View</button>
+                                            <div class="content-comment text-center">click map to view</div>
+                                            <div id="map-${event.id}" class="map blur show-map-map" data-id="${event.id}" data-origin="${event.origin}" data-destination="${event.destination}"></div>        
                                         </div>
                                     </div>
 									<p class="card-text" id="post-categories-${event.id}">
@@ -1232,7 +1244,7 @@ function newsfeedInitMap(eventId, origin, destination) {
     directionsDisplay.setMap(map);
 
     if (destination === "") {
-
+        map.setZoom(10)
         function codeAddress() {
             var address = origin;
             geocoder.geocode( { 'address': address}, function(results, status) {
@@ -1240,7 +1252,7 @@ function newsfeedInitMap(eventId, origin, destination) {
                     map.setCenter(results[0].geometry.location);
                     var marker = new google.maps.Marker({
                         map: map,
-                        position: results[0].geometry.location
+                        position: results[0].geometry.location,
                     });
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);

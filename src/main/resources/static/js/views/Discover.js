@@ -2,7 +2,6 @@ import createView from "../createView.js";
 import {enableSearchIfLogged} from "./Home.js";
 
 export default function Discover(props) {
-	console.log(props)
 	// language=html
 	let html = `<!DOCTYPE html>
     <html lang="html">
