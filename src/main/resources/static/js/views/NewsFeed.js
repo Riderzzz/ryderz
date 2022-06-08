@@ -102,6 +102,7 @@ export function NewsFeedEvents() {
 
 
     showMap()
+    showMapMap()
     // newsfeedInitAllMaps()
     newsFeedMobileSelect()
 
@@ -149,6 +150,18 @@ function newsFeedMobileSelect() {
 function showMap() {
     $('.show-map').click(function (){
         $(this).remove()
+        let mapId = $(this).data('id')
+        let origin = $(this).data('origin')
+        let destination = $(this).data('destination')
+
+        $(`.map[data-id=${mapId}]`).removeClass('blur')
+
+        newsfeedInitMap(mapId, origin, destination)
+    })
+}
+
+function showMapMap() {
+    $('.show-map-map').click(function (){
         let mapId = $(this).data('id')
         let origin = $(this).data('origin')
         let destination = $(this).data('destination')
@@ -855,8 +868,8 @@ function eventCard(event) {
                                             <p class="card-text" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
                                         </div>
                                         <div class="map-container d-none d-lg-block col-lg-6 mx-auto">
-                                            <div id="map-${event.id}" class="map blur" data-id="${event.id}"></div>        
-                                            <button type="button" class="btn btn-lightG show-map" data-id="${event.id}" data-origin="${event.origin}" data-destination="${event.destination}">View</button>
+                                            <div class="content-comment text-center">click map to view</div>
+                                            <div id="map-${event.id}" class="map blur show-map-map" data-id="${event.id}" data-origin="${event.origin}" data-destination="${event.destination}"></div>        
                                         </div>
                                     </div>
 									<p class="card-text" id="post-categories-${event.id}">
