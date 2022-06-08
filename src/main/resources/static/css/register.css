@@ -3,7 +3,7 @@
     background-size: cover;
 }
 #username {
-    background: white url(../images/user-icon.png) right no-repeat;
+    background: #404040 url(../images/user-icon.png) right no-repeat;
     /* height: 10px; */
     margin-right: 10px;
     padding-left: 10px;

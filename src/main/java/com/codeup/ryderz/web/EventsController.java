@@ -175,12 +175,19 @@ public class EventsController {
     @GetMapping("recentEvents")
     public Collection<Events> getRecentEvents(){
         List<Events> allEvents = eventsRepository.findAll();
+        Events event1 = allEvents.get(allEvents.size() - 1);
+        Events event2 = allEvents.get(allEvents.size() - 2);
+        Events event3 = allEvents.get(allEvents.size() - 3);
+
+        event1.setEventImageUrl(s3Service.getSignedURL(event1.getEventImageName(), 5L));
+        event2.setEventImageUrl(s3Service.getSignedURL(event2.getEventImageName(), 5L));
+        event3.setEventImageUrl(s3Service.getSignedURL(event3.getEventImageName(), 5L));
 
         List<Events> recentThree = new ArrayList<>();
 
-        recentThree.add(allEvents.get(allEvents.size() - 1));
-        recentThree.add(allEvents.get(allEvents.size() - 2));
-        recentThree.add(allEvents.get(allEvents.size() - 3));
+        recentThree.add(event1);
+        recentThree.add(event2);
+        recentThree.add(event3);
 
         return recentThree;
     }

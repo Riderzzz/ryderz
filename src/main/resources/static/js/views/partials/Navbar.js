@@ -47,7 +47,7 @@ export default function Navbar(props) {
             </li>
 			<li class="nav-item">
 				<div class="dropdown">
-					<input class="form-control me-2 nav-search dropdown-toggle settingForm" type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search" value=" ">
+					<input class="form-control me-2 nav-search dropdown-toggle settingForm" type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search">
 					<ul class="dropdown-menu w-100 transparentBg" id="searchedUsersContainer" aria-labelledby="dropdownMenuButton1">
 					</ul>
 				</div>
@@ -73,12 +73,12 @@ export default function Navbar(props) {
 			html +=
 				`
 				<div class="your-profile order-3 order-lg-3">
-					<div class="btn-group dropstart">
-						<button type="button" class="btn btn-secondary dropdown-toggle p-0 navbar-profile" data-bs-toggle="dropdown" aria-expanded="false">
+					<div class="btn-group">
+						<button type="button" class="btn btn-secondary dropdown-toggle ps-1 navbar-profile" data-bs-toggle="dropdown" aria-expanded="false">
 							<i class="bi bi-person-circle comment-avatar text-white"></i>
 						</button>
 	
-						<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+						<ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
 							<li><a class="dropdown-item" id="navbarProfile" href="/myProfile" data-link="myProfile">Profile</a></li>
 							<li><hr class="dropdown-divider m-0"></li>
 							<li><a class="dropdown-item" href="/user" data-link="User Info">Setting</a></li>

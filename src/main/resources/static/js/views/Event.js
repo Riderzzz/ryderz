@@ -13,9 +13,11 @@ export default function Event(props) {
     </head>
     <body>
     <div class="container eventContainer">
-		<div class="row">
-			<img class="event-bg-img" src="${props.event.eventImageUrl !== null ? props.event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}" alt="">
-		</div>
+        <div class="row">
+            <img class="event-bg-img"
+                 src="${props.event.eventImageUrl !== null ? props.event.eventImageUrl : "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"}"
+                 alt="">
+        </div>
         <div class="row mt-4 justify-content-center">
             <div class="col-md-7">
                 <div class="eventTitles">
@@ -23,7 +25,7 @@ export default function Event(props) {
                 </div>
                 <div>
                     <div class="collapse" id="collapseExample">
-						<p class="commentPostWarning"></p>
+                        <p class="commentPostWarning"></p>
                         <div class="input-group my-3">
                             <input type="text" id="comment-content" class="form-control settingForm"
                                    data-postId="${props.event.id}" placeholder="Your thoughts..."
@@ -70,12 +72,12 @@ export function EventEvents() {
 	backToDiscover();
 	editEventBtn(OGState, OGStatusOfEvent, OGCategories);
 	cancelEditsBtn();
-	submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatusOfEvent, OGState, OGCategories, OGOrigin, OGDestination);
 	joinEventBtn();
 	leaveEventBtn();
 	commentOnEvent();
 	deleteEventBtn();
 	clickOnCommentAuthorName();
+	submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatusOfEvent, OGState, OGCategories, OGOrigin, OGDestination)
 	initMap(OGOrigin, OGDestination);
 	uploadEventImgHeader();
 
@@ -116,7 +118,7 @@ function initMap(OGOrigin, OGDestination) {
 
 		function codeAddress() {
 			var address = OGOrigin;
-			geocoder.geocode( { 'address': address}, function(results, status) {
+			geocoder.geocode({'address': address}, function (results, status) {
 				if (status == 'OK') {
 					map.setCenter(results[0].geometry.location);
 					var marker = new google.maps.Marker({
@@ -133,7 +135,7 @@ function initMap(OGOrigin, OGDestination) {
 
 	} else {
 		//define calcRoute function
-		function calcRoute() {
+		async function calcRoute() {
 			//create request
 			var request = {
 				origin: OGOrigin,
@@ -141,6 +143,7 @@ function initMap(OGOrigin, OGDestination) {
 				travelMode: google.maps.TravelMode.DRIVING, //WALKING, BYCYCLING, TRANSIT
 				unitSystem: google.maps.UnitSystem.IMPERIAL
 			}
+
 
 			//pass the request to the route method
 			directionsService.route(request, function (result, status) {
@@ -170,8 +173,6 @@ function initMap(OGOrigin, OGDestination) {
 		calcRoute();
 
 	}
-
-
 
 
 //create autocomplete objects for all inputs
@@ -378,7 +379,7 @@ function checkUserEventStatus(props) {
 		html += `
             <button class="leaveEvent btn btn-danger mx-3" data-id="${props.event.id}">Leave Event</button>`
 	} else if (!found && userEmail() !== props.event.eventCreator.email) {
-		html += `<button class="joinEventBtn btn btn-dark mx-3" data-id="${props.event.id}">Join Event</button>`
+		html += `<button class="joinEventBtn btn mx-3 groupGreenButton" data-id="${props.event.id}">Join Event</button>`
 	}
 	if (found || userEmail() === props.event.eventCreator.email) {
 		//language=HTML
@@ -397,7 +398,6 @@ function checkUserEventStatus(props) {
 
 function checkIfCommentsExist(props) {
 	let html;
-	console.log(props);
 	if (props.event.comments.length > 0) {
 		//language=HTML
 		let html = `
@@ -482,8 +482,8 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 		const dateTime = $("#editedEventDate").val();
 		const eventDate = new Date(dateTime).getTime();
 		const stateOfEvent = $('#eventStatus').val();
-		const origin = $("#from").val();
-		let destination = $("#to").val();
+		const origin = OGOrigin;
+		let destination = OGDestination;
 
 		if (isSingleLocation) {
 			destination = "";
@@ -503,33 +503,17 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 
 		const categories = selectedCategories;
 
-		if (OGDestination === "") {
-			if (!titleOfEvent ||
-				!descriptionOfEvent ||
-				!eventLocation ||
-				!eventDate ||
-				!origin ||
-				!stateOfEvent) {
-				warningPTag.css("color", "red");
-				warningPTag.text("Please fill in all fields!");
-				return;
-			} else {
-				warningPTag.text("")
-			}
+
+		if (!titleOfEvent ||
+			!descriptionOfEvent ||
+			!eventLocation ||
+			!eventDate ||
+			!stateOfEvent) {
+			warningPTag.css("color", "red");
+			warningPTag.text("Please fill in all fields!");
+			return;
 		} else {
-			if (!titleOfEvent ||
-				!descriptionOfEvent ||
-				!eventLocation ||
-				!eventDate ||
-				!origin ||
-				!destination ||
-				!stateOfEvent) {
-				warningPTag.css("color", "red");
-				warningPTag.text("Please fill in all fields!");
-				return;
-			} else {
-				warningPTag.text("")
-			}
+			warningPTag.text("")
 		}
 
 		const editedEvent = {
@@ -626,14 +610,19 @@ function eventColHTML(props, timeFormat) {
         <p class="event-owner-${props.event.id}">Organizer: ${props.event.eventCreator.username}</p>
 
         <p>State of event: <span class="stateOfEvent">${props.event.stateOfEvent}</span></p>
-		
-		`; if (props.event.isSingleLocationEvent) {
-			html += `<p>Location: <span id="OGFrom">${props.event.origin}</span></p>`;
+
+	`;
+	if (props.event.isSingleLocationEvent) {
+		html += `<p>Location: <span id="OGFrom">${props.event.origin}</span></p>`;
 	} else {
-			html+= `<p>Origin: <span id="OGFrom">${props.event.origin}</span></p>
+		html += `
+        <p>Route Details</p>
+        <p>Miles: ${props.event.routeDistance}, Duration: ${props.event.routeDuration}, Summary:
+            ${props.event.routeSummary}</p>
+		<p>Origin: <span id="OGFrom">${props.event.origin}</span></p>
 					<p>Destination: <span id="OGTo">${props.event.destination}</span></p>`;
 	}
-	html+=`
+	html += `
 	`
 	if (userEmail() === props.event.eventCreator.email) {
 		html += `<button class= "editEventBtn btn btn-dark">Edit Event</button>`
@@ -649,7 +638,8 @@ function eventEditFormHTML(props, timeFormat) {
             <label for="editedEventTitle">Title: <span
                     id="event-title"></span></label><br>
 
-            <input class="settingForm form-control" value="${props.event.titleOfEvent}" type="text" id="editedEventTitle"
+            <input class="settingForm form-control" value="${props.event.titleOfEvent}" type="text"
+                   id="editedEventTitle"
                    name="newEventTitle">
 
 
@@ -666,7 +656,8 @@ function eventEditFormHTML(props, timeFormat) {
                    value="${props.event.eventLocation}">
 
             <label class="mt-3" for="editedEventDate">Event Date
-			<input type="datetime-local" class="settingForm form-control" id="editedEventDate" name="eventDate" value="${timeFormat}">
+                <input type="datetime-local" class="settingForm form-control" id="editedEventDate" name="eventDate"
+                       value="${timeFormat}">
             </label>
             <div class="my-3 formCategories">
 
@@ -679,31 +670,21 @@ function eventEditFormHTML(props, timeFormat) {
                 <option value="INPROGRESS">IN PROGRESS</option>
                 <option value="COMPLETED">COMPLETED</option>
             </select>
-			<br>
-			<br>
-			
-			`; if (props.event.isSingleLocationEvent) {
-					html+= `
-						<label for="from">Origin</label>
-						<input class="settingForm form-control" value="${props.event.origin}" type="text" id="from" name="from">`
-				} else {
-					html+= `
-						<label for="from">Origin</label>
-						<input class="settingForm form-control" value="${props.event.origin}" type="text" id="from" name="from">
-			
-						<label class="mt-3" for="to">Destination</label>
-						<input class="settingForm form-control" value="${props.event.destination}" type="text" id="to" name="to">`
-						}
-						html+= `
-    			        <p id="character-warning-on-submit"></p>
-    			        <button class="btn" id="cancelEdits">Cancel Edits</button>
-    			        <button class="btn" id="submitEditedEventBtn" data-id="${props.event.id}">Submit Changes</button>
-    			        <button id="deleteEvent" data-id="${props.event.id}" data-location="${props.event.isSingleLocationEvent}" class="btn btn-danger">Delete Event</button>
-    			        <h3>Change header image</h3>
-            			<p id="file-warning-on-submit"></p>
-            			<input class="fileUploadBtn mt-3" id="eventHeaderFile" type="file" accept="image/*">
-						<button type="submit" class="groupGreenButton btn" data-id="${props.event.id}" id="submitEventHeaderImg">Change Image</button>
-    			    </form>
+            <br>
+            <br>
+            <p id="character-warning-on-submit"></p>
+            <button class="btn" id="cancelEdits">Cancel Edits</button>
+            <button class="btn" id="submitEditedEventBtn" data-id="${props.event.id}">Submit Changes</button>
+            <button id="deleteEvent" data-id="${props.event.id}" data-location="${props.event.isSingleLocationEvent}"
+                    class="btn btn-danger">Delete Event
+            </button>
+            <h3>Change header image</h3>
+            <p id="file-warning-on-submit"></p>
+            <input class="fileUploadBtn mt-3" id="eventHeaderFile" type="file" accept="image/*">
+            <button type="submit" class="groupGreenButton btn" data-id="${props.event.id}" id="submitEventHeaderImg">
+                Change Image
+            </button>
+        </form>
 	`
 
 	return html;

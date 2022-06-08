@@ -1,16 +1,14 @@
-.home-picture {
+/*.home-picture {*/
 
-}
+/*}*/
 
-.pic-large{
-    background-size: 100% 100%;
-    height: 100vh;
-    width: 100%;
-}
+/*.pic-large{*/
+/*    background-image: url("../js/temp/Biker.png");*/
+/*    background-size: 100% 100%;*/
+/*    height: 100vh;*/
+/*    width: 100%;*/
+/*}*/
 
-.pic-large p {
-    font-size: 1.25em;
-}
 
 .pic-small {
     background-size: 100% 100%;
@@ -56,3 +54,4 @@
 .second-features {
 
 }
+
