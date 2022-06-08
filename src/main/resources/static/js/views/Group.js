@@ -444,9 +444,9 @@ function populateGroupCommentsHTML(props) {
                                 </a>
                                 <div class="ms-2 names">
                                 	<a class="commentATag" data-id="${comment.author.id}">
-                                    	<div class="username">${comment.author.username}</div>
+                                    	<div class="username-group">${comment.author.username}</div>
                                 	</a>
-                                	<div class="content">${comment.content}</div>
+                                	<div class="text-white content">${comment.content}</div>
                                 </div>
                             </div>
                         </div>

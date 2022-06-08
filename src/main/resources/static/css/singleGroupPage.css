@@ -45,7 +45,7 @@
 }
 
 .groupComment {
-    /*color: white;*/
+    background-color: #181818;
 }
 
 .rightColDiv {
@@ -60,4 +60,15 @@
 .fileUploadBtn::file-selector-button {
     background-color: #A1CCA5;
     color: black;
+}
+.username-group{
+    color: white;
+    font-weight: bold;
+}
+.username-group:hover{
+    color: #4C4C4C;
+    cursor: pointer;
+}
+.commentATag{
+    text-decoration: none;
 }
