@@ -636,7 +636,7 @@ function newsfeedSidebarHtml(userProps) {
 				
 				<p class="mx-auto my-3">
 					<button class="sidebar-btn collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
-                        <div><i class="bi bi-people ms-1 me-1"></i>Groups</div>
+                        <div><i class="bi bi-people ms-1 me-1"></i>Clubs</div>
                         <div><i class="bi bi-caret-up icon mx-2"></i></div>
 					</button>
 				</p>
@@ -711,7 +711,7 @@ function newsfeedRecent(props) {
     let html =
         `
         <div class="recent-events">
-            <h4>Recent groups...</h4>
+            <h4>Recent clubs...</h4>
             ${props.recentGroups.map(group => `${recentGroupCard(group)}`).join("")}
             <h4>Recent events...</h4>
             ${props.recentEvents.map(event => `${recentEventCard(event)}`).join("")}
