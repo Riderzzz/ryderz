@@ -153,11 +153,22 @@ span {
     .second-weeks-card {
         display: none;
     }
-}
 
+}
+@media (min-width: 768px) {
+    .first-card {
+        margin-left: 80px;
+
+    }
+}
 @media (max-width: 767px) {
     .weeks-card {
         display: none!important;
+    }
+
+    .first-card {
+        margin-left: 0;
+        width: 300px;
     }
 
     #capstone-card {
@@ -178,11 +189,11 @@ span {
     font-family: Oswald,Arial Narrow,sans-serif;
     text-transform: uppercase;
     color: white;
+    margin-left: 80px;
 }
 
 .first-card {
     margin-top: 250px;
-    margin-left: 80px;
 }
 
 .our-story-card {
@@ -234,7 +245,6 @@ span {
     height: 100px;
     border-radius: 75px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
     font-weight: lighter;
     letter-spacing: 2px;
     transition: 1s box-shadow;

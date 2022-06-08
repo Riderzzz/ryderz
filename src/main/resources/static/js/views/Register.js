@@ -85,7 +85,7 @@ export function RegisterEvent() {
 			return;
 		}
 
-		if (!newUser.email.contains("@") || !newUser.email.containes(".")) {
+		if (!newUser.email.contains("@") || !newUser.email.contains(".")) {
 			warningTag.text("Not correct email format!");
 			warningTag.css("color", "red");
 		}
