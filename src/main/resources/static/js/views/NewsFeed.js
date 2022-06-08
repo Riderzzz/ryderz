@@ -154,7 +154,7 @@ function showMap() {
         let origin = $(this).data('origin')
         let destination = $(this).data('destination')
 
-        $(`.map[data-id=${mapId}]`).removeClass('blur')
+        $(`#map-${mapId}`).removeClass('blur')
 
         newsfeedInitMap(mapId, origin, destination)
     })
@@ -162,11 +162,15 @@ function showMap() {
 
 function showMapMap() {
     $('.show-map-map').click(function (){
+
         let mapId = $(this).data('id')
         let origin = $(this).data('origin')
         let destination = $(this).data('destination')
 
+        $('#map-' + mapId).removeClass('show-map-map')
+
         $(`.map[data-id=${mapId}]`).removeClass('blur')
+        $(`.map[data-id=${mapId}]`).removeClass('show-map-map')
 
         newsfeedInitMap(mapId, origin, destination)
     })
@@ -864,8 +868,8 @@ function eventCard(event) {
                                             <p class="card-text" id="post-content-${event.id}">${event.descriptionOfEvent}</p>
                                         </div>
                                         <div class="map-container d-none d-lg-block col-lg-6 mx-auto">
-                                            <div class="content-comment text-center">click map to view</div>
-                                            <div id="map-${event.id}" class="map blur show-map-map" data-id="${event.id}" data-origin="${event.origin}" data-destination="${event.destination}"></div>        
+                                            <div class="content-comment text-center show-map" data-id="${event.id}" data-origin="${event.origin}" data-destination="${event.destination}">click here to view map</div>
+                                            <div id="map-${event.id}" class="map blur" data-id="${event.id}" data-origin="${event.origin}" data-destination="${event.destination}"></div>        
                                         </div>
                                     </div>
 									<p class="card-text" id="post-categories-${event.id}">
