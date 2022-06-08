@@ -221,12 +221,10 @@ let summary;
 			const origin = $("#from").val();
 			const destination = $("#to").val();
 			const isSingleLocationEvent = document.getElementById('singleLocation').checked;
-			console.log(distance)
 
 			let routeDistance = distance;
 			let routeDuration = duration;
 			let routeSummary = summary;
-			console.log(routeDistance)
 
 			if (isSingleLocationEvent) {
 				if (!titleOfEvent || !descriptionOfEvent || !eventLocation || !eventDate || !origin) {
