@@ -6,6 +6,15 @@
     background-size: 30px 30px;
 }
 
+
+.emailStylingStuff {
+    background: #404040 url(../images/email-icon.png) right no-repeat;
+    /* height: 10px; */
+    margin-right: 10px;
+    padding-left: 10px;
+    background-size: 30px 30px;
+}
+
 #password {
     background: #404040 url(../images/password-icon.png) right no-repeat;
     /* height: 10px; */
