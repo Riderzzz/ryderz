@@ -243,14 +243,8 @@ let summary;
 		//pass the request to the route method
 		await directionsService.route(request, function (result, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
-				console.log(result);
-				console.log(status);
-				console.log(result.routes[0].legs[0].distance.text)
 				distance = result.routes[0].legs[0].distance.text;
-				console.log(distance);
-				console.log(result.routes[0].legs[0].duration.text)
 				duration = result.routes[0].legs[0].duration.text;
-				console.log(result.routes[0].summary)
 				summary = result.routes[0].summary;
 				$(".eventMiles").text(distance);
 				$(".eventDuration").text(duration);
@@ -327,14 +321,11 @@ let summary;
 			let selectedCategories = [];
 
 			$('input[type="checkbox"]:checked').each(function () {
-				console.log(this.value);
 				selectedCategories.push({name: this.value})
 
 			});
 
 			const categories = selectedCategories;
-
-			console.log(selectedCategories)
 
 			const newEvent = {
 				origin,
@@ -359,7 +350,6 @@ let summary;
 
 			fetch(`${URI}/api/events`, request)
 				.then(res => {
-					console.log(res.status);
 					createView("/discover");
 				})
 				.catch(error => {

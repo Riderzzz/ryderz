@@ -17,10 +17,5 @@ export default function logOut(props) {
 
 export function LogOutEvent(){
     window.localStorage.clear()
-    let userConfirmation = confirm("do you want to  to home page?")
-    if (userConfirmation === true){
-        createView("/")
-    } else {
-        createView("/logout")
-    }
+    createView("/");
 }

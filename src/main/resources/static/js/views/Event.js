@@ -2,7 +2,6 @@ import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
 
 export default function Event(props) {
-	console.log(props);
 	const timeFormat = getTimeFormat(props);
 	// language=HTML
 	let html = `<!DOCTYPE html>
@@ -230,8 +229,6 @@ function initMap(OGOrigin, OGDestination) {
 			//pass the request to the route method
 			directionsService.route(request, function (result, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
-					console.log(result);
-					console.log(status);
 
 					//Get distance and time
 					// const output = document.querySelector('#output');
@@ -301,7 +298,6 @@ function backToDiscover() {
 function joinEventBtn() {
 	$(".joinEventBtn").click(function () {
 		const eventId = $(this).data("id");
-		console.log(eventId);
 
 		let warningPTag = $("#character-warning-on-submit");
 
@@ -312,9 +308,7 @@ function joinEventBtn() {
 
 		fetch(`${URI}/api/events/${eventId}/adduser`, request)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
-					console.log(res);
 					warningPTag.text("Error submitting changes!");
 					warningPTag.css("color", "red");
 					return;
@@ -332,7 +326,6 @@ function joinEventBtn() {
 function leaveEventBtn() {
 	$(".leaveEvent").click(function () {
 		const eventId = $(this).data("id");
-		console.log(eventId);
 
 		let warningPTag = $("#character-warning-on-submit");
 
@@ -343,7 +336,6 @@ function leaveEventBtn() {
 
 		fetch(`${URI}/api/events/${eventId}/remove-user`, request)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -389,7 +381,6 @@ function commentOnEvent() {
 
 		fetch(`${URI}/api/comments`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					return;
@@ -536,7 +527,6 @@ function editEventBtn(OGState, OGStatusOfEvent, OGCategories) {
 		fetch(`${URI}/api/categories/all`)
 			.then(res => res.json())
 			.then(data => {
-				console.log(data)
 				//feed categories to form
 				let html = `
 					${data.map(cat => `
@@ -618,7 +608,6 @@ function submitEditsBtn(OGTitle, OGDescription, OGLocation, OGEventDate, OGStatu
 
 		fetch(`${URI}/api/events/${eventId}`, request)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -651,7 +640,6 @@ function deleteEventBtn() {
 
 		fetch(`${URI}/api/events/${eventId}`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -788,7 +776,6 @@ function uploadEventImgHeader() {
 
 		fetch(`${URI}/api/events/${eventId}/eventUpload`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					return;

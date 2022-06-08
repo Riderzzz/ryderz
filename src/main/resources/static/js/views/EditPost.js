@@ -5,7 +5,6 @@ import {editPostContent, editPostId, editPostTitle} from "./NewsFeed.js";
 const POST_URI = `${URI}/api/posts`
 
 export default function EditPost(props) {
-    console.log(props)
     return `
 			<!DOCTYPE html>
 			<html lang="html">
@@ -75,7 +74,6 @@ function editPostListener() {
             content,
             categories
         }
-        console.log(postObject);
         const requestObject = {
             method: "PUT",
             headers: getHeaders(),

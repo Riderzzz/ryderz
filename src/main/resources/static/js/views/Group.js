@@ -2,7 +2,6 @@ import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
 
 export default function Group(props) {
-	console.log(props)
 	//language=HTML
 	return `<!DOCTYPE html>
     <html lang="html">
@@ -72,7 +71,6 @@ export function GroupEvents() {
 function joinGroupBtn() {
 	$(".joinGroupBtn").click(function () {
 		const groupId = $(this).data("id");
-		console.log(groupId);
 		let warningPTag = $("#character-warning-on-submit");
 
 		let request = {
@@ -82,7 +80,6 @@ function joinGroupBtn() {
 
 		fetch(`${URI}/api/groups/${groupId}/adduser`, request)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -111,7 +108,6 @@ function leaveGroupBtn() {
 
 		fetch(`${URI}/api/groups/${groupId}/remove-user`, request)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -185,7 +181,6 @@ function editGroupSubmitBtn(groupName, OGBio, OGLocation) {
 
 		fetch(`${URI}/api/groups/${groupId}`, request)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -218,7 +213,6 @@ function deleteGroupBtn() {
 
 		fetch(`${URI}/api/groups/${groupId}`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					warningPTag.text("Error submitting changes!");
@@ -258,7 +252,6 @@ function createCommentListener() {
 
 		fetch(`${URI}/api/comments`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					return;
@@ -315,7 +308,6 @@ function uploadGroupImgHeader() {
 
 		fetch(`${URI}/api/groups/${groupId}/groupUpload`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 					return;
@@ -358,7 +350,6 @@ function groupInfoPopulateHTML(props) {
 	if (userEmail() === props.group.groupOwner.email) {
 		html += `<button class="groupGreenButton editGroupBtn btn btn-dark">Edit Group</button>`
 	} else if (props.group.users.length === 0) {
-		console.log("length 0")
 		html += `<button class="groupGreenButton joinGroupBtn btn btn-dark" data-id="${props.group.id}">Join Group</button>`
 	} else if (props.group.users.length > 0) {
 		arrayEmpty = false;
