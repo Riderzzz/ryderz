@@ -1,6 +1,7 @@
 import CreateView from "../createView.js";
 import {clearLocalStorage, getHeaders} from "../auth.js";
 import createView from "../createView.js";
+import {enableSearchIfLogged} from "./Home.js";
 
 export default function User(props) {
 	console.log(props)
@@ -68,6 +69,8 @@ export function UserEvent() {
 	editAvatarImage();
 	editHeaderImage();
 	editProfileBtnListener();
+
+	enableSearchIfLogged()
 }
 
 function accountSettingsHtml(props) {

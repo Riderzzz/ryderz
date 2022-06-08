@@ -1,5 +1,6 @@
 import createView from "../createView.js";
 import {getHeaders, userEmail} from "../auth.js";
+import {enableSearchIfLogged} from "./Home.js";
 
 const BASE_URI = `${URI}/api/users`;
 const COMMENT_URI = `${URI}/api/comments`;
@@ -131,6 +132,7 @@ export function showFriendsProfile() {
     goBackToHome();
     editPostFromProfile();
     editPostButtonListener();
+    enableSearchIfLogged()
 }
 
 function goBackToHome(){

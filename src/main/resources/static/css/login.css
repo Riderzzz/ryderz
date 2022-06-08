@@ -1,5 +1,14 @@
-#username {
-    background: white url(../images/email-icon.png) right no-repeat;
+#email {
+    background: #404040 url(../images/email-icon.png) right no-repeat;
+    /* height: 10px; */
+    margin-right: 10px;
+    padding-left: 10px;
+    background-size: 30px 30px;
+}
+
+
+.emailStylingStuff {
+    background: #404040 url(../images/email-icon.png) right no-repeat;
     /* height: 10px; */
     margin-right: 10px;
     padding-left: 10px;
@@ -7,11 +16,15 @@
 }
 
 #password {
-    background: white url(../images/password-icon.png) right no-repeat;
+    background: #404040 url(../images/password-icon.png) right no-repeat;
     /* height: 10px; */
     margin-right: 10px;
     padding-left: 10px;
     background-size: 30px 30px;
+}
+
+.card-darker-bg {
+    background-color: #181818;
 }
 
 .form-control-email {
@@ -35,11 +48,11 @@
 
 
 #radius-shape-1 {
-    background: radial-gradient(#44006b, #9d2e2e);
+    background: radial-gradient(#181818, #A1CCA5);
 }
 
 #radius-shape-2 {
-    background: radial-gradient(#44006b, #9d2e2e);
+    background: radial-gradient(#181818, #A1CCA5);
 }
 
 .glow-on-hover-login {
@@ -47,8 +60,8 @@
     height: 50px;
     border: none;
     outline: none;
-    color: #fff;
-    background: #111;
+    color: #000000;
+    background: #A1CCA5;
     cursor: pointer;
     position: relative;
     z-index: 0;
@@ -73,7 +86,7 @@
 }
 
 .glow-on-hover-login:active {
-    color: #000
+    color: #A1CCA5
 }
 
 .glow-on-hover-login:active:after {
@@ -90,14 +103,33 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #111;
+    background: #A1CCA5;
     left: 0;
     top: 0;
     border-radius: 10px;
+}
+
+.footerLine {
+    width: 86%;
+    color: white;
+}
+
+.iconLinks {
+    width: 60%;
+}
+
+.icon-link {
+    font-size: 1.5em;
 }
 
 @keyframes glowing {
     0% { background-position: 0 0; }
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
+}
+
+@media screen and (min-width:992px) {
+    .iconLinks {
+        width: 20%;
+    }
 }

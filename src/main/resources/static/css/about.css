@@ -1,3 +1,134 @@
+/*body h1 {*/
+/*    text-align: center;*/
+/*}*/
+
+#about-body, h1 {
+    text-align: center;
+    box-sizing: content-box;
+}
+
+.about-images{
+    aspect-ratio: 1;
+    width: 300px;
+    height: 400px;
+}
+
+.card-container-about {
+    left: 50%;
+    top: 50%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+    background: black;
+    align-self: center;
+    margin-top: 70px;
+}
+
+.card-container-about,
+.card-container-about * {
+    box-sizing: content-box;
+}
+
+.card-about {
+    margin: 20px 40px 40px 20px;
+    width: 300px;
+    height: 400px;
+    transform-style: preserve-3d;
+    perspective: 600px;
+    transition: 0.5s;
+}
+
+.front {
+    position: absolute;
+}
+
+.card-about .front {
+    border: solid 10px whitesmoke;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transition: 0.5s;
+    -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+.card-about:hover .front {
+    transform: rotateY(-180deg);
+}
+
+.card-about .back {
+    border: solid 10px whitesmoke;
+    width: 100%;
+    height: 100%;
+    background: #1d1d1d;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    transition: 0.5s;
+    -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+
+
+}
+
+.card-about:hover .back {
+    transform: rotateY(0deg);
+}
+
+.card-about .back .details {
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card-about .back .details .caption {
+    font-weight: 100;
+    font-style: italic;
+}
+
+.card-about .back .details .caption,
+h2,
+span {
+    color: whitesmoke;
+}
+
+.social-icon {
+    padding: 10px;
+}
+
+.social-icon a {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background: #333;
+    text-align: center;
+    text-decoration: none;
+    color: whitesmoke;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+.social-icon a .fab {
+    line-height: 36px;
+}
+
+.social-icon a:hover {
+    background: rgb(104, 240, 215);
+}
+.social-icon a:hover i {
+    transition: 0.5s;
+    color: #333;
+}
+
+/*second about section*/
+
 @media (min-width: 45em) {
     #our-story-card {
         flex-direction: row;
@@ -34,6 +165,7 @@
 .story__name {
     font-family: Oswald,Arial Narrow,sans-serif;
     text-transform: uppercase;
+    color: white;
 }
 
 .first-card {
@@ -41,13 +173,19 @@
     margin-left: 80px;
 }
 
-#our-story-card {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column-reverse;
-    max-width: 56.25rem;
-    height: 500px;
+.our-story-card {
+    color: white;
 }
+
+.our-story-card h2{
+    color: white;
+    text-shadow: 0 0 5px #a1cca5;
+}
+
+.about-names {
+    text-shadow: 0 0 5px #a1cca5;
+}
+
 #capstone-card h2 {
     text-align: center;
     padding-left: 0;
