@@ -4,7 +4,6 @@ import createView from "../createView.js";
 const POST_URI = `${URI}/api/posts`
 
 export default function CreatePost(props) {
-    console.log(props)
     return `
 			<!DOCTYPE html>
 			<html lang="html">
@@ -50,12 +49,10 @@ function createPostListener() {
         let selectedCategories = [];
 
         $('input[type="checkbox"]:checked').each(function() {
-            console.log(this.value);
             selectedCategories.push({name: this.value})
 
         });
 
-        console.log(selectedCategories)
 
         const title = $('#createPostTitle').val();
         const content = $('#createPostContent').val();
@@ -66,7 +63,6 @@ function createPostListener() {
             content,
             categories
         }
-        console.log(postObject);
         const requestObject = {
             method: "POST",
             headers: getHeaders(),

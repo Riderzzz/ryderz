@@ -39,7 +39,6 @@ export default function createView(URI, Id) {
 // When the user hits back in the browser, get the last uri from history and render it (w/ props)
 window.addEventListener('popstate', (e) => {
     if (e?.state?.lastUri) {
-        console.log(`Back to ${e.state.lastUri}!`)
         const splitURI = e.state.lastUri.split("/")
         const Id = splitURI[2];
         const {lastUri, ...props} = e.state

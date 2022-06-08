@@ -7,7 +7,6 @@ const COMMENT_URI = `${URI}/api/comments`;
 const POST_URI = `${URI}/api/posts`;
 
 export default function Profile(props) {
-    console.log(props)
 // language=HTML
     return `<!DOCTYPE html>
     <html lang="html">
@@ -366,7 +365,6 @@ function showUsersFriends(props) {
 }
 
 function showUsersPosts(props) {
-    console.log(props)
     //language=HTML
     let html = `
         ${props.profile.posts.reverse().map(post => ` 
@@ -457,12 +455,10 @@ function refreshPosts(userId){
 
     fetch(`${BASE_URI}/${userId}`, requestObject)
         .then(res => res.json()).then(data => {
-        console.log(data)
 
         let state = {
             profile: data
         };
-        console.log(state)
         postSection.html(showUsersPosts(state));
         commentFromUserProfile();
         deleteCommentOnPost();
@@ -477,8 +473,6 @@ function deletePostButtonListener(){
     $(".delete-post-btn").click(function (){
         let postId = $(this).data("id")
         let userId = $(this).data("user")
-        console.log(postId)
-        console.log(userId)
         const requestObject = {
             method: "DELETE",
             headers: getHeaders()
@@ -551,7 +545,6 @@ function displayCommentsButton(post){
 }
 
 function displayComments(props) {
-    console.log(props)
     //language=HTML
     let html = `
         ${props.comments.reverse().map(posts => `

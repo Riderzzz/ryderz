@@ -84,7 +84,6 @@ function createGroupSubmitListener() {
 
 		fetch(`${URI}/api/groups`, request)
 			.then(res => {
-				console.log(res.status)
 				createView("/discover")
 			})
 			.catch(error => {

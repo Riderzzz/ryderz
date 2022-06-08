@@ -95,7 +95,6 @@ export function RegisterEvent() {
 			warningTag.css("color", "red");
 		}
 
-		console.log(newUser);
 
 		let request = {
 			method: "POST",
