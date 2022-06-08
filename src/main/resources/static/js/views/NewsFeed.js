@@ -365,6 +365,7 @@ function createPostBtn() {
                 // newsfeedInitAllMaps()
                 newsFeedMobileSelect()
                 createBtnClearListener()
+                createEventBtn();
             })
         })
     })
@@ -550,6 +551,7 @@ function joinEvent() {
                 // newsfeedInitAllMaps()
                 newsFeedMobileSelect()
                 createBtnClearListener()
+                createEventBtn();
             })
         })
     })
@@ -598,7 +600,7 @@ function leaveEvent() {
                 showMapMap()
                 // newsfeedInitAllMaps()
                 newsFeedMobileSelect()
-
+                createEventBtn();
                 createBtnClearListener()
             })
         })
