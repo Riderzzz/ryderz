@@ -7,8 +7,6 @@ const BASE_URI = `${URI}/api/users`;
 
 
 export default function Requests(props) {
-    console.log(props)
-    console.log(props.request[0].sender)
     //language=html
     return `
         <!DOCTYPE html>
@@ -35,6 +33,7 @@ export function showRequests() {
 }
 
 function showAllRequests(props) {
+    console.log(props)
     let html = `
        ${props.request.map(m => `
          <div class="card request-card" style="width: 18rem;">
@@ -68,7 +67,6 @@ function addFriend() {
 
         fetch(`${BASE_URI}/addfriend/${id}`, request)
             .then(res => {
-                console.log(res.status);
                 createView(`/request`)
             }).catch(error => {
             console.log(error);

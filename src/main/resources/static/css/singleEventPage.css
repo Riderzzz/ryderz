@@ -140,3 +140,18 @@
     aspect-ratio: 3/1;
     object-fit: cover;
 }
+.event-indv-card{
+    background-color: #181818;
+}
+
+.event-content{
+    color: white;
+}
+.event-username{
+    color: white;
+    font-weight: bold;
+}
+.event-username:hover{
+    cursor: pointer;
+    color: #4C4C4C;
+}

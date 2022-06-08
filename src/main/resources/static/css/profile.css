@@ -12,6 +12,7 @@
 
 body {
     background-color: black;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .profile-header-photograph {
@@ -29,11 +30,12 @@ body {
     margin-top: 20px;
     color: white;
     text-decoration: none;
+    font-size: large;
 }
 
 .minutes-ago {
     margin-left: 5px;
-    margin-top: 26px;
+    margin-top: 23px;
 }
 
 .comment-users-posts {
@@ -46,6 +48,10 @@ body {
 
 ::placeholder {
     color: darkgray;
+}
+.edit-bio{
+    background-color: #181818;
+    color: white;
 }
 
 .edit-post-button {
@@ -217,9 +223,15 @@ body {
 .content-within-comments{
     color: #CCDBDC;
 }
+.comment-users-posts{
+    color: #CCDBDC
+}
+.modal-content{
+    background-color: #4C4C4C;
+    color: white;
+}
 
-
-@media (min-width: 375px) {
+@media (max-width: 425px) {
 .submit-comment{
     display: flex;
     width: 30%;

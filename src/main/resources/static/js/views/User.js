@@ -4,7 +4,6 @@ import createView from "../createView.js";
 import {enableSearchIfLogged} from "./Home.js";
 
 export default function User(props) {
-	console.log(props)
 	//language=HTML
 	let html = `
 		
@@ -185,8 +184,6 @@ function editHeaderImage() {
 		const userId = $(this).data('id');
 		const file = document.getElementById("userHeaderFile");
 		let image = file.files[0]
-		console.log(image.image)
-		console.log(file.files)
 
 		// $('.user-image').append(`<img src="${image.image}" alt="">`)
 
@@ -200,7 +197,6 @@ function editHeaderImage() {
 
 		fetch(`${URI}/api/users/changeHeader/${userId}`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 				}
@@ -219,8 +215,6 @@ function editAvatarImage() {
 		const userId = $(this).data('id');
 		const file = document.getElementById("userAvatarFile");
 		let image = file.files[0]
-		console.log(image.image)
-		console.log(file.files)
 
 		// $('.user-image').append(`<img src="${image.image}" alt="">`)
 
@@ -234,7 +228,6 @@ function editAvatarImage() {
 
 		fetch(`${URI}/api/users/changeAvatar/${userId}`, requestObject)
 			.then(res => {
-				console.log(res.status)
 				if (res.status !== 200) {
 					console.log(res);
 				}
@@ -359,7 +352,6 @@ function editProfileBtnListener() {
 		const username = $("#usernameForm").val();
 		const email = $("#emailForm").val();
 		const bio = $('#bioForm').val();
-		console.log(bio)
 		const validation = $("#validation");
 
 		if (!username || !email) {

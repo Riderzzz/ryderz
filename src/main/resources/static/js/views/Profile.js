@@ -7,7 +7,6 @@ const COMMENT_URI = `${URI}/api/comments`;
 const POST_URI = `${URI}/api/posts`;
 
 export default function Profile(props) {
-    console.log(props)
 // language=HTML
     return `<!DOCTYPE html>
     <html lang="html">
@@ -366,7 +365,6 @@ function showUsersFriends(props) {
 }
 
 function showUsersPosts(props) {
-    console.log(props)
     //language=HTML
     let html = `
         ${props.profile.posts.reverse().map(post => ` 
@@ -430,7 +428,7 @@ function showUsersPosts(props) {
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">Delete Comment</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -438,7 +436,7 @@ function showUsersPosts(props) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary confirm-delete-comment" data-bs-dismiss="modal" data-id="${props.profile.id}">Delete Post</button>
+                        <button type="button" class="btn btn-lightG confirm-delete-comment" data-bs-dismiss="modal" data-id="${props.profile.id}">Delete Post</button>
                     </div>
                 </div>
             </div>
@@ -457,12 +455,10 @@ function refreshPosts(userId){
 
     fetch(`${BASE_URI}/${userId}`, requestObject)
         .then(res => res.json()).then(data => {
-        console.log(data)
 
         let state = {
             profile: data
         };
-        console.log(state)
         postSection.html(showUsersPosts(state));
         commentFromUserProfile();
         deleteCommentOnPost();
@@ -477,8 +473,6 @@ function deletePostButtonListener(){
     $(".delete-post-btn").click(function (){
         let postId = $(this).data("id")
         let userId = $(this).data("user")
-        console.log(postId)
-        console.log(userId)
         const requestObject = {
             method: "DELETE",
             headers: getHeaders()
@@ -551,7 +545,6 @@ function displayCommentsButton(post){
 }
 
 function displayComments(props) {
-    console.log(props)
     //language=HTML
     let html = `
         ${props.comments.reverse().map(posts => `
@@ -621,7 +614,7 @@ function showAboutPageOnly(props) {
     let html = `
         <div class="card  card-profile shadow" style="width: 100%">
             <div class="card-body card-body-profile">
-                <h5 class="card-title card-title-profile">About Me</h5>
+                <h5 class="card-title card-title-profile mb-2">About Me</h5>
                 <h6 class="card-subtitle  card-subtitle-profile mb-2 text-muted">${props.profile.username}</h6>
                     <div class="about-${props.profile.id}-show" data-id="${props.profile.id}">
                         <p class="card-text card-text-profile">${aboutMe(props)}</p>
