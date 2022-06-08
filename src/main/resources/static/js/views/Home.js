@@ -77,10 +77,11 @@ export function enableSearchIfLogged(){
 
 function loginAndRegister() {
     if (!isLoggedIn()) {
-        return `<div class="d-flex justify-content-end">
-                                <button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/login" data-link="Login">Login</a></button>
-                                <button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/register" data-link="Register">Register</a></button>
-                            </div>`
+        return `
+<div class="d-flex justify-content-end">
+<button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/login" data-link="Login">Login</a></button>
+<button class="btn btn-dark mx-2 w-100"><a class="nav-link text-white" href="/register" data-link="Register">Register</a></button>
+ </div>`
     }
     return ``
 }
