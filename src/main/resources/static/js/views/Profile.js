@@ -723,7 +723,6 @@ function addOrRemoveFriends(props) {
                 <button type="button" 
                             class="btn btn-lightG mr-2 cancel-friend-btn" 
                             data-id="${props.profile.id}">Cancel Request
-                        <i class="fas fa-plus ml-2"></i>
                     </button>`
             return html
         }
@@ -735,7 +734,6 @@ function addOrRemoveFriends(props) {
                 <button type="button" 
                             class="btn btn-lightG-2 mr-2 remove-friend-btn" 
                             data-id="${props.profile.id}">Remove Friend 
-                        <i class="fas fa-plus ml-2"></i>
                     </button>`
             return html
         }
@@ -746,14 +744,12 @@ function addOrRemoveFriends(props) {
                 <button type="button" 
                             class="btn btn-lightG-2 mr-2 add-friend-btn" 
                             data-id="${props.profile.id}">Add Friend
-                        <i class="fas fa-plus ml-2"></i>
                     </button>`
         return html
     } else if (props.profile.email === userEmail()){
         let html = `
         <a type="button" 
                    class="btn btn-lightG-2 mr-2 edit-profile-btn">Edit Profile
-               <i class="fas fa-plus ml-2"></i>
         </a>`
         return html
     }
