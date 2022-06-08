@@ -348,7 +348,21 @@ function createPostBtn() {
         }).finally(r => {
             fetchPostsAndEventsData().then(d => {
                 $('.posts-container').html(newsfeedPostsHtml(d))
-                NewsFeedEvents()
+                // NewsFeedEvents()
+                commentOnPost();
+                populateEditPostBtn();
+                deletePostBtn();
+                showProfilePage();
+                editEventBtn();
+                deleteEventBtn();
+                commentOnEvent();
+                editPostBtn();
+                joinEvent();
+                leaveEvent();
+                showMap()
+                showMapMap()
+                // newsfeedInitAllMaps()
+                newsFeedMobileSelect()
             })
         })
     })
@@ -515,7 +529,24 @@ function joinEvent() {
             fetchPostsAndEventsData().then(d => {
                 console.log(d)
                 $('.posts-container').html(newsfeedPostsHtml(d))
-                NewsFeedEvents()
+                // NewsFeedEvents()
+                commentOnPost();
+                populateEditPostBtn();
+                deletePostBtn();
+                showProfilePage();
+                editEventBtn();
+                deleteEventBtn();
+                commentOnEvent();
+                editPostBtn();
+                joinEvent();
+                leaveEvent();
+                showMap()
+                showMapMap()
+                // newsfeedInitAllMaps()
+                newsFeedMobileSelect()
+                sideBarGroupBtn();
+                sideBarEventBtn();
+                sideBarFriendBtn();
             })
         })
     })
@@ -546,7 +577,24 @@ function leaveEvent() {
             fetchPostsAndEventsData().then(d => {
                 // console.log(d)
                 $('.posts-container').html(newsfeedPostsHtml(d))
-                NewsFeedEvents()
+                // NewsFeedEvents()
+                commentOnPost();
+                populateEditPostBtn();
+                deletePostBtn();
+                showProfilePage();
+                editEventBtn();
+                deleteEventBtn();
+                commentOnEvent();
+                editPostBtn();
+                joinEvent();
+                leaveEvent();
+                showMap()
+                showMapMap()
+                // newsfeedInitAllMaps()
+                newsFeedMobileSelect()
+                sideBarGroupBtn();
+                sideBarEventBtn();
+                sideBarFriendBtn();
             })
         })
     })
