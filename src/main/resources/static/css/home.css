@@ -1,5 +1,5 @@
 .feature-card{
-    background-color: #a1cca5;
+    background-color: #415D43;
     border-radius: 20px;
     color: white;
     margin-bottom: 10px;
@@ -18,20 +18,20 @@
     margin-bottom: 20px;
 }
 .photo{
-    height: 50vh;
+    height: 100%;
+    aspect-ratio: 18/9;
     width: 100%;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
 .welcome-photo{
     position: relative;
-    height: 50vh;
     width: 100%;
     margin-bottom: 20px;
 }
 .welcome-text{
     position: absolute;
-    top: 10%;
+    top: 36%;
     left: 7%;
     right: 7%;
 }
@@ -39,10 +39,45 @@
     color: white;
     margin-bottom: 30px;
     text-align: center;
+    animation: moveInTop 1s ease-out;
+}
+.login-btn {
+    animation: moveInLeft 2s ease-out;
+    border-radius: 30px;
+}
+.register-btn {
+    animation: moveInRight 2s ease-out;
+    border-radius: 30px;
+}
+.features-title {
+    /*animation: moveInRight 1s ease-out;*/
 }
 .register-btn{
     background-color: #415D43;!important;
 }
+.home-card-1 {
+    animation: moveInLeft 2s ease-out;
+}
 
+.home-card-2 {
+    animation: moveInBottom 1s ease-out;
+}
 
+.home-card-3 {
+    animation: moveInRight 2s ease-out;
+}
+
+@media (max-width: 576px) {
+    .welcome-text{
+        position: absolute;
+        top: 6%;
+    }
+
+    .homeTopRow {
+        margin-bottom: 5em;
+    }
+    .photo {
+        height: 130%;
+    }
+}
 
