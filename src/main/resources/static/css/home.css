@@ -32,11 +32,13 @@
 .welcome-text{
     position: absolute;
     top: 10%;
-    left: 7%
+    left: 7%;
+    right: 7%;
 }
 .welcome-statement{
     color: white;
     margin-bottom: 30px;
+    text-align: center;
 }
 .register-btn{
     background-color: #415D43;!important;
