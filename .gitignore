@@ -6,6 +6,8 @@ target/
 application.properties
 keys.js
 config.js
+*.p12
+run.sh
 
 ### STS ###
 .apt_generated
