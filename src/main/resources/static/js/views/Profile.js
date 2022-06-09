@@ -321,7 +321,7 @@ function showUsersGroups(props) {
                             <div class="justify-content-center">
                                 <div class="group-img-profile">
                                     <img src="${groups.groupPhotoUrl !== null ? groups.groupPhotoUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}"
-                                        alt="image 1" class="rounded-circle"
+                                        alt="image 1" class="users-group"
                                         style="width: 90px;height: 90px;">
                                 </div>
                                 <div class="text-center">
@@ -348,8 +348,7 @@ function showUsersFriends(props) {
                             <div class="justify-content-center">
                                 <div>
                                     <img src="${friends.userPhotoUrl !== null ? friends.userPhotoUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}"
-                                        alt="image 1" class="rounded-circle"
-                                         style="width: 90px;height: 90px;">
+                                        alt="image 1" class="users-picture" style="width: 90px;height: 90px;">
                                 </div>
                                 <div class="text-center">
                                    <a class="show-users-friends-profile" 
@@ -617,10 +616,12 @@ function showAboutPageOnly(props) {
             <div class="card-body card-body-profile">
                 <h5 class="card-title card-title-profile mb-2">About Me</h5>
                 <h6 class="card-subtitle  card-subtitle-profile mb-2 text-muted">${props.profile.username}</h6>
-                    <div class="about-${props.profile.id}-show" data-id="${props.profile.id}">
+                    <div class="about-${props.profile.id}-show about-text" data-id="${props.profile.id}">
                         <p class="card-text card-text-profile">${aboutMe(props)}</p>
                     </div>
+                <div class="d-flex justify-content-end">
                     ${verifyUsersAboutProfile(props)}
+                </div>
             </div>
         </div>
 
