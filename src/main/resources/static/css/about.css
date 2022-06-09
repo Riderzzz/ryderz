@@ -4,10 +4,10 @@
     box-sizing: content-box;
 }
 
-.about-images{
+.about-images {
     aspect-ratio: 1;
-    width: 300px;
-    height: 400px;
+    width: inherit;
+    height: inherit;
 }
 
 .card-container-about {
