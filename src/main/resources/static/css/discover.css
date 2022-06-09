@@ -1,3 +1,42 @@
+@keyframes moveInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-10rem); }
+    80% {
+        transform: translateX(1rem); }
+    100% {
+        opacity: 1;
+        transform: translate(0); } }
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(10rem); }
+    80% {
+        transform: translateX(-1rem); }
+    100% {
+        opacity: 1;
+        transform: translate(0); } }
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(10rem); }
+    100% {
+        opacity: 1;
+        transform: translate(0); } }
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
+.btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0; }
+
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
+
 .groupDiv {
     text-decoration: none;
     color: black !important;
@@ -152,12 +191,20 @@
 .featuredSubTitle {
     color: white;
     font-size: 1.5em;
+    animation-name: moveInLeft;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
 }
 
 .featuredSubDetails {
     color: white;
     font-size: .75em;
     margin-bottom: 0;
+    animation: moveInRight 1s ease-out;
+}
+
+.featuredEventBtn {
+    animation: moveInBottom 1s ease-out;
 }
 
 /*// Small devices (landscape phones, 576px and up)*/
