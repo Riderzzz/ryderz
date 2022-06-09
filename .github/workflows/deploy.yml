@@ -37,7 +37,7 @@ jobs:
             echo '${{ secrets.APPLICATION_PROPERTIES }}' > src/main/resources/application.properties
             echo '${{ secrets.KEYS_JS }}' > src/main/resources/static/js/keys.js
             echo '${{ secrets.CONFIG_JS }}' > src/main/resources/static/js/config.js
-            echo '${{ secrets.HTTPS_CERT }}' | base64 -d > fulgentcorp.p12
+            echo '${{ secrets.HTTPS_CERT }}' | base64 -d > cert.p12
             pm2 reload all
           
 # end of deployment script
