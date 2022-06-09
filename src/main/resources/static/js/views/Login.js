@@ -50,8 +50,8 @@ export default function Login(props) {
           Connect With Your <br />
           <span style="color: #A1CCA5">Fellow Ryderz</span>
         </h1>
-        <p class="mb-4" style="color: #fa0000">
-          Send messages, set custom routes/events, track ryderz in real-time
+        <p class="mb-4" style="color: #a9a9a9">
+          Send messages, create events and groups, and meet with fellow riderz!
         </p>
       </div>
 
