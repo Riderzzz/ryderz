@@ -69,6 +69,11 @@
     opacity: .7%;
 }
 
+.thicc-font {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
 @media screen and (min-width:776px) {
     .dashboard {
         width: 75%;
