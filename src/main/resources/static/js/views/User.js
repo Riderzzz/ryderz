@@ -169,7 +169,7 @@ function removeAccountSettingsHtml(props) {
 					</div>
 				</div>
 				<div class="my-3 d-flex align-items-center">
-					<button type="button" class="btn btn-red delete-account-btn" data-id="${props.user.id}">Remove</button>
+					<button type="button" class="btn btn-red delete-account-btn thicc-font" data-id="${props.user.id}">Remove</button>
 					<div class="mx-3" id="delete-account-validation"></div>
 				</div>
 			</div>
