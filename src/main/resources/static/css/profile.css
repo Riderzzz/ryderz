@@ -206,13 +206,30 @@ body {
      color: white;
  }
 
+ .about-text{
+     margin-left: 4px;
+ }
+
  .card-title-profile{
      color: white;
  }
 
  .card-subtitle-profile{
      color: white;
+     margin-left: 3px;
  }
+
+.users-group{
+    filter: drop-shadow(0px 0px 1px white);
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.users-picture{
+    filter: drop-shadow(0px 0px 1px white);
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
 
  .card-body-profile{
      color: white;

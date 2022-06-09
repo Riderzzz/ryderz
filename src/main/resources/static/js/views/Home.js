@@ -17,7 +17,7 @@ export default function Home(props) {
             <div class="welcome-photo">
                 <img class="photo" src="https://images.unsplash.com/photo-1552306062-29a5560e1c31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
                 <div class="welcome-text">
-                    <h1 class="welcome-statement">Come join our community of like-minded riders and go on an adventure today!</h1>
+                    <h2 class="welcome-statement">Join our community and go on an adventure today!</h2>
                     ${loginAndRegister()}
                 </div>
             </div>
