@@ -381,9 +381,9 @@ function editProfileBtnListener() {
 		fetch(`${URI}/api/users/${userId}`, request)
 			.then(res => {
 				console.log(res.status)
-				window.localStorage.clear()
-				alert("Redirecting to login...")
-				createView("/login")
+				// window.localStorage.clear()
+				// alert("Redirecting to login...")
+				// createView("/login")
 			})
 			.catch(error => {
 				console.log(error)

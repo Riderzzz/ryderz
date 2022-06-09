@@ -28,8 +28,9 @@ export default function Requests(props) {
 }
 
 export function showRequests() {
-    addFriend()
-    enableSearchIfLogged()
+    addFriend();
+    enableSearchIfLogged();
+    deleteFriendRequest();
 }
 
 function showAllRequests(props) {
@@ -47,7 +48,7 @@ function showAllRequests(props) {
                     </div>     
                          <div class="d-flex justify-content-end">
                         <button href="#" class="btn-accept accept-friend" data-id="${m.sender.id}">accept</button>
-                        <button href="#" class="btn-decline decline-friend">decline</button>
+                        <button href="#" class="btn-decline decline-friend" data-id="${m.id}">decline</button>
                         </div>
                     </div>
                 </div>
@@ -73,5 +74,24 @@ function addFriend() {
             createView(`/request`);
         });
 
+    })
+}
+
+function  deleteFriendRequest(){
+    $(".decline-friend").click(function (){
+        const id = $(this).data("id");
+
+        const request ={
+            method: "DELETE",
+        }
+
+        fetch(`${BASE_URI}/friendRequest/${id}`, request)
+            .then(res =>{
+                console.log(res)
+                createView(`/request`)
+            }).catch(err =>{
+            console.log(err)
+            createView(`/request`)
+        })
     })
 }
