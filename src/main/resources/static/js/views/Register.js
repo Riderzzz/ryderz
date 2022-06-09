@@ -18,19 +18,19 @@ export default function Register(props) {
 
                                         <!-- username input -->
                                         <div class="form-outline mb-4 username-input-card">
-                                            <input type="text" class="form-control form-control-lg" id="username"
+                                            <input type="text" class="form-control settingForm form-control-lg text-white" id="username"
                                                    placeholder="Enter username"/>
                                             <label class="form-label" for="form3Example3"></label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="email" id="email" class="form-control form-control-lg"
+                                            <input type="email" id="email" class="form-control settingForm form-control-lg text-white"
                                                    placeholder="Enter email"/>
                                             <label class="form-label" for="form3Example3cg"></label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="password" id="password" class="form-control form-control-lg"
+                                            <input type="password" id="password" class="form-control settingForm form-control-lg text-white"
                                                    placeholder="Enter password"/>
                                             <label class="form-label" for="form3Example4cg"></label>
                                         </div>
@@ -90,9 +90,10 @@ export function RegisterEvent() {
 		// 	warningTag.css("color", "red");
 		// }
 
-		if (newUser.password.length < 7) {
-			warningTag.text("Password must be longer than 6 characters!");
+		if (newUser.password.length < 6) {
+			warningTag.text("Password must be atleast 6 characters!");
 			warningTag.css("color", "red");
+			return;
 		}
 
 
