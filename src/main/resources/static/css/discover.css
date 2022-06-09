@@ -26,6 +26,14 @@
         opacity: 1;
         transform: translate(0); } }
 
+@keyframes moveInTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-10rem); }
+    100% {
+        opacity: 1;
+        transform: translate(0); } }
+
 .btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
