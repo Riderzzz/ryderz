@@ -215,6 +215,15 @@
     animation: moveInBottom 1s ease-out;
 }
 
+@media (max-width: 768px) {
+    .featuredTitle {
+        top: 7%;
+    }
+    .discoverFeaturedEventImg {
+        aspect-ratio: 14/9;
+    }
+}
+
 /*// Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
     .media-scroller {

@@ -20,7 +20,7 @@ export default function Discover(props) {
 				<div class="featuredTitle">
 					<h3 class="featuredSubTitle">Night Life Tour</h3>
 					<p class="featuredSubDetails">Join us on a late night route!</p>
-					<button class="featuredEventBtn btn mt-3 groupGreenButton">Go to event</button>
+					<button class="featuredEventBtn btn btn-sm mt-3 groupGreenButton">Go to event</button>
 				</div>
 			</div>
 		</header>
