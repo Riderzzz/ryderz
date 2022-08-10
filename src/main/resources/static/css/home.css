@@ -42,11 +42,11 @@
     animation: moveInTop 1s ease-out;
 }
 .login-btn {
-    animation: moveInLeft 2s ease-out;
+    animation: moveInLeftHomePage 2s ease-out;
     border-radius: 30px;
 }
 .register-btn {
-    animation: moveInRight 2s ease-out;
+    animation: moveInRightHomePage 2s ease-out;
     border-radius: 30px;
 }
 .features-title {
