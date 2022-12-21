@@ -14,69 +14,105 @@ export default function Home(props) {
 
         <section>
             <div class="container">
-            <div class="welcome-photo">
-                <img class="photo" src="https://images.unsplash.com/photo-1552306062-29a5560e1c31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
-                <div class="welcome-text">
-                    <h1 class="welcome-statement">Come join our community of like-minded riders and go on an adventure today!</h1>
-                    ${loginAndRegister()}
+                <div class="welcome-photo">
+                    <img class="photo-1"
+                         src="https://images.unsplash.com/photo-1552306062-29a5560e1c31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
+                    <div class="welcome-text">
+                        <h1 class="welcome-statement">Come join our community of like-minded riders and go on an
+                            adventure today!</h1>
+                        ${loginAndRegister()}
+                    </div>
                 </div>
             </div>
-            </div>
         </section>
-        
+
         <section>
             <div class="container">
-            <div class="d-flex text-center row">
-                <h2 class="features-title">Features</h2>
-            </div>
-            
-            <div class="row justify-content-between">
-                <div class="col-12 feature-card col-md-3">
-                    <div class="d-flex justify-content-center">
-                        <i class="bi bi-calendar-date" style="font-size: 4rem;"></i>
-                    </div>
-                   <div class="text-center">
-                    <div>
-                        Host/Join Clubs
-                    </div>
-                    <p>
-                        Host or join events with other motorcyclists
-                    </p>
-                    <p class="second-features">
-                        Choose your date and time!
-                    </p>
-                   </div>
-                </div>
-                
-                <div class="col-12 feature-card col-md-3">
-                    <div class="d-flex justify-content-center">
-                        <i class="bi bi-pin-map" style="font-size: 4rem;"></i>
-                    </div>
-                    <div class="text-center">
-                    <div>
-                        Create/View Motorcycle Routes
-                    </div>
-                    <p class="">
-                        Using google's map api, users can set markers on a map to show route start locations
-                    </p>
-                    <p>
-                        Find motorcycle riding events nearby!
-                    </p>
-                    </div>
+                <div class="d-flex text-center row">
+                    <h2 class="features-title">Features</h2>
                 </div>
 
-                <div class="col-12 feature-card col-md-3">
-                    <div class="d-flex justify-content-center">
-                        <i class="bi bi-person-plus" style="font-size: 4rem;"></i>
+                <div class="row justify-content-between">
+                    <div class="col-12 feature-card col-md-3">
+                        <div class="d-flex justify-content-center">
+                            <i class="bi bi-calendar-date" style="font-size: 4rem;"></i>
+                        </div>
+                        <div class="text-center">
+                            <div>
+                                Host/Join Clubs
+                            </div>
+                            <p>
+                                Host or join events with other motorcyclists
+                            </p>
+                            <p class="second-features">
+                                Choose your date and time!
+                            </p>
+                        </div>
                     </div>
-                    <div class="text-center">
-                    <div>Add/Message Friends</div>
+
+                    <div class="col-12 feature-card col-md-3">
+                        <div class="d-flex justify-content-center">
+                            <i class="bi bi-pin-map" style="font-size: 4rem;"></i>
+                        </div>
+                        <div class="text-center">
+                            <div>
+                                Create/View Motorcycle Routes
+                            </div>
+                            <p class="">
+                                Using google's map api, users can set markers on a map to show route start locations
+                            </p>
+                            <p>
+                                Find motorcycle riding events nearby!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 feature-card col-md-3">
+                        <div class="d-flex justify-content-center">
+                            <i class="bi bi-person-plus" style="font-size: 4rem;"></i>
+                        </div>
+                        <div class="text-center">
+                            <div>Add/Message Friends</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
         </section>
-        
+        <div class="container testimonial-container">
+            <div class="testimonial-card photo-1 glow-wrap">
+                <i class="glow"></i>
+                <div class="text">Lorem ipsum dolor sit amet consectetur elit. Ipsa voluptatum ipsum, laudantium minima
+                    aliquam porro? Iste, Et, esta ah <i class="fas fa-quote-right quote"></i>
+                </div>
+                <div class="testimonial-footer">
+                    <div class="testimonial-image">
+                    </div>
+                    <h3 class='person'>Jane Doe</h3>
+                </div>
+            </div>
+            <!--            <div class="testimonial-card photo-1 glow-wrap">-->
+            <!--                <i class="glow"></i>-->
+            <!--                <div class="text">Lorem ipsum dolor sit amet consectetur elit. Ipsa voluptatum ipsum, laudantium minima aliquam porro? Iste,  Et, esta ah <i class="fas fa-quote-right quote"></i>-->
+            <!--                </div>-->
+            <!--                <div class="testimonial-footer">-->
+            <!--                    <div class="testimonial-image">-->
+            <!--                    </div>-->
+            <!--                    <h3 class='person'>Jane Doe</h3>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--            <div class="testimonial-card photo-1 glow-wrap">-->
+            <!--                -->
+            <!--                    <i class="glow"></i>-->
+            <!--                -->
+            <!--                <div class="text">Lorem ipsum dolor sit amet consectetur elit. Ipsa voluptatum ipsum, laudantium minima aliquam porro? Iste,  Et, esta ah <i class="fas fa-quote-right quote"></i>-->
+            <!--                </div>-->
+            <!--                <div class="testimonial-footer">-->
+            <!--                    <div class="testimonial-image">-->
+            <!--                    </div>-->
+            <!--                    <h3 class='person'>Jane Doe</h3>-->
+            <!--                </div>-->
+        </div>
+        </div>
         </body>
         </html>
     `;
